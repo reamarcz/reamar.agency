@@ -1,7 +1,7 @@
 ---
 import DigitalLuxuryDashboard from './DigitalLuxuryDashboard.astro';
 import SectionNewsletterContact from './SectionNewsletterContact.astro';
-const heroImage = '/images/seconddreamhome.png';
+const heroImage = '/images/seconddreamhome.webp';
 ---
 <section class="bg-[#ededed]" aria-labelledby="zahranici-heading">
   <!-- Parallax hero: obrázek fixujeme jen dokud je sekce v viewportu; po odscrollování se odfixuje, aby nepřetékal do patičky -->
@@ -12,7 +12,7 @@ const heroImage = '/images/seconddreamhome.png';
       class="zahranici-hero-img absolute inset-0 w-full h-full object-cover object-center"
       width="1920"
       height="1080"
-      fetchpriority="high"
+      loading="lazy"
       data-zahranici-hero-img
     />
   </div>

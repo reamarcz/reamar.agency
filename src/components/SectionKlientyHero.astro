@@ -1,5 +1,5 @@
 ---
-const heroImage = '/images/pro-klienty-bg.png';
+const heroImage = '/images/pro-klienty-bg.webp';
 ---
 <section id="klienty" class="bg-[#ededed]" aria-labelledby="klienty-heading">
   <!-- Hero: 75vh, širokoúhlá fotka -->
@@ -10,7 +10,7 @@ const heroImage = '/images/pro-klienty-bg.png';
       class="absolute inset-0 w-full h-full object-cover object-left"
       width="1920"
       height="1080"
-      fetchpriority="high"
+      loading="lazy"
     />
     <!-- Gradient overlay: tmavší vlevo (kde je text), světlejší vpravo – text zůstane čitelný na světlé fotce -->
     <div class="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" aria-hidden="true" />
