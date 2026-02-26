@@ -1,0 +1,123 @@
+---
+---
+<footer class="relative z-10 bg-black text-white pt-16 md:pt-20 pb-10 md:pb-12 -mt-px" role="contentinfo">
+  <div class="mx-auto w-[90%] max-w-[1280px] px-4 md:px-8">
+    <!-- Horní blok: kontaktní údaje + akční odkazy vlevo, logo vpravo – spodní linie loga v úrovni „Osobní schůzka“ -->
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-14 md:gap-16 lg:gap-20">
+      <!-- Levý blok: Adresa, Telefon, E-mail + akční odkazy -->
+      <div class="flex flex-col md:flex-row md:flex-wrap md:gap-x-16 lg:gap-x-20 gap-10 md:gap-12">
+        <!-- Kontaktní údaje v třech sloupcích -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 md:gap-12 md:gap-x-16 lg:gap-x-20">
+          <div>
+            <p class="font-yellix text-[14px] md:text-[15px] font-normal text-[#BFBFBF] mb-2">Adresa</p>
+            <p class="font-yellix text-[16px] font-normal text-white leading-snug">
+              Záběhlický zámek<br />
+              Za potokem 46/4<br />
+              106 00 Praha 10
+            </p>
+          </div>
+          <div>
+            <p class="font-yellix text-[14px] md:text-[15px] font-normal text-[#BFBFBF] mb-2">Telefon</p>
+            <p class="font-yellix text-[16px] font-normal text-white">
+              <a href="tel:+420607066044" class="hover:opacity-80 transition-opacity">+420 607 066 044</a>
+            </p>
+          </div>
+          <div>
+            <p class="font-yellix text-[14px] md:text-[15px] font-normal text-[#BFBFBF] mb-2">E-mail</p>
+            <p class="font-yellix text-[16px] font-normal text-white">
+              <a href="mailto:info@reamar.cz" class="hover:opacity-80 transition-opacity">info@reamar.cz</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Akční odkazy s ikonami (stejné jako Rychlý kontakt) -->
+        <div class="flex flex-col gap-4">
+          <a href="mailto:info@reamar.cz" class="flex items-center gap-3 group w-fit hidden md:flex">
+            <span class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-white group-hover:opacity-70 transition-opacity">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </span>
+            <span class="font-yellix text-[16px] font-normal text-white group-hover:opacity-70 transition-opacity">Napsat zprávu</span>
+          </a>
+          <a href="https://wa.me/420607066044" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 group w-fit flex md:hidden">
+            <span class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-white group-hover:opacity-70 transition-opacity">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </span>
+            <span class="font-yellix text-[16px] font-normal text-white group-hover:opacity-70 transition-opacity">Napsat zprávu</span>
+          </a>
+          <a href="#" class="flex items-center gap-3 group w-fit" data-smart-contact-open>
+            <span class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-white group-hover:opacity-70 transition-opacity">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h10M7 12h10M7 17h6"/></svg>
+            </span>
+            <span class="font-yellix text-[16px] font-normal text-white group-hover:opacity-70 transition-opacity">Poptávkový formulář</span>
+          </a>
+          <a href="#" class="flex items-center gap-3 group w-fit" data-smart-meeting-open>
+            <span class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-white group-hover:opacity-70 transition-opacity">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </span>
+            <span class="font-yellix text-[16px] font-normal text-white group-hover:opacity-70 transition-opacity">Osobní schůzka v Praze nebo online</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobil: Ochrana + Nastavení cookies před logem, velikost jako Telefon/E-mail -->
+      <div class="flex flex-col gap-3 md:hidden">
+        <a href="/ochrana-osobnich-udaju" class="font-yellix text-[14px] md:text-[15px] font-normal text-[#BFBFBF] hover:text-white transition-colors w-fit">Ochrana osobních údajů</a>
+        <button type="button" id="open-cookie-settings" class="font-yellix text-[14px] md:text-[15px] font-normal text-[#BFBFBF] hover:text-white transition-colors cursor-pointer text-left w-fit" data-cookie-settings aria-label="Nastavení cookies">Nastavení cookies</button>
+      </div>
+
+      <!-- Logo REAMAR vpravo – Grand Finale Reveal: objeví se po doscrollování na konec -->
+      <div class="footer-logo-wrap flex items-end justify-start lg:justify-end" data-footer-logo-wrap>
+        <img src="/images/logo-rig-w.svg" alt="Reamar" width="400" height="107" class="h-28 md:h-40 lg:h-48 xl:h-56 w-auto object-contain object-bottom" />
+      </div>
+    </div>
+
+    <!-- Spodní řádek: právní texty (mobil: jen copyright na středu) -->
+    <div class="mt-10 md:mt-20 pt-3 md:pt-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6 font-yellix text-[12px] md:text-[13px] font-normal text-[#BFBFBF]">
+      <div class="hidden md:flex flex-wrap items-center gap-x-6 gap-y-1">
+        <a href="/ochrana-osobnich-udaju" class="hover:text-white transition-colors">Ochrana osobních údajů</a>
+        <button type="button" class="cursor-pointer hover:text-white transition-colors" data-cookie-settings aria-label="Nastavení cookies">Nastavení cookies</button>
+        <span>Všechna práva vyhrazena</span>
+      </div>
+      <div class="flex flex-col gap-2 pt-2 md:pt-0 md:hidden items-center text-center">
+        <p>© Reamar Invest Group, s.r.o. 2026</p>
+        <p>23413646&nbsp;|&nbsp;CZ23413646&nbsp;|&nbsp;2ejj4q</p>
+      </div>
+      <p class="hidden md:block leading-snug">
+        Reamar Invest Group, s.r.o. | IČO: 23413646 | DIČ: CZ23413646 | Datová schránka: 2ejj4q
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-logo-wrap {
+    opacity: 0;
+    transform: translateX(40px) scale(0.96);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .footer-logo-wrap.reveal {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+</style>
+
+<script>
+  (function () {
+    const wrap = document.querySelector('[data-footer-logo-wrap]');
+    if (!wrap) return;
+
+    const observer = new IntersectionObserver(
+      function (entries) {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          wrap.classList.add('reveal');
+        } else {
+          wrap.classList.remove('reveal');
+        }
+      },
+      { root: null, rootMargin: '0px', threshold: 0.4 }
+    );
+    observer.observe(wrap);
+  })();
+</script>

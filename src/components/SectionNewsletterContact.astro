@@ -1,0 +1,134 @@
+---
+---
+<section class="bg-black pt-20 md:pt-28 pb-28 md:pb-36 border-0" aria-labelledby="newsletter-heading">
+  <div class="mx-auto w-[90%] max-w-[1280px] px-4 md:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-24 md:gap-32 lg:gap-40">
+      <!-- Levý sloupec: Newsletter -->
+      <div class="flex flex-col">
+        <h2 id="newsletter-heading" class="font-yellix text-[27px] font-normal text-white">
+          Odebírejte novinky
+        </h2>
+        <form id="newsletter-form" class="mt-8" action="#" method="post" aria-label="Přihlášení k odběru novinek" novalidate>
+          <div class="form-row border-b border-white flex items-end gap-3 pb-8">
+            <label class="flex-1 min-w-0">
+              <span class="sr-only">E-mail</span>
+              <input
+                type="email"
+                name="email"
+                placeholder="zadejte váš e-mail"
+                required
+                class="newsletter-input w-full border-0 bg-transparent py-2 pr-0 font-yellix text-[16px] font-normal text-white placeholder:text-[#BFBFBF] outline-none transition-colors duration-200 focus:bg-white focus:text-gray-900 focus:placeholder:text-[#BFBFBF] rounded-sm focus:px-2 focus:-mx-2 focus:py-1.5 focus:-my-0.5"
+                autocomplete="email"
+              />
+            </label>
+            <button
+              type="submit"
+              class="newsletter-arrow shrink-0 p-1 pb-0.5 text-[#BFBFBF] hover:text-white transition-all duration-200 hover:translate-x-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BFBFBF] focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:opacity-70 disabled:pointer-events-none"
+              aria-label="Odeslat e-mail"
+              data-newsletter-submit
+            >
+              <span class="font-yellix text-[18px] font-normal" data-newsletter-submit-label>→</span>
+            </button>
+          </div>
+          <span class="newsletter-error font-yellix text-[12px] text-red-400 mt-1 hidden" data-newsletter-error>Zadejte platný e-mail.</span>
+        </form>
+        <p class="mt-5 font-yellix text-[11px] md:text-[12px] font-normal text-[#BFBFBF] leading-snug">
+          Odesláním formuláře souhlasíte se <a href="/ochrana-osobnich-udaju" class="text-[#BFBFBF] underline hover:text-white transition-colors">Zásadami zpracování osobních údajů</a>
+        </p>
+      </div>
+
+      <!-- Pravý sloupec: Telefon -->
+      <div class="flex flex-col">
+        <h2 id="contact-heading" class="font-yellix text-[27px] font-normal text-white">
+          Ozveme se vám
+        </h2>
+        <form id="callback-form" class="mt-8" action="#" method="post" aria-label="Zanechat telefonní číslo" novalidate>
+          <div class="form-row border-b border-white flex items-end gap-3 pb-8">
+            <label class="flex-1 min-w-0">
+              <span class="sr-only">Telefon</span>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="zadejte váš telefon"
+                required
+                class="newsletter-input w-full border-0 bg-transparent py-2 pr-0 font-yellix text-[16px] font-normal text-white placeholder:text-[#BFBFBF] outline-none transition-colors duration-200 focus:bg-white focus:text-gray-900 focus:placeholder:text-[#BFBFBF] rounded-sm focus:px-2 focus:-mx-2 focus:py-1.5 focus:-my-0.5"
+                autocomplete="tel"
+              />
+            </label>
+            <button
+              type="submit"
+              class="newsletter-arrow shrink-0 p-1 pb-0.5 text-[#BFBFBF] hover:text-white transition-all duration-200 hover:translate-x-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BFBFBF] focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:opacity-70 disabled:pointer-events-none"
+              aria-label="Odeslat telefon"
+              data-callback-submit
+            >
+              <span class="font-yellix text-[18px] font-normal" data-callback-submit-label>→</span>
+            </button>
+          </div>
+          <span class="callback-error font-yellix text-[12px] text-red-400 mt-1 hidden" data-callback-error>Zadejte telefonní číslo.</span>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var newsletterForm = document.getElementById('newsletter-form');
+    var callbackForm = document.getElementById('callback-form');
+    var DELAY_MS = 1500;
+
+    function showThankYou() {
+      window.dispatchEvent(new CustomEvent('form-thank-you-show'));
+    }
+
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var input = newsletterForm.querySelector('input[name="email"]');
+        var err = newsletterForm.querySelector('[data-newsletter-error]');
+        var btn = newsletterForm.querySelector('[data-newsletter-submit]');
+        var label = newsletterForm.querySelector('[data-newsletter-submit-label]');
+        var email = (input && input.value) ? input.value.trim() : '';
+        var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        if (err) err.classList.add('hidden');
+        if (!valid) {
+          if (err) err.classList.remove('hidden');
+          return;
+        }
+        if (btn) btn.disabled = true;
+        if (label) label.textContent = 'Odesílám...';
+        setTimeout(function () {
+          showThankYou();
+          if (btn) btn.disabled = false;
+          if (label) label.textContent = '→';
+          if (input) input.value = '';
+        }, DELAY_MS);
+      });
+    }
+
+    if (callbackForm) {
+      callbackForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var input = callbackForm.querySelector('input[name="phone"]');
+        var err = callbackForm.querySelector('[data-callback-error]');
+        var btn = callbackForm.querySelector('[data-callback-submit]');
+        var label = callbackForm.querySelector('[data-callback-submit-label]');
+        var phone = (input && input.value) ? input.value.trim().replace(/\s/g, '') : '';
+        var valid = phone.length >= 9 && /^[0-9+]/.test(phone);
+        if (err) err.classList.add('hidden');
+        if (!valid) {
+          if (err) err.classList.remove('hidden');
+          return;
+        }
+        if (btn) btn.disabled = true;
+        if (label) label.textContent = 'Odesílám...';
+        setTimeout(function () {
+          showThankYou();
+          if (btn) btn.disabled = false;
+          if (label) label.textContent = '→';
+          if (input) input.value = '';
+        }, DELAY_MS);
+      });
+    }
+  })();
+</script>

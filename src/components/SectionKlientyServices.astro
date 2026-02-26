@@ -1,0 +1,115 @@
+---
+const serviceNames = [
+  'Vyhledání nemovitosti',
+  'Prodej nemovitosti',
+  'Výkup nemovitosti',
+  'Marketing nemovitosti',
+  'Zahraniční nemovitosti',
+];
+const tickerCopy = [...serviceNames, ...serviceNames, ...serviceNames];
+---
+<section class="bg-white py-16 md:py-24" aria-labelledby="architektura-heading">
+  <div class="mx-auto w-[90%] max-w-[1280px]">
+    <!-- Horní blok: vlevo nadpis + text, vpravo odkaz na formulář -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 lg:gap-16 items-start">
+      <div class="md:col-span-7 lg:col-span-8 max-w-3xl">
+        <h2 id="architektura-heading" class="font-yellix text-3xl md:text-4xl lg:text-5xl font-medium leading-tight text-gray-900" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease">
+          Architektura hodnoty
+        </h2>
+        <div class="mt-6 md:mt-8 font-yellix text-[16px] md:text-[17px] leading-[1.7] text-gray-700" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease" data-aos-delay="100">
+          <p>
+            Reality vnímáme jako soubor dat a emocí, které musí být v rovnováze. Pro nákup fungujeme jako bariéra, která propustí jen projekty s prověřenou historií a čistou právní strukturou, ať už v centru Prahy nebo na pobřeží Španělska. Váš prodej naopak akcelerujeme marketingem, který znáte z velkých ověřených značek na developerském trhu.
+          </p>
+        </div>
+      </div>
+      <div class="md:col-span-5 lg:col-span-4 flex flex-col md:items-end" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease" data-aos-delay="150">
+        <span class="font-yellix text-[14px] text-gray-500 uppercase tracking-wide">Konzultovat další krok</span>
+        <a href="#" class="mt-2 font-yellix text-[16px] font-medium text-gray-900 border-b border-gray-900 hover:opacity-70 transition-opacity inline-block w-fit" data-smart-contact-open data-smart-contact-type="client">
+          Poptávkový formulář
+        </a>
+      </div>
+    </div>
+
+    <!-- Spodní sekce: motion – názvy služeb v nekonečné smyčce (mobil: JS, desktop: CSS) -->
+    <div class="mt-20 md:mt-28 overflow-hidden border-t border-b border-gray-200 py-5 md:py-6" aria-hidden="true">
+      <div class="klienty-ticker flex whitespace-nowrap will-change-transform" data-klienty-ticker>
+        <span class="klienty-ticker-inner flex gap-12 md:gap-16 items-center pr-12 md:pr-16" data-klienty-ticker-segment>
+          {tickerCopy.map((name) => (
+            <span class="font-yellix text-xl md:text-2xl lg:text-3xl font-medium text-gray-800 shrink-0">{name}</span>
+          ))}
+        </span>
+        <span class="klienty-ticker-inner flex gap-12 md:gap-16 items-center pr-12 md:pr-16" aria-hidden="true" data-klienty-ticker-segment>
+          {tickerCopy.map((name) => (
+            <span class="font-yellix text-xl md:text-2xl lg:text-3xl font-medium text-gray-800 shrink-0">{name}</span>
+          ))}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes klienty-ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .klienty-ticker {
+    animation: klienty-ticker-scroll 32s linear infinite;
+  }
+  @media (max-width: 767px) {
+    .klienty-ticker {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    var ticker = document.querySelector('[data-klienty-ticker]');
+    var segmentEl = document.querySelector('[data-klienty-ticker-segment]');
+    if (!ticker || !segmentEl || !window.matchMedia('(max-width: 767px)').matches) return;
+
+    var segmentWidth = 0;
+    var position = 0;
+    var lastTime = 0;
+    var durationSec = 40;
+    var rafId = null;
+
+    function measure() {
+      segmentWidth = segmentEl.offsetWidth;
+    }
+
+    function tick(now) {
+      if (!lastTime) lastTime = now;
+      var dt = (now - lastTime) / 1000;
+      lastTime = now;
+      if (segmentWidth <= 0) measure();
+      if (segmentWidth <= 0) { rafId = requestAnimationFrame(tick); return; }
+      var speed = segmentWidth / durationSec;
+      position -= speed * dt;
+      if (position <= -segmentWidth) position += segmentWidth;
+      ticker.style.transform = 'translate3d(' + position + 'px, 0, 0)';
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function start() {
+      measure();
+      lastTime = 0;
+      position = 0;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(tick);
+    }
+
+    var resizeTimeout;
+    window.addEventListener('resize', function () {
+      if (!window.matchMedia('(max-width: 767px)').matches) {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        ticker.style.transform = '';
+        return;
+      }
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(function () { measure(); }, 100);
+    });
+    start();
+  })();
+</script>

@@ -1,0 +1,225 @@
+---
+const heroImage = '/images/hero-reamar.png';
+const videoMobile = '/videos/' + encodeURIComponent('Hero Mobil Reamar.mp4');
+const videoLeft = '/videos/' + encodeURIComponent('video Pro developery.mp4');
+const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
+---
+<section class="hero-split relative h-screen w-full overflow-hidden bg-black" aria-label="Úvod">
+  <!-- ========== MOBILNÍ HERO – pixelově dle screenshotu ========== -->
+  <div class="hero-mobile absolute inset-0 flex flex-col px-6 pt-12 pb-20 md:hidden z-40">
+    <video
+      class="absolute inset-0 h-full w-full object-cover"
+      muted
+      loop
+      playsinline
+      autoplay
+      preload="metadata"
+      data-hero-mobile-video
+      data-src={videoMobile}
+      aria-hidden="true"
+    >
+      <source type="video/mp4" />
+    </video>
+    <div class="absolute inset-0 bg-black/55 pointer-events-none" aria-hidden="true"></div>
+
+    <div class="relative z-10 flex flex-1 flex-col">
+      <!-- Logo REAMAR nahoře, vycentrované (nesahat) -->
+      <div class="flex justify-center pt-2">
+        <img
+          src="/images/logo-rig-w.svg"
+          alt="Reamar"
+          class="max-h-[10vh] w-auto object-contain"
+          width="240"
+          height="60"
+        />
+      </div>
+      <!-- Blok Reality + tlačítka: vertikálně vycentrovaný v prostoru pod logem, zarovnání vlevo -->
+      <div class="flex flex-1 flex-col justify-center items-start">
+        <div class="flex w-full flex-col items-start">
+          <!-- Nadpis: Yellix Regular, 60px / 80px -->
+          <p class="text-left font-yellix text-[60px] font-medium leading-[1.2] tracking-tight text-white sm:text-[80px]">
+            Reality.<br />Marketing.
+          </p>
+          <!-- Tlačítka: mírně zaoblené rohy, jemný okraj, vlevo zarovnané s nápisem -->
+          <div class="mt-7 flex flex-col gap-3 items-start">
+            <a
+              href="/#developery"
+              class="inline-flex items-center gap-2 rounded-sm border border-gray-200 bg-white px-4 py-2 font-yellix text-sm font-medium text-black no-underline"
+            >
+              <img src="/images/arrow-1.svg" alt="" class="h-3.5 w-3.5 shrink-0 brightness-0" width="14" height="14" />
+              Pro developery
+            </a>
+            <a
+              href="/#klienty"
+              class="inline-flex items-center gap-2 rounded-sm border border-gray-200 bg-white px-4 py-2 font-yellix text-sm font-medium text-black no-underline"
+            >
+              <img src="/images/arrow-1.svg" alt="" class="h-3.5 w-3.5 shrink-0 brightness-0" width="14" height="14" />
+              Pro klienty
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== DESKTOP HERO (skryté na mobilu) ========== -->
+  <div class="absolute inset-0 z-0 hidden md:block">
+  <!-- Výchozí: celoobrazovkový obrázek hero-reamar s lehkým zatměním -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src={heroImage}
+      alt=""
+      class="h-full w-full object-cover"
+      width="1920"
+      height="1080"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 bg-black/50" aria-hidden="true"></div>
+  </div>
+
+  <!-- Levá polovina: video (zobrazí se při hoveru na levou stranu) -->
+  <div class="hero-half hero-half-left absolute left-0 top-0 z-10 h-full w-1/2 overflow-hidden opacity-0 transition-opacity duration-300" data-half="left">
+    <video
+      class="h-full w-full object-cover"
+      muted
+      loop
+      playsinline
+      preload="none"
+      data-hero-video="left"
+      data-src={videoLeft}
+      aria-hidden="true"
+    >
+      <source type="video/mp4" />
+    </video>
+    <div class="absolute inset-0 bg-black/10 pointer-events-none" aria-hidden="true"></div>
+  </div>
+  <!-- Pravá polovina: video (zobrazí se při hoveru na pravou stranu) -->
+  <div class="hero-half hero-half-right absolute left-1/2 top-0 z-10 h-full w-1/2 overflow-hidden opacity-0 transition-opacity duration-300" data-half="right">
+    <video
+      class="h-full w-full object-cover"
+      muted
+      loop
+      playsinline
+      preload="none"
+      data-hero-video="right"
+      data-src={videoRight}
+      aria-hidden="true"
+    >
+      <source type="video/mp4" />
+    </video>
+    <div class="absolute inset-0 bg-black/10 pointer-events-none" aria-hidden="true"></div>
+  </div>
+
+  <!-- Zatmavení levé poloviny, když je aktivní pravá -->
+  <div class="hero-left-dim absolute left-0 top-0 z-[5] h-full w-1/2 bg-black/0 pointer-events-none transition-colors duration-300" data-left-dim></div>
+
+  <!-- Hover zóny + proklik na kotvy (levá → developery, pravá → klienty) -->
+  <a href="/#developery" class="hero-zone absolute left-0 top-0 z-20 h-full w-1/2 cursor-pointer" data-zone="left" aria-label="Pro developery"></a>
+  <a href="/#klienty" class="hero-zone absolute left-1/2 top-0 z-20 h-full w-1/2 cursor-pointer" data-zone="right" aria-label="Pro klienty"></a>
+
+  <!-- Pravý horní roh (desktop): REALITY. MARKETING. + Zahájit spolupráci – decentní -->
+  <div class="absolute top-0 right-0 z-30 flex flex-col items-end pt-8 md:pt-16 pr-6 md:pr-10 lg:pr-12">
+    <span class="font-yellix text-[13px] text-white/60 uppercase tracking-wide">REALITY. MARKETING.</span>
+    <a href="#" class="mt-1.5 font-yellix text-[14px] font-medium text-white/80 border-b border-white/50 hover:text-white hover:border-white/80 transition-colors inline-block w-fit pointer-events-auto" data-smart-contact-open>Zahájit spolupráci</a>
+  </div>
+
+  <!-- Bílé logo uprostřed – při scrollu „dojíždí“ do bílé baru, pak se v něm změní na černé (pozice img se sleduje) -->
+  <div class="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
+    <img
+      data-hero-logo
+      src="/images/logo-rig-w.svg"
+      alt="Reamar"
+      class="max-h-[15vh] w-auto object-contain md:max-h-[18vh]"
+      width="400"
+      height="100"
+    />
+  </div>
+
+  <!-- Texty v každé polovině dole – podnadpisy vycentrované pod nadpisy -->
+  <div class="absolute left-0 bottom-0 flex h-1/2 w-1/2 items-end justify-center pb-12 md:pb-16 pointer-events-none z-[25]">
+    <div class="text-center">
+      <h2 class="font-yellix text-xl font-medium text-white md:text-[36px] md:leading-[48px]">
+        <a href="/#developery" class="pointer-events-auto hover:underline">Pro developery</a>
+      </h2>
+      <p class="mt-1 text-sm text-white/90">Marketing - Sales - Consulting - Capital</p>
+    </div>
+  </div>
+  <div class="absolute right-0 bottom-0 flex h-1/2 w-1/2 items-end justify-center pb-12 md:pb-16 pointer-events-none z-[25]">
+    <div class="text-center">
+      <h2 class="font-yellix text-xl font-medium text-white md:text-[36px] md:leading-[48px]">
+        <a href="/#klienty" class="pointer-events-auto hover:underline">Pro klienty</a>
+      </h2>
+      <p class="mt-1 text-sm text-white/90">Realitní činnost - Výkup - Marketing - Hypotéky</p>
+    </div>
+  </div>
+  </div>
+  <!-- konec desktop hero -->
+
+</section>
+
+<script>
+  (function () {
+    // Mobil: načíst a spustit video jen na malých obrazovkách
+    var mobileVideo = document.querySelector('[data-hero-mobile-video]');
+    if (mobileVideo && window.matchMedia('(max-width: 767px)').matches) {
+      var src = mobileVideo.getAttribute('data-src');
+      if (src) {
+        var source = mobileVideo.querySelector('source');
+        if (source && !source.getAttribute('src')) {
+          source.setAttribute('src', src);
+          mobileVideo.load();
+          mobileVideo.play().catch(function () {});
+        }
+      }
+    }
+
+    var hero = document.querySelector('.hero-split');
+    const zones = document.querySelectorAll('.hero-zone');
+    const leftDim = document.querySelector('[data-left-dim]');
+    const leftVideoWrap = document.querySelector('.hero-half-left');
+    const rightVideoWrap = document.querySelector('.hero-half-right');
+    const leftVideo = document.querySelector('[data-hero-video="left"]');
+    const rightVideo = document.querySelector('[data-hero-video="right"]');
+
+    function loadAndPlay(el, src) {
+      if (!el || !src) return;
+      const source = el.querySelector('source');
+      if (source && !source.getAttribute('src')) {
+        source.setAttribute('src', src);
+        el.load();
+      }
+      el.play().catch(function () {});
+    }
+    function pause(el) {
+      if (el) el.pause();
+    }
+
+    var hover = null;
+
+    function setHover(side) {
+      if (hover === side) return;
+      hover = side;
+
+      if (leftVideoWrap) leftVideoWrap.style.opacity = hover === 'left' ? '1' : '0';
+      if (rightVideoWrap) rightVideoWrap.style.opacity = hover === 'right' ? '1' : '0';
+      if (leftDim) leftDim.style.backgroundColor = hover === 'right' ? 'rgba(0,0,0,0.4)' : 'transparent';
+
+      if (hover === 'left') {
+        loadAndPlay(leftVideo, leftVideo.getAttribute('data-src'));
+        pause(rightVideo);
+      } else if (hover === 'right') {
+        loadAndPlay(rightVideo, rightVideo.getAttribute('data-src'));
+        pause(leftVideo);
+      } else {
+        pause(leftVideo);
+        pause(rightVideo);
+      }
+    }
+
+    zones.forEach(function (zone) {
+      var side = zone.getAttribute('data-zone');
+      zone.addEventListener('mouseenter', function () { setHover(side); });
+    });
+    hero.addEventListener('mouseleave', function () { setHover(null); });
+  })();
+</script>

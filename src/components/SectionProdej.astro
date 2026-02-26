@@ -1,0 +1,48 @@
+---
+const videoProdej = '/videos/' + encodeURIComponent('REAMAR X.mp4');
+---
+<section class="bg-black text-white -mt-px" aria-labelledby="prodej-heading">
+  <div class="mx-auto w-[90%] max-w-[1280px] pt-12 md:pt-16 pb-16 md:pb-24">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 lg:gap-16 items-center">
+      <!-- Video vlevo -->
+      <div class="md:col-span-5 lg:col-span-6 flex justify-center md:justify-start">
+        <div class="aspect-square w-full max-w-[480px] overflow-hidden bg-black/50">
+          <video
+            class="h-full w-full object-cover"
+            muted
+            loop
+            playsinline
+            autoplay
+            preload="metadata"
+            width="720"
+            height="720"
+          >
+            <source src={videoProdej} type="video/mp4" />
+          </video>
+        </div>
+      </div>
+      <!-- Text vpravo -->
+      <div class="md:col-span-7 lg:col-span-6 flex flex-col gap-6 md:gap-8">
+        <h2 id="prodej-heading" class="font-yellix text-[27px] font-medium leading-[1.15] text-white">
+          Zajistíme kompletní prodej pod vaší značkou
+        </h2>
+        <div class="flex flex-col gap-4 font-yellix text-[16px] leading-[1.6] text-white/95">
+          <p>
+            Dokážeme provozovat a řídit prodejní tým, který oficálně vystupuje jako interní oddělení developera.
+          </p>
+          <p>
+            Přebíráme každodenní řízení prodeje, jeho výkon i návaznost na marketing, zatímco vy si zachováváte plnou kontrolu nad obchodní strategií a komunikací se zákazníky.
+          </p>
+        </div>
+        <a
+          href="#"
+          class="inline-flex items-center justify-center w-fit bg-white border border-black px-4 py-2 font-yellix text-[14px] font-medium text-black transition-colors hover:bg-neutral-200"
+          data-smart-contact-open
+          data-smart-contact-type="developer"
+        >
+          Získat tým
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

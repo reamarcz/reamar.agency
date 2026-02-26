@@ -1,0 +1,43 @@
+---
+const heroImage = '/images/pro-klienty-bg.png';
+---
+<section id="klienty" class="bg-[#ededed]" aria-labelledby="klienty-heading">
+  <!-- Hero: 75vh, širokoúhlá fotka -->
+  <div class="relative w-full h-[75vh] min-h-[320px] overflow-hidden">
+    <img
+      src={heroImage}
+      alt=""
+      class="absolute inset-0 w-full h-full object-cover object-left"
+      width="1920"
+      height="1080"
+      fetchpriority="high"
+    />
+    <!-- Gradient overlay: tmavší vlevo (kde je text), světlejší vpravo – text zůstane čitelný na světlé fotce -->
+    <div class="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" aria-hidden="true" />
+    <!-- Text vlevo nad klidnější částí scény -->
+    <div class="absolute inset-0 flex flex-col justify-center pl-[10%] pr-[20%] md:pl-[12%] md:pr-[35%]">
+      <h2
+        id="klienty-heading"
+        class="font-yellix text-3xl md:text-4xl lg:text-[42px] font-medium leading-tight text-white max-w-md [text-shadow:0_1px_2px_rgba(0,0,0,0.4),0_2px_8px_rgba(0,0,0,0.3)]"
+        data-aos="fade-right"
+        data-aos-duration="800"
+        data-aos-easing="ease"
+        data-aos-delay="100"
+      >
+        Služby pro klienty
+      </h2>
+      <p
+        class="mt-4 md:mt-6 font-yellix text-lg md:text-xl text-white/95 max-w-md [text-shadow:0_1px_3px_rgba(0,0,0,0.5)]"
+        data-aos="fade-up"
+        data-aos-duration="800"
+        data-aos-easing="ease"
+        data-aos-delay="400"
+      >
+        Pomáháme vám kupovat, prodávat a zhodnocovat vaše nemovitosti
+      </p>
+      <div class="mt-5 md:mt-6 flex items-center" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease" data-aos-delay="500">
+        <img src="/images/arrow-1.svg" alt="" class="h-5 w-5 shrink-0" width="20" height="20" />
+      </div>
+    </div>
+  </div>
+</section>

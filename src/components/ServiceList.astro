@@ -1,0 +1,104 @@
+---
+const services = [
+  'Positioning a Go-to-market strategie',
+  'Brand a vizuální identita projektu',
+  'Digitální prezentace a vizualizace',
+  'Výkonnostní kampaně a Lead generation',
+  'Nastavení prodejního modelu a pricingu',
+  'CRM a automatizace prodejních procesů',
+  'AI asistenti pro lead kvalifikaci',
+  'Reporting a hloubková datová analytika',
+  'Kapitálový vstup & Co-investment',
+  'Zprostředkování investorů a fondů',
+];
+---
+<section class="bg-black text-white pt-16 md:pt-24 pb-24 -mt-px" aria-labelledby="service-list-heading">
+  <div class="mx-auto w-[90%] max-w-[1280px]">
+    <h2 id="service-list-heading" class="sr-only">Seznam služeb</h2>
+    <ul class="flex flex-col gap-4 md:gap-6 lg:gap-8 list-none p-0 m-0" data-service-list>
+      {services.map((label, i) => (
+        <li class="service-list-item font-yellix text-[30px] font-medium leading-[40px] text-gray-600 text-left transition-all duration-500 ease-out cursor-default" data-service-item>
+          {label}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .service-list-item.is-active {
+    color: rgb(255 255 255);
+    transform: translateX(30px);
+  }
+</style>
+
+<script>
+  (function () {
+    const list = document.querySelector('[data-service-list]');
+    if (!list) return;
+
+    const items = Array.from(list.querySelectorAll('[data-service-item]'));
+
+    function getViewportCenterY() {
+      return window.innerHeight / 2;
+    }
+
+    function getItemCenterY(el) {
+      const r = el.getBoundingClientRect();
+      return r.top + r.height / 2;
+    }
+
+    function updateCenterActive() {
+      const viewportCenter = getViewportCenterY();
+      let closest = null;
+      let minDist = Infinity;
+      items.forEach(function (item) {
+        const centerY = getItemCenterY(item);
+        const dist = Math.abs(centerY - viewportCenter);
+        if (dist < minDist) {
+          minDist = dist;
+          closest = item;
+        }
+      });
+      items.forEach(function (item) {
+        item.dataset.inCenter = item === closest ? '1' : '0';
+        updateActive(item);
+      });
+    }
+
+    function updateActive(el) {
+      const inCenter = el.dataset.inCenter === '1';
+      const hover = el.dataset.hover === '1';
+      if (inCenter || hover) {
+        el.classList.add('is-active');
+      } else {
+        el.classList.remove('is-active');
+      }
+    }
+
+    let ticking = false;
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(function () {
+          updateCenterActive();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    items.forEach(function (item) {
+      item.addEventListener('mouseenter', function () {
+        item.dataset.hover = '1';
+        updateActive(item);
+      });
+      item.addEventListener('mouseleave', function () {
+        item.dataset.hover = '0';
+        updateCenterActive();
+      });
+    });
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateCenterActive();
+  })();
+</script>

@@ -1,0 +1,130 @@
+---
+const locations = [
+  { name: 'MARBELLA', coords: '36.5101° N, 4.8824° W', country: 'Španělsko' },
+  { name: 'LISBON', coords: '38.7223° N, 9.1393° W', country: 'Portugalsko' },
+  { name: 'VLORË', coords: '40.4661° N, 19.4914° E', country: 'Albánie' },
+  { name: 'MALAGA', coords: '36.7213° N, 4.4214° W', country: 'Španělsko' },
+  { name: 'ATHENS', coords: '37.9838° N, 23.7275° E', country: 'Řecko' },
+];
+const first = locations[0];
+---
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<div class="luxury-dashboard mx-auto w-[90%] max-w-[1280px] py-12 md:py-16" data-dashboard aria-live="polite">
+  <div class="flex flex-col md:flex-row md:items-stretch gap-6 md:gap-0 min-h-[120px] md:min-h-[140px]">
+    <!-- Levá strana: souřadnice (monospace, glitch) -->
+    <div class="md:w-[42%] flex flex-col justify-center font-mono text-gray-500" style="font-family: 'JetBrains Mono', monospace;">
+      <div class="text-[11px] md:text-[12px] tracking-wider uppercase" data-dashboard-country>{first.country}</div>
+      <div class="mt-1 text-[13px] md:text-[15px] tabular-nums" data-dashboard-coords>{first.coords}</div>
+    </div>
+
+    <!-- Pravá strana: válec – vertikální přetáčení v úzkém okně -->
+    <div class="md:flex-1 flex items-center overflow-hidden relative">
+      <div class="roller-window h-[4rem] md:h-[5rem] lg:h-[6rem] w-full overflow-hidden" data-dashboard-track>
+        <div class="roller-track h-[200%] flex flex-col" data-dashboard-roller-track>
+          <div class="roller-slot h-1/2 flex items-center font-yellix font-medium text-gray-900 text-3xl md:text-4xl lg:text-5xl whitespace-nowrap" data-dashboard-slot-current>{first.name}</div>
+          <div class="roller-slot h-1/2 flex items-center font-yellix font-medium text-gray-900 text-3xl md:text-4xl lg:text-5xl whitespace-nowrap" data-dashboard-slot-next></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .roller-track {
+    transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+</style>
+
+<script define:vars={{ locations: locations }}>
+  (function () {
+    const dashboard = document.querySelector('[data-dashboard]');
+    const coordsEl = document.querySelector('[data-dashboard-coords]');
+    const countryEl = document.querySelector('[data-dashboard-country]');
+    const trackEl = document.querySelector('[data-dashboard-roller-track]');
+    const slotCurrentEl = document.querySelector('[data-dashboard-slot-current]');
+    const slotNextEl = document.querySelector('[data-dashboard-slot-next]');
+    if (!dashboard || !coordsEl || !trackEl || !slotCurrentEl || !slotNextEl) return;
+
+    const ROLL_DURATION_MS = 600;
+    const GLITCH_DURATION = 600;
+    const INTERVAL_MS = 2500;
+
+    let index = 0;
+    let intervalId = null;
+    let hasStarted = false;
+
+    function randomDigit() {
+      return Math.floor(Math.random() * 10);
+    }
+    function randomCoordString() {
+      const lat = (randomDigit() * 10 + randomDigit()) + '.' + randomDigit() + randomDigit() + randomDigit() + randomDigit() + '°';
+      const lon = (randomDigit() * 10 + randomDigit()) + '.' + randomDigit() + randomDigit() + randomDigit() + randomDigit() + '°';
+      const ns = Math.random() > 0.5 ? ' N' : ' S';
+      const ew = Math.random() > 0.5 ? ' W' : ' E';
+      return lat + ns + ', ' + lon + ew;
+    }
+
+    function glitchCoords(finalCoords) {
+      const steps = 10;
+      const stepMs = GLITCH_DURATION / steps;
+      let step = 0;
+      function glitchTick() {
+        if (step < steps) {
+          coordsEl.textContent = randomCoordString();
+          step++;
+          setTimeout(glitchTick, stepMs);
+        } else {
+          coordsEl.textContent = finalCoords;
+        }
+      }
+      glitchTick();
+    }
+
+    function switchDestination(name) {
+      slotNextEl.textContent = name;
+      trackEl.style.transform = 'translateY(-50%)';
+      trackEl.addEventListener('transitionend', function onRollEnd() {
+        trackEl.removeEventListener('transitionend', onRollEnd);
+        slotCurrentEl.textContent = name;
+        trackEl.style.transform = 'translateY(0)';
+      }, { once: true });
+    }
+
+    function tick() {
+      index = (index + 1) % locations.length;
+      const loc = locations[index];
+
+      countryEl.textContent = loc.country || '\u00A0';
+      glitchCoords(loc.coords);
+      switchDestination(loc.name);
+    }
+
+    function start() {
+      if (hasStarted) return;
+      hasStarted = true;
+      intervalId = setInterval(tick, INTERVAL_MS);
+    }
+
+    function stop() {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+      hasStarted = false;
+    }
+
+    const io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) start();
+          else stop();
+        });
+      },
+      { root: null, rootMargin: '0px', threshold: 0.2 }
+    );
+    io.observe(dashboard);
+  })();
+</script>

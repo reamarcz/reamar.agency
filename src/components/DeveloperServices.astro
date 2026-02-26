@@ -1,0 +1,150 @@
+---
+---
+<section class="bg-black text-white overflow-hidden -mt-px md:mt-0" aria-labelledby="developer-services-heading">
+  <div class="mx-auto w-[90%] max-w-[1280px] px-0 py-16 md:py-24">
+    <h2 id="developer-services-heading" class="font-yellix text-4xl md:text-5xl font-medium leading-tight text-white" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease">
+      Služby<br />pro developery
+    </h2>
+
+    <!-- Šipka + text (mobil: statický, desktop: rolující nadpis s parallaxem) -->
+    <div class="mt-14 md:mt-16 flex items-center gap-3 overflow-hidden" aria-hidden="true">
+      <img src="/images/arrow-1.svg" alt="" class="h-5 w-5 shrink-0 brightness-0 invert md:relative md:z-10" width="20" height="20" />
+      <p class="font-yellix text-2xl md:hidden font-medium leading-[1.2] tracking-tight text-white">
+        Oblasti, ve kterých vynikáme
+      </p>
+      <div class="hidden md:block will-change-transform flex-1 min-w-0 md:ml-5 overflow-hidden" data-dev-headline-track>
+        <p class="font-yellix text-4xl md:text-6xl lg:text-7xl font-medium leading-[1.1] tracking-tight text-white whitespace-nowrap inline-block dev-services-headline-text" data-dev-headline-text>
+          Oblasti, ve kterých vynikáme &nbsp; Detaily, které dělají celek &nbsp; Oblasti, ve kterých vynikáme &nbsp; Detaily, které dělají celek &nbsp; Oblasti, ve kterých vynikáme &nbsp; Detaily, které dělají celek &nbsp;
+        </p>
+      </div>
+    </div>
+
+    <!-- Tři karty: mobil = full width, bez mezery, scroll-motion „přitečení“; desktop = grid -->
+    <div class="mt-12 md:mt-24 flex flex-col md:flex-row md:items-end gap-8 md:gap-10 lg:gap-12">
+      <div class="dev-tiles-grid grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-8 w-full md:max-w-[65%] lg:max-w-[70%]">
+        <!-- Marketing -->
+        <div class="will-change-transform" data-dev-tile data-dev-tile-index="0">
+          <div data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease" data-aos-delay="0" class="relative aspect-[3/4] md:h-auto md:max-h-[420px] w-full overflow-hidden bg-neutral-800">
+            <img src="/images/Marketing.png" alt="Marketing" class="h-full w-full object-cover object-top md:hover:scale-105 md:transition-transform md:duration-500" width="600" height="800" loading="lazy" />
+            <p class="absolute bottom-0 left-0 p-3 md:p-4 font-yellix text-2xl font-medium text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] pr-8 md:hidden">Marketing</p>
+          </div>
+          <p class="hidden md:block mt-3 font-yellix text-[15px] font-medium text-white">Marketing</p>
+        </div>
+        <!-- Sales -->
+        <div class="will-change-transform" data-dev-tile data-dev-tile-index="1">
+          <div data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease" data-aos-delay="100" class="relative aspect-[3/4] md:h-auto md:max-h-[420px] w-full overflow-hidden bg-neutral-800">
+            <img src="/images/Sales.png" alt="Sales" class="h-full w-full object-cover object-top md:hover:scale-105 md:transition-transform md:duration-500" width="600" height="800" loading="lazy" />
+            <p class="absolute bottom-0 left-0 p-3 md:p-4 font-yellix text-2xl font-medium text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] pr-8 md:hidden">Sales</p>
+          </div>
+          <p class="hidden md:block mt-3 font-yellix text-[15px] font-medium text-white">Sales</p>
+        </div>
+        <!-- Strategic consulting -->
+        <div class="will-change-transform" data-dev-tile data-dev-tile-index="2">
+          <div data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease" data-aos-delay="200" class="relative aspect-[3/4] md:h-auto md:max-h-[420px] w-full overflow-hidden bg-neutral-800">
+            <img src="/images/Strategic%20consulting.png" alt="Strategic consulting" class="h-full w-full object-cover object-top md:hover:scale-105 md:transition-transform md:duration-500" width="600" height="800" loading="lazy" />
+            <p class="absolute bottom-0 left-0 p-3 md:p-4 font-yellix text-2xl font-medium text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] pr-8 md:hidden">Strategic consulting</p>
+          </div>
+          <p class="hidden md:block mt-3 font-yellix text-[15px] font-medium text-white">Strategic consulting</p>
+        </div>
+      </div>
+      <div class="md:flex-shrink-0 md:self-center pt-8 md:pt-0" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease" data-aos-delay="150">
+        <p class="font-yellix text-[27px] font-medium leading-[1.25] text-white">
+          Od strategie<br />
+          po každodenní<br />
+          výkon
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (max-width: 767px) {
+    .dev-tiles-grid {
+      width: 100vw;
+      max-width: none;
+      margin-left: calc(-50vw + 50%);
+      box-sizing: border-box;
+    }
+  }
+  @media (min-width: 768px) {
+    .dev-tiles-grid {
+      margin-left: 0;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const section = document.querySelector('[aria-labelledby="developer-services-heading"]');
+    const headlineText = document.querySelector('[data-dev-headline-text]');
+    const tiles = section ? section.querySelectorAll('[data-dev-tile]') : [];
+    const isDesktop = () => window.matchMedia('(min-width: 768px)').matches;
+
+    if (!section || !headlineText) return;
+
+    function clamp(x, a, b) {
+      return Math.max(a, Math.min(b, x));
+    }
+
+    function updateParallax() {
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      if (!isDesktop()) {
+        headlineText.style.transform = '';
+        var flowProgress = clamp(1 - rect.top / vh, 0, 1);
+        var flowDistance = 56;
+        tiles.forEach(function (tile) {
+          var idx = parseInt(tile.getAttribute('data-dev-tile-index') || '0', 10);
+          if (idx === 0) {
+            tile.style.transform = '';
+          } else {
+            var y = (1 - flowProgress) * flowDistance * idx;
+            tile.style.transform = 'translate3d(0, ' + y + 'px, 0)';
+          }
+        });
+        return;
+      }
+      const top = rect.top;
+      const height = rect.height;
+      const visibleStart = vh * 0.1;
+      const visibleEnd = vh * 0.9;
+      const progress = (visibleEnd - top) / (visibleEnd - visibleStart + height);
+      const p = clamp(progress, 0, 1);
+
+      const tx = (p - 0.5) * 2 * 0.15 * 100;
+      headlineText.style.transform = 'translate3d(' + tx + '%, 0, 0)';
+
+      const move = 140;
+      const salesDrop = 95;
+      tiles.forEach(function (tile) {
+        const idx = parseInt(tile.getAttribute('data-dev-tile-index') || '0', 10);
+        let y = 0;
+        if (idx === 0) {
+          y = (1 - p) * move;
+        } else if (idx === 1) {
+          y = (1 - p) * -move + p * salesDrop;
+        } else {
+          y = (1 - p) * move;
+        }
+        tile.style.transform = 'translate3d(0, ' + y + 'px, 0)';
+      });
+    }
+
+    let ticking = false;
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(function () {
+          updateParallax();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', updateParallax);
+    updateParallax();
+  })();
+</script>

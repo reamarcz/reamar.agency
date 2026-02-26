@@ -1,0 +1,65 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import Navigation from '../components/Navigation.astro';
+import SmartContactModal from '../components/SmartContactModal.astro';
+import SmartMeetingModal from '../components/SmartMeetingModal.astro';
+import CookieSystem from '../components/CookieSystem.astro';
+import FormThankYouModal from '../components/FormThankYouModal.astro';
+import SEO from '../components/SEO.astro';
+import '../styles/global.css';
+import 'aos/dist/aos.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  canonical?: string;
+}
+const { title = 'REAMAR | Reality. Marketing.', description = 'Propojujeme marketing a obchod pro realitní developery.', image, ogTitle, ogDescription, canonical } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <SEO title={title} description={description} image={image} ogTitle={ogTitle} ogDescription={ogDescription} canonical={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/images/Reamar%20SVG.svg" />
+    <ViewTransitions />
+  </head>
+  <body class="font-yellix">
+    <Navigation />
+    <main id="main" role="main">
+      <slot />
+    </main>
+    <SmartContactModal />
+    <SmartMeetingModal />
+    <CookieSystem />
+    <FormThankYouModal />
+    <script>
+      import AOS from 'aos';
+      AOS.init({ duration: 800, easing: 'ease', offset: 60, once: false });
+    </script>
+    <script is:inline>
+      document.body.addEventListener('click', function (e) {
+        var openContact = e.target.closest('[data-smart-contact-open]');
+        if (openContact) {
+          e.preventDefault();
+          var type = openContact.getAttribute('data-smart-contact-type') || 'developer';
+          var service = openContact.getAttribute('data-smart-contact-service') || null;
+          window.dispatchEvent(new CustomEvent('smart-contact-open', { detail: { initialType: type, initialService: service } }));
+          return;
+        }
+        var openMeeting = e.target.closest('[data-smart-meeting-open]');
+        if (openMeeting) {
+          e.preventDefault();
+          var meetingType = openMeeting.getAttribute('data-smart-meeting-type') || 'developer';
+          var meetingService = openMeeting.getAttribute('data-smart-meeting-service') || null;
+          window.dispatchEvent(new CustomEvent('smart-meeting-open', { detail: { initialType: meetingType, initialService: meetingService } }));
+return;
+        }
+      });
+    </script>
+  </body>
+</html>
