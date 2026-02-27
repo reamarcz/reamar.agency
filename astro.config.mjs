@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
-  output: 'hybrid',
+  output: 'static',
   adapter: vercel(),
   integrations: [tailwind()],
   build: {
