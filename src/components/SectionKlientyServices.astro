@@ -24,7 +24,7 @@ const tickerCopy = [...serviceNames, ...serviceNames, ...serviceNames];
       </div>
       <div class="md:col-span-5 lg:col-span-4 flex flex-col md:items-end" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease" data-aos-delay="150">
         <span class="font-yellix text-[14px] text-gray-500 uppercase tracking-wide">Konzultovat další krok</span>
-        <a href="#" class="mt-2 font-yellix text-[16px] font-medium text-gray-900 border-b border-gray-900 hover:opacity-70 transition-opacity inline-block w-fit" data-smart-contact-open data-smart-contact-type="client">
+        <a href="javascript:void(0)" class="mt-2 font-yellix text-[16px] font-medium text-gray-900 border-b border-gray-900 hover:opacity-70 transition-opacity inline-block w-fit" data-smart-contact-open data-smart-contact-type="client">
           Poptávkový formulář
         </a>
       </div>
@@ -64,7 +64,15 @@ const tickerCopy = [...serviceNames, ...serviceNames, ...serviceNames];
 </style>
 
 <script>
-  (function () {
+  function initKlientyTicker() {
+    if (window.__klientyTickerRafId != null) {
+      cancelAnimationFrame(window.__klientyTickerRafId);
+      window.__klientyTickerRafId = null;
+    }
+    if (window.__klientyTickerResizeHandler) {
+      window.removeEventListener('resize', window.__klientyTickerResizeHandler);
+      window.__klientyTickerResizeHandler = null;
+    }
     var ticker = document.querySelector('[data-klienty-ticker]');
     var segmentEl = document.querySelector('[data-klienty-ticker-segment]');
     if (!ticker || !segmentEl || !window.matchMedia('(max-width: 767px)').matches) return;
@@ -73,7 +81,6 @@ const tickerCopy = [...serviceNames, ...serviceNames, ...serviceNames];
     var position = 0;
     var lastTime = 0;
     var durationSec = 40;
-    var rafId = null;
 
     function measure() {
       segmentWidth = segmentEl.offsetWidth;
@@ -84,32 +91,39 @@ const tickerCopy = [...serviceNames, ...serviceNames, ...serviceNames];
       var dt = (now - lastTime) / 1000;
       lastTime = now;
       if (segmentWidth <= 0) measure();
-      if (segmentWidth <= 0) { rafId = requestAnimationFrame(tick); return; }
+      if (segmentWidth <= 0) { window.__klientyTickerRafId = requestAnimationFrame(tick); return; }
       var speed = segmentWidth / durationSec;
       position -= speed * dt;
       if (position <= -segmentWidth) position += segmentWidth;
       ticker.style.transform = 'translate3d(' + position + 'px, 0, 0)';
-      rafId = requestAnimationFrame(tick);
+      window.__klientyTickerRafId = requestAnimationFrame(tick);
     }
 
     function start() {
       measure();
       lastTime = 0;
       position = 0;
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(tick);
+      if (window.__klientyTickerRafId != null) cancelAnimationFrame(window.__klientyTickerRafId);
+      window.__klientyTickerRafId = requestAnimationFrame(tick);
     }
 
     var resizeTimeout;
-    window.addEventListener('resize', function () {
+    function onResize() {
       if (!window.matchMedia('(max-width: 767px)').matches) {
-        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        if (window.__klientyTickerRafId != null) {
+          cancelAnimationFrame(window.__klientyTickerRafId);
+          window.__klientyTickerRafId = null;
+        }
         ticker.style.transform = '';
         return;
       }
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(function () { measure(); }, 100);
-    });
+    }
+    window.__klientyTickerResizeHandler = onResize;
+    window.addEventListener('resize', onResize);
     start();
-  })();
+  }
+  initKlientyTicker();
+  document.addEventListener('astro:page-load', initKlientyTicker);
 </script>

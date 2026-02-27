@@ -48,9 +48,10 @@
 </div>
 
 <script>
-  (function () {
+  function initFormThankYouModal() {
     const overlay = document.getElementById('form-thankyou-overlay');
     const modal = document.querySelector('[data-form-thankyou-modal]');
+    if (!overlay && !modal) return;
 
     function openModal() {
       if (!overlay || !modal) return;
@@ -69,6 +70,7 @@
       document.body.style.overflow = '';
       modal.classList.remove('scale-100');
       modal.classList.add('scale-95');
+      window.dispatchEvent(new CustomEvent('smart-modal-closed'));
     }
 
     overlay?.addEventListener('click', closeModal);
@@ -79,6 +81,12 @@
       if (e.key === 'Escape') closeModal();
     });
 
+    if (window.__formThankYouOpenModalHandler) {
+      window.removeEventListener('form-thank-you-show', window.__formThankYouOpenModalHandler);
+    }
+    window.__formThankYouOpenModalHandler = openModal;
     window.addEventListener('form-thank-you-show', openModal);
-  })();
+  }
+  initFormThankYouModal();
+  document.addEventListener('astro:page-load', initFormThankYouModal);
 </script>

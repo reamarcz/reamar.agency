@@ -120,24 +120,24 @@
 
   /* --- Animace běží jen při třídě .run-animation (přidá JS při vstupu do viewportu) --- */
   .hero-logo-mobile.run-animation .icon-main {
-    animation: iconReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+    animation: iconReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
   }
 
   .hero-logo-mobile.run-animation .accent-1 {
-    animation: accentPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1.7s forwards, accentPulse 0.6s ease-in-out 2.8s 1;
+    animation: accentPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s forwards, accentPulse 0.6s ease-in-out 1.8s 1;
   }
 
   .hero-logo-mobile.run-animation .accent-2 {
-    animation: accentPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1.95s forwards, accentPulse 0.6s ease-in-out 3s 1;
+    animation: accentPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.7s forwards, accentPulse 0.6s ease-in-out 2s 1;
   }
 
   .hero-logo-mobile.run-animation .logo-square .letter {
-    animation: letterShot 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-    animation-delay: calc(1.6s + var(--i, 0) * 0.18s);
+    animation: letterShot 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(0.8s + var(--i, 0) * 0.1s);
   }
 
   .hero-logo-mobile.run-animation .logo-sub {
-    animation: subReveal 1s ease-out 3s forwards;
+    animation: subReveal 0.8s ease-out 1.5s forwards;
   }
 
   @keyframes iconReveal {
@@ -199,7 +199,11 @@
 </style>
 
 <script>
-  (function () {
+  function initHeroLogoMobile() {
+    if (window.__heroLogoMobileObserver) {
+      window.__heroLogoMobileObserver.disconnect();
+      window.__heroLogoMobileObserver = null;
+    }
     const root = document.getElementById('hero-logo-mobile-root');
     if (!root) return;
 
@@ -213,9 +217,8 @@
         const isVisible = entry.isIntersecting;
 
         if (isVisible && !wasVisible) {
-          // Právě vjelo do viewportu → malé zpoždění, pak spustit animaci
           root.classList.remove('run-animation');
-          root.offsetHeight; // reflow
+          root.offsetHeight;
           setTimeout(() => {
             root.classList.add('run-animation');
           }, 400);
@@ -225,7 +228,9 @@
       },
       { rootMargin: '0px', threshold: 0.2 }
     );
-
+    window.__heroLogoMobileObserver = observer;
     observer.observe(root);
-  })();
+  }
+  initHeroLogoMobile();
+  document.addEventListener('astro:page-load', initHeroLogoMobile);
 </script>

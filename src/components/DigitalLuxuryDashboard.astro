@@ -39,7 +39,7 @@ const first = locations[0];
 </style>
 
 <script define:vars={{ locations: locations }}>
-  (function () {
+  function initDigitalLuxuryDashboard() {
     const dashboard = document.querySelector('[data-dashboard]');
     const coordsEl = document.querySelector('[data-dashboard-coords]');
     const countryEl = document.querySelector('[data-dashboard-country]');
@@ -126,5 +126,7 @@ const first = locations[0];
       { root: null, rootMargin: '0px', threshold: 0.2 }
     );
     io.observe(dashboard);
-  })();
+  }
+  initDigitalLuxuryDashboard();
+  document.addEventListener('astro:page-load', initDigitalLuxuryDashboard);
 </script>

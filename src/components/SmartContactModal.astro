@@ -177,7 +177,7 @@ const clientServices = ['Vyhledání nemovitosti', 'Prodej nemovitosti', 'Market
 <script>
   import { actions } from 'astro:actions';
 
-  (function () {
+  function initSmartContactModal() {
     const overlay = document.getElementById('smart-contact-overlay');
     const modal = document.querySelector('[data-smart-contact-modal]');
     const closeBtn = document.querySelector('[data-smart-contact-close]');
@@ -282,6 +282,7 @@ const clientServices = ['Vyhledání nemovitosti', 'Prodej nemovitosti', 'Market
         submitBtn.textContent = 'Odeslat';
         submitBtn.disabled = false;
       }
+      window.dispatchEvent(new CustomEvent('smart-modal-closed'));
     }
 
     async function handleSubmit() {
@@ -360,5 +361,8 @@ const clientServices = ['Vyhledání nemovitosti', 'Prodej nemovitosti', 'Market
     window.addEventListener('smart-contact-open', function (event) {
       openModal(event.detail || {});
     });
-  })();
+  }
+
+  initSmartContactModal();
+  document.addEventListener('astro:page-load', initSmartContactModal);
 </script>

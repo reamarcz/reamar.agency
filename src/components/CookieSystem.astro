@@ -107,10 +107,15 @@ const CATEGORIES = [
 </div>
 
 <script define:vars={{ STORAGE_KEY }}>
-  (function () {
+  function initCookieSystem() {
     const banner = document.querySelector('[data-cookie-banner]');
     const overlay = document.querySelector('[data-cookie-overlay]');
     const modal = document.querySelector('[data-cookie-modal]');
+    if (!banner && !overlay && !modal) return;
+
+    if (window.__cookieOpenSettingsHandler) {
+      document.body.removeEventListener('click', window.__cookieOpenSettingsHandler);
+    }
 
     const defaultConsent = {
       necessary: true,
@@ -221,6 +226,7 @@ const CATEGORIES = [
         openModal();
       }
     }
+    window.__cookieOpenSettingsHandler = handleOpenSettings;
     document.body.addEventListener('click', handleOpenSettings);
 
     // Toggle kategorie v modalu (Analytické, Marketingové)
@@ -259,5 +265,7 @@ const CATEGORIES = [
     modal?.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeModal();
     });
-  })();
+  }
+  initCookieSystem();
+  document.addEventListener('astro:page-load', initCookieSystem);
 </script>

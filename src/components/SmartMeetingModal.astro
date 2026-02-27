@@ -167,7 +167,7 @@ const meetingTypes = ['Osobní schůzka v Praze', 'Online'];
 <script>
   import { actions } from 'astro:actions';
 
-  (function () {
+  function initSmartMeetingModal() {
     const overlay = document.getElementById('smart-meeting-overlay');
     const modal = document.querySelector('[data-smart-meeting-modal]');
     const closeBtn = document.querySelector('[data-smart-meeting-close]');
@@ -253,6 +253,7 @@ const meetingTypes = ['Osobní schůzka v Praze', 'Online'];
         submitBtn.textContent = 'Odeslat';
         submitBtn.disabled = false;
       }
+      window.dispatchEvent(new CustomEvent('smart-modal-closed'));
     }
 
     async function handleSubmit() {
@@ -334,5 +335,8 @@ const meetingTypes = ['Osobní schůzka v Praze', 'Online'];
     window.addEventListener('smart-meeting-open', function (event) {
       openModal(event.detail || {});
     });
-  })();
+  }
+
+  initSmartMeetingModal();
+  document.addEventListener('astro:page-load', initSmartMeetingModal);
 </script>

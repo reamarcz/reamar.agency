@@ -32,7 +32,7 @@ const heroImage = '/images/seconddreamhome.webp';
           </div>
         </div>
         <div class="md:col-span-5 lg:col-span-4 flex flex-col md:items-end" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease" data-aos-delay="150">
-          <a href="#" class="font-yellix text-[16px] font-medium text-gray-900 border-b border-gray-900 hover:opacity-70 transition-opacity inline-block w-fit uppercase tracking-wide" data-smart-contact-open data-smart-contact-type="client" data-smart-contact-service="Zahraniční">
+          <a href="javascript:void(0)" class="font-yellix text-[16px] font-medium text-gray-900 border-b border-gray-900 hover:opacity-70 transition-opacity inline-block w-fit uppercase tracking-wide" data-smart-contact-open data-smart-contact-type="client" data-smart-contact-service="Zahraniční">
             NAJÍT NEMOVITOST U MOŘE
           </a>
         </div>
@@ -58,14 +58,17 @@ const heroImage = '/images/seconddreamhome.webp';
 </style>
 
 <script>
-  (function () {
+  function initZahraniciParallax() {
+    if (window.__zahraniciParallaxOnScroll) {
+      window.removeEventListener('scroll', window.__zahraniciParallaxOnScroll, { passive: true });
+      window.__zahraniciParallaxOnScroll = null;
+    }
     const hero = document.querySelector('[data-zahranici-hero]');
     const img = document.querySelector('[data-zahranici-hero-img]');
     if (!hero || !img) return;
 
     function updateFixed() {
       const rect = hero.getBoundingClientRect();
-      // Fixovat jen dokud je hero v viewportu: od horního okraje (rect.top <= 0) do dokud neodscrolluje celé (rect.bottom > 0)
       const shouldFix = rect.top <= 0 && rect.bottom > 0;
       img.classList.toggle('is-fixed', shouldFix);
     }
@@ -79,8 +82,10 @@ const heroImage = '/images/seconddreamhome.webp';
         ticking = false;
       });
     }
-
+    window.__zahraniciParallaxOnScroll = onScroll;
     window.addEventListener('scroll', onScroll, { passive: true });
     updateFixed();
-  })();
+  }
+  initZahraniciParallax();
+  document.addEventListener('astro:page-load', initZahraniciParallax);
 </script>

@@ -33,7 +33,11 @@ const services = [
 </style>
 
 <script>
-  (function () {
+  function initServiceList() {
+    if (window.__serviceListOnScroll) {
+      window.removeEventListener('scroll', window.__serviceListOnScroll, { passive: true });
+      window.__serviceListOnScroll = null;
+    }
     const list = document.querySelector('[data-service-list]');
     if (!list) return;
 
@@ -97,8 +101,11 @@ const services = [
         updateCenterActive();
       });
     });
-
+    window.__serviceListOnScroll = onScroll;
     window.addEventListener('scroll', onScroll, { passive: true });
     updateCenterActive();
-  })();
+  }
+
+  initServiceList();
+  document.addEventListener('astro:page-load', initServiceList);
 </script>

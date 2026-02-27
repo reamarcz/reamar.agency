@@ -129,7 +129,11 @@ const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
   </style>
 
   <script>
-    (function () {
+    function initHeroRotatingWord() {
+      if (window.__heroRotatingWordTimeoutId != null) {
+        clearTimeout(window.__heroRotatingWordTimeoutId);
+        window.__heroRotatingWordTimeoutId = null;
+      }
       var words = ['Marketing.', 'Strategie.', 'Investice.', 'Emoce.', 'Prodej.'];
       var el = document.querySelector('.rotating-word');
       var mobile = document.querySelector('.hero-mobile');
@@ -141,10 +145,12 @@ const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
         el.offsetHeight;
         el.classList.add('snap');
         i = (i + 1) % words.length;
-        setTimeout(tick, 2000);
+        window.__heroRotatingWordTimeoutId = setTimeout(tick, 2000);
       }
-      setTimeout(tick, 0);
-    })();
+      window.__heroRotatingWordTimeoutId = setTimeout(tick, 0);
+    }
+    initHeroRotatingWord();
+    document.addEventListener('astro:page-load', initHeroRotatingWord);
   </script>
 
   <!-- ========== DESKTOP HERO (skryté na mobilu) ========== -->
@@ -206,7 +212,7 @@ const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
   <!-- Pravý horní roh (desktop): REALITY. MARKETING. + Zahájit spolupráci – decentní -->
   <div class="absolute top-0 right-0 z-30 flex flex-col items-end pt-8 md:pt-16 pr-6 md:pr-10 lg:pr-12">
     <span class="font-yellix text-[13px] text-white/60 uppercase tracking-wide">REALITY. MARKETING.</span>
-    <a href="#" class="mt-1.5 font-yellix text-[14px] font-medium text-white/80 border-b border-white/50 hover:text-white hover:border-white/80 transition-colors inline-block w-fit pointer-events-auto" data-smart-contact-open>Zahájit spolupráci</a>
+    <a href="javascript:void(0)" class="mt-1.5 font-yellix text-[14px] font-medium text-white/80 border-b border-white/50 hover:text-white hover:border-white/80 transition-colors inline-block w-fit pointer-events-auto" data-smart-contact-open>Zahájit spolupráci</a>
   </div>
 
   <!-- Bílé logo uprostřed – při scrollu „dojíždí“ do bílé baru, pak se v něm změní na černé (pozice img se sleduje) -->
@@ -244,8 +250,9 @@ const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
 </section>
 
 <script>
-  (function () {
+  function initHeroVideos() {
     var hero = document.querySelector('.hero-split');
+    if (!hero) return;
     const zones = document.querySelectorAll('.hero-zone');
     const leftDim = document.querySelector('[data-left-dim]');
     const leftVideoWrap = document.querySelector('.hero-half-left');
@@ -293,5 +300,8 @@ const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
       zone.addEventListener('mouseenter', function () { setHover(side); });
     });
     hero.addEventListener('mouseleave', function () { setHover(null); });
-  })();
+  }
+
+  initHeroVideos();
+  document.addEventListener('astro:page-load', initHeroVideos);
 </script>

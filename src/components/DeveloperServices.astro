@@ -68,7 +68,13 @@
 </style>
 
 <script>
-  (function () {
+  function initDeveloperServicesParallax() {
+    if (window.__devServicesParallaxOnScroll) {
+      window.removeEventListener('scroll', window.__devServicesParallaxOnScroll, { passive: true });
+      window.removeEventListener('resize', window.__devServicesParallaxOnResize);
+      window.__devServicesParallaxOnScroll = null;
+      window.__devServicesParallaxOnResize = null;
+    }
     const section = document.querySelector('[aria-labelledby="developer-services-heading"]');
     const headlineText = document.querySelector('[data-dev-headline-text]');
     const tiles = section ? section.querySelectorAll('[data-dev-tile]') : [];
@@ -135,9 +141,13 @@
         ticking = true;
       }
     }
-
+    window.__devServicesParallaxOnScroll = onScroll;
+    window.__devServicesParallaxOnResize = updateParallax;
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', updateParallax);
     updateParallax();
-  })();
+  }
+
+  initDeveloperServicesParallax();
+  document.addEventListener('astro:page-load', initDeveloperServicesParallax);
 </script>
