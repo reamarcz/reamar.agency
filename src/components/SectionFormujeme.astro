@@ -119,6 +119,10 @@ import HeroLogoMobile from './HeroLogoMobile.astro';
 
   /* Na mobilu: overlay a text nechytají tap (jde na dlaždici), zatmavení a text jen po kliknutí (třída .reveal) */
   @media (max-width: 767px) {
+    .formujeme-tile-tap {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
     .formujeme-tile-tap .formujeme-tile-tap-overlay,
     .formujeme-tile-tap .formujeme-tile-tap-text {
       pointer-events: none;
@@ -140,28 +144,44 @@ import HeroLogoMobile from './HeroLogoMobile.astro';
     const tiles = document.querySelectorAll('[data-formujeme-tap-tile]');
     if (!tiles.length) return;
     const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
+    const opts = { passive: false, capture: true };
     tiles.forEach((tile) => {
       let touchHandled = false;
+      let touchStartY = 0;
+      let touchStartX = 0;
       function doToggle() {
         if (!isMobile()) return;
         tile.classList.toggle('reveal');
       }
+      tile.addEventListener('touchstart', function (e) {
+        if (!isMobile()) return;
+        if (e.touches && e.touches[0]) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }
+      }, { passive: true, capture: true });
       tile.addEventListener('touchend', function (e) {
         if (!isMobile()) return;
         e.preventDefault();
         touchHandled = true;
-        doToggle();
-      }, { passive: false });
+        var dx = 0, dy = 0;
+        if (e.changedTouches && e.changedTouches[0]) {
+          dx = e.changedTouches[0].clientX - touchStartX;
+          dy = e.changedTouches[0].clientY - touchStartY;
+        }
+        if (dx * dx + dy * dy < 400) doToggle();
+      }, opts);
       tile.addEventListener('click', function (e) {
         if (!isMobile()) return;
         if (touchHandled) {
           touchHandled = false;
           e.preventDefault();
+          e.stopPropagation();
           return;
         }
         e.preventDefault();
         doToggle();
-      });
+      }, true);
       tile.addEventListener('keydown', function (e) {
         if (e.key !== 'Enter' && e.key !== ' ') return;
         if (!isMobile()) return;
