@@ -20,7 +20,7 @@ interface Props {
 const { title = 'REAMAR | Reality. Marketing.', description = 'Propojujeme marketing a obchod pro realitní developery.', image, ogTitle, ogDescription, canonical } = Astro.props;
 ---
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="cs" class="overflow-x-hidden w-full">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -28,9 +28,9 @@ const { title = 'REAMAR | Reality. Marketing.', description = 'Propojujeme marke
     <link rel="icon" type="image/svg+xml" href="/images/Reamar%20SVG.svg" />
     <ViewTransitions />
   </head>
-  <body class="font-yellix">
-    <Navigation />
-    <main id="main" role="main">
+  <body class="font-yellix overflow-x-hidden w-full min-w-0">
+    <Navigation currentPath={Astro.url.pathname} />
+    <main id="main" role="main" class="min-w-0 overflow-x-hidden">
       <slot />
     </main>
     <SmartContactModal />

@@ -72,17 +72,28 @@
 </section>
 
 <script>
+  import { actions } from 'astro:actions';
+
   (function () {
     var newsletterForm = document.getElementById('newsletter-form');
     var callbackForm = document.getElementById('callback-form');
-    var DELAY_MS = 1500;
 
     function showThankYou() {
       window.dispatchEvent(new CustomEvent('form-thank-you-show'));
     }
 
+    function resetNewsletterBtn(btn, label) {
+      if (btn) btn.disabled = false;
+      if (label) label.textContent = '→';
+    }
+
+    function resetCallbackBtn(btn, label) {
+      if (btn) btn.disabled = false;
+      if (label) label.textContent = '→';
+    }
+
     if (newsletterForm) {
-      newsletterForm.addEventListener('submit', function (e) {
+      newsletterForm.addEventListener('submit', async function (e) {
         e.preventDefault();
         var input = newsletterForm.querySelector('input[name="email"]');
         var err = newsletterForm.querySelector('[data-newsletter-error]');
@@ -97,23 +108,26 @@
         }
         if (btn) btn.disabled = true;
         if (label) label.textContent = 'Odesílám...';
-        setTimeout(function () {
-          showThankYou();
-          if (btn) btn.disabled = false;
-          if (label) label.textContent = '→';
-          if (input) input.value = '';
-        }, DELAY_MS);
+        try {
+          var result = await actions.sendContactForm({ formSource: 'newsletter', email: email });
+          if (result.data) {
+            showThankYou();
+            if (input) input.value = '';
+          }
+        } catch (_) {}
+        resetNewsletterBtn(btn, label);
       });
     }
 
     if (callbackForm) {
-      callbackForm.addEventListener('submit', function (e) {
+      callbackForm.addEventListener('submit', async function (e) {
         e.preventDefault();
         var input = callbackForm.querySelector('input[name="phone"]');
         var err = callbackForm.querySelector('[data-callback-error]');
         var btn = callbackForm.querySelector('[data-callback-submit]');
         var label = callbackForm.querySelector('[data-callback-submit-label]');
-        var phone = (input && input.value) ? input.value.trim().replace(/\s/g, '') : '';
+        var phoneRaw = (input && input.value) ? input.value.trim() : '';
+        var phone = phoneRaw.replace(/\s/g, '');
         var valid = phone.length >= 9 && /^[0-9+]/.test(phone);
         if (err) err.classList.add('hidden');
         if (!valid) {
@@ -122,12 +136,14 @@
         }
         if (btn) btn.disabled = true;
         if (label) label.textContent = 'Odesílám...';
-        setTimeout(function () {
-          showThankYou();
-          if (btn) btn.disabled = false;
-          if (label) label.textContent = '→';
-          if (input) input.value = '';
-        }, DELAY_MS);
+        try {
+          var result = await actions.sendContactForm({ formSource: 'callback', phone: phoneRaw });
+          if (result.data) {
+            showThankYou();
+            if (input) input.value = '';
+          }
+        } catch (_) {}
+        resetCallbackBtn(btn, label);
       });
     }
   })();

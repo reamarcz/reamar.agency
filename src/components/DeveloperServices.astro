@@ -2,7 +2,7 @@
 ---
 <section class="bg-black text-white overflow-hidden -mt-px md:mt-0" aria-labelledby="developer-services-heading">
   <div class="mx-auto w-[90%] max-w-[1280px] px-0 py-16 md:py-24">
-    <h2 id="developer-services-heading" class="font-yellix text-4xl md:text-5xl font-medium leading-tight text-white" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease">
+    <h2 id="developer-services-heading" class="font-yellix text-3xl md:text-5xl font-medium leading-tight text-white break-words" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease">
       Služby<br />pro developery
     </h2>
 
@@ -59,14 +59,7 @@
 </section>
 
 <style>
-  @media (max-width: 767px) {
-    .dev-tiles-grid {
-      width: 100vw;
-      max-width: none;
-      margin-left: calc(-50vw + 50%);
-      box-sizing: border-box;
-    }
-  }
+  /* Na mobilu ponecháme grid v normálním toku (bez 100vw), aby nevznikal horizontální scroll. */
   @media (min-width: 768px) {
     .dev-tiles-grid {
       margin-left: 0;

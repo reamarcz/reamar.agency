@@ -1,30 +1,27 @@
 ---
 const heroImage = '/images/hero-reamar.webp';
-const videoMobile = '/videos/' + encodeURIComponent('Hero Mobil Reamar.mp4');
+const mobileHeroImage = '/images/Mobil-Hero-Bg.webp';
 const videoLeft = '/videos/' + encodeURIComponent('video Pro developery.mp4');
 const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
 ---
 <section class="hero-split relative h-screen w-full overflow-hidden bg-black" aria-label="Úvod">
-  <!-- ========== MOBILNÍ HERO – pixelově dle screenshotu ========== -->
-  <div class="hero-mobile absolute inset-0 flex flex-col px-6 pt-12 pb-20 md:hidden z-40">
-    <video
-      class="absolute inset-0 h-full w-full object-cover"
-      muted
-      loop
-      playsinline
-      autoplay
-      preload="metadata"
-      data-hero-mobile-video
-      data-src={videoMobile}
-      aria-hidden="true"
-    >
-      <source type="video/mp4" />
-    </video>
-    <div class="absolute inset-0 bg-black/55 pointer-events-none" aria-hidden="true"></div>
+  <!-- ========== MOBILNÍ HERO – statický obrázek dle designu ========== -->
+  <div class="hero-mobile absolute inset-0 flex flex-col md:hidden z-40">
+    <!-- Plnoobrazovkové pozadí -->
+    <img
+      src={mobileHeroImage}
+      alt=""
+      class="absolute inset-0 h-full w-full object-cover object-center"
+      width="1080"
+      height="1920"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 bg-black/30 pointer-events-none" aria-hidden="true"></div>
 
-    <div class="relative z-10 flex flex-1 flex-col">
-      <!-- Logo REAMAR nahoře, vycentrované (nesahat) -->
-      <div class="flex justify-center pt-2">
+    <div class="relative z-10 flex flex-1 flex-col min-h-0">
+      <!-- Logo REAMAR nahoře, vycentrované -->
+      <div class="flex justify-center pt-10 sm:pt-14 shrink-0">
         <img
           src="/images/logo-rig-w.svg"
           alt="Reamar"
@@ -33,34 +30,111 @@ const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
           height="60"
         />
       </div>
-      <!-- Blok Reality + tlačítka: vertikálně vycentrovaný v prostoru pod logem, zarovnání vlevo -->
-      <div class="flex flex-1 flex-col justify-center items-start">
-        <div class="flex w-full flex-col items-start">
-          <!-- Nadpis: Yellix Regular, 60px / 80px -->
-          <p class="text-left font-yellix text-[60px] font-medium leading-[1.2] tracking-tight text-white sm:text-[80px]">
-            Reality.<br />Marketing.
-          </p>
-          <!-- Tlačítka: mírně zaoblené rohy, jemný okraj, vlevo zarovnané s nápisem -->
-          <div class="mt-7 flex flex-col gap-3 items-start">
-            <a
-              href="/#developery"
-              class="inline-flex items-center gap-2 rounded-sm border border-gray-200 bg-white px-4 py-2 font-yellix text-sm font-medium text-black no-underline"
-            >
-              <img src="/images/arrow-1.svg" alt="" class="h-3.5 w-3.5 shrink-0 brightness-0" width="14" height="14" />
-              Pro developery
-            </a>
-            <a
-              href="/#klienty"
-              class="inline-flex items-center gap-2 rounded-sm border border-gray-200 bg-white px-4 py-2 font-yellix text-sm font-medium text-black no-underline"
-            >
-              <img src="/images/arrow-1.svg" alt="" class="h-3.5 w-3.5 shrink-0 brightness-0" width="14" height="14" />
-              Pro klienty
-            </a>
-          </div>
+      <!-- Blok Reality. + rotující slovo (mobil) + tlačítka -->
+      <div class="flex flex-1 flex-col justify-end items-start px-6 pb-14 -translate-y-3">
+        <div class="hero-mobile-headline text-left font-yellix text-[56px] sm:text-[64px] font-medium leading-[1.15] tracking-tight text-white">
+          <span class="hero-line-reality block">Reality.</span>
+          <span class="rotating-word ml-[10px] inline-block" aria-live="polite">Marketing.</span>
+        </div>
+        <div class="mt-6 flex flex-col gap-3 items-start">
+          <a
+            href="/#developery"
+            class="hero-mobile-btn hero-mobile-btn-1 inline-flex items-center gap-2 rounded-none border border-gray-800 bg-white px-5 py-2.5 font-yellix text-sm font-medium text-black no-underline opacity-0 animate-hero-btn-in"
+          >
+            <img src="/images/arrow-1.svg" alt="" class="h-3.5 w-3.5 shrink-0 brightness-0" width="14" height="14" />
+            Pro developery
+          </a>
+          <a
+            href="/#klienty"
+            class="hero-mobile-btn hero-mobile-btn-2 inline-flex items-center gap-2 rounded-none border border-gray-800 bg-white px-5 py-2.5 font-yellix text-sm font-medium text-black no-underline opacity-0 animate-hero-btn-in"
+          >
+            <img src="/images/arrow-1.svg" alt="" class="h-3.5 w-3.5 shrink-0 brightness-0" width="14" height="14" />
+            Pro klienty
+          </a>
         </div>
       </div>
+      <!-- Naše portfolio – vpravo dole, linka pod textem, s vyjevením -->
+      <a
+        href="/#developery"
+        class="hero-mobile-portfolio absolute bottom-0 right-0 pr-6 pb-6 pt-20 pl-8 pointer-events-auto font-yellix text-sm font-medium text-white no-underline inline-block w-fit opacity-0 animate-hero-portfolio-reveal"
+        aria-label="Přejít na sekci Formujeme prodej"
+      >
+        <span class="border-b border-white pb-0.5">Naše portfolio</span>
+      </a>
     </div>
   </div>
+
+  <style>
+    @keyframes hero-portfolio-reveal {
+      0% {
+        opacity: 0;
+        transform: translateX(12px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    .animate-hero-portfolio-reveal {
+      animation: hero-portfolio-reveal 0.6s ease-out 0.8s forwards;
+    }
+
+    @keyframes hero-btn-in {
+      from {
+        opacity: 0;
+        transform: translateX(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    .hero-mobile-btn-1 {
+      animation: hero-btn-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.25s forwards;
+    }
+    .hero-mobile-btn-2 {
+      animation: hero-btn-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.4s forwards;
+    }
+
+    /* Rotující slovo – mechanický strojek, jen osa Y */
+    @keyframes mechanicalClack {
+      0% {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      70% {
+        transform: translateY(-5px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    .rotating-word.snap {
+      display: inline-block;
+      animation: mechanicalClack 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+  </style>
+
+  <script>
+    (function () {
+      var words = ['Marketing.', 'Strategie.', 'Investice.', 'Emoce.', 'Prodej.'];
+      var el = document.querySelector('.rotating-word');
+      var mobile = document.querySelector('.hero-mobile');
+      if (!el || !mobile || window.getComputedStyle(mobile).display === 'none') return;
+      var i = 0;
+      function tick() {
+        el.classList.remove('snap');
+        el.textContent = words[i];
+        el.offsetHeight;
+        el.classList.add('snap');
+        i = (i + 1) % words.length;
+        setTimeout(tick, 2000);
+      }
+      setTimeout(tick, 0);
+    })();
+  </script>
 
   <!-- ========== DESKTOP HERO (skryté na mobilu) ========== -->
   <div class="absolute inset-0 z-0 hidden md:block">
@@ -160,20 +234,6 @@ const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
 
 <script>
   (function () {
-    // Mobil: načíst a spustit video jen na malých obrazovkách
-    var mobileVideo = document.querySelector('[data-hero-mobile-video]');
-    if (mobileVideo && window.matchMedia('(max-width: 767px)').matches) {
-      var src = mobileVideo.getAttribute('data-src');
-      if (src) {
-        var source = mobileVideo.querySelector('source');
-        if (source && !source.getAttribute('src')) {
-          source.setAttribute('src', src);
-          mobileVideo.load();
-          mobileVideo.play().catch(function () {});
-        }
-      }
-    }
-
     var hero = document.querySelector('.hero-split');
     const zones = document.querySelectorAll('.hero-zone');
     const leftDim = document.querySelector('[data-left-dim]');

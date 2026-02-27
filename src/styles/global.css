@@ -45,7 +45,15 @@
   }
 
   html {
-    @apply scroll-smooth;
+    @apply scroll-smooth overflow-x-hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+  body {
+    @apply font-yellix font-medium text-black antialiased bg-white overflow-x-hidden;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
   #developery,
   #klienty {
@@ -54,9 +62,6 @@
   /* Zahraničí: kotva na začátku bílé sekce; velký margin = v záběru hero obrázek i „Nemovitosti v zahraničí“ */
   #zahranici {
     scroll-margin-top: 55vh;
-  }
-  body {
-    @apply font-yellix font-medium text-black antialiased bg-white;
   }
 }
 

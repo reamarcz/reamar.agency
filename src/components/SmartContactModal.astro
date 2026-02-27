@@ -175,6 +175,8 @@ const clientServices = ['Vyhledání nemovitosti', 'Prodej nemovitosti', 'Market
 </div>
 
 <script>
+  import { actions } from 'astro:actions';
+
   (function () {
     const overlay = document.getElementById('smart-contact-overlay');
     const modal = document.querySelector('[data-smart-contact-modal]');
@@ -282,10 +284,11 @@ const clientServices = ['Vyhledání nemovitosti', 'Prodej nemovitosti', 'Market
       }
     }
 
-    function handleSubmit() {
+    async function handleSubmit() {
       const jmeno = (form.querySelector('[name="jmeno"]')?.value || '').trim();
       const telefon = (form.querySelector('[name="telefon"]')?.value || '').trim();
       const email = (form.querySelector('[name="email"]')?.value || '').trim();
+      const vzkaz = (form.querySelector('[name="vzkaz"]')?.value || '').trim();
       let valid = true;
       document.querySelectorAll('.smart-contact-error').forEach(function (el) { el.classList.add('hidden'); });
       if (!jmeno) {
@@ -305,10 +308,27 @@ const clientServices = ['Vyhledání nemovitosti', 'Prodej nemovitosti', 'Market
         submitBtn.textContent = 'Odesílám...';
         submitBtn.disabled = true;
       }
-      setTimeout(function () {
-        if (formView) formView.classList.add('hidden');
-        if (successView) successView.classList.remove('hidden');
-      }, 1500);
+      try {
+        const { data, error } = await actions.sendContactForm({
+          formSource: 'contact',
+          jmeno,
+          telefon,
+          email,
+          vzkaz: vzkaz || '',
+          userType,
+          selectedService: selectedService ?? '',
+        });
+        if (error) {
+          if (submitBtn) { submitBtn.textContent = 'Odeslat'; submitBtn.disabled = false; }
+          return;
+        }
+        if (data && formView && successView) {
+          formView.classList.add('hidden');
+          successView.classList.remove('hidden');
+        }
+      } catch (_) {
+        if (submitBtn) { submitBtn.textContent = 'Odeslat'; submitBtn.disabled = false; }
+      }
     }
 
     overlay?.addEventListener('click', closeModal);

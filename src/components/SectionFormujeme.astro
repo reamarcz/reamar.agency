@@ -9,21 +9,23 @@
 // - Spacery: 30px (mobile 15px), 50px (mobile 25px), 37px (mobile 18px)
 const videoAM = '/videos/AM.mp4';
 const videoSQRE = '/videos/SQRE.mp4';
+import HeroLogoMobile from './HeroLogoMobile.astro';
 ---
 <section id="developery" class="bg-[rgb(0,0,0)] text-[#E4E2E2]" aria-labelledby="formujeme-heading">
   <!-- Max-width 1280px, 90 % šířky. Dlaždice o trochu menší (max výška). -->
   <div class="mx-auto w-[90%] max-w-[1280px] px-0 py-12 md:py-16">
-    <!-- row-main: nadpis col grid-5-12 (41.67%) -->
+    <!-- row-main: nadpis – bez omezení šířky, zlom jen u <br /> -->
     <div class="grid grid-cols-12 gap-x-7 gap-y-0">
-      <div class="col-span-12 md:col-span-5">
-        <h2 id="formujeme-heading" class="font-yellix text-[36px] font-medium leading-[39.6px] tracking-normal text-[#E4E2E2]">
-          Formujeme prodej developerských projektů
+      <div class="col-span-12">
+        <h2 id="formujeme-heading" class="font-yellix text-[30px] md:text-[48px] md:leading-[1.1] font-medium leading-tight tracking-normal text-[#E4E2E2] break-words" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease">
+          Formujeme prodej<br />
+          developerských <br class="md:hidden" />projektů
         </h2>
       </div>
     </div>
-    <!-- row-main: odstavec grid-12-12 (mobil: motion při scrollu) -->
+    <!-- row-main: odstavec – jemný motion -->
     <div class="mt-6 grid grid-cols-12 gap-x-7">
-      <div class="col-span-12 formujeme-intro-wrap" data-formujeme-intro>
+      <div class="col-span-12 md:max-w-2xl" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease" data-aos-delay="100">
         <p class="font-yellix text-[16px] leading-[19.2px] tracking-normal text-[#E4E2E2]">
           Jsme marketing & sales agentura pro realitní developery. Pomáháme novým projektům obstát na trhu, kde rozhodují detaily. Vytváříme marketingová a prodejní řešení, která dávají projektům jasnou pozici a podporují jejich obchodní úspěch.
         </p>
@@ -40,36 +42,36 @@ const videoSQRE = '/videos/SQRE.mp4';
     <div class="mt-8 grid grid-cols-12 gap-x-7 gap-y-8 md:gap-y-10">
       <!-- Col 1 -->
       <div class="col-span-12 flex flex-col gap-6 md:col-span-4 md:gap-8 w-full md:max-w-[380px] md:mx-auto">
-        <div class="section-tile group relative aspect-[3/4] max-h-[480px] w-full overflow-hidden bg-black">
-          <img src="/images/reamar-presale.webp" alt="" class="h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-70" width="1080" height="1350" loading="lazy" />
-          <div class="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/50" aria-hidden="true"></div>
-          <p class="absolute left-4 top-4 max-w-[85%] font-yellix text-[16px] font-medium leading-[19.2px] text-[#E4E2E2] opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:left-5 md:top-5 formujeme-tile-text">
+        <div class="section-tile formujeme-tile-tap group relative aspect-[3/4] max-h-[480px] w-full overflow-hidden bg-black cursor-pointer md:cursor-default" data-formujeme-tap-tile>
+          <img src="/images/reamar-presale.webp" alt="" class="formujeme-tile-tap-img h-full w-full object-cover transition-opacity duration-300 md:group-hover:opacity-70" width="1080" height="1350" loading="lazy" />
+          <div class="formujeme-tile-tap-overlay absolute inset-0 bg-black/0 transition-colors duration-300 md:group-hover:bg-black/50" aria-hidden="true"></div>
+          <p class="formujeme-tile-tap-text absolute left-4 top-4 max-w-[85%] font-yellix text-[16px] font-medium leading-[19.2px] text-[#E4E2E2] opacity-0 transition-opacity duration-300 md:group-hover:opacity-100 md:left-5 md:top-5 formujeme-tile-text">
             Pomohli jsme nastavit model, který umožnil financovat výstavbu z předprodejů a investorů.<br /><span class="formujeme-tile-line2">Developer tak mohl projekt rozjet bez zbytečných zpoždění.</span>
           </p>
         </div>
         <div class="section-tile relative aspect-square w-full overflow-hidden bg-black">
-          <video class="h-full w-full object-cover" muted loop playsinline autoplay preload="metadata" width="1000" height="1000">
+          <video class="formujeme-video-am h-full w-full object-cover" autoplay muted loop playsinline preload="auto" poster="/images/AM.webp" width="1000" height="1000">
             <source src={videoAM} type="video/mp4" />
           </video>
         </div>
-        <p class="text-center font-yellix text-[12px] leading-[14.4px] tracking-normal text-[#E4E2E2]">
+        <p class="formujeme-am-caption text-center font-yellix text-[12px] leading-[14.4px] tracking-normal text-[#E4E2E2]" data-aos="fade-up" data-aos-duration="600" data-aos-easing="ease" data-aos-delay="150">
           Performance Marketing pro <strong class="font-medium text-[#E4E2E2]">mezinárodního developera</strong>
         </p>
       </div>
       <!-- Col 2: spacer 50px (mobile 25px) -->
       <div class="col-span-12 flex flex-col gap-6 md:col-span-4 md:gap-8 w-full md:max-w-[380px] md:mx-auto">
         <div class="h-[25px] md:h-[50px]" aria-hidden="true"></div>
-        <div class="section-tile group relative aspect-square w-full overflow-hidden bg-black">
-          <img src="/images/reamar-launch.webp" alt="" class="h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-70" width="1000" height="1000" loading="lazy" />
-          <div class="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/50" aria-hidden="true"></div>
-          <p class="absolute left-4 top-4 max-w-[85%] font-yellix text-[16px] font-medium leading-[19.2px] text-[#E4E2E2] opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:left-5 md:top-5 formujeme-tile-text">
+        <div class="section-tile formujeme-tile-tap group relative aspect-square w-full overflow-hidden bg-black cursor-pointer md:cursor-default" data-formujeme-tap-tile>
+          <img src="/images/reamar-launch.webp" alt="" class="formujeme-tile-tap-img h-full w-full object-cover transition-opacity duration-300 md:group-hover:opacity-70" width="1000" height="1000" loading="lazy" />
+          <div class="formujeme-tile-tap-overlay absolute inset-0 bg-black/0 transition-colors duration-300 md:group-hover:bg-black/50" aria-hidden="true"></div>
+          <p class="formujeme-tile-tap-text absolute left-4 top-4 max-w-[85%] font-yellix text-[16px] font-medium leading-[19.2px] text-[#E4E2E2] opacity-0 transition-opacity duration-300 md:group-hover:opacity-100 md:left-5 md:top-5 formujeme-tile-text">
             Kompletní příprava od nuly. Název, brand, web, vizualizace a kampaně.<br /><span class="formujeme-tile-line2">První leady jsme získali ještě před spuštěním prodeje.</span>
           </p>
         </div>
-        <div class="section-tile group relative aspect-[3/4] max-h-[480px] w-full overflow-hidden bg-black">
-          <img src="/images/reamar-restart.webp" alt="" class="h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-70" width="1080" height="1350" loading="lazy" />
-          <div class="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/50" aria-hidden="true"></div>
-          <p class="absolute left-4 top-4 max-w-[85%] font-yellix text-[16px] font-medium leading-[19.2px] text-[#E4E2E2] opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:left-5 md:top-5">
+        <div class="section-tile formujeme-tile-tap group relative aspect-[3/4] max-h-[480px] w-full overflow-hidden bg-black cursor-pointer md:cursor-default" data-formujeme-tap-tile>
+          <img src="/images/reamar-restart.webp" alt="" class="formujeme-tile-tap-img h-full w-full object-cover transition-opacity duration-300 md:group-hover:opacity-70" width="1080" height="1350" loading="lazy" />
+          <div class="formujeme-tile-tap-overlay absolute inset-0 bg-black/0 transition-colors duration-300 md:group-hover:bg-black/50" aria-hidden="true"></div>
+          <p class="formujeme-tile-tap-text absolute left-4 top-4 max-w-[85%] font-yellix text-[16px] font-medium leading-[19.2px] text-[#E4E2E2] opacity-0 transition-opacity duration-300 md:group-hover:opacity-100 md:left-5 md:top-5">
             Nový vizuální koncept, repositioning značky a cílené výkonnostní kampaně přinesly zlom v zájmu o projekt, který po první etapě ztrácel tempo.
           </p>
         </div>
@@ -77,14 +79,18 @@ const videoSQRE = '/videos/SQRE.mp4';
       <!-- Col 3: text-size-small, spacer 37px (mobile 18px), h3 text-size-3 27px/1.2 -->
       <div class="col-span-12 flex flex-col gap-6 md:col-span-4 md:gap-8 w-full md:max-w-[380px] md:mx-auto">
         <div class="section-tile relative aspect-[3/4] max-h-[480px] w-full overflow-hidden bg-black">
-          <video class="h-full w-full object-cover" muted loop playsinline autoplay preload="metadata" width="1080" height="1350">
+          <div class="absolute inset-0 md:hidden">
+            <HeroLogoMobile />
+          </div>
+          <video class="absolute inset-0 hidden h-full w-full object-cover md:block" muted loop playsinline autoplay preload="metadata" width="1080" height="1350">
             <source src={videoSQRE} type="video/mp4" />
           </video>
         </div>
-        <p class="text-center font-yellix text-[12px] leading-[14.4px] tracking-normal text-[#E4E2E2]">
+        <p class="formujeme-sqre-caption relative z-10 -mt-[3.9375rem] text-center font-yellix text-[12px] leading-[14.4px] tracking-normal text-[#E4E2E2]" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease" data-aos-delay="200">
           <a href="https://sqre.cz/" target="_blank" rel="noopener noreferrer" class="text-[#E4E2E2] no-underline hover:text-white">Full Marketing Sales Services pro <strong class="font-medium text-[#E4E2E2]">SQUARE REAL ESTATE</strong></a>
         </p>
-        <div class="h-[18px] md:h-[37px]" aria-hidden="true"></div>
+        <!-- Na mobilu větší mezera (jako od tlačítka k „Služby pro developery”), na desktopu původní -->
+        <div class="h-[64px] md:h-[37px]" aria-hidden="true"></div>
         <h3 class="text-center font-yellix text-[27px] font-medium leading-[1.2] tracking-normal text-[#E4E2E2]">
           Řekněte nám více o vašem projektu
         </h3>
@@ -103,32 +109,35 @@ const videoSQRE = '/videos/SQRE.mp4';
     display: block;
     margin-top: 0.5em;
   }
+
+  /* Video AM: na mobilu zamezit kliknutí (méně systémových prvků, lepší autoplay) */
   @media (max-width: 767px) {
-    .formujeme-intro-wrap {
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    .formujeme-video-am {
+      pointer-events: none;
     }
-    .formujeme-intro-wrap.in-view {
+  }
+
+  /* Na mobilu: zatmavení a text jen po kliknutí (třída .reveal) */
+  @media (max-width: 767px) {
+    .formujeme-tile-tap.reveal .formujeme-tile-tap-img {
+      opacity: 0.7;
+    }
+    .formujeme-tile-tap.reveal .formujeme-tile-tap-overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .formujeme-tile-tap.reveal .formujeme-tile-tap-text {
       opacity: 1;
-      transform: translateY(0);
     }
   }
 </style>
 
 <script>
-  (function () {
-    const wrap = document.querySelector('[data-formujeme-intro]');
-    if (!wrap || !window.matchMedia('(max-width: 767px)').matches) return;
-
-    const observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) entry.target.classList.add('in-view');
-        });
-      },
-      { rootMargin: '0px 0px -40px 0px', threshold: 0.1 }
-    );
-    observer.observe(wrap);
-  })();
+  document.querySelectorAll('[data-formujeme-tap-tile]').forEach((tile) => {
+    tile.addEventListener('click', (e) => {
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      if (!isMobile) return;
+      e.preventDefault();
+      tile.classList.toggle('reveal');
+    });
+  });
 </script>

@@ -165,6 +165,8 @@ const meetingTypes = ['Osobní schůzka v Praze', 'Online'];
 </div>
 
 <script>
+  import { actions } from 'astro:actions';
+
   (function () {
     const overlay = document.getElementById('smart-meeting-overlay');
     const modal = document.querySelector('[data-smart-meeting-modal]');
@@ -253,7 +255,7 @@ const meetingTypes = ['Osobní schůzka v Praze', 'Online'];
       }
     }
 
-    function handleSubmit() {
+    async function handleSubmit() {
       const jmeno = (form.querySelector('[name="jmeno"]')?.value || '').trim();
       const telefon = (form.querySelector('[name="telefon"]')?.value || '').trim();
       const email = (form.querySelector('[name="email"]')?.value || '').trim();
@@ -281,10 +283,27 @@ const meetingTypes = ['Osobní schůzka v Praze', 'Online'];
         submitBtn.textContent = 'Odesílám...';
         submitBtn.disabled = true;
       }
-      setTimeout(function () {
-        if (formView) formView.classList.add('hidden');
-        if (successView) successView.classList.remove('hidden');
-      }, 1500);
+      try {
+        const { data, error } = await actions.sendContactForm({
+          formSource: 'meeting',
+          jmeno,
+          telefon,
+          email,
+          vzkaz: vzkaz || '',
+          userType,
+          selectedService: selectedService ?? '',
+        });
+        if (error) {
+          if (submitBtn) { submitBtn.textContent = 'Odeslat'; submitBtn.disabled = false; }
+          return;
+        }
+        if (data && formView && successView) {
+          formView.classList.add('hidden');
+          successView.classList.remove('hidden');
+        }
+      } catch (_) {
+        if (submitBtn) { submitBtn.textContent = 'Odeslat'; submitBtn.disabled = false; }
+      }
     }
 
     overlay?.addEventListener('click', closeModal);

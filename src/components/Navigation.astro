@@ -3,25 +3,26 @@ const navLinks = [
   { href: '/#developery', label: 'Pro developery' },
   { href: '/#klienty', label: 'Pro klienty' },
   { href: '/#zahranici', label: 'Zahraničí' },
-  { href: '/kontakt', label: 'Kontakt' },
+  { href: '/#kontakt', label: 'Kontakt' },
 ];
-
+const { currentPath = '/' } = Astro.props;
+const isSubpage = currentPath !== '/' && currentPath !== '';
 ---
 
-<header id="header" class="fixed inset-x-0 top-0 z-[70] w-full transition-all duration-300 ease-out" role="banner" data-nav>
-  <div class="nav-bar-inner relative h-[75px] md:h-[91px] w-full">
+<header id="header" class="fixed inset-x-0 top-0 z-[70] w-full transition-all duration-300 ease-out" role="banner" data-nav data-subpage={isSubpage || undefined}>
+  <div class="nav-bar-inner relative h-[65px] md:h-[91px] w-full">
     <button type="button" class="nav-btn-edge nav-btn-left absolute top-1/2 -translate-y-1/2 flex items-center gap-2 border-0 bg-transparent p-0 text-black cursor-pointer z-10" aria-expanded="false" aria-controls="menu-drawer" aria-label="Menu" data-nav-toggle>
-      <span class="flex items-center justify-center w-6 h-6 transition-opacity duration-200" data-nav-hamburger>
-        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <span class="flex items-center justify-center w-5 h-5 md:w-6 md:h-6 transition-opacity duration-200" data-nav-hamburger>
+        <svg class="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </span>
       <span class="absolute left-0 top-1/2 -translate-y-1/2 flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-200" data-nav-close-wrap aria-hidden="true">
-        <span class="w-6 h-6 relative flex-shrink-0"><span class="absolute left-1/2 top-1/2 w-3.5 h-px bg-current -translate-x-1/2 -translate-y-1/2 rotate-45"></span><span class="absolute left-1/2 top-1/2 w-3.5 h-px bg-current -translate-x-1/2 -translate-y-1/2 -rotate-45"></span></span>
+        <span class="w-5 h-5 md:w-6 md:h-6 relative flex-shrink-0"><span class="absolute left-1/2 top-1/2 w-3 h-px md:w-3.5 bg-current -translate-x-1/2 -translate-y-1/2 rotate-45"></span><span class="absolute left-1/2 top-1/2 w-3 h-px md:w-3.5 bg-current -translate-x-1/2 -translate-y-1/2 -rotate-45"></span></span>
         <span class="hidden md:inline font-yellix text-[14px] font-medium">Zavřít</span>
       </span>
     </button>
 
     <a href="/" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center opacity-0 scale-150 pointer-events-none transition-all duration-300 ease-out origin-top" data-nav-logo title="Reamar">
-      <img src="/images/logo-rig-b.svg" alt="Reamar" width="140" height="36" class="h-[46px] md:h-[51px] w-auto object-contain" />
+      <img src="/images/logo-rig-b.svg" alt="Reamar" width="140" height="36" class="h-[45px] md:h-[51px] w-auto object-contain" />
     </a>
 
     <button type="button" class="nav-btn-edge nav-btn-right absolute right-0 top-1/2 -translate-y-1/2 hidden md:flex items-center gap-2 border-0 bg-transparent p-0 font-yellix text-[14px] font-medium text-black cursor-pointer hover:opacity-80 transition-opacity" aria-controls="contact-drawer" aria-expanded="false" data-contact-toggle>
@@ -43,9 +44,7 @@ const navLinks = [
       <span class="font-yellix text-[14px] font-medium text-black drawer-close-label">Zavřít</span>
     </button>
     <nav class="flex flex-col pt-8 pl-12 pr-8 gap-6" aria-label="Hlavní">
-      {navLinks.map((link) => link.href === '/kontakt' ? (
-        <button type="button" class="font-yellix text-[24px] font-medium text-black leading-tight text-left w-full border-0 bg-transparent p-0 cursor-pointer hover:opacity-70 transition-opacity" data-drawer-close data-contact-open>{link.label}</button>
-      ) : (
+      {navLinks.map((link) => (
         <a href={link.href} class="font-yellix text-[24px] font-medium text-black leading-tight hover:opacity-70 transition-opacity" data-drawer-close>{link.label}</a>
       ))}
     </nav>
@@ -110,6 +109,13 @@ const navLinks = [
   }
   @media (max-width: 767px) {
     [data-drawer-panel] .drawer-close-label { display: none !important; }
+  }
+
+  /* Na subpage (včetně mobilu): logo v menubaru vždy viditelné a prokliknutelné na homepage */
+  header[data-nav][data-subpage] [data-nav-logo] {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
   }
 </style>
 
