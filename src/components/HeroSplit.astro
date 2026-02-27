@@ -4,7 +4,7 @@ const mobileHeroImage = '/images/Mobil-Hero-Bg.webp';
 const videoLeft = '/videos/' + encodeURIComponent('video Pro developery.mp4');
 const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
 ---
-<section class="hero-split relative h-screen w-full overflow-hidden bg-black" aria-label="Úvod">
+<section class="hero-split hero-split-height relative w-full overflow-hidden bg-black" aria-label="Úvod">
   <!-- ========== MOBILNÍ HERO – statický obrázek dle designu ========== -->
   <div class="hero-mobile absolute inset-0 flex flex-col md:hidden z-40">
     <!-- Plnoobrazovkové pozadí -->
@@ -30,8 +30,8 @@ const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
           height="60"
         />
       </div>
-      <!-- Blok Reality. + rotující slovo (mobil) + tlačítka -->
-      <div class="flex flex-1 flex-col justify-end items-start px-6 pb-14 -translate-y-3">
+      <!-- Blok Reality. + rotující slovo (mobil) + tlačítka; pb s ohledem na lišty a safe-area -->
+      <div class="flex flex-1 flex-col justify-end items-start px-6 pb-[max(3.5rem,calc(1rem+env(safe-area-inset-bottom)))] -translate-y-3">
         <div class="hero-mobile-headline text-left font-yellix text-[56px] sm:text-[64px] font-medium leading-[1.15] tracking-tight text-white">
           <span class="hero-line-reality block">Reality.</span>
           <span class="rotating-word ml-[10px] inline-block" aria-live="polite">Marketing.</span>
@@ -56,7 +56,7 @@ const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
       <!-- Naše portfolio – vpravo dole, linka pod textem, s vyjevením -->
       <a
         href="/#developery"
-        class="hero-mobile-portfolio absolute bottom-0 right-0 pr-6 pb-6 pt-20 pl-8 pointer-events-auto font-yellix text-sm font-medium text-white no-underline inline-block w-fit opacity-0 animate-hero-portfolio-reveal"
+        class="hero-mobile-portfolio absolute bottom-0 right-0 pr-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-20 pl-8 pointer-events-auto font-yellix text-sm font-medium text-white no-underline inline-block w-fit opacity-0 animate-hero-portfolio-reveal"
         aria-label="Přejít na sekci Formujeme prodej"
       >
         <span class="border-b border-white pb-0.5">Naše portfolio</span>
@@ -65,6 +65,17 @@ const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
   </div>
 
   <style>
+    /* Mobil: 100svh = viditelná výška i s lištami (Safari/Chrome); fallback 100vh pro starší prohlížeče */
+    .hero-split-height {
+      height: 100vh;
+      height: 100svh;
+    }
+    @media (min-width: 768px) {
+      .hero-split-height {
+        height: 100vh;
+      }
+    }
+
     @keyframes hero-portfolio-reveal {
       0% {
         opacity: 0;
