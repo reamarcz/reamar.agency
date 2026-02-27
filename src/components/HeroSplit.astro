@@ -169,35 +169,35 @@ const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
     <div class="absolute inset-0 bg-black/50" aria-hidden="true"></div>
   </div>
 
-  <!-- Levá polovina: video (zobrazí se při hoveru na levou stranu) -->
+  <!-- Levá polovina: video (zobrazí se při hoveru na levou stranu). Bez src v HTML = na mobilu se nestahuje (~9 MB). -->
   <div class="hero-half hero-half-left absolute left-0 top-0 z-10 h-full w-1/2 overflow-hidden opacity-0 transition-opacity duration-300" data-half="left">
     <video
       class="h-full w-full object-cover"
       muted
       loop
       playsinline
-      preload="auto"
+      preload="none"
       data-hero-video="left"
       data-src={videoLeft}
       aria-hidden="true"
     >
-      <source type="video/mp4" src={videoLeft} />
+      <source type="video/mp4" data-src={videoLeft} />
     </video>
     <div class="absolute inset-0 bg-black/10 pointer-events-none" aria-hidden="true"></div>
   </div>
-  <!-- Pravá polovina: video (zobrazí se při hoveru na pravou stranu) -->
+  <!-- Pravá polovina: video (zobrazí se při hoveru na pravou stranu). Bez src v HTML = na mobilu se nestahuje (~8 MB). -->
   <div class="hero-half hero-half-right absolute left-1/2 top-0 z-10 h-full w-1/2 overflow-hidden opacity-0 transition-opacity duration-300" data-half="right">
     <video
       class="h-full w-full object-cover"
       muted
       loop
       playsinline
-      preload="auto"
+      preload="none"
       data-hero-video="right"
       data-src={videoRight}
       aria-hidden="true"
     >
-      <source type="video/mp4" src={videoRight} />
+      <source type="video/mp4" data-src={videoRight} />
     </video>
     <div class="absolute inset-0 bg-black/10 pointer-events-none" aria-hidden="true"></div>
   </div>

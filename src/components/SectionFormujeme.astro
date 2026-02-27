@@ -82,8 +82,8 @@ import HeroLogoMobile from './HeroLogoMobile.astro';
           <div class="absolute inset-0 md:hidden">
             <HeroLogoMobile />
           </div>
-          <video class="absolute inset-0 hidden h-full w-full object-cover md:block" muted loop playsinline autoplay preload="metadata" width="1080" height="1350">
-            <source src={videoSQRE} type="video/mp4" />
+          <video class="absolute inset-0 hidden h-full w-full object-cover md:block" muted loop playsinline autoplay preload="none" width="1080" height="1350" data-sqre-video data-video-src={videoSQRE}>
+            <source type="video/mp4" data-src={videoSQRE} />
           </video>
         </div>
         <p class="formujeme-sqre-caption relative z-10 -mt-[3.9375rem] text-center font-yellix text-[12px] leading-[14.4px] tracking-normal text-[#E4E2E2]" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease" data-aos-delay="200">
@@ -184,6 +184,22 @@ import HeroLogoMobile from './HeroLogoMobile.astro';
       });
     });
   }
+  function initFormujemeSQREVideo() {
+    if (!window.matchMedia('(min-width: 768px)').matches) return;
+    var video = document.querySelector('[data-sqre-video]');
+    if (!video) return;
+    var source = video.querySelector('source[data-src]');
+    if (!source) return;
+    var src = source.getAttribute('data-src');
+    if (!src || source.getAttribute('src')) return;
+    source.setAttribute('src', src);
+    video.load();
+    video.play().catch(function () {});
+  }
   initFormujeme();
-  document.addEventListener('astro:page-load', initFormujeme);
+  initFormujemeSQREVideo();
+  document.addEventListener('astro:page-load', function () {
+    initFormujeme();
+    initFormujemeSQREVideo();
+  });
 </script>
