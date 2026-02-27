@@ -117,7 +117,8 @@ import HeroLogoMobile from './HeroLogoMobile.astro';
     }
   }
 
-  /* Na mobilu: overlay a text nechytají tap (jde na dlaždici), zatmavení a text jen po kliknutí (třída .reveal) */
+  /* Desktop: hover (group-hover na rodiči) */
+  /* Mobil: efekt natvrdo přes třídu .active – Safari na iPhonu nespolehlivě řeší :hover */
   @media (max-width: 767px) {
     .formujeme-tile-tap {
       -webkit-tap-highlight-color: transparent;
@@ -127,69 +128,62 @@ import HeroLogoMobile from './HeroLogoMobile.astro';
     .formujeme-tile-tap .formujeme-tile-tap-text {
       pointer-events: none;
     }
-    .formujeme-tile-tap.reveal .formujeme-tile-tap-img {
+    .formujeme-tile-tap.active .formujeme-tile-tap-img {
       opacity: 0.7;
     }
-    .formujeme-tile-tap.reveal .formujeme-tile-tap-overlay {
+    .formujeme-tile-tap.active .formujeme-tile-tap-overlay {
       background-color: rgba(0, 0, 0, 0.5);
-    }
-    .formujeme-tile-tap.reveal .formujeme-tile-tap-text {
       opacity: 1;
+      visibility: visible;
+    }
+    .formujeme-tile-tap.active .formujeme-tile-tap-text {
+      opacity: 1;
+      visibility: visible;
     }
   }
 </style>
 
 <script>
-  function initFormujemeTapTiles() {
-    const tiles = document.querySelectorAll('[data-formujeme-tap-tile]');
+  function initFormujeme() {
+    const tiles = document.querySelectorAll('.formujeme-tile-tap');
     if (!tiles.length) return;
     const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
-    const opts = { passive: false, capture: true };
+
     tiles.forEach((tile) => {
-      let touchHandled = false;
-      let touchStartY = 0;
-      let touchStartX = 0;
-      function doToggle() {
-        if (!isMobile()) return;
-        tile.classList.toggle('reveal');
-      }
+      let startX = 0;
+      let startY = 0;
+
       tile.addEventListener('touchstart', function (e) {
-        if (!isMobile()) return;
-        if (e.touches && e.touches[0]) {
-          touchStartX = e.touches[0].clientX;
-          touchStartY = e.touches[0].clientY;
-        }
-      }, { passive: true, capture: true });
+        if (!e.touches || !e.touches[0]) return;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      }, { passive: true });
+
       tile.addEventListener('touchend', function (e) {
         if (!isMobile()) return;
-        e.preventDefault();
-        touchHandled = true;
-        var dx = 0, dy = 0;
-        if (e.changedTouches && e.changedTouches[0]) {
-          dx = e.changedTouches[0].clientX - touchStartX;
-          dy = e.changedTouches[0].clientY - touchStartY;
+        if (!e.changedTouches || !e.changedTouches[0]) return;
+        const endX = e.changedTouches[0].clientX;
+        const endY = e.changedTouches[0].clientY;
+        const diffX = Math.abs(endX - startX);
+        const diffY = Math.abs(endY - startY);
+
+        if (diffX < 10 && diffY < 10) {
+          const wasActive = tile.classList.contains('active');
+          tiles.forEach(function (t) { t.classList.remove('active'); });
+          if (!wasActive) tile.classList.add('active');
+          if (e.cancelable) e.preventDefault();
         }
-        if (dx * dx + dy * dy < 400) doToggle();
-      }, opts);
+      }, { passive: false });
+
       tile.addEventListener('click', function (e) {
         if (!isMobile()) return;
-        if (touchHandled) {
-          touchHandled = false;
-          e.preventDefault();
-          e.stopPropagation();
-          return;
-        }
         e.preventDefault();
-        doToggle();
-      }, true);
-      tile.addEventListener('keydown', function (e) {
-        if (e.key !== 'Enter' && e.key !== ' ') return;
-        if (!isMobile()) return;
-        e.preventDefault();
-        doToggle();
+        const wasActive = tile.classList.contains('active');
+        tiles.forEach(function (t) { t.classList.remove('active'); });
+        if (!wasActive) tile.classList.add('active');
       });
     });
   }
-  initFormujemeTapTiles();
-  document.addEventListener('astro:page-load', initFormujemeTapTiles);
+  initFormujeme();
+  document.addEventListener('astro:page-load', initFormujeme);
 </script>
