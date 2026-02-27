@@ -42,7 +42,7 @@ import HeroLogoMobile from './HeroLogoMobile.astro';
     <div class="mt-8 grid grid-cols-12 gap-x-7 gap-y-8 md:gap-y-10">
       <!-- Col 1 -->
       <div class="col-span-12 flex flex-col gap-6 md:col-span-4 md:gap-8 w-full md:max-w-[380px] md:mx-auto">
-        <div class="section-tile formujeme-tile-tap group relative aspect-[3/4] max-h-[480px] w-full overflow-hidden bg-black cursor-pointer md:cursor-default" data-formujeme-tap-tile>
+        <div class="section-tile formujeme-tile-tap group relative aspect-[3/4] max-h-[480px] w-full overflow-hidden bg-black cursor-pointer md:cursor-default" data-formujeme-tap-tile role="button" tabindex="0" aria-label="Zobrazit popis projektu">
           <img src="/images/reamar-presale.webp" alt="" class="formujeme-tile-tap-img h-full w-full object-cover transition-opacity duration-300 md:group-hover:opacity-70" width="1080" height="1350" loading="lazy" />
           <div class="formujeme-tile-tap-overlay absolute inset-0 bg-black/0 transition-colors duration-300 md:group-hover:bg-black/50" aria-hidden="true"></div>
           <p class="formujeme-tile-tap-text absolute left-4 top-4 max-w-[85%] font-yellix text-[16px] font-medium leading-[19.2px] text-[#E4E2E2] opacity-0 transition-opacity duration-300 md:group-hover:opacity-100 md:left-5 md:top-5 formujeme-tile-text">
@@ -61,14 +61,14 @@ import HeroLogoMobile from './HeroLogoMobile.astro';
       <!-- Col 2: spacer 50px (mobile 25px) -->
       <div class="col-span-12 flex flex-col gap-6 md:col-span-4 md:gap-8 w-full md:max-w-[380px] md:mx-auto">
         <div class="h-[25px] md:h-[50px]" aria-hidden="true"></div>
-        <div class="section-tile formujeme-tile-tap group relative aspect-square w-full overflow-hidden bg-black cursor-pointer md:cursor-default" data-formujeme-tap-tile>
+        <div class="section-tile formujeme-tile-tap group relative aspect-square w-full overflow-hidden bg-black cursor-pointer md:cursor-default" data-formujeme-tap-tile role="button" tabindex="0" aria-label="Zobrazit popis projektu">
           <img src="/images/reamar-launch.webp" alt="" class="formujeme-tile-tap-img h-full w-full object-cover transition-opacity duration-300 md:group-hover:opacity-70" width="1000" height="1000" loading="lazy" />
           <div class="formujeme-tile-tap-overlay absolute inset-0 bg-black/0 transition-colors duration-300 md:group-hover:bg-black/50" aria-hidden="true"></div>
           <p class="formujeme-tile-tap-text absolute left-4 top-4 max-w-[85%] font-yellix text-[16px] font-medium leading-[19.2px] text-[#E4E2E2] opacity-0 transition-opacity duration-300 md:group-hover:opacity-100 md:left-5 md:top-5 formujeme-tile-text">
             Kompletní příprava od nuly. Název, brand, web, vizualizace a kampaně.<br /><span class="formujeme-tile-line2">První leady jsme získali ještě před spuštěním prodeje.</span>
           </p>
         </div>
-        <div class="section-tile formujeme-tile-tap group relative aspect-[3/4] max-h-[480px] w-full overflow-hidden bg-black cursor-pointer md:cursor-default" data-formujeme-tap-tile>
+        <div class="section-tile formujeme-tile-tap group relative aspect-[3/4] max-h-[480px] w-full overflow-hidden bg-black cursor-pointer md:cursor-default" data-formujeme-tap-tile role="button" tabindex="0" aria-label="Zobrazit popis projektu">
           <img src="/images/reamar-restart.webp" alt="" class="formujeme-tile-tap-img h-full w-full object-cover transition-opacity duration-300 md:group-hover:opacity-70" width="1080" height="1350" loading="lazy" />
           <div class="formujeme-tile-tap-overlay absolute inset-0 bg-black/0 transition-colors duration-300 md:group-hover:bg-black/50" aria-hidden="true"></div>
           <p class="formujeme-tile-tap-text absolute left-4 top-4 max-w-[85%] font-yellix text-[16px] font-medium leading-[19.2px] text-[#E4E2E2] opacity-0 transition-opacity duration-300 md:group-hover:opacity-100 md:left-5 md:top-5">
@@ -117,8 +117,12 @@ import HeroLogoMobile from './HeroLogoMobile.astro';
     }
   }
 
-  /* Na mobilu: zatmavení a text jen po kliknutí (třída .reveal) */
+  /* Na mobilu: overlay a text nechytají tap (jde na dlaždici), zatmavení a text jen po kliknutí (třída .reveal) */
   @media (max-width: 767px) {
+    .formujeme-tile-tap .formujeme-tile-tap-overlay,
+    .formujeme-tile-tap .formujeme-tile-tap-text {
+      pointer-events: none;
+    }
     .formujeme-tile-tap.reveal .formujeme-tile-tap-img {
       opacity: 0.7;
     }
@@ -135,12 +139,34 @@ import HeroLogoMobile from './HeroLogoMobile.astro';
   function initFormujemeTapTiles() {
     const tiles = document.querySelectorAll('[data-formujeme-tap-tile]');
     if (!tiles.length) return;
+    const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
     tiles.forEach((tile) => {
-      tile.addEventListener('click', (e) => {
-        const isMobile = window.matchMedia('(max-width: 767px)').matches;
-        if (!isMobile) return;
-        e.preventDefault();
+      let touchHandled = false;
+      function doToggle() {
+        if (!isMobile()) return;
         tile.classList.toggle('reveal');
+      }
+      tile.addEventListener('touchend', function (e) {
+        if (!isMobile()) return;
+        e.preventDefault();
+        touchHandled = true;
+        doToggle();
+      }, { passive: false });
+      tile.addEventListener('click', function (e) {
+        if (!isMobile()) return;
+        if (touchHandled) {
+          touchHandled = false;
+          e.preventDefault();
+          return;
+        }
+        e.preventDefault();
+        doToggle();
+      });
+      tile.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        if (!isMobile()) return;
+        e.preventDefault();
+        doToggle();
       });
     });
   }
