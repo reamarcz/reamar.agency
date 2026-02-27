@@ -63,10 +63,11 @@ export const server = {
       }
       const body = buildEmailBody(input as Record<string, unknown>);
       const resend = new Resend(apiKey);
+      const replyTo = email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : 'info@reamar.cz';
       const { data, error } = await resend.emails.send({
-        from: 'REAMAR partners@reamar.group',
+        from: 'REAMAR <partners@reamar.group>',
         to: 'info@reamar.cz',
-        reply_to: 'info@reamar.cz',
+        reply_to: replyTo,
         subject: 'Nová poptávka z webu REAMAR',
         text: body,
         html: '<pre style="font-family:sans-serif;white-space:pre-wrap;">' + body.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>',
