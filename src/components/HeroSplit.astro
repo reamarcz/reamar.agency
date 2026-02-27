@@ -159,12 +159,12 @@ const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
       muted
       loop
       playsinline
-      preload="none"
+      preload="auto"
       data-hero-video="left"
       data-src={videoLeft}
       aria-hidden="true"
     >
-      <source type="video/mp4" />
+      <source type="video/mp4" src={videoLeft} />
     </video>
     <div class="absolute inset-0 bg-black/10 pointer-events-none" aria-hidden="true"></div>
   </div>
@@ -175,12 +175,12 @@ const videoRight = '/videos/' + encodeURIComponent('video Pro klienty.mp4');
       muted
       loop
       playsinline
-      preload="none"
+      preload="auto"
       data-hero-video="right"
       data-src={videoRight}
       aria-hidden="true"
     >
-      <source type="video/mp4" />
+      <source type="video/mp4" src={videoRight} />
     </video>
     <div class="absolute inset-0 bg-black/10 pointer-events-none" aria-hidden="true"></div>
   </div>
