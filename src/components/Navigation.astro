@@ -48,6 +48,26 @@ const isSubpage = currentPath !== '/' && currentPath !== '';
         <a href={link.href} class="font-yellix text-[24px] font-medium text-black leading-tight hover:opacity-70 transition-opacity" data-drawer-close>{link.label}</a>
       ))}
     </nav>
+
+    <!-- Market report card -->
+    <div class="px-12 mt-10 pt-8 border-t border-black/8">
+      <a href="/prazsky-rezidencni-trh" class="market-card block border border-black/12 p-4 relative" data-drawer-close>
+        <span class="absolute top-3 right-3 text-[8px] font-medium uppercase tracking-[0.15em] text-white bg-black px-1.5 py-0.5">Zobrazit</span>
+        <div class="flex items-end gap-[4px] h-6 mb-3">
+          <span class="mbar" style="height:38%;animation-delay:0s"></span>
+          <span class="mbar" style="height:68%;animation-delay:0.22s"></span>
+          <span class="mbar" style="height:88%;animation-delay:0.44s"></span>
+          <span class="mbar" style="height:52%;animation-delay:0.11s"></span>
+          <span class="mbar" style="height:100%;animation-delay:0.33s"></span>
+          <span class="mbar" style="height:74%;animation-delay:0.55s"></span>
+          <span class="mbar" style="height:60%;animation-delay:0.18s"></span>
+        </div>
+        <p class="text-[9px] font-medium uppercase tracking-[0.18em] text-black/30 mb-1">Praha · Q1 2026</p>
+        <p class="font-yellix text-[15px] font-medium text-black leading-snug">Pražský rezidenční trh</p>
+        <p class="market-sub text-[11px] text-black/35 mt-0.5 transition-colors duration-200">Data, grafy & analýza →</p>
+      </a>
+    </div>
+
     <div class="mt-auto pt-8 pb-10 pl-12 pr-8 md:hidden">
       <div class="font-yellix text-[16px] leading-relaxed space-y-4 mb-6">
         <div><p class="text-[14px] text-black/70">Adresa</p><p class="font-medium text-black">Záběhlický zámek, Praha 10</p></div>
@@ -116,6 +136,28 @@ const isSubpage = currentPath !== '/' && currentPath !== '';
     opacity: 1;
     pointer-events: auto;
     transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* Market report card */
+  .market-card {
+    transition: transform 0.2s ease;
+  }
+  .market-card:hover {
+    transform: translateY(-2px);
+  }
+  .market-card:hover .market-sub {
+    color: rgba(0,0,0,0.65);
+  }
+  .mbar {
+    width: 5px;
+    background: rgba(0,0,0,0.18);
+    border-radius: 1px 1px 0 0;
+    transform-origin: bottom;
+    animation: mbar-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes mbar-pulse {
+    0%, 100% { opacity: 0.35; transform: scaleY(0.8); }
+    50%       { opacity: 0.9;  transform: scaleY(1); }
   }
 </style>
 
