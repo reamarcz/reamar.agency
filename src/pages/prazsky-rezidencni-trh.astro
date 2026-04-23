@@ -1064,7 +1064,7 @@ const topHouses2025 = [
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" is:inline></script>
 
 <script is:inline>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('astro:page-load', function () {
 
   // ── Counter animation ──────────────────────────────────────────────
   const counters = document.querySelectorAll('.counter');
@@ -1101,6 +1101,7 @@ document.addEventListener('DOMContentLoaded', function () {
   liqBars.forEach(b => observerL.observe(b));
 
   // ── Chart defaults ──────────────────────────────────────────────────
+  if (typeof Chart === 'undefined') return;
   Chart.defaults.font.family = "'Yellix', system-ui, sans-serif";
   Chart.defaults.color = 'rgba(0,0,0,0.45)';
   Chart.defaults.plugins.legend.display = false;
