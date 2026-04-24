@@ -16,15 +16,16 @@ interface Props {
   ogTitle?: string;
   ogDescription?: string;
   canonical?: string;
+  ogType?: string;
 }
-const { title = 'REAMAR | Reality. Marketing.', description = 'Propojujeme marketing a obchod pro realitní developery.', image, ogTitle, ogDescription, canonical } = Astro.props;
+const { title = 'REAMAR | Reality. Marketing.', description = 'Propojujeme marketing a obchod pro realitní developery.', image, ogTitle, ogDescription, canonical, ogType } = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang="cs" class="overflow-x-hidden w-full">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <SEO title={title} description={description} image={image} ogTitle={ogTitle} ogDescription={ogDescription} canonical={canonical} />
+    <SEO title={title} description={description} image={image} ogTitle={ogTitle} ogDescription={ogDescription} canonical={canonical} ogType={ogType} />
     <link rel="icon" type="image/svg+xml" href="/images/Reamar%20SVG.svg" />
     <ViewTransitions />
     <script is:inline>

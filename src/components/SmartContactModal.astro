@@ -258,6 +258,8 @@ const clientServices = ['Vyhledání nemovitosti', 'Prodej nemovitosti', 'Market
       if (formView) formView.classList.remove('hidden');
       if (successView) successView.classList.add('hidden');
       if (submitBtn) { submitBtn.textContent = 'Odeslat'; submitBtn.disabled = false; }
+      const titleEl = document.getElementById('smart-contact-title');
+      if (titleEl) titleEl.textContent = options.customTitle || 'Poptávkový formulář';
       overlay.classList.remove('opacity-0', 'pointer-events-none');
       overlay.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';

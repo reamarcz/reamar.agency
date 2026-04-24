@@ -21,4 +21,193 @@ import Footer from '../components/Footer.astro';
   <SectionKlientyServices />
   <SectionZahranici />
   <Footer />
+
+  <!-- Market Intelligence Pill — homepage only -->
+  <div id="mkt-pill">
+    <a href="/prazsky-rezidencni-trh" id="mkt-pill-link" class="font-yellix">
+      <svg class="mkt-spark" width="46" height="30" viewBox="0 0 46 30" fill="none" aria-hidden="true">
+        <polyline class="spark-line" points="2,26 10,19 18,23 28,11 36,16 44,4"
+          stroke="rgba(0,0,0,0.28)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="mkt-txt">
+        <span class="mkt-title">Pražský rezidenční trh</span>
+        <span class="mkt-sub"><span class="mkt-live"></span>Market Data · Q1 2026</span>
+      </div>
+      <span class="mkt-arr">→</span>
+    </a>
+    <button id="mkt-pill-close" aria-label="Zavřít">×</button>
+  </div>
 </Layout>
+
+<style>
+  #mkt-pill {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 40;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+    pointer-events: none;
+  }
+  #mkt-pill.mkt-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  #mkt-pill-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 100px;
+    padding: 8px 18px 8px 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+  }
+  #mkt-pill-link:hover { background: rgba(255, 255, 255, 0.99); box-shadow: 0 6px 28px rgba(0, 0, 0, 0.12); }
+  #mkt-pill-link:hover .mkt-arr { transform: translateX(2px); }
+  .mkt-spark {
+    flex-shrink: 0;
+    overflow: visible;
+  }
+  .spark-line {
+    stroke-dasharray: 68;
+    stroke-dashoffset: 68;
+    animation: spark-draw 3.2s ease-in-out infinite;
+  }
+  @keyframes spark-draw {
+    0%   { stroke-dashoffset: 68; opacity: 0; }
+    8%   { opacity: 1; }
+    68%  { stroke-dashoffset: 0; opacity: 1; }
+    84%  { stroke-dashoffset: 0; opacity: 0.85; }
+    97%  { stroke-dashoffset: 0; opacity: 0; }
+    100% { stroke-dashoffset: 68; opacity: 0; }
+  }
+  .mkt-live {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #16a34a;
+    margin-right: 5px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+    animation: live-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes live-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.65); }
+  }
+  .mkt-txt {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .mkt-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #0a0a0a;
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+  .mkt-sub {
+    font-size: 9.5px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.38);
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+  .mkt-arr {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.35);
+    margin-left: 2px;
+    transition: transform 0.2s ease;
+    line-height: 1;
+  }
+  #mkt-pill-close {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(240, 240, 240, 0.97);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    line-height: 1;
+    padding: 0;
+  }
+  #mkt-pill-close:hover {
+    background: rgba(220, 220, 220, 0.99);
+    color: #000;
+  }
+
+  /* Mobile: full-width strip fixed at bottom */
+  @media (max-width: 767px) {
+    #mkt-pill {
+      bottom: 0;
+      right: 0;
+      left: 0;
+      width: 100%;
+    }
+    #mkt-pill-link {
+      border-radius: 0;
+      padding: 14px 52px 14px 20px;
+      padding-bottom: calc(14px + env(safe-area-inset-bottom));
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      gap: 12px;
+    }
+    .mkt-spark { display: none; }
+    .mkt-title { font-size: 14px; }
+    #mkt-pill-close {
+      position: absolute;
+      top: 50%;
+      right: 18px;
+      transform: translateY(-50%);
+    }
+  }
+</style>
+
+<script>
+  function initMarketPill() {
+    const pill = document.getElementById('mkt-pill');
+    const closeBtn = document.getElementById('mkt-pill-close');
+    if (!pill || !closeBtn) return;
+
+    if (sessionStorage.getItem('mkt-pill-dismissed')) return;
+
+    const showOnScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.85) {
+        pill.classList.add('mkt-visible');
+        window.removeEventListener('scroll', showOnScroll);
+      }
+    };
+
+    setTimeout(() => {
+      window.addEventListener('scroll', showOnScroll, { passive: true });
+    }, 400);
+
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      pill.classList.remove('mkt-visible');
+      sessionStorage.setItem('mkt-pill-dismissed', '1');
+    });
+  }
+
+  document.addEventListener('astro:page-load', initMarketPill);
+</script>

@@ -65,10 +65,111 @@ const topHouses2025 = [
 ];
 ---
 <Layout
-  title="Pražský rezidenční trh | REAMAR"
-  description="Prague Residential Intelligence Report Q1 2026 – ceny, absorpce, likvidita, obvody, nájemní výnosy a výhled pro investory a developery."
+  title="Pražský rezidenční trh 2026 | Ceny bytů Praha, novostavby, vývoj trhu"
+  description="Aktuální data o cenách bytů v Praze, trhu novostaveb a vývoji rezidenčního trhu. Přehled pro investory a developery."
+  ogTitle="Pražský rezidenční trh 2026 – Ceny bytů & analýza novostaveb"
+  image="/images/PragueResidentialIntelligence.webp"
   canonical="https://www.reamar.cz/prazsky-rezidencni-trh"
+  ogType="article"
 >
+
+<!-- ── Structured data ───────────────────────────────────────────────────── -->
+<script type="application/ld+json" is:inline>
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Pražský rezidenční trh Q1 2026 – Ceny bytů, absorpce a výhled",
+      "description": "Kompletní datový přehled pražského rezidenčního trhu. Průměrná cena 176 464 Kč/m², absorpce 26 %, tržní mapa a výhled 2026–2027.",
+      "datePublished": "2026-04-01",
+      "dateModified": "2026-04-24",
+      "author": {
+        "@type": "Organization",
+        "name": "REAMAR",
+        "url": "https://www.reamar.cz"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "REAMAR",
+        "url": "https://www.reamar.cz",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.reamar.cz/images/logo-rig-b.svg"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.reamar.cz/prazsky-rezidencni-trh"
+      },
+      "image": "https://www.reamar.cz/images/PragueResidentialIntelligence.webp",
+      "keywords": "pražský rezidenční trh, ceny bytů Praha 2026, novostavby Praha, rezidenční development Praha, průměrná cena bytu Praha, investice do nemovitostí Praha"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "REAMAR",
+          "item": "https://www.reamar.cz"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Pražský rezidenční trh 2026",
+          "item": "https://www.reamar.cz/prazsky-rezidencni-trh"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Jaká je průměrná cena novostavby v Praze v roce 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Průměrná cena novostavby v Praze dosáhla v Q1 2026 hodnoty 176 464 Kč/m², což představuje meziroční nárůst o 10,4 %. Ceny rostou 8. čtvrtletí v řadě."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kde jsou nejdražší a nejlevnější novostavby v Praze?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nejdražší jsou novostavby v Praze 7 (průměr 252 000 Kč/m²). Nejdostupnější nabídka je v Praze 22 (146 000 Kč/m²), Praze 18 (147 000 Kč/m²) a Praze 13 (149 000 Kč/m²)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kolik novostaveb se prodalo v Praze v Q1 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "V prvním čtvrtletí roku 2026 bylo prodáno 1 504 novostaveb. Absorpce trhu dosáhla 26 % z celkové nabídky 5 852 dostupných jednotek. Nejaktivnější obvody jsou Praha 9, 5, 4 a 10."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Jaký je výhled cen bytů v Praze na rok 2026 a 2027?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Základní scénář predikuje růst cen o 4–5 % ročně. Průměrná cena by mohla dosáhnout 182 000 Kč/m² ve druhém čtvrtletí 2026 a přibližně 192 000 Kč/m² na konci roku 2026."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Jaký je hrubý nájemní výnos z novostavby v Praze?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hrubý nájemní výnos z novostavby v Praze se pohybuje mezi 2,7 % a 3,0 %. Nejlepší poměr nabízejí byty 2+kk s výnosem přibližně 3,0 % ročně."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
 
 <!-- ── HERO ─────────────────────────────────────────────────────────────── -->
 <section class="pt-32 pb-20 md:pt-44 md:pb-28 bg-white">
@@ -79,7 +180,7 @@ const topHouses2025 = [
         Pražský<br/>rezidenční trh
       </h1>
       <p class="mt-6 text-lg text-black/60 max-w-xl leading-relaxed">
-        Komplexní datový přehled novostaveb v Praze. Ceny, absorpce, likvidita, obvody a výhled – vše na jednom místě.
+        Komplexní datový přehled novostaveb v Praze. Ceny, absorpce, likvidita i výhled trhu přehledně na jednom místě.
       </p>
       <p class="mt-3 text-xs text-black/35">Zdroje: BuiltMind, Deloitte, Sreality, ČNB</p>
     </div>
@@ -162,7 +263,7 @@ const topHouses2025 = [
                 class="h-full min-h-[90px] w-full object-cover"
               />
               <div>
-                <p class="text-sm font-medium text-white mb-2 leading-relaxed">{item.title}</p>
+                <h3 class="text-sm font-medium text-white mb-2 leading-relaxed">{item.title}</h3>
                 <p class="text-sm text-white/80 leading-relaxed">{item.body}</p>
               </div>
             </article>
@@ -214,10 +315,7 @@ const topHouses2025 = [
         <p class="text-xs font-medium tracking-widest uppercase text-black/40 mb-2">2014 – 2026</p>
         <h2 class="font-yellix text-2xl md:text-3xl font-medium text-black">Historický vývoj cen</h2>
       </div>
-      <div class="flex gap-6 text-xs text-black/50">
-        <span class="flex items-center gap-2"><span class="w-8 h-0.5 bg-black inline-block"></span>Skutečnost</span>
-        <span class="flex items-center gap-2"><span class="w-8 h-0.5 bg-black/30 inline-block border-dashed border-b border-black/30"></span>Predikce</span>
-      </div>
+      <p class="text-xs font-medium tracking-[0.18em] uppercase text-black/30">Pražské developerské projekty</p>
     </div>
     <div class="bg-white p-4 md:p-8" data-aos="fade-up" data-aos-delay="80">
       <canvas id="chartHistory" style="max-height:420px"></canvas>
@@ -263,7 +361,7 @@ const topHouses2025 = [
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
       <!-- Chart -->
       <div class="lg:col-span-2 bg-[#f5f5f3] p-4 md:p-8" data-aos="fade-right">
-        <p class="text-xs font-medium uppercase tracking-widest text-black/40 mb-4">Nabídka podle dispozic (segmenty ceny) — počet jednotek</p>
+        <h3 class="text-xs font-medium uppercase tracking-widest text-black/40 mb-4">Nabídka podle dispozic (segmenty ceny) — počet jednotek</h3>
         <canvas id="chartPriceTiers" style="max-height:360px"></canvas>
         <!-- Legend -->
         <div class="mt-5 flex flex-wrap gap-x-6 gap-y-2">
@@ -334,7 +432,7 @@ const topHouses2025 = [
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
       <div class="bg-[#f5f5f3] p-4 md:p-8" data-aos="fade-right">
-        <p class="text-xs font-medium uppercase tracking-widest text-black/40 mb-4">Kč/m² — dostupné vs. prodané</p>
+        <h3 class="text-xs font-medium uppercase tracking-widest text-black/40 mb-4">Kč/m² — dostupné vs. prodané</h3>
         <canvas id="chartLayout" style="max-height:320px"></canvas>
       </div>
       <div data-aos="fade-left" data-aos-delay="60">
@@ -379,7 +477,7 @@ const topHouses2025 = [
         </div>
         <!-- Menší vs větší -->
         <div class="mt-8">
-          <p class="text-xs font-medium uppercase tracking-widest text-black/40 mb-4">Menší vs. větší byt v rámci dispozice</p>
+          <h3 class="text-xs font-medium uppercase tracking-widest text-black/40 mb-4">Menší vs. větší byt v rámci dispozice</h3>
           <div class="space-y-3">
             {[
               { layout: '1+kk', smaller: 206000, larger: 188000, note: 'Malé 1+kk – investiční prémie' },
@@ -621,7 +719,7 @@ const topHouses2025 = [
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
         <!-- Bubble chart + quick cards -->
-        <div class="bg-white border border-black/8 p-6 md:p-10 h-full flex flex-col" data-aos="fade-left" data-aos-delay="80">
+        <div class="hidden md:flex bg-white border border-black/8 p-6 md:p-10 h-full flex-col" data-aos="fade-left" data-aos-delay="80">
           <p class="text-sm font-medium uppercase tracking-[0.16em] text-black mb-5 leading-tight">
             <span class="text-[10px] md:text-[11px] text-black/45">Městské obvody</span><br />
             Cena/m² vs. Prodeje<br />
@@ -684,7 +782,7 @@ const topHouses2025 = [
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
       <!-- Top developers -->
       <div data-aos="fade-right">
-        <p class="text-xs font-medium uppercase tracking-widest text-black/40 mb-4">Top 10 developerů — prodeje Q1 2026</p>
+        <h3 class="text-xs font-medium uppercase tracking-widest text-black/40 mb-4">Top 10 developerů — prodeje Q1 2026</h3>
         <div class="space-y-2">
           {[
             { n: 'Central Group', q1: 211, y: 1107 },
@@ -715,7 +813,7 @@ const topHouses2025 = [
       </div>
       <!-- Top projects -->
       <div data-aos="fade-left" data-aos-delay="60">
-        <p class="text-xs font-medium uppercase tracking-widest text-black/40 mb-4">Top 10 projektů — prodeje Q1 2026</p>
+        <h3 class="text-xs font-medium uppercase tracking-widest text-black/40 mb-4">Top 10 projektů — prodeje Q1 2026</h3>
         <div class="space-y-2">
           {[
             { n: 'Kolbenova park', dev: 'CPI', loc: 'P9', q1: 63, badge: 'Nový lídr' },
@@ -814,7 +912,7 @@ const topHouses2025 = [
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <!-- Yield cards -->
       <div class="space-y-4" data-aos="fade-right">
-        <p class="text-xs font-medium uppercase tracking-widest text-black/40">Hrubý výnos z nájmu — novostavby Praha</p>
+        <h3 class="text-xs font-medium uppercase tracking-widest text-black/40">Hrubý výnos z nájmu — novostavby Praha</h3>
         {[
           { l: '1+kk', price: '6 800 000', rent: '15 610', yield: 2.76, best: false },
           { l: '2+kk', price: '9 776 000', rent: '24 530', yield: 3.01, best: true },
@@ -841,7 +939,7 @@ const topHouses2025 = [
       </div>
       <!-- Rent by district -->
       <div class="lg:col-span-2 bg-white p-4 md:p-8" data-aos="fade-left" data-aos-delay="60">
-        <p class="text-xs font-medium uppercase tracking-widest text-black/40 mb-6">Průměrný nájem dle části Prahy (Kč/m²/měsíc)</p>
+        <h3 class="text-xs font-medium uppercase tracking-widest text-black/40 mb-6">Průměrný nájem dle části Prahy (Kč/m²/měsíc)</h3>
         <canvas id="chartRent" style="max-height:360px"></canvas>
         <div class="mt-6 grid grid-cols-2 md:grid-cols-3 gap-3 text-xs text-black/50">
           <div class="border-l border-black/20 pl-3">
@@ -873,7 +971,7 @@ const topHouses2025 = [
       <!-- Price forecast chart -->
       <div data-aos="fade-right">
         <div class="bg-[#f5f5f3] p-4 md:p-8">
-          <p class="text-xs font-medium uppercase tracking-widest text-black/40 mb-4">Predikce cen Kč/m² (základní scénář +4–5 % p.a.)</p>
+          <h3 class="text-xs font-medium uppercase tracking-widest text-black/40 mb-4">Predikce cen Kč/m² (základní scénář +4–5 % p.a.)</h3>
           <canvas id="chartForecast" style="max-height:280px"></canvas>
         </div>
         <div class="mt-4 grid grid-cols-3 gap-3">
@@ -1483,6 +1581,24 @@ document.addEventListener('astro:page-load', function () {
   });
 
 });
+</script>
+
+<script>
+  document.addEventListener('astro:page-load', function () {
+    if (sessionStorage.getItem('pri-modal-shown')) return;
+
+    const timer = setTimeout(function () {
+      if (sessionStorage.getItem('pri-modal-shown')) return;
+      const overlay = document.getElementById('smart-contact-overlay');
+      if (overlay && !overlay.classList.contains('pointer-events-none')) return;
+      sessionStorage.setItem('pri-modal-shown', '1');
+      window.dispatchEvent(new CustomEvent('smart-contact-open', {
+        detail: { customTitle: 'Rozhodujte se na základě dat' }
+      }));
+    }, 120000);
+
+    document.addEventListener('astro:before-swap', function () { clearTimeout(timer); }, { once: true });
+  });
 </script>
 
 </Layout>
