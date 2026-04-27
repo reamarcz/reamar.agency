@@ -154,30 +154,19 @@ import Footer from '../components/Footer.astro';
     color: #000;
   }
 
-  /* Mobile: full-width strip fixed at bottom */
+  /* Mobile: pill vpravo dole stejně jako desktop, jen trochu blíž k okraji */
   @media (max-width: 767px) {
     #mkt-pill {
-      bottom: 0;
-      right: 0;
-      left: 0;
-      width: 100%;
+      bottom: calc(1.25rem + env(safe-area-inset-bottom));
+      right: 1rem;
     }
     #mkt-pill-link {
-      border-radius: 0;
-      padding: 14px 52px 14px 20px;
-      padding-bottom: calc(14px + env(safe-area-inset-bottom));
-      border-left: none;
-      border-right: none;
-      border-bottom: none;
-      gap: 12px;
+      padding-left: 16px;
     }
     .mkt-spark { display: none; }
-    .mkt-title { font-size: 14px; }
+    .mkt-title { font-size: 13px; }
     #mkt-pill-close {
-      position: absolute;
-      top: 50%;
-      right: 18px;
-      transform: translateY(-50%);
+      right: 5px;
     }
   }
 </style>
