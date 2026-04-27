@@ -157,7 +157,7 @@ import Footer from '../components/Footer.astro';
   /* Mobile: pill vpravo dole stejně jako desktop, jen trochu blíž k okraji */
   @media (max-width: 767px) {
     #mkt-pill {
-      bottom: calc(1.25rem + env(safe-area-inset-bottom));
+      bottom: calc(var(--vv-gap, 0px) + 1.25rem + env(safe-area-inset-bottom));
       right: 1rem;
     }
     #mkt-pill-link {
@@ -196,6 +196,16 @@ import Footer from '../components/Footer.astro';
       pill.classList.remove('mkt-visible');
       sessionStorage.setItem('mkt-pill-dismissed', '1');
     });
+
+    if (window.visualViewport) {
+      const syncVV = () => {
+        if (window.innerWidth >= 768) return;
+        const gap = Math.max(0, window.innerHeight - window.visualViewport.height);
+        document.documentElement.style.setProperty('--vv-gap', `${gap}px`);
+      };
+      window.visualViewport.addEventListener('resize', syncVV, { passive: true });
+      syncVV();
+    }
   }
 
   document.addEventListener('astro:page-load', initMarketPill);
