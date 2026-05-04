@@ -1,0 +1,1074 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+
+const alternaLogo = '/images/Alterna/Alterna%20logo.svg';
+const squareLogo  = '/images/Alterna/Square_svg_logo.svg';
+const kampan2     = '/images/Alterna/Alterna%20-%20kampan%282%29.webp';
+const kampan3     = '/images/Alterna/Alterna%20-%20kampan%283%29.webp';
+const kampan4     = '/images/Alterna/Alterna%20-%20kampan%284%29.webp';
+
+/** Top 10 na desktopu, prvních 5 na mobilu (< md) — bez horizontálního scrollu */
+/** Výška plochy sloupců (px) – menší = nižší měřítko grafu */
+const chartPlotH = 200;
+
+const chartData = [
+  { name: 'Alterna',                  value: 26, main: true },
+  { name: 'Nová Květice',             value: 24 },
+  { name: 'Na Malé Růži 6. Etapa',    value: 18 },
+  { name: 'Klecanská Alej',           value: 18 },
+  { name: 'Bydlení Jinočany',         value: 15 },
+  { name: 'Rodinné domy Satalice',    value: 15 },
+  { name: 'Řadové domy Buštěhrad',    value: 15 },
+  { name: 'Praha - Park Nehvizdy',    value: 12 },
+  { name: 'Domy Bílý Vrch',           value: 11 },
+  { name: 'Zahradní čtvrť Kyje',      value: 11 },
+];
+
+const klicoveKroky = [
+  { label: 'Cílová skupina',     titleTop: 'MLADÉ RODINY',              titleBot: 'VÝCHOD A JIH PRAHY',               body: 'Kupující, kteří řešili, zda zůstat v bytě v Praze, nebo získat více prostoru a zahradu za hranicí města.' },
+  { label: 'Positioning',        titleTop: 'DŮM SE ZAHRADOU MÍSTO',    titleBot: 'KOMPROMISU V BYTĚ',                body: 'Z projektu jsme udělali jasně pochopitelnou variantu pro rodinné bydlení.' },
+  { label: 'Komunikace',         titleTop: 'NOVÝ JAZYK PROJEKTU',      titleBot: '',                                  body: 'Nová komunikace postavená na rodinném životě, prostoru a vznikající komunitě posílila důvěru i představivost kupujících.' },
+  { label: 'Sales architektura', titleTop: 'PRÁCE S ETAPAMI',          titleBot: '',                                  body: 'Místo rozmělnění nabídky jsme postupně budovali prodejní momentum. Pozornost trhu jsme nejprve soustředili na I. etapu a její úspěch využili při spuštění II. etapy.' },
+  { label: 'Lead generation',    titleTop: 'ONLINE A OFFLINE NÁSTROJE', titleBot: 'V JEDNOM FUNNELU',                body: 'Zájem jsme nestavěli jen na reklamě. Kampaně, web i vzorový dům fungovaly jako navazující systém pro získávání relevantních zájemců.' },
+];
+---
+<Layout
+  title="Alterna Sluštice – Reference | REAMAR"
+  description="Z neznámého projektu jsme vytvořili nejprodávanější rodinné domy v Praze a okolí. Reference REAMAR pro developerský projekt Alterna Sluštice."
+  ogTitle="Alterna Sluštice – Reference REAMAR"
+  canonical="https://www.reamar.cz/alterna"
+  image="/images/Alterna/Alterna-hero.webp"
+>
+
+<!-- ── HERO ─────────────────────────────────────────────────────────────── -->
+<section id="alterna-hero" data-hero-transparent class="relative h-screen min-h-[580px] flex flex-col justify-end bg-black overflow-hidden">
+  <!-- Mobil: Alterna-heromobil | Desktop beze změny -->
+  <img
+    src="/images/Alterna/Alterna-heromobil.webp"
+    alt="Alterna Sluštice"
+    class="absolute inset-0 h-full w-full object-cover object-center md:hidden"
+    width="941"
+    height="1672"
+    fetchpriority="high"
+  />
+  <img
+    src="/images/Alterna/Alterna-hero.webp"
+    alt="Alterna Sluštice"
+    class="absolute inset-0 hidden h-full w-full object-cover object-center md:block"
+    width="1920"
+    height="1080"
+    fetchpriority="high"
+  />
+  <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10"></div>
+
+  <div class="relative z-10 mx-auto w-full max-w-none">
+    <div class="mx-auto max-w-[1280px] w-[90%] pb-[max(2.5rem,calc(0.75rem+env(safe-area-inset-bottom)))] md:pb-14">
+      <!-- Label + Claim -->
+      <p class="text-[11px] font-medium tracking-[0.22em] uppercase text-white/70 mb-4">Reference</p>
+      <h1 class="font-yellix text-[clamp(1.5rem,3vw,2.4rem)] font-medium leading-[1.12] tracking-tight text-white max-w-xl">
+        Cesta k nejprodávanějším<br />rodinným domům<br />v Praze a okolí
+      </h1>
+      <a href="#alterna-story" class="inline-block mt-4 text-sm text-white/65 underline underline-offset-4 hover:text-white transition-colors">Přečíst</a>
+
+      <!-- Bottom bar: šipka uvnitř tlačítka přímo před „alternaslustice.cz“ -->
+      <div class="mt-10 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+        <a
+          href="https://www.alternaslustice.cz"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 text-sm font-medium text-white border border-white/40 bg-white/5 px-4 py-2 hover:bg-white/15 transition-colors"
+        >
+          <img
+            src="/images/arrow-1.svg"
+            alt=""
+            aria-hidden="true"
+            class="h-4 w-4 shrink-0 opacity-95"
+            width="16"
+            height="16"
+          />
+          alternaslustice.cz
+        </a>
+        <img src={alternaLogo} alt="Alterna" class="h-5 md:h-6 w-auto hero-logo-invert" width="120" height="30" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STORY ─────────────────────────────────────────────────────────────── -->
+<section id="alterna-story" class="pt-20 pb-0 md:pt-32 bg-white">
+  <div class="mx-auto max-w-[1280px] w-[90%]">
+
+    <!-- Title + Klient -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-20 md:mb-28">
+      <div class="lg:col-span-7" data-aos="fade-right">
+        <h2 class="font-yellix text-[1.75rem] md:text-[2.2rem] font-medium leading-tight text-black mb-5">
+          Z neznámého projektu jsme vytvořili<br class="hidden md:block" />nejprodávanější rodinné domy v Praze
+        </h2>
+        <p class="text-sm text-black/55 leading-relaxed max-w-lg">
+          Alterna měla silný produkt, ale slabou tržní čitelnost. Projekt jsme nově vymezili pro mladé rodiny hledající alternativu k bytu v Praze a postavili jsme kolem něj nový prodejní příběh. Díky přesnému positioningu, nové komunikaci a chytré práci s etapami se projekt zařadil na špičku trhu.
+        </p>
+      </div>
+      <div class="lg:col-span-5 flex gap-12 lg:justify-end lg:items-start lg:pt-1" data-aos="fade-left" data-aos-delay="60">
+        <div>
+          <p class="text-[10px] font-medium tracking-[0.18em] uppercase text-black/35 mb-2">Klient</p>
+          <img src={squareLogo} alt="Square" class="h-[18px] w-auto object-contain" width="80" height="18" />
+        </div>
+        <div>
+          <p class="text-[10px] font-medium tracking-[0.18em] uppercase text-black/35 mb-2">Služby</p>
+          <p class="text-sm font-medium text-black">Full Marketing & Sales</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bar chart (layout + styling pod referenčním screenshotem BuiltMind) -->
+    <div data-aos="fade-up" data-aos-delay="40" class="mx-auto ac-chart-wrap">
+      <div class="ac-chart-head">
+        <div class="ac-chart-head__row">
+          <a
+            href="/prazsky-rezidencni-trh"
+            class="ac-chart-title"
+          >
+            Nejprodávanější projekty rodinných domů, Praha a okolí, 2025
+          </a>
+        </div>
+      </div>
+      <!-- padding-bottom: místo pro štítky osy X otočené o 45° -->
+      <div class="ac-chart-scroll">
+        <div id="alterna-chart" class="ac-root" style={`--plot-h:${chartPlotH}px`}>
+          <div class="ac-y" aria-hidden="true">
+            {[30, 25, 20, 15, 10, 5, 0].map((v) => (
+              <span style={`--ty:${((30 - v) / 30) * 100}%`}>{v}</span>
+            ))}
+          </div>
+          <div class="ac-body">
+            {chartData.map((item, i) => (
+              <div
+                class:list={['chart-col', i >= 5 && 'chart-col--desktop-extra']}
+                data-tip={`${item.name}: ${item.value}`}
+              >
+                <!-- výška plotu = chartPlotH; štítky X až pod slotem -->
+                <div class="chart-col-barslot">
+                  <div
+                    class="ac-bar"
+                    style={`--bh:${Math.round((item.value / 30) * chartPlotH)}px`}
+                  >
+                    {item.main && (
+                      <div class="ac-bar-logo-wrap">
+                        <img
+                          src={alternaLogo}
+                          alt="Alterna"
+                          class="ac-bar-logo"
+                          width="140"
+                          height="36"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div class="ac-lbl-wrap">
+                  <span class="ac-lbl">{item.name}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div id="chart-tooltip" class="chart-tooltip" aria-hidden="true" />
+      </div>
+      <div class="ac-chart-foot">
+        <a href="/prazsky-rezidencni-trh" class="ac-chart-source">
+          <span class="ac-chart-source__zdroj">zdroj</span>
+          <img src="/images/builtmind-logo.png" alt="" class="ac-chart-source__logo" width="56" height="14" />
+        </a>
+      </div>
+    </div>
+
+    <!-- Quote + cycling image (asymetrická dvousloupcová kompozice) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-y-12 lg:gap-x-0 mt-28 md:mt-36 lg:items-start">
+      <div class="lg:col-span-5 max-w-[min(100%,30rem)] xl:pr-4" data-aos="fade-right">
+        <p class="font-yellix text-[1.1rem] md:text-[1.2rem] font-medium leading-[1.55] text-black">
+          „Klíčem nebyl vyšší mediální tlak, ale správná interpretace produktu pro konkrétního kupujícího. Projekt jsme přestali komunikovat jako soubor domů a začali ho stavět jako jasnou alternativu k bytu a nově <span class="underline decoration-black/45 underline-offset-[3px]">vznikající komunitu mladých&nbsp;rodin</span>. Tím jsme zlepšili čitelnost projektu, výkon kampaní i celkové tempo prodeje.“
+        </p>
+      </div>
+      <div class="lg:col-span-6 lg:col-start-7 lg:pt-8 xl:pt-10 xl:pl-6" data-aos="fade-left" data-aos-delay="60">
+        <div class="ml-auto w-full max-w-2xl lg:max-w-none">
+          <div class="relative overflow-hidden" style="aspect-ratio:4/3; max-height:min(400px,52vw)">
+            <img id="slide-a" src="/images/Alterna/Alterna-Bungalov.webp"    alt="Alterna" class="slide-img" width="800" height="600" loading="lazy" />
+            <img id="slide-b" src="/images/Alterna/Alterna-DoubleBlock.webp" alt="Alterna" class="slide-img slide-hidden" width="800" height="600" loading="lazy" />
+            <img id="slide-c" src="/images/Alterna/Alterna-TwoStory.webp"    alt="Alterna" class="slide-img slide-hidden" width="800" height="600" loading="lazy" />
+          </div>
+          <p class="mt-4 text-xs text-black/40 text-right max-w-2xl ml-auto leading-snug">
+            Díky silnému prodejnímu tempu<br />
+            jsme mohli <strong class="text-black font-medium">zdražit o 15&nbsp;%</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VÝCHOZÍ / SOUČASNÝ STAV ───────────────────────────────────────────── -->
+<section class="py-20 md:py-32 bg-white">
+  <div class="mx-auto w-[90%] max-w-3xl">
+    <div class="flex flex-col md:flex-row md:items-stretch md:justify-center gap-10 md:gap-0">
+
+      <!-- Výchozí -->
+      <div class="md:flex-1 md:min-w-0 md:pr-6 lg:pr-8" data-aos="fade-right">
+        <div class="inline-block bg-neutral-200 text-black/60 text-[10px] font-medium tracking-[0.18em] uppercase px-3 py-1.5 mb-3">
+          Výchozí stav
+        </div>
+        <h3 class="font-yellix text-2xl md:text-[1.75rem] font-medium text-black mb-7">Zaseknuté prodeje</h3>
+        <ul class="space-y-3">
+          {[
+            'souběžný prodej obou etap bez jasného fokusu',
+            'projekt bez konkrétní komunikační linky',
+            'trh nerozuměl hlavním výhodám projektu',
+            'nízká znalost projektu',
+          ].map((t) => (
+            <li class="text-sm text-black/55 leading-relaxed">{t}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div
+        class="hidden md:block w-px shrink-0 self-stretch bg-black/12"
+        aria-hidden="true"
+      />
+
+      <!-- Současný -->
+      <div class="md:flex-1 md:min-w-0 md:pl-6 lg:pl-8" data-aos="fade-left" data-aos-delay="60">
+        <div class="inline-block bg-[#022d20] text-white text-[10px] font-medium tracking-[0.18em] uppercase px-3 py-1.5 mb-3">
+          Současný stav
+        </div>
+        <h3 class="font-yellix text-2xl md:text-[1.75rem] font-medium text-black mb-7">Silný prodejní výkon</h3>
+        <ul class="space-y-3">
+          {[
+            { t: '70 % domů prodaných', bold: true, icon: true },
+            { t: 'zdražení bez zpomalení prodejů', bold: false },
+            { t: 'úspěšné spuštění II. etapy', bold: false },
+            { t: 'otevření vzorového domu pro zvýšení konverze', bold: false },
+          ].map(({ t, bold, icon }) =>
+            icon ? (
+              <li class="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm leading-relaxed">
+                <span class="font-semibold text-black">{t}</span>
+                <span class="text-[#022d20] flex-shrink-0 translate-y-[2px]" aria-hidden="true">
+                  <svg
+                    class="w-[15px] h-[15px] md:w-4 md:h-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                    <polyline points="17 6 23 6 23 12" />
+                  </svg>
+                </span>
+              </li>
+            ) : (
+              <li class={`text-sm leading-relaxed ${bold ? 'font-semibold text-black' : 'text-black/55'}`}>{t}</li>
+            ),
+          )}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── KAMPANĚ (rotace – střed vždy zvýrazněný) ─────────────────────────── -->
+<section class="pb-0 bg-white">
+  <div class="mx-auto max-w-[1280px] w-[90%]">
+    <div class="alterna-campaign-row relative" data-aos="fade-up">
+      <h2
+        class="alterna-campaign__title relative z-10 mb-4 font-yellix text-xl font-medium leading-tight text-black sm:text-2xl md:absolute md:left-0 md:mb-0 md:text-[1.65rem]"
+      >
+        Kampaně
+      </h2>
+    <div
+      id="alterna-campaign"
+      class="alterna-campaign flex w-full min-w-0 items-center justify-center gap-2 sm:gap-3 md:gap-5"
+      data-k0={kampan2}
+      data-k1={kampan3}
+      data-k2={kampan4}
+    >
+      <div class="alterna-campaign__slot alterna-campaign__slot--side group relative min-w-0" data-slot="left">
+        <div class="alterna-campaign__imgstack">
+          <img
+            src={kampan2}
+            alt="Alterna – kampaň"
+            class="alterna-campaign__layer alterna-campaign__layer--over object-cover"
+            width="400"
+            height="533"
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            src={kampan2}
+            alt=""
+            class="alterna-campaign__layer alterna-campaign__layer--under object-cover"
+            width="400"
+            height="533"
+            loading="lazy"
+            decoding="async"
+            aria-hidden="true"
+          />
+        </div>
+        <span
+          class="pointer-events-none absolute z-10 bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-black/85 px-2.5 py-1 text-[10px] font-medium text-white opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100 sm:bottom-3 sm:px-3 sm:py-1.5 sm:text-[11px]"
+          aria-hidden="true"
+        >
+          Náhled kampaně
+        </span>
+      </div>
+      <div class="alterna-campaign__slot alterna-campaign__slot--feat group relative min-w-0" data-slot="center">
+        <div class="alterna-campaign__imgstack">
+          <img
+            src={kampan3}
+            alt="Alterna – kampaň"
+            class="alterna-campaign__layer alterna-campaign__layer--over object-cover"
+            width="400"
+            height="533"
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            src={kampan3}
+            alt=""
+            class="alterna-campaign__layer alterna-campaign__layer--under object-cover"
+            width="400"
+            height="533"
+            loading="lazy"
+            decoding="async"
+            aria-hidden="true"
+          />
+        </div>
+        <span
+          class="pointer-events-none absolute z-10 bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-black/85 px-2.5 py-1 text-[10px] font-medium text-white opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100 sm:bottom-3 sm:px-3 sm:py-1.5 sm:text-[11px]"
+          aria-hidden="true"
+        >
+          Náhled kampaně
+        </span>
+      </div>
+      <div class="alterna-campaign__slot alterna-campaign__slot--side group relative min-w-0" data-slot="right">
+        <div class="alterna-campaign__imgstack">
+          <img
+            src={kampan4}
+            alt="Alterna – kampaň"
+            class="alterna-campaign__layer alterna-campaign__layer--over object-cover"
+            width="400"
+            height="533"
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            src={kampan4}
+            alt=""
+            class="alterna-campaign__layer alterna-campaign__layer--under object-cover"
+            width="400"
+            height="533"
+            loading="lazy"
+            decoding="async"
+            aria-hidden="true"
+          />
+        </div>
+        <span
+          class="pointer-events-none absolute z-10 bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-black/85 px-2.5 py-1 text-[10px] font-medium text-white opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100 sm:bottom-3 sm:px-3 sm:py-1.5 sm:text-[11px]"
+          aria-hidden="true"
+        >
+          Náhled kampaně
+        </span>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROSTOR · SVĚTLO · KOMFORT ─────────────────────────────────────────── -->
+<section class="relative overflow-hidden mt-12 md:mt-16 alterna-psk-banner h-[600px]">
+  <!-- Mobil: Prostor.Svetlo.Komfort-mob | Desktop beze změny -->
+  <img
+    src="/images/Alterna/Prostor.Svetlo.Komfort-mob.webp"
+    alt="Alterna – Prostor, Světlo, Komfort"
+    class="absolute inset-0 h-full w-full object-cover object-center md:hidden"
+    width="1122"
+    height="1402"
+    loading="lazy"
+  />
+  <img
+    src="/images/Alterna/Prostor.Svetlo.Komfort.webp"
+    alt="Alterna – Prostor, Světlo, Komfort"
+    class="absolute inset-0 hidden h-full w-full object-cover object-center md:block"
+    width="1920"
+    height="1080"
+    loading="lazy"
+  />
+  <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent"></div>
+  <div class="relative z-10 mx-auto flex h-full max-w-[1280px] w-[90%] flex-col py-6 md:py-8">
+    <h2
+      id="alterna-psk-word"
+      class="alterna-psk-word mt-10 self-start font-yellix text-[clamp(1.65rem,3.2vw,2.4rem)] font-medium leading-tight tracking-tight text-[#022d20] md:mt-12 lg:mt-14"
+    >
+      Prostor.
+    </h2>
+    <p class="mt-auto mb-2.5 self-end text-base md:text-lg text-white/90 text-right max-w-[min(100%,24rem)] leading-snug drop-shadow-md">
+      Nové rodinné domy
+      <br />
+      na hranici Prahy
+    </p>
+  </div>
+</section>
+
+<!-- ── KLÍČOVÉ KROKY ─────────────────────────────────────────────────────── -->
+<section class="py-16 md:py-24 bg-white lg:overflow-visible">
+  <div class="mx-auto max-w-[1280px] w-[90%]">
+    <div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:items-stretch lg:gap-20">
+
+      <!-- Left: timeline -->
+      <div>
+        <div class="inline-block bg-[#022d20] text-white text-[10px] font-medium tracking-[0.2em] uppercase px-3 py-1.5 mb-10" data-aos="fade-right">
+          Klíčové kroky
+        </div>
+
+        <ol class="krok-list">
+          {klicoveKroky.map((krok, i) => (
+            <li class="krok-item" data-aos="fade-right" data-aos-delay={i * 70}>
+              <p class="krok-label">{krok.label}</p>
+              <p class="krok-title">{krok.titleTop}{krok.titleBot ? <><br />{krok.titleBot}</> : ''}</p>
+              <p class="krok-body">{krok.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <!-- Right: celek vertikálně vystředěný vůči výšce sloupce Klíčové kroky (viz lg:justify-center) -->
+      <div class="flex min-h-0 flex-col lg:h-full lg:justify-center" data-aos="fade-left" data-aos-delay="80">
+        <a
+          href="https://www.alternaslustice.cz"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="alterna-kroky-logo mb-5 inline-block w-max shrink-0 self-start transition-opacity hover:opacity-[0.85]"
+          aria-label="Alterna Sluštice – web projektu"
+        >
+          <img
+            src={alternaLogo}
+            alt="Alterna"
+            class="alterna-kroky-logo-img h-5 w-auto object-contain md:h-6"
+            width="100"
+            height="13"
+          />
+        </a>
+
+        <div class="alterna-vid-bleed-right relative my-4 aspect-video min-h-0 w-full overflow-hidden bg-neutral-100 md:my-5">
+          <video
+            class="w-full h-full object-cover"
+            autoplay muted loop playsinline preload="metadata"
+            poster="/images/Alterna/Alterna-vid-cover.webp"
+          >
+            <source src="/images/Alterna/Alterna-vid.mp4" type="video/mp4" />
+            <img src="/images/Alterna/Alterna-vid-cover.webp" alt="Alterna" class="w-full h-full object-cover" />
+          </video>
+        </div>
+
+        <div class="alterna-kroky-site-link mt-4 flex w-full flex-row flex-wrap items-center justify-end gap-2 font-yellix md:mt-5 md:gap-3">
+          <span class="text-xs font-medium uppercase tracking-[0.14em] text-black/40 md:text-[13px]">stránky projektu</span>
+          <span class="inline-block text-black/25" aria-hidden="true">·</span>
+          <a
+            href="https://www.alternaslustice.cz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-base font-medium tracking-tight text-[#022d20] underline decoration-black/25 underline-offset-[6px] transition-colors hover:text-black hover:decoration-black/40 md:text-lg ml-[0.3em]"
+          >
+            <img
+              src="/images/arrow-1.svg"
+              alt=""
+              aria-hidden="true"
+              class="h-4 w-4 shrink-0 brightness-0 opacity-55 md:h-[1.125rem] md:w-[1.125rem]"
+              width="18"
+              height="18"
+            />
+            alternaslustice.cz
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────────────────────── -->
+<section class="bg-white py-16 md:py-24 lg:py-28">
+  <div class="mx-auto max-w-[1280px] w-[90%]">
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-x-14 lg:gap-x-16">
+      <!-- Left -->
+      <div class="md:col-span-7" data-aos="fade-right">
+        <p class="text-[10px] font-medium tracking-[0.2em] uppercase text-black/40 mb-4 md:mb-5">Pro developery</p>
+        <h2 class="font-yellix text-2xl md:text-[1.9rem] font-medium leading-tight text-black mb-5">
+          Připravujete nebo prodáváte<br />rezidenční projekt v Praze?
+        </h2>
+        <p class="text-sm text-black/50 leading-relaxed max-w-md">
+          Správně nastavíme produkt, pricing i vstup projektu na trh podle aktuální reality poptávky a konkurence.
+        </p>
+      </div>
+      <!-- Right -->
+      <div class="md:col-span-5 flex flex-col justify-center gap-2" data-aos="fade-left" data-aos-delay="60">
+        <p class="text-[10px] font-medium tracking-[0.2em] uppercase text-black/35 mb-1">Konzultovat další krok</p>
+        <a
+          href="javascript:void(0)"
+          class="text-base font-medium text-black underline underline-offset-4 hover:text-[#022d20] transition-colors w-fit"
+          data-smart-contact-open
+          data-smart-contact-type="developer"
+        >
+          Poptávkový formulář
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<Footer />
+</Layout>
+
+<style>
+  /* Alterna logo: white in hero */
+  .hero-logo-invert { filter: brightness(0) invert(1); }
+
+  /* ── SLIDESHOW ── */
+  .slide-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain; object-position: center;
+    transition: opacity 1s ease;
+  }
+  .slide-hidden { opacity: 0; }
+
+  /* ── BAR CHART ── */
+  .ac-chart-wrap {
+    max-width: 1040px;
+  }
+  .ac-chart-head {
+    margin-bottom: 2rem;
+  }
+  .ac-chart-head__row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: right;
+  }
+  .ac-chart-foot {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.375rem;
+  }
+  .ac-chart-title {
+    display: block;
+    margin: 0;
+    padding: 0;
+    max-width: min(28rem, 100%);
+    text-align: right;
+    font-size: 11px;
+    line-height: 1.35;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.38);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .ac-chart-title:hover {
+    color: rgba(0, 0, 0, 0.52);
+  }
+  .ac-chart-source {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.38);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.15s ease;
+  }
+  .ac-chart-source:hover {
+    color: rgba(0, 0, 0, 0.52);
+  }
+  .ac-chart-source__zdroj {
+    letter-spacing: 0.04em;
+  }
+  .ac-chart-source__logo {
+    height: 14px;
+    width: auto;
+    display: block;
+    opacity: 0.85;
+  }
+  .ac-chart-scroll {
+    overflow: visible;
+    margin: 0;
+    padding: 0 0 clamp(4.5rem, 12vw, 6.25rem);
+  }
+  /* Mobil: vzduch kolem celého grafu (titulek + plot + zdroj), štítky X sahají vpravo */
+  @media (max-width: 767.98px) {
+    .ac-chart-wrap {
+      padding-left: max(0.5rem, env(safe-area-inset-left));
+      padding-right: max(1.25rem, calc(0.75rem + env(safe-area-inset-right)));
+      box-sizing: border-box;
+    }
+    .ac-chart-scroll {
+      padding-bottom: clamp(4.5rem, 12vw, 6.25rem);
+    }
+    .ac-chart-head__row {
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    .ac-chart-title {
+      text-align: left;
+      max-width: 100%;
+    }
+    .ac-chart-foot {
+      justify-content: flex-end;
+      margin-top: 0.75rem;
+    }
+    .ac-body {
+      gap: 10px;
+    }
+    /* Úzka osa Y = více šířky na sloupce bez přilepení ke kraji */
+    .ac-y {
+      width: 24px;
+      padding-right: 4px;
+    }
+    .ac-y span {
+      right: 4px;
+      font-size: 9px;
+    }
+    .ac-lbl {
+      font-size: 10px;
+    }
+    .ac-bar-logo {
+      width: clamp(48px, 16vw, 64px);
+    }
+    .chart-col.chart-col--desktop-extra {
+      display: none !important;
+    }
+  }
+
+  .ac-root {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    max-width: 100%;
+  }
+  /* Osa Y — stejná výška jako .ac-body; škála 0–30 lineárně, střed čísla na „čáře“ */
+  .ac-y {
+    position: relative;
+    flex-shrink: 0;
+    align-self: flex-start;
+    width: 28px;
+    height: var(--plot-h, 200px);
+    padding-right: 6px;
+  }
+  .ac-y span {
+    position: absolute;
+    right: 6px;
+    top: var(--ty);
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.5);
+    line-height: 1;
+    font-weight: 400;
+    display: block;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+  }
+  /* Oblast sloupců — bez fixní výšky na řádku; slot = výška osy Y (chartPlotH) */
+  .ac-body {
+    flex: 1;
+    align-self: flex-start;
+    min-width: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    overflow: visible;
+  }
+  .chart-col {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 0;
+    cursor: default;
+    overflow: visible;
+  }
+  /* Spodek slotu spojuje baseline všech sloupců s nulou na ose Y */
+  .chart-col-barslot {
+    flex-shrink: 0;
+    height: var(--plot-h, 200px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .chart-col:hover .ac-bar {
+    opacity: 0.88;
+  }
+  .ac-bar {
+    width: 100%;
+    height: 0;
+    background: #00221b;
+    position: relative;
+    overflow: hidden;
+    transition: height 1.3s cubic-bezier(0.34, 1.1, 0.64, 1), opacity 0.15s ease;
+  }
+  .ac-root.animated .ac-bar {
+    height: var(--bh);
+  }
+  /* Logo v prvním sloupci — SVG, bílé, otočené o 90° podél výšky sloupce */
+  .ac-bar-logo-wrap {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ac-bar-logo {
+    width: clamp(56px, 9vw, 80px);
+    height: auto;
+    flex-shrink: 0;
+    transform: rotate(-90deg);
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
+  }
+  /* Štítky osy X — 45°, blízko baseline (osa pod sloupci) */
+  .ac-lbl-wrap {
+    position: relative;
+    width: 100%;
+    flex-shrink: 0;
+    height: clamp(3.5rem, 10vw, 5.25rem);
+    margin-top: 0;
+    overflow: visible;
+  }
+  .ac-lbl {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 400;
+    white-space: nowrap;
+    line-height: 1.15;
+    display: inline-block;
+    overflow: visible;
+    transform-origin: bottom center;
+    transform: translateX(-50%) rotate(45deg);
+  }
+  .chart-tooltip {
+    position: fixed;
+    background: #00221b;
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 10px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 100;
+    white-space: nowrap;
+  }
+  .chart-tooltip.visible { opacity: 1; }
+
+  /* ── KLÍČOVÉ KROKY TIMELINE ── */
+  .krok-list {
+    position: relative;
+    padding-left: 18px;
+  }
+  /* Continuous vertical line */
+  .krok-list::before {
+    content: '';
+    position: absolute;
+    left: 3px; top: 4px; bottom: 4px;
+    width: 1px;
+    background: rgba(2,45,32,0.2);
+  }
+  .krok-item {
+    position: relative;
+    padding-bottom: 28px;
+  }
+  .krok-item:last-child { padding-bottom: 0; }
+  /* Square marker */
+  .krok-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 4px;
+    width: 8px; height: 8px;
+    background: #022d20;
+  }
+  .krok-label {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(0,0,0,0.4); margin-bottom: 4px;
+  }
+  .krok-title {
+    font-family: inherit; font-size: 1rem; font-weight: 600;
+    color: #0a0a0a; line-height: 1.25; margin-bottom: 6px;
+    text-transform: uppercase; letter-spacing: 0.01em;
+  }
+  .krok-body {
+    font-size: 0.8125rem; color: rgba(0,0,0,0.5); line-height: 1.6;
+  }
+
+  /* Alterna wordmark SVG je bílý; na světlém pozadí přebarvit na #022d20 */
+  .alterna-kroky-logo-img {
+    filter: brightness(0) saturate(100%) invert(9%) sepia(45%) saturate(1800%) hue-rotate(125deg) brightness(0.92) contrast(1.08);
+  }
+
+  @media (max-width: 767px) {
+    video { pointer-events: none; }
+  }
+
+  .alterna-psk-word {
+    transition: opacity 0.35s ease;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.35);
+  }
+
+  /* „Kampaně“ od md výš absolutně vlevo — karty jdou přes celou šířku a jsou v ose stránky uprostřed */
+  @media (min-width: 768px) {
+    .alterna-campaign__title {
+      top: clamp(0.35rem, 2.75vw, 1.3rem);
+    }
+  }
+
+  /* Kampaně — cross-fade mezi dvěma vrstvami (bez probliknutí při změně src) */
+  .alterna-campaign__imgstack {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 0.125rem;
+    overflow: hidden;
+  }
+  .alterna-campaign__layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.7s ease;
+  }
+  .alterna-campaign__layer--over {
+    opacity: 1;
+    z-index: 1;
+  }
+  .alterna-campaign__layer--under {
+    opacity: 0;
+    z-index: 0;
+  }
+
+  /* Kampaně — boční menší, střed dominantní; při prefers-reduced-motion stejná šířka */
+  .alterna-campaign__slot {
+    transition:
+      transform 0.55s cubic-bezier(0.33, 1, 0.68, 1),
+      opacity 0.5s ease,
+      box-shadow 0.5s ease;
+  }
+  .alterna-campaign__slot--side {
+    flex: 1 1 26%;
+    max-width: 220px;
+    transform: scale(0.9);
+    opacity: 0.82;
+  }
+  .alterna-campaign__slot--feat {
+    flex: 1.35 1 36%;
+    max-width: 400px;
+    transform: scale(1);
+    opacity: 1;
+    z-index: 2;
+    filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.14));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .alterna-campaign__layer {
+      transition: none;
+    }
+    .alterna-campaign__slot--side,
+    .alterna-campaign__slot--feat {
+      flex: 1 1 33%;
+      max-width: none;
+      transform: none;
+      opacity: 1;
+      filter: none;
+    }
+  }
+
+  /* Video: pravý bleed jen do rozumného max. šířky (na ultrawide neroste donekonečna) */
+  @media (min-width: 1024px) {
+    .alterna-vid-bleed-right {
+      --alterna-vid-max: min(54rem, 92vw); /* ~864 px, drží proporcionalitu naší 16∶9 */
+
+      width: min(
+        var(--alterna-vid-max),
+        calc(100% + (100vw - min(90vw, 1280px)) / 2)
+      );
+      margin-left: auto;
+    }
+  }
+</style>
+
+<script>
+  var alternaPskInterval = null;
+  var alternaCampaignInterval = null;
+
+  function initAlternaPage() {
+    /* ── Slideshow ── */
+    var slides = [
+      document.getElementById('slide-a'),
+      document.getElementById('slide-b'),
+      document.getElementById('slide-c'),
+    ];
+    if (slides[0]) {
+      var cur = 0;
+      setInterval(function() {
+        slides[cur].classList.add('slide-hidden');
+        cur = (cur + 1) % slides.length;
+        slides[cur].classList.remove('slide-hidden');
+      }, 4000);
+    }
+
+    /* ── Bar chart ── */
+    var chart   = document.getElementById('alterna-chart');
+    var tooltip = document.getElementById('chart-tooltip');
+    if (chart) {
+      var obs = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) {
+          chart.classList.add('animated');
+          obs.unobserve(chart);
+        }
+      }, { threshold: 0.2 });
+      obs.observe(chart);
+
+      if (tooltip) {
+        chart.querySelectorAll('.chart-col').forEach(function(col) {
+          col.addEventListener('mouseenter', function() {
+            tooltip.textContent = col.dataset.tip;
+            tooltip.classList.add('visible');
+          });
+          col.addEventListener('mousemove', function(e) {
+            tooltip.style.left = (e.clientX + 12) + 'px';
+            tooltip.style.top  = (e.clientY - 30) + 'px';
+          });
+          col.addEventListener('mouseleave', function() {
+            tooltip.classList.remove('visible');
+          });
+        });
+      }
+    }
+
+    /* ── Prostor / Světlo / Komfort — rotace textu v banneru ── */
+    if (alternaPskInterval) {
+      clearInterval(alternaPskInterval);
+      alternaPskInterval = null;
+    }
+    var pskEl = document.getElementById('alterna-psk-word');
+    if (pskEl && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var pskWords = ['Prostor.', 'Světlo.', 'Komfort.'];
+      var pskI = 0;
+      alternaPskInterval = setInterval(function() {
+        pskEl.style.opacity = '0';
+        setTimeout(function() {
+          pskI = (pskI + 1) % pskWords.length;
+          pskEl.textContent = pskWords[pskI];
+          pskEl.style.opacity = '1';
+        }, 220);
+      }, 3800);
+    }
+
+    /* ── Kampaně — rotace rolí: vždy jedna vizuálně ve středu (větší) ── */
+    if (alternaCampaignInterval) {
+      clearInterval(alternaCampaignInterval);
+      alternaCampaignInterval = null;
+    }
+    var campRoot = document.getElementById('alterna-campaign');
+    if (
+      campRoot &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      var u0 = campRoot.getAttribute('data-k0');
+      var u1 = campRoot.getAttribute('data-k1');
+      var u2 = campRoot.getAttribute('data-k2');
+      if (u0 && u1 && u2) {
+        var urls = [u0, u1, u2];
+        var centerIdx = 1;
+
+        function slotFrom(selector) {
+          var stack = campRoot.querySelector(selector + ' .alterna-campaign__imgstack');
+          if (!stack) return null;
+          var imgs = stack.querySelectorAll('.alterna-campaign__layer');
+          if (imgs.length < 2) return null;
+          return { stack: stack, imgs: [imgs[0], imgs[1]], visible: 0 };
+        }
+
+        var leftSlot = slotFrom('[data-slot="left"]');
+        var centerSlot = slotFrom('[data-slot="center"]');
+        var rightSlot = slotFrom('[data-slot="right"]');
+
+        function crossfadeSlot(slot, newUrl) {
+          if (!slot) return;
+          var vis = slot.visible;
+          var hid = 1 - vis;
+          var nextEl = slot.imgs[hid];
+          var curEl = slot.imgs[vis];
+
+          function finish() {
+            nextEl.classList.remove('alterna-campaign__layer--under');
+            nextEl.classList.add('alterna-campaign__layer--over');
+            curEl.classList.remove('alterna-campaign__layer--over');
+            curEl.classList.add('alterna-campaign__layer--under');
+            slot.visible = hid;
+          }
+
+          function afterReady() {
+            if (nextEl.decode) {
+              nextEl.decode().then(finish).catch(finish);
+            } else {
+              finish();
+            }
+          }
+
+          var resolved = new URL(newUrl, window.location.href).href;
+          if (nextEl.src === resolved) {
+            afterReady();
+            return;
+          }
+
+          nextEl.src = newUrl;
+          if (nextEl.complete && nextEl.naturalWidth > 0) {
+            requestAnimationFrame(afterReady);
+          } else {
+            nextEl.onload = function() {
+              nextEl.onload = null;
+              afterReady();
+            };
+            nextEl.onerror = function() {
+              nextEl.onerror = null;
+            };
+          }
+        }
+
+        function applyCampaignRotation() {
+          var L = (centerIdx + 2) % 3;
+          var C = centerIdx;
+          var R = (centerIdx + 1) % 3;
+          crossfadeSlot(leftSlot, urls[L]);
+          crossfadeSlot(centerSlot, urls[C]);
+          crossfadeSlot(rightSlot, urls[R]);
+        }
+
+        alternaCampaignInterval = setInterval(function() {
+          centerIdx = (centerIdx + 1) % 3;
+          applyCampaignRotation();
+        }, 5200);
+      }
+    }
+  }
+
+  initAlternaPage();
+  document.addEventListener('astro:page-load', initAlternaPage);
+</script>

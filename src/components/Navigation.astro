@@ -138,6 +138,18 @@ const isSubpage = currentPath !== '/' && currentPath !== '';
     transform: translate(-50%, -50%) scale(1);
   }
 
+  /* Průhledný hero mód (např. stránka Alterna) */
+  header[data-nav].nav-hero-transparent {
+    background: transparent !important;
+  }
+  header[data-nav].nav-hero-transparent [data-nav-toggle],
+  header[data-nav].nav-hero-transparent [data-contact-toggle] {
+    color: white;
+  }
+  header[data-nav].nav-hero-transparent [data-nav-logo] img {
+    filter: brightness(0) invert(1);
+  }
+
   /* Market report card */
   .market-card {
     transition: transform 0.2s ease;
@@ -173,7 +185,27 @@ const isSubpage = currentPath !== '/' && currentPath !== '';
       var headerNow = document.querySelector('[data-nav]');
       var navLogoNow = document.querySelector('[data-nav-logo]');
       var heroLogoNow = document.querySelector('[data-hero-logo]');
+      var transparentHeroEl = document.querySelector('[data-hero-transparent]');
       if (!headerNow) return;
+
+      /* ── Průhledný hero mód (stránky s data-hero-transparent na hero sekci) ── */
+      if (transparentHeroEl) {
+        var heroBottom = transparentHeroEl.getBoundingClientRect().bottom;
+        headerNow.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-100%]');
+        if (navLogoNow) {
+          navLogoNow.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+          navLogoNow.classList.remove('opacity-0', 'pointer-events-none', 'scale-150');
+        }
+        if (heroBottom > BAR_HEIGHT) {
+          headerNow.classList.add('nav-hero-transparent');
+          headerNow.classList.remove('bg-white');
+        } else {
+          headerNow.classList.remove('nav-hero-transparent');
+          headerNow.classList.add('bg-white');
+        }
+        return;
+      }
+
       var isSubpageNow = !heroLogoNow;
       if (headerNow.dataset) headerNow.dataset.subpage = isSubpageNow ? 'true' : undefined;
       if (isSubpageNow) {
