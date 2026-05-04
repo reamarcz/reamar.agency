@@ -547,10 +547,9 @@ const klicoveKroky = [
           />
         </a>
 
-        <div class="alterna-vid-bleed-right relative my-4 aspect-video min-h-0 w-full overflow-hidden bg-neutral-100 md:my-5" data-alterna-kroky-video-wrap>
+        <div class="alterna-vid-bleed-right relative my-4 aspect-video min-h-0 w-full overflow-hidden bg-neutral-100 md:my-5">
           <video
             class="w-full h-full object-cover"
-            data-alterna-kroky-video
             autoplay muted loop playsinline preload="metadata"
             poster="/images/Alterna/Alterna-vid-cover.webp"
           >
@@ -979,10 +978,7 @@ const klicoveKroky = [
   }
 
   @media (max-width: 767px) {
-    .alterna-vid-bleed-right video {
-      pointer-events: auto;
-      touch-action: manipulation;
-    }
+    video { pointer-events: none; }
   }
 
   .alterna-psk-word {
@@ -1220,48 +1216,6 @@ const klicoveKroky = [
   }
 
 
-  function initAlternaKrokyVideo() {
-    var video = document.querySelector('[data-alterna-kroky-video]');
-    if (!video) return;
-
-    var wrap = document.querySelector('[data-alterna-kroky-video-wrap]');
-
-    function enableManualPlay() {
-      video.controls = true;
-      video.muted = false;
-      video.loop = false;
-      video.autoplay = false;
-    }
-
-    function tryPlay() {
-      var maybe = video.play();
-      if (maybe && typeof maybe.catch === 'function') {
-        maybe.catch(function () {
-          enableManualPlay();
-        });
-      }
-    }
-
-    tryPlay();
-
-    if (!video.dataset.alternaTapBound) {
-      video.dataset.alternaTapBound = '1';
-      video.addEventListener('click', function () {
-        if (!video.paused) return;
-        tryPlay();
-      });
-    }
-
-    if (wrap && !wrap.dataset.alternaTapBound) {
-      wrap.dataset.alternaTapBound = '1';
-      wrap.addEventListener('click', function (e) {
-        if (e.target && e.target.closest('video')) return;
-        if (!video.paused) return;
-        tryPlay();
-      });
-    }
-  }
-
   function initAlternaPage() {
     /* ── Slideshow ── */
     var slides = [
@@ -1415,7 +1369,6 @@ const klicoveKroky = [
     }
 
     bindAlternaCampaignLightbox();
-    initAlternaKrokyVideo();
   }
 
   initAlternaPage();
