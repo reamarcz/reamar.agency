@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+---
+<Layout
+  title="Stránka nenalezena | REAMAR"
+  description="Tato stránka na reamar.cz neexistuje nebo byla přesunuta."
+  ogTitle="Stránka nenalezena | REAMAR"
+  robots="noindex, follow"
+>
+  <section class="min-h-[calc(100vh-4rem)] pt-24 pb-16 md:pt-32 md:pb-24">
+    <div class="relative mx-auto max-w-[1600px] px-6 lg:px-10">
+      <p class="text-[10px] font-medium tracking-[0.2em] uppercase text-black/40">Chyba 404</p>
+      <h1 class="mt-3 font-yellix text-3xl font-medium tracking-tight text-black md:text-4xl">
+        Stránka nenalezena
+      </h1>
+      <p class="mt-6 max-w-lg text-base leading-relaxed text-black/70">
+        Tato adresa neexistuje, nebo sem už nevede žádný odkaz. Pokračujte prosím z úvodní stránky, nebo nás kontaktujte.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <a
+          href="/"
+          class="btn-premium inline-block border border-black/20 px-6 py-3 text-sm font-medium text-black transition-colors hover:border-black/40"
+        >
+          Na úvodní stránku
+        </a>
+        <a
+          href="/kontakt"
+          class="text-sm font-medium text-black/65 underline underline-offset-4 decoration-black/25 transition-colors hover:text-black hover:decoration-black/50"
+        >
+          Kontakt
+        </a>
+      </div>
+    </div>
+  </section>
+  <Footer />
+</Layout>
