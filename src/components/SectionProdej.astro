@@ -6,9 +6,9 @@ const videoProdej = '/videos/' + encodeURIComponent('REAMAR X.mp4');
     <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 lg:gap-16 items-center">
       <!-- Video vlevo -->
       <div class="md:col-span-5 lg:col-span-6 flex justify-center md:justify-start">
-        <div class="aspect-square w-full max-w-[480px] overflow-hidden bg-black/50">
+        <div class="video-decorative-wrap aspect-square w-full max-w-[480px] overflow-hidden bg-black/50">
           <video
-            class="section-prodej-video h-full w-full object-cover"
+            class="section-prodej-video relative z-0 h-full w-full object-cover"
             autoplay
             muted
             loop
@@ -17,9 +17,11 @@ const videoProdej = '/videos/' + encodeURIComponent('REAMAR X.mp4');
             poster="/images/REAMAR%20X.webp"
             width="720"
             height="720"
+            data-decorative-autoplay
           >
             <source src={videoProdej} type="video/mp4" />
           </video>
+          <img src="/images/REAMAR%20X.webp" alt="" class="video-decorative-cover" width="720" height="720" loading="lazy" />
         </div>
       </div>
       <!-- Text vpravo -->
@@ -48,11 +50,3 @@ const videoProdej = '/videos/' + encodeURIComponent('REAMAR X.mp4');
   </div>
 </section>
 
-<style>
-  /* Video REAMAR X: na mobilu zamezit kliknutí (lepší autoplay, bez ikonky play) */
-  @media (max-width: 767px) {
-    .section-prodej-video {
-      pointer-events: none;
-    }
-  }
-</style>

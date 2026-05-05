@@ -49,10 +49,11 @@ import HeroLogoMobile from './HeroLogoMobile.astro';
             Pomohli jsme nastavit model, který umožnil financovat výstavbu z předprodejů a investorů.<br /><span class="formujeme-tile-line2">Developer tak mohl projekt rozjet bez zbytečných zpoždění.</span>
           </p>
         </div>
-        <div class="section-tile relative aspect-square w-full overflow-hidden bg-black">
-          <video class="formujeme-video-am h-full w-full object-cover" autoplay muted loop playsinline preload="auto" poster="/images/AM.webp" width="1000" height="1000">
+        <div class="section-tile video-decorative-wrap relative aspect-square w-full overflow-hidden bg-black">
+          <video class="formujeme-video-am relative z-0 h-full w-full object-cover" autoplay muted loop playsinline preload="auto" poster="/images/AM.webp" width="1000" height="1000" data-decorative-autoplay>
             <source src={videoAM} type="video/mp4" />
           </video>
+          <img src="/images/AM.webp" alt="" class="video-decorative-cover" width="1000" height="1000" loading="lazy" />
         </div>
         <p class="formujeme-am-caption text-center font-yellix text-[12px] leading-[14.4px] tracking-normal text-[#E4E2E2]" data-aos="fade-up" data-aos-duration="600" data-aos-easing="ease" data-aos-delay="150">
           Performance Marketing pro <strong class="font-medium text-[#E4E2E2]">mezinárodního developera</strong>
@@ -108,13 +109,6 @@ import HeroLogoMobile from './HeroLogoMobile.astro';
   .formujeme-tile-line2 {
     display: block;
     margin-top: 0.5em;
-  }
-
-  /* Video AM: na mobilu zamezit kliknutí (méně systémových prvků, lepší autoplay) */
-  @media (max-width: 767px) {
-    .formujeme-video-am {
-      pointer-events: none;
-    }
   }
 
   /* Desktop: hover (group-hover na rodiči) */

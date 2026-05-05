@@ -73,3 +73,44 @@
 [aria-expanded="true"] .accordion-icon-vertical {
   opacity: 0;
 }
+
+/* Dekorativní autoplay videa (mobil / iOS): poster nad videem dokud neproběhne přehrávání — zakryje systémovou ikonku play */
+.video-decorative-wrap {
+  position: relative;
+}
+.video-decorative-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+@media (min-width: 768px) {
+  .video-decorative-cover {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@media (max-width: 767px) {
+  .video-decorative-wrap.is-playing .video-decorative-cover {
+    opacity: 0;
+    visibility: hidden;
+  }
+  video[data-decorative-autoplay] {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    pointer-events: none;
+  }
+  .video-decorative-wrap.is-playing video[data-decorative-autoplay] {
+    opacity: 1;
+    visibility: visible;
+  }
+  video[data-decorative-autoplay]::-webkit-media-controls,
+  video[data-decorative-autoplay]::-webkit-media-controls-enclosure {
+    display: none !important;
+  }
+}

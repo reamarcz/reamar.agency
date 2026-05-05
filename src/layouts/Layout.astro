@@ -97,5 +97,28 @@ const {
         AOS.init(aosOptions);
       });
     </script>
+    <script>
+      function initVideoDecorativeCovers() {
+        document.querySelectorAll('.video-decorative-wrap').forEach(function (wrap) {
+          if (wrap.dataset.videoDecorCoverInit === '1') return;
+          var video = wrap.querySelector('video[data-decorative-autoplay]');
+          if (!video) return;
+          wrap.dataset.videoDecorCoverInit = '1';
+
+          var markPlaying = function () {
+            wrap.classList.add('is-playing');
+          };
+
+          if (!window.matchMedia('(max-width: 767px)').matches) return;
+
+          if (!video.paused && video.readyState >= 2) markPlaying();
+          video.addEventListener('playing', markPlaying, { once: true });
+          var p = video.play();
+          if (p !== undefined) p.catch(function () {});
+        });
+      }
+      initVideoDecorativeCovers();
+      document.addEventListener('astro:page-load', initVideoDecorativeCovers);
+    </script>
   </body>
 </html>

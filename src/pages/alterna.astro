@@ -547,15 +547,16 @@ const klicoveKroky = [
           />
         </a>
 
-        <div class="alterna-vid-bleed-right relative my-4 aspect-video min-h-0 w-full overflow-hidden bg-neutral-100 md:my-5">
+        <div class="alterna-vid-bleed-right video-decorative-wrap relative my-4 aspect-video min-h-0 w-full overflow-hidden bg-neutral-100 md:my-5">
           <video
-            class="w-full h-full object-cover"
+            class="relative z-0 h-full w-full object-cover"
             autoplay muted loop playsinline preload="metadata"
             poster="/images/Alterna/Alterna-vid-cover.webp"
+            data-decorative-autoplay
           >
             <source src="/images/Alterna/Alterna-vid.mp4" type="video/mp4" />
-            <img src="/images/Alterna/Alterna-vid-cover.webp" alt="Alterna" class="w-full h-full object-cover" />
           </video>
+          <img src="/images/Alterna/Alterna-vid-cover.webp" alt="" class="video-decorative-cover" loading="lazy" width="1280" height="720" />
         </div>
 
         <div class="alterna-kroky-site-link mt-4 flex w-full flex-row flex-wrap items-center justify-end gap-2 font-yellix md:mt-5 md:gap-3">
@@ -975,10 +976,6 @@ const klicoveKroky = [
   /* Alterna wordmark SVG je bílý; na světlém pozadí přebarvit na #022d20 */
   .alterna-kroky-logo-img {
     filter: brightness(0) saturate(100%) invert(9%) sepia(45%) saturate(1800%) hue-rotate(125deg) brightness(0.92) contrast(1.08);
-  }
-
-  @media (max-width: 767px) {
-    video { pointer-events: none; }
   }
 
   .alterna-psk-word {
