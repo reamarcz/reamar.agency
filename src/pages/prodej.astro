@@ -1326,8 +1326,7 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     #prodej-pill {
       bottom: calc(var(--vv-gap, 0px) + 1rem + env(safe-area-inset-bottom));
       right: 1rem;
-      padding-left: 16px;
-      /* pill až po ~půl minutě — na hero neruší první dojem */
+      /* padding řeší MOBILE REFINEMENTS — tady jen zpoždění vstupu */
       animation-delay: 30s;
     }
     .prodej-pill-house { display: none; }
@@ -4027,12 +4026,13 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
      ═══════════════════════════════════════════════════════════════════════ */
   @media (max-width: 767px) {
 
-    /* ── Hero: jedna obrazovka (dvh + safe area), lede / mezera / perex / badge ── */
+    /* ── Hero: jedna obrazovka — svh zůstává stabilní při skrytí lišt (dvh by měnilo
+       výšku a object-fit: cover na pozadí působilo jako „přibližování“). ── */
     .prodej-hero {
       height: 100vh;
-      height: 100dvh;
-      min-height: 100dvh;
-      max-height: 100dvh;
+      height: 100svh;
+      min-height: 100svh;
+      max-height: 100svh;
       overflow: hidden;
     }
     .prodej-hero-inner {
@@ -4074,15 +4074,15 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     }
     .prodej-eyebrow {
       margin-bottom: 0.875rem;
-      font-size: 11px;
+      font-size: 12px;
       letter-spacing: 0.2em;
     }
     .prodej-h1-main {
-      font-size: 1.5rem; /* 24 px */
+      font-size: 1.625rem; /* 26 px */
       line-height: 1.22;
     }
     .prodej-h1-big {
-      font-size: 2rem; /* 32 px — „Nyní i pro váš …” výrazněji */
+      font-size: 2.125rem; /* 34 px — „Nyní i pro váš …” */
       line-height: 1.1;
       margin-top: 0.5rem;
       /* bez odsazení doprava — řádek lícuje s hlavním nadpisem, nepůsobí v pravém rohu */
@@ -4137,10 +4137,16 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     #prodej-pill {
       bottom: max(0.85rem, env(safe-area-inset-bottom, 0px));
       right: max(0.85rem, env(safe-area-inset-right, 0px));
-      /* stejná typografická hmotnost jako hero-mobile-btn, kompaktnější pill */
-      padding: 6px 12px 6px 10px;
-      gap: 6px;
+      /* víc vzduchu uvnitř — předtím 6×12 px působilo „nalepeně“ k rámečku */
+      padding: 10px 16px 10px 14px;
+      gap: 0.5rem;
       box-shadow: 0 3px 18px rgba(0, 0, 0, 0.12);
+    }
+    #prodej-pill .prodej-pill-txt {
+      gap: 0.3125rem; /* 5px mezi titulkem a podřádkem */
+    }
+    #prodej-pill .prodej-pill-arr {
+      margin-left: 0.125rem;
     }
     #prodej-pill .prodej-pill-title {
       font-size: 0.875rem;
@@ -4669,14 +4675,14 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     }
     .prodej-eyebrow {
       margin-bottom: 0.875rem;
-      font-size: 9.5px;
+      font-size: 10px;
     }
     .prodej-h1-main {
-      font-size: 1.125rem;
+      font-size: 1.1875rem; /* 19 px */
       line-height: 1.26;
     }
     .prodej-h1-big {
-      font-size: 1.375rem;
+      font-size: 1.4375rem; /* 23 px */
       margin-top: 0.5rem;
     }
     .prodej-hero-bottom {
@@ -5041,7 +5047,8 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       souhlas: false,
     };
 
-    function showStep(step) {
+    function showStep(step, opts) {
+      opts = opts || {};
       currentStep = step;
       stages.forEach(function (s) {
         const stepNum = s.getAttribute('data-step');
@@ -5061,9 +5068,8 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
           }
         }
       });
-      /* Po přechodu mezi kroky scroll k vrchu karty — nikdy ne pro success,
-         který už hlásí výsledek a uživatel chápe kontext. */
-      if (typeof step === 'number') {
+      /* Scroll jen při přechodu kroků z akce uživatele — ne při prvním showStep(1) po načtení stránky. */
+      if (typeof step === 'number' && opts.scroll) {
         try {
           section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } catch (_) {}
@@ -5182,14 +5188,14 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       btn.addEventListener('click', function () {
         if (validateStep(currentStep)) {
           const next = currentStep + 1;
-          if (next <= 3) showStep(next);
+          if (next <= 3) showStep(next, { scroll: true });
         }
       });
     });
     section.querySelectorAll('[data-step-prev]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         const prev = currentStep - 1;
-        if (prev >= 1) showStep(prev);
+        if (prev >= 1) showStep(prev, { scroll: true });
       });
     });
 
@@ -5200,9 +5206,9 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
         if (!stepNum) return;
         if (stepNum === currentStep) return;
         if (stepNum < currentStep) {
-          showStep(stepNum);
+          showStep(stepNum, { scroll: true });
         } else if (validateStep(currentStep)) {
-          showStep(stepNum);
+          showStep(stepNum, { scroll: true });
         }
       });
     });
