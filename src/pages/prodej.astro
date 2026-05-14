@@ -13,7 +13,7 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
 ---
 <Layout
   title="Prodej nemovitosti v Praze | Marketing od týmu pro developery"
-  description="Prodej bytu nebo domu v Praze a okolí s marketingovým zázemím z rezidenčního developmentu. Marketing nemovitosti za 1,5 %, nebo kompletní prodej s makléřem za 2,5 %."
+  description="Prodej bytu nebo domu v Praze a okolí s marketingovým zázemím z rezidenčního developmentu. Marketing nemovitosti od 29 900 Kč (Basic, Silver, Gold), nebo kompletní prodej s makléřem za 2,5 %."
   canonical="https://www.reamar.cz/prodej"
   image="/images/Prodej/prodejog.png"
 >
@@ -84,12 +84,12 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
 
         <!-- Dva badge vedle sebe — kotvy na sekci s podrobnostmi -->
         <div class="prodej-enter prodej-enter--d4 prodej-hero-pills">
-          <a href="#prodej-services" class="prodej-badge" data-prodej-scroll aria-label="Marketing nemovitosti — 1,5 % z prodejní ceny">
+          <a href="#prodej-services" class="prodej-badge" data-prodej-scroll aria-label="Marketing nemovitosti — 29 900 Kč">
             <div class="prodej-badge-text">
               <span class="prodej-badge-label">Bez makléře</span>
               <span class="prodej-badge-title">Marketing nemovitosti</span>
             </div>
-            <span class="prodej-badge-pct">1,5&nbsp;%</span>
+            <span class="prodej-badge-pct">29&nbsp;900&nbsp;Kč</span>
           </a>
           <a href="#prodej-services" class="prodej-badge" data-prodej-scroll aria-label="Kompletní prodej — 2,5 % z prodejní ceny">
             <div class="prodej-badge-text">
@@ -173,38 +173,63 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
               <p class="prodej-service-subtitle">Pro majitele, kteří chtějí prodat sami.</p>
             </div>
             <div class="prodej-service-price">
-              <span class="prodej-service-price-big">1,5&nbsp;%</span>
-              <span class="prodej-service-price-sub">z&nbsp;prodejní ceny + DPH</span>
+              <span class="prodej-service-price-hint">Zvolte variantu</span>
+              <span class="prodej-service-price-big">od&nbsp;29&nbsp;900&nbsp;Kč</span>
             </div>
           </div>
 
-          <ul class="prodej-service-list">
-            <li>Prodejní strategie a&nbsp;nastavení ceny dle tržních dat</li>
-            <li>Profesionální focení a&nbsp;prezentace nemovitosti</li>
-            <li>Zalistování na realitní portály</li>
-            <li>
-              <span class="prodej-service-underline">Výkonnostní reklama</span>
-              <span class="prodej-service-info-wrap">
-                <button
-                  type="button"
-                  class="prodej-service-info"
-                  aria-label="Více o výkonnostní reklamě"
-                  aria-describedby="prodej-tip-vykon-1"
-                >i</button>
-                <span id="prodej-tip-vykon-1" class="prodej-service-tip" role="tooltip">
-                  Výkonnostní marketing zahrnuje přípravu, spuštění a&nbsp;správu kampaní. Mediální <strong class="prodej-service-tip-strong">rozpočet není součástí fee</strong>, doporučíme ho podle nemovitosti a&nbsp;tempa prodeje.
+          <div class="prodej-service-packages" aria-label="Cenové balíčky marketingu nemovitosti">
+            <button type="button" class="prodej-pkg prodej-pkg__trigger" data-pkg-open="basic" aria-haspopup="dialog">
+              <span class="prodej-pkg__summary-main">
+                <span class="prodej-pkg__summary-txt">
+                  <span class="prodej-pkg__summary-top">
+                    <span class="prodej-pkg__name-row">
+                      <span class="prodej-pkg__name">Basic</span>
+                    </span>
+                    <span class="prodej-pkg__price">29&nbsp;900&nbsp;Kč</span>
+                  </span>
+                  <span class="prodej-pkg__tagline">Profesionální příprava nemovitosti k prodeji</span>
                 </span>
+                <span class="prodej-pkg__chev" aria-hidden="true"></span>
               </span>
-            </li>
-            <li>Oslovení kupujících z&nbsp;databáze</li>
-          </ul>
+            </button>
 
-          <div class="prodej-service-extra">
-            <div class="prodej-service-extra-left">
-              <span class="prodej-service-extra-plus" aria-hidden="true">+</span>
-              <span class="prodej-service-extra-text">Právní servis</span>
-            </div>
-            <span class="prodej-service-extra-pill">v&nbsp;ceně balíčku</span>
+            <button type="button" class="prodej-pkg prodej-pkg__trigger" data-pkg-open="silver" aria-haspopup="dialog">
+              <span class="prodej-pkg__summary-main">
+                <span class="prodej-pkg__summary-txt">
+                  <span class="prodej-pkg__summary-top">
+                    <span class="prodej-pkg__name-row">
+                      <span class="prodej-pkg__name">Silver</span>
+                      <span class="prodej-pkg__badges">
+                        <span class="prodej-pkg__badge">Placená reklama</span>
+                      </span>
+                    </span>
+                    <span class="prodej-pkg__price">59&nbsp;900&nbsp;Kč</span>
+                  </span>
+                  <span class="prodej-pkg__tagline">Aktivní marketing a kompletní správa propagace</span>
+                </span>
+                <span class="prodej-pkg__chev" aria-hidden="true"></span>
+              </span>
+            </button>
+
+            <button type="button" class="prodej-pkg prodej-pkg__trigger" data-pkg-open="gold" aria-haspopup="dialog">
+              <span class="prodej-pkg__summary-main">
+                <span class="prodej-pkg__summary-txt">
+                  <span class="prodej-pkg__summary-top">
+                    <span class="prodej-pkg__name-row">
+                      <span class="prodej-pkg__name">Gold</span>
+                      <span class="prodej-pkg__badges">
+                        <span class="prodej-pkg__badge">Placená reklama</span>
+                        <span class="prodej-pkg__badge">Právní servis</span>
+                      </span>
+                    </span>
+                    <span class="prodej-pkg__price">99&nbsp;900&nbsp;Kč</span>
+                  </span>
+                  <span class="prodej-pkg__tagline">Prémiový marketing nemovitosti s právním dotažením</span>
+                </span>
+                <span class="prodej-pkg__chev" aria-hidden="true"></span>
+              </span>
+            </button>
           </div>
 
           <a
@@ -1045,6 +1070,211 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
   </div>
 </dialog>
 
+<!-- ── Package modal — BASIC / SILVER / GOLD ─────────────────────────────── -->
+<dialog
+  id="prodej-pkg-modal"
+  class="pkg-modal font-yellix"
+  aria-modal="true"
+>
+  <div class="pkg-modal-shell">
+
+    <!-- Tabs + zavřít -->
+    <div class="pkg-modal-header">
+      <div class="pkg-modal-tabs" role="tablist" aria-label="Balíčky marketingu nemovitosti">
+        <button class="pkg-modal-tab" role="tab" aria-selected="true" aria-controls="pkg-panel-basic" id="pkg-tab-basic" data-pkg-tab="basic">
+          <span class="pkg-modal-tab-name">Basic</span>
+          <span class="pkg-modal-tab-price">29&nbsp;900&nbsp;Kč</span>
+        </button>
+        <button class="pkg-modal-tab" role="tab" aria-selected="false" aria-controls="pkg-panel-silver" id="pkg-tab-silver" data-pkg-tab="silver">
+          <span class="pkg-modal-tab-name">Silver</span>
+          <span class="pkg-modal-tab-price">59&nbsp;900&nbsp;Kč</span>
+        </button>
+        <button class="pkg-modal-tab" role="tab" aria-selected="false" aria-controls="pkg-panel-gold" id="pkg-tab-gold" data-pkg-tab="gold">
+          <span class="pkg-modal-tab-name">Gold</span>
+          <span class="pkg-modal-tab-price">99&nbsp;900&nbsp;Kč</span>
+        </button>
+      </div>
+      <button type="button" class="pkg-modal-close" data-pkg-modal-close aria-label="Zavřít">×</button>
+    </div>
+
+    <!-- Panely -->
+    <div class="pkg-modal-body">
+
+      <!-- Basic -->
+      <div id="pkg-panel-basic" role="tabpanel" aria-labelledby="pkg-tab-basic" class="pkg-modal-panel">
+        <div class="pkg-modal-intro">
+          <p class="pkg-modal-tagline">Profesionální příprava nemovitosti k&nbsp;prodeji</p>
+          <div class="pkg-modal-badges" aria-label="Co je součástí">
+            <span class="pkg-modal-badge">Strategie</span>
+            <span class="pkg-modal-badge">Cena</span>
+            <span class="pkg-modal-badge">Prezentace</span>
+            <span class="pkg-modal-badge">Inzerát</span>
+          </div>
+        </div>
+        <div class="pkg-modal-sections">
+          <div class="pkg-modal-section">
+            <h4 class="pkg-modal-h">Strategie prodeje</h4>
+            <ul class="pkg-modal-list">
+              <li>Cenové doporučení podle tržních dat</li>
+              <li>Analýza konkurence v&nbsp;lokalitě</li>
+              <li>Návrh prodejní strategie</li>
+              <li>Doporučení nabídkové ceny</li>
+            </ul>
+          </div>
+          <div class="pkg-modal-section">
+            <h4 class="pkg-modal-h">Prezentace nemovitosti</h4>
+            <ul class="pkg-modal-list">
+              <li>Profesionální focení nemovitosti</li>
+              <li>Výběr a&nbsp;úprava fotografií</li>
+              <li>Copywriting nabídky</li>
+              <li>Příprava podkladů pro inzerci</li>
+            </ul>
+          </div>
+          <div class="pkg-modal-section">
+            <h4 class="pkg-modal-h">Inzerce nemovitosti</h4>
+            <ul class="pkg-modal-list">
+              <li>Vytvoření inzerátu na&nbsp;Sreality.cz</li>
+              <li>Publikace a&nbsp;správa inzerátu <strong>na&nbsp;3&nbsp;měsíce</strong></li>
+              <li>Úpravy textu a&nbsp;prezentace během inzerce</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Silver -->
+      <div id="pkg-panel-silver" role="tabpanel" aria-labelledby="pkg-tab-silver" class="pkg-modal-panel" hidden>
+        <div class="pkg-modal-intro">
+          <p class="pkg-modal-tagline">Aktivní marketing a&nbsp;kompletní správa propagace</p>
+          <div class="pkg-modal-badges" aria-label="Co je součástí">
+            <span class="pkg-modal-badge pkg-modal-badge--muted">Vše z&nbsp;Basic</span>
+            <span class="pkg-modal-badge">Video</span>
+            <span class="pkg-modal-badge">Web</span>
+            <span class="pkg-modal-badge">Kampaně 20K</span>
+          </div>
+        </div>
+        <div class="pkg-modal-sections">
+          <div class="pkg-modal-section">
+            <h4 class="pkg-modal-h">Vše z&nbsp;balíčku Basic</h4>
+            <ul class="pkg-modal-list">
+              <li>Strategie prodeje</li>
+              <li>Profesionální prezentace nemovitosti</li>
+              <li>Inzerce na&nbsp;Sreality.cz</li>
+            </ul>
+          </div>
+          <div class="pkg-modal-section">
+            <h4 class="pkg-modal-h">Rozšířená prezentace</h4>
+            <ul class="pkg-modal-list">
+              <li><strong>Video prohlídka</strong> nemovitosti</li>
+              <li>Střih a&nbsp;úprava videa pro&nbsp;online použití</li>
+              <li>Prezentační <strong>landing page nebo&nbsp;miniweb</strong></li>
+              <li>Rozšířená online prezentace nemovitosti</li>
+            </ul>
+          </div>
+          <div class="pkg-modal-section">
+            <h4 class="pkg-modal-h">Výkonnostní marketing</h4>
+            <ul class="pkg-modal-list">
+              <li>Návrh reklamní strategie</li>
+              <li>Příprava kampaní pro&nbsp;Facebook a&nbsp;Instagram</li>
+              <li><strong>Reklamní budget 20&nbsp;000&nbsp;Kč</strong></li>
+              <li>Cílení podle typu nemovitosti a&nbsp;lokality</li>
+              <li>Retargeting návštěvníků a&nbsp;zájemců</li>
+              <li>Průběžná optimalizace kampaní</li>
+            </ul>
+          </div>
+          <div class="pkg-modal-section">
+            <h4 class="pkg-modal-h">Správa propagace</h4>
+            <ul class="pkg-modal-list">
+              <li>Správa a&nbsp;aktualizace inzerátů</li>
+              <li>Monitoring výkonu kampaní</li>
+              <li>Doporučení úprav podle výsledků</li>
+              <li>Reporting propagace</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gold -->
+      <div id="pkg-panel-gold" role="tabpanel" aria-labelledby="pkg-tab-gold" class="pkg-modal-panel" hidden>
+        <div class="pkg-modal-intro">
+          <p class="pkg-modal-tagline">Prémiový marketing nemovitosti s&nbsp;právním dotažením</p>
+          <div class="pkg-modal-badges" aria-label="Co je součástí">
+            <span class="pkg-modal-badge pkg-modal-badge--muted">Vše ze&nbsp;Silver</span>
+            <span class="pkg-modal-badge">Kampaně 25K</span>
+            <span class="pkg-modal-badge">Právní servis</span>
+          </div>
+        </div>
+        <div class="pkg-modal-sections">
+          <div class="pkg-modal-section">
+            <h4 class="pkg-modal-h">Vše z&nbsp;balíčku Silver</h4>
+            <ul class="pkg-modal-list">
+              <li>Strategie, prezentace a&nbsp;inzerce</li>
+              <li>Video prohlídka a&nbsp;landing page</li>
+              <li>Výkonnostní marketing</li>
+              <li>Správa propagace a&nbsp;reporting</li>
+            </ul>
+          </div>
+          <div class="pkg-modal-section">
+            <h4 class="pkg-modal-h">Rozšířený marketing</h4>
+            <ul class="pkg-modal-list">
+              <li>Individuální marketingová strategie</li>
+              <li>Prioritní správa kampaní</li>
+              <li>Intenzivnější optimalizace reklam</li>
+              <li>Průběžné konzultace během prodeje</li>
+            </ul>
+          </div>
+          <div class="pkg-modal-section">
+            <h4 class="pkg-modal-h">Prémiové video</h4>
+            <ul class="pkg-modal-list">
+              <li>Rozšířená video prezentace nemovitosti</li>
+              <li>Reklamní video pro&nbsp;sociální sítě</li>
+              <li>Úprava videa pro&nbsp;kampaně</li>
+            </ul>
+          </div>
+          <div class="pkg-modal-section">
+            <h4 class="pkg-modal-h">Výkonnostní marketing</h4>
+            <ul class="pkg-modal-list">
+              <li><strong>Reklamní budget 25&nbsp;000&nbsp;Kč</strong></li>
+              <li>Prioritní monitoring výkonu kampaní</li>
+              <li>Doporučení úprav podle výsledků propagace</li>
+            </ul>
+          </div>
+          <div class="pkg-modal-section">
+            <h4 class="pkg-modal-h">Právní servis</h4>
+            <ul class="pkg-modal-list">
+              <li>Příprava rezervační smlouvy</li>
+              <li>Příprava kupní smlouvy</li>
+              <li><strong>Advokátní úschova</strong> finančních prostředků</li>
+              <li>Koordinace převodu nemovitosti</li>
+              <li>Dohled nad&nbsp;průběhem transakce</li>
+            </ul>
+          </div>
+          <div class="pkg-modal-section">
+            <h4 class="pkg-modal-h">Prémiová podpora</h4>
+            <ul class="pkg-modal-list">
+              <li>Prioritní komunikace</li>
+              <li>Individuální konzultace během prodeje</li>
+              <li>Průběžná koordinace dalších kroků</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer — CTA -->
+    <div class="pkg-modal-footer">
+      <a
+        href="#prodej-poptavka"
+        class="pkg-modal-cta"
+        data-poptavka-link
+        data-poptavka-preselect="Marketing nemovitosti"
+        data-pkg-modal-cta
+      >Mám zájem o&nbsp;tento balíček</a>
+    </div>
+
+  </div>
+</dialog>
+
 <Footer />
 </Layout>
 
@@ -1093,6 +1323,11 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     gap: 0.75rem;
     /* BLOK 2 vnitřní: 14 → 19 → 22 px — badge sedí těsně pod perexem */
     margin-top: clamp(0.875rem, 1.85vw, 1.375rem);
+  }
+  /* Hero: ne 16.5rem × 2 (zlom / mačkání) — šířka dle obsahu, zalomení řeší flex-wrap na rodiči */
+  .prodej-hero-pills .prodej-badge {
+    max-width: 100%;
+    gap: clamp(1.35rem, 2.5vw, 2.25rem);
   }
   .prodej-badge {
     position: relative;
@@ -1174,6 +1409,9 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     font-weight: 500;
     color: #fff;
   }
+  .prodej-hero-pills .prodej-badge-title {
+    white-space: nowrap;
+  }
   .prodej-badge-pct {
     font-family: 'Yellix', system-ui, sans-serif;
     font-size: 18px;
@@ -1188,6 +1426,28 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       /* na mobilu jeden pod druhým a o trochu užší */
       min-width: 0;
       width: 100%;
+    }
+  }
+
+  /* Desktop hero: dva glass pill vedle sebe; šířka z obsahu (min-content), při úzké kolonce řádek zalomí */
+  @media (min-width: 768px) {
+    .prodej-hero-pills {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: clamp(0.5rem, 1vw, 0.75rem);
+    }
+    .prodej-hero-pills .prodej-badge {
+      flex: 0 1 auto;
+      min-width: min-content;
+      max-width: 100%;
+      width: auto;
+    }
+    .prodej-hero-pills .prodej-badge-text {
+      min-width: 0;
+    }
+    .prodej-hero-pills .prodej-badge-pct {
+      flex-shrink: 0;
     }
   }
 
@@ -1857,6 +2117,9 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     /* Rozdíl mezi overline a head je řízen přes parent gap, takže tady 0 */
     margin-top: -0.5rem;
   }
+  .prodej-service-card:first-child .prodej-service-head {
+    align-items: center;
+  }
   .prodej-service-head-text {
     min-width: 0;
     flex: 1;
@@ -1891,12 +2154,569 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     letter-spacing: -0.02em;
     color: #fff;
   }
+  .prodej-service-card:first-child .prodej-service-price {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    text-align: left;
+    min-width: min(100%, 17rem);
+  }
+  .prodej-service-card:first-child .prodej-service-price-big {
+    font-size: clamp(1.625rem, 2.85vw, 2.125rem);
+    text-align: right;
+  }
+  .prodej-service-price-hint {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.52);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
   .prodej-service-price-sub {
     display: block;
     margin-top: 8px;
     font-size: 11px;
     color: rgba(255, 255, 255, 0.72);
     letter-spacing: 0.04em;
+  }
+
+  /* Balíčky (Marketing nemovitosti) — BASIC / SILVER / GOLD, rozbalovací */
+  .prodej-service-packages {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: clamp(1.25rem, 2vw, 1.75rem);
+    padding-top: clamp(1.25rem, 2vw, 1.75rem);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .prodej-pkg {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .prodej-pkg__summary {
+    list-style: none;
+    display: block;
+    padding: 0.65rem 0.85rem;
+    cursor: pointer;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    transition: background 0.2s ease;
+  }
+  .prodej-pkg__summary:hover {
+    background: rgba(255, 255, 255, 0.055);
+  }
+  .prodej-pkg__summary:active {
+    background: rgba(255, 255, 255, 0.07);
+  }
+  .prodej-pkg[open] > .prodej-pkg__summary {
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .prodej-pkg__summary::-webkit-details-marker {
+    display: none;
+  }
+  .prodej-pkg__summary::marker {
+    display: none;
+    content: '';
+  }
+  .prodej-pkg__summary-main {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+  }
+  .prodej-pkg__summary-txt {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .prodej-pkg__summary-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: 0.75rem;
+    row-gap: 0.35rem;
+  }
+  .prodej-pkg__name-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+  .prodej-pkg__badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 0.35rem;
+  }
+  .prodej-pkg[open] .prodej-pkg__badges {
+    display: none;
+  }
+  .prodej-pkg__badge {
+    display: inline-block;
+    padding: 0.14rem 0.42rem 0.16rem;
+    font-size: 7px;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.78);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 3px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .prodej-pkg__tagline {
+    display: block;
+    font-size: 12px;
+    line-height: 1.45;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.62);
+    letter-spacing: 0.01em;
+    max-width: 36rem;
+  }
+  .prodej-pkg__name {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.82);
+  }
+  .prodej-pkg__price {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    justify-self: end;
+    align-self: start;
+  }
+  .prodej-pkg__chev {
+    flex-shrink: 0;
+    width: 7px;
+    height: 7px;
+    margin-top: 0.35rem;
+    border-right: 2px solid rgba(255, 255, 255, 0.65);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.65);
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform 0.2s ease;
+  }
+  .prodej-pkg[open] .prodej-pkg__chev {
+    transform: rotate(225deg) translateY(1px);
+  }
+  .prodej-pkg__summary:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.45);
+    outline-offset: 2px;
+  }
+  .prodej-pkg__body {
+    padding: 0.75rem 0.85rem 0.9rem;
+  }
+  .prodej-pkg__anchors {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.45rem;
+    margin-bottom: 0.85rem;
+  }
+  .prodej-pkg__jump {
+    display: inline-block;
+    padding: 0.18rem 0.48rem 0.2rem;
+    font-size: 7.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 3px;
+    line-height: 1.25;
+    white-space: nowrap;
+    transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  }
+  .prodej-pkg__jump:hover {
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+  .prodej-pkg__jump:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.45);
+    outline-offset: 2px;
+  }
+  .prodej-pkg__h[id] {
+    scroll-margin-top: 1.25rem;
+  }
+  .prodej-pkg__h {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin: 0 0 0.65rem;
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.78);
+  }
+  .prodej-pkg__h::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  }
+  .prodej-pkg__list + .prodej-pkg__h {
+    margin-top: 1.05rem;
+  }
+  .prodej-pkg__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .prodej-pkg__list li {
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.56);
+  }
+
+  /* Trigger button — nahrazuje <summary>, zachovává vizuál */
+  .prodej-pkg__trigger {
+    display: block;
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    cursor: pointer;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    background: transparent;
+    border: none;
+    transition: background 0.2s ease;
+  }
+  .prodej-pkg__trigger:hover {
+    background: rgba(255, 255, 255, 0.055);
+  }
+  .prodej-pkg__trigger:active {
+    background: rgba(255, 255, 255, 0.07);
+  }
+  .prodej-pkg__trigger:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.45);
+    outline-offset: 2px;
+  }
+
+  /* ── Package modal — design shodný s poptávkovým formulářem ────────── */
+  .pkg-modal {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+  }
+  .pkg-modal[open] {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .pkg-modal::backdrop {
+    background: rgba(0, 0, 0, 0.45);
+  }
+  .pkg-modal-shell {
+    background: #fff;
+    color: #0a0a0a;
+    border-radius: 0;
+    width: 100%;
+    height: 100svh;
+    max-height: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* clip animaci, scroll řeší .pkg-modal-body */
+  }
+  .pkg-modal[open] .pkg-modal-shell {
+    animation: pkg-slide-up 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .pkg-modal.is-closing .pkg-modal-shell {
+    animation: pkg-slide-down 0.25s cubic-bezier(0.36, 0, 0.66, 0) both;
+  }
+  @keyframes pkg-slide-up {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+  @keyframes pkg-slide-down {
+    from { transform: translateY(0); }
+    to   { transform: translateY(100%); }
+  }
+
+  /* Header: tabs + close */
+  .pkg-modal-header {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid rgba(10, 10, 10, 0.12);
+    flex-shrink: 0;
+  }
+  .pkg-modal-tabs {
+    display: flex;
+    flex: 1;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .pkg-modal-tabs::-webkit-scrollbar { display: none; }
+  .pkg-modal-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    padding: clamp(0.85rem, 2vw, 1.1rem) clamp(1rem, 2.5vw, 1.5rem) clamp(0.7rem, 1.5vw, 0.9rem);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: rgba(10, 10, 10, 0.38);
+    font: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: color 0.18s ease, border-color 0.18s ease;
+    margin-bottom: -1px;
+  }
+  .pkg-modal-tab[aria-selected="true"] {
+    color: #0a0a0a;
+    border-bottom-color: #0a0a0a;
+  }
+  .pkg-modal-tab:hover:not([aria-selected="true"]) {
+    color: rgba(10, 10, 10, 0.65);
+  }
+  .pkg-modal-tab:focus-visible {
+    outline: 2px solid rgba(10, 10, 10, 0.4);
+    outline-offset: -2px;
+  }
+  .pkg-modal-tab-name {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+  .pkg-modal-tab-price {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.2;
+  }
+  .pkg-modal-close {
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    color: rgba(10, 10, 10, 0.38);
+    font-size: 22px;
+    cursor: pointer;
+    padding: 0 clamp(1rem, 2.5vw, 1.5rem);
+    line-height: 1;
+    transition: color 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pkg-modal-close:hover { color: #0a0a0a; }
+  .pkg-modal-close:focus-visible {
+    outline: 2px solid rgba(10, 10, 10, 0.4);
+    outline-offset: 2px;
+  }
+
+  /* Body (mobil: scroll fallback) */
+  .pkg-modal-body {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4.5vw, 2.5rem) clamp(0.75rem, 2vw, 1.25rem);
+  }
+  .pkg-modal-panel[hidden] { display: none; }
+
+  /* Intro: tagline + badges — flex řádek, badges vedle textu */
+  .pkg-modal-intro {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.25rem;
+    margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+    padding-top: clamp(0.25rem, 1vw, 0.5rem);
+  }
+  .pkg-modal-tagline {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 500;
+    color: #0a0a0a;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin: 0;
+    min-width: 0;
+  }
+  .pkg-modal-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+    padding-top: 0.2rem;
+  }
+  .pkg-modal-badge {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    background: #0a0a0a;
+    border-radius: 2px;
+    padding: 0.26rem 0.6rem 0.28rem;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .pkg-modal-badge--muted {
+    background: rgba(10, 10, 10, 0.22);
+    color: rgba(10, 10, 10, 0.7);
+  }
+
+  /* Sections grid — column-count se nastavuje per-panel v desktop bloku */
+  .pkg-modal-sections {
+    column-gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .pkg-modal-section {
+    break-inside: avoid;
+    margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
+  }
+  .pkg-modal-h {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin: 0 0 0.6rem;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(10, 10, 10, 0.45);
+  }
+  .pkg-modal-h::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(10, 10, 10, 0.15);
+  }
+  .pkg-modal-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .pkg-modal-list li {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: rgba(10, 10, 10, 0.75);
+  }
+
+  /* Footer */
+  .pkg-modal-footer {
+    padding: clamp(0.875rem, 2vw, 1.25rem) clamp(1.5rem, 4.5vw, 2.5rem) calc(clamp(1rem, 2vw, 1.25rem) + env(safe-area-inset-bottom, 0px));
+    flex-shrink: 0;
+  }
+  .pkg-modal-cta {
+    display: inline-block;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    color: #fff;
+    background: #0a0a0a;
+    border: 0;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.18s ease;
+  }
+  .pkg-modal-cta:hover { opacity: 0.8; }
+
+  /* Mobil: full screen, vzdušnější, menší texty */
+  @media (max-width: 639px) {
+    .pkg-modal-header {
+      padding-top: env(safe-area-inset-top, 0px);
+    }
+    .pkg-modal-tab {
+      padding: 1.1rem 1.25rem 0.9rem;
+    }
+    .pkg-modal-section {
+      margin-bottom: 1.75rem;
+    }
+    .pkg-modal-intro {
+      margin-bottom: 1.75rem;
+    }
+    .pkg-modal-body {
+      padding: 2rem 1.75rem 1rem;
+      overflow-y: auto;
+    }
+    .pkg-modal-tagline {
+      font-size: clamp(1.25rem, 5.5vw, 1.5rem);
+    }
+    .pkg-modal-h {
+      font-size: 10px;
+    }
+    .pkg-modal-list li {
+      font-size: 13px;
+    }
+    .pkg-modal-tab-price {
+      font-size: 13px;
+    }
+    .pkg-modal-footer {
+      padding: 1.25rem 1.75rem calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    }
+  }
+
+  /* Desktop: fixní výška = jeden rozměr pro všechny panely */
+  @media (min-width: 640px) {
+    .pkg-modal[open] { align-items: center; }
+    .pkg-modal-shell {
+      width: min(1160px, 94vw);
+      /* Pevná výška — všechny taby vypadají stejně */
+      height: min(86vh, 720px);
+      max-height: none;
+      border-radius: 0;
+    }
+    /* Body nescrolluje — obsah se vejde do fixní výšky */
+    .pkg-modal-body { overflow: hidden; }
+    .pkg-modal[open] .pkg-modal-shell {
+      animation: pkg-scale-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .pkg-modal.is-closing .pkg-modal-shell {
+      animation: pkg-scale-out 0.22s ease-in both;
+    }
+    @keyframes pkg-scale-in {
+      from { transform: translateY(12px) scale(0.98); opacity: 0; }
+      to   { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    @keyframes pkg-scale-out {
+      from { transform: translateY(0) scale(1); opacity: 1; }
+      to   { transform: translateY(6px) scale(0.98); opacity: 0; }
+    }
+
+    /* Column count per panel */
+    #pkg-panel-basic .pkg-modal-sections   { column-count: 3; }
+    #pkg-panel-silver .pkg-modal-sections  { column-count: 2; }
+    #pkg-panel-gold .pkg-modal-sections    { column-count: 3; }
   }
 
   /* Seznam — editorial číslovaný (01 — položka) */
@@ -4231,15 +5051,29 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       flex-direction: column;
     }
     .prodej-hero-pills .prodej-badge {
-      padding: 0.45rem 0.85rem;
-      gap: 1rem;
-      width: auto;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(1rem, 3.5vw, 1.75rem);
+      padding: 0.5rem 0.85rem;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+    .prodej-hero-pills .prodej-badge-text {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+    .prodej-hero-pills .prodej-badge-pct {
+      flex-shrink: 0;
+      line-height: 1;
+      font-size: 16px;
     }
     .prodej-hero-pills .prodej-badge-title {
       font-size: 13px;
     }
-    .prodej-hero-pills .prodej-badge-pct {
-      font-size: 16px;
+    .prodej-hero-pills .prodej-badge:first-child .prodej-badge-pct {
+      font-size: clamp(13px, 3.4vw, 16px);
     }
     .prodej-hero-pills .prodej-badge-label {
       font-size: 8.5px;
@@ -4343,8 +5177,14 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       border-top: 1px solid rgba(255, 255, 255, 0.12);
     }
     .prodej-service-price-big {
-      font-size: 1.625rem; /* 26 px */
+      font-size: clamp(1.35rem, 4.2vw, 1.625rem);
       letter-spacing: -0.015em;
+    }
+    .prodej-service-card:first-child .prodej-service-price-big {
+      font-size: clamp(1.2rem, 3.6vw, 1.45rem);
+    }
+    .prodej-service-card:first-child .prodej-service-head {
+      align-items: stretch;
     }
     .prodej-service-price-sub {
       margin-top: 0;
@@ -4353,6 +5193,58 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       font-size: 10.5px;
       line-height: 1.4;
       color: rgba(255, 255, 255, 0.6);
+    }
+
+    .prodej-service-packages {
+      gap: 0.55rem;
+      margin-top: clamp(1.25rem, 4vw, 1.65rem);
+      padding-top: clamp(1.25rem, 4vw, 1.65rem);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .prodej-pkg__summary {
+      padding: 0.55rem 0.75rem;
+    }
+    .prodej-pkg__body {
+      padding: 0.7rem 0.75rem 0.75rem;
+    }
+    .prodej-pkg__name {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+    }
+    .prodej-pkg__price {
+      font-size: 14px;
+    }
+    .prodej-pkg__tagline {
+      font-size: 11.5px;
+    }
+    .prodej-pkg__anchors {
+      gap: 0.3rem 0.38rem;
+      margin-bottom: 0.75rem;
+    }
+    .prodej-pkg__jump {
+      font-size: 6.5px;
+      padding: 0.14rem 0.4rem 0.16rem;
+      letter-spacing: 0.09em;
+    }
+    .prodej-pkg__badge {
+      font-size: 6.5px;
+      padding: 0.12rem 0.34rem 0.14rem;
+      letter-spacing: 0.1em;
+    }
+    .prodej-pkg__name-row {
+      gap: 0.28rem 0.4rem;
+    }
+    .prodej-pkg__h {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+    }
+    .prodej-pkg__list + .prodej-pkg__h {
+      margin-top: 0.95rem;
+      padding-top: 0;
+    }
+    .prodej-pkg__list li {
+      font-size: 12.5px;
+      color: rgba(255, 255, 255, 0.54);
     }
 
     /* Seznam služeb — žádné číslování (rušilo), čistý editorial pattern
@@ -5575,4 +6467,83 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
 
   initProdejQuoteReveal();
   document.addEventListener('astro:page-load', initProdejQuoteReveal);
+
+  /* ── Package modal ──────────────────────────────────────────────────── */
+  function initPkgModal() {
+    var modal = document.getElementById('prodej-pkg-modal');
+    if (!modal) return;
+
+    /* Otevření — kliknutí na trigger button */
+    document.querySelectorAll('[data-pkg-open]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        openPkgModal(btn.dataset.pkgOpen);
+      });
+    });
+
+    /* Zavření — pozadí (backdrop), tlačítko × nebo Escape */
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closePkgModal();
+    });
+    var closeBtn = modal.querySelector('[data-pkg-modal-close]');
+    if (closeBtn) closeBtn.addEventListener('click', closePkgModal);
+    modal.addEventListener('cancel', function(e) {
+      e.preventDefault();
+      closePkgModal();
+    });
+
+    /* Přepínání tabů */
+    modal.querySelectorAll('[data-pkg-tab]').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        switchPkgTab(tab.dataset.pkgTab);
+      });
+    });
+
+    /* CTA: zavřít modal, pak scroll na formulář */
+    var ctaBtn = modal.querySelector('[data-pkg-modal-cta]');
+    if (ctaBtn) {
+      ctaBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var href = ctaBtn.getAttribute('href');
+        closePkgModal();
+        setTimeout(function() {
+          var target = href ? document.querySelector(href) : null;
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      });
+    }
+
+    function openPkgModal(pkg) {
+      switchPkgTab(pkg || 'basic');
+      modal.showModal();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePkgModal() {
+      modal.classList.add('is-closing');
+      setTimeout(function() {
+        modal.classList.remove('is-closing');
+        modal.close();
+        document.body.style.overflow = '';
+      }, 260);
+    }
+
+    function switchPkgTab(pkg) {
+      modal.querySelectorAll('[data-pkg-tab]').forEach(function(t) {
+        t.setAttribute('aria-selected', t.dataset.pkgTab === pkg ? 'true' : 'false');
+      });
+      modal.querySelectorAll('.pkg-modal-panel').forEach(function(panel) {
+        if (panel.id === 'pkg-panel-' + pkg) {
+          panel.removeAttribute('hidden');
+        } else {
+          panel.setAttribute('hidden', '');
+        }
+      });
+      /* Reset scroll na začátek panelu */
+      var body = modal.querySelector('.pkg-modal-body');
+      if (body) body.scrollTop = 0;
+    }
+  }
+
+  initPkgModal();
+  document.addEventListener('astro:page-load', initPkgModal);
 </script>
