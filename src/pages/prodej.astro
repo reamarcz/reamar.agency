@@ -4189,15 +4189,15 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       letter-spacing: 0.2em;
     }
     .prodej-h1-main {
-      font-size: min(clamp(1.5rem, 5.1vw, 2.25rem), var(--prodej-h1-accent));
+      font-size: min(clamp(1.5rem, 5.1vw, 2.25rem), calc(var(--prodej-h1-accent) * 0.9));
       line-height: 1.18;
       max-width: 100%;
     }
     .prodej-h1-big {
       font-size: var(--prodej-h1-accent);
       line-height: 1.08;
-      margin-top: 0.65rem;
-      padding-left: clamp(0.75rem, 3vw, 1.25rem);  /* lehce doprava */
+      margin-top: clamp(0.85rem, 2.8vw, 1.25rem);
+      padding-left: 0;
       width: 100%;
       max-width: 100%;
       align-self: stretch;
@@ -4209,22 +4209,23 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
         --prodej-h1-accent: clamp(1.5rem, 5.75vw, 2.125rem);
       }
     }
-    /* Spodní blok: flex: 1 = vyplní prostor po lede; pořadí pills → perex přes order */
+    /* Spodní blok: pill hned pod H1 (order −1), perex u dna (order 1 + margin-top: auto).
+       flex:1 + min-height:0 — zabere zbylou výšku hero-top, aby auto margin měl kam táhnout. */
     .prodej-hero-bottom {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      justify-content: flex-start;
       width: 100%;
-      flex: 1;
-      margin-top: 0;
-      flex-shrink: 0;
-      gap: 0;
+      flex: 1 1 auto;
+      min-height: 0;
+      margin-top: clamp(1rem, 3.5vmin, 1.85rem);
+      gap: clamp(0.75rem, 2.5vmin, 1.25rem);
     }
-    /* Pills — nahoře hned pod lede, zúžené (align-self: flex-start) */
     .prodej-hero-pills {
       order: -1;
       align-self: flex-start;
-      margin-top: clamp(3.5rem, 13vw, 5.5rem);
+      margin-top: 0;
       flex-shrink: 0;
       gap: 0.5rem;
       flex-direction: column;
@@ -4244,7 +4245,7 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       font-size: 8.5px;
       margin-bottom: 2px;
     }
-    /* Perex — přitáhnutý dolů s linkou nahoře */
+    /* Perex — v DOM až za pill, order:1 + margin-top:auto = u dna spodního flexu */
     .prodej-hero-bottom .prodej-paragraph {
       order: 1;
       margin-top: auto;
@@ -4254,7 +4255,7 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       line-height: 1.48;
       flex-shrink: 0;
       border-top: none;
-      padding-top: clamp(0.75rem, 3vmin, 1.25rem);
+      padding-top: 0;
       border-bottom: none;
       padding-bottom: 0;
       margin-bottom: 0;
@@ -4813,10 +4814,10 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       margin-top: 0.5rem;
     }
     .prodej-hero-bottom {
-      gap: 0;
+      gap: clamp(0.65rem, 2.5vmin, 1rem);
     }
     .prodej-hero-bottom .prodej-paragraph {
-      margin-top: 0;
+      margin-top: auto;
       font-size: 12px;
       line-height: 1.42;
       max-width: 13.5rem;
