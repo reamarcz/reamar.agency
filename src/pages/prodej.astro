@@ -12,9 +12,10 @@ const kamp5 = '/images/Prodej/rekonstrukce.png';  /* Small — Kvalitní rekonst
 const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alternativa k bytu */
 ---
 <Layout
-  title="REAMAR | Prodej nemovitostí"
-  description="Marketingová a prodejní agentura pro developery — nyní i pro váš byt."
+  title="Prodej nemovitosti v Praze | Marketing od týmu pro developery"
+  description="Prodej bytu nebo domu v Praze a okolí s marketingovým zázemím z rezidenčního developmentu. Marketing nemovitosti za 1,5 %, nebo kompletní prodej s makléřem za 2,5 %."
   canonical="https://www.reamar.cz/prodej"
+  image="/images/Prodej/prodejog.png"
 >
 
 <!-- ── HERO ─────────────────────────────────────────────────────────────── -->
@@ -27,24 +28,16 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
   <!-- Vnitřní wrapper – na velkých displejích omezí šířku celé kompozice -->
   <div class="prodej-hero-inner">
 
-  <!-- Pozadí: mesh vlna + wireframe budova.
-       Picture s mobilním source — pod 768 px se načte purpose-built agencyheromob.webp,
-       která je komponovaná na výšku a nepotřebuje cropping z wide desktop verze. -->
-  <picture>
-    <source
-      media="(max-width: 767px)"
-      srcset="/images/Prodej/agencyheromob.webp"
-    />
-    <img
-      src="/images/Prodej/agencyhero.webp"
-      alt=""
-      aria-hidden="true"
-      class="prodej-hero-bg"
-      width="1920"
-      height="1080"
-      fetchpriority="high"
-    />
-  </picture>
+  <!-- Pozadí: mesh vlna + wireframe — stejný agencyhero.webp i na mobilu (contain + střed, viz MOBILE). -->
+  <img
+    src="/images/Prodej/agencyhero.webp"
+    alt=""
+    aria-hidden="true"
+    class="prodej-hero-bg"
+    width="1920"
+    height="1080"
+    fetchpriority="high"
+  />
 
   <!-- Plovoucí částice — jen dekorace, pure CSS -->
   <div class="prodej-particles" aria-hidden="true">
@@ -3975,17 +3968,70 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
   }
 
   /* ═══════════════════════════════════════════════════════════════════════
+     CITÁT — word-by-word cascade reveal
+     ═══════════════════════════════════════════════════════════════════════ */
+  /* Dynamicky vytvořené spans nemají Astro scoped atribut — nutno :global() */
+  :global(.prodej-quote-word) {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .prodej-process-quote.is-word-revealed :global(.prodej-quote-word) {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Po rozdělení na spans text-wrap: balance nefunguje — vypneme */
+  .prodej-process-quote[data-word-split] {
+    text-wrap: initial;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.prodej-quote-word) {
+      opacity: 1;
+      transform: none;
+      transition: none;
+      will-change: auto;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     SCROLL REVEAL — univerzální fade-up pro celou stránku
+     Stav .prodej-reveal přidává JS (takže bez JS = obsah viditelný).
+     ═══════════════════════════════════════════════════════════════════════ */
+  .prodej-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .prodej-reveal.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .prodej-reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+      will-change: auto;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════
      MOBILNÍ PŘEPISY (max 767px) — vzdušnější, jednodušší, logičtější
      ═══════════════════════════════════════════════════════════════════════ */
   @media (max-width: 767px) {
 
-    /* ── Hero: purpose-built mobilní fotka (agencyheromob.webp), komponovaná
-         na výšku — jen lehké ztmavení pro čitelnost textu, žádný cropping přes
-         object-position, který byl ladění pro oříznutou wide desktop verzi. ── */
+    /* ── Hero: agencyhero.webp contain + střed ── */
     .prodej-hero-bg {
-      object-fit: cover;
-      object-position: center;
-      filter: brightness(0.78);
+      object-fit: contain;
+      object-position: center 57%;
+      filter: brightness(0.88);
     }
 
     /* ── Hero levý sloupec: layout řeší MOBILE REFINEMENTS níže (100svh + lede) ── */
@@ -4009,6 +4055,12 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       background: transparent;
       padding: 12px 0 0;
       margin: 0;
+    }
+
+    /* ── Services: bez horního paddingu + záporný margin zakryje subpixel mezeru ── */
+    .prodej-services {
+      padding-top: 0;
+      margin-top: -2px;
     }
 
     /* ── Services claim: levé zarovnání na mobilu ── */
@@ -4078,8 +4130,7 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
      ═══════════════════════════════════════════════════════════════════════ */
   @media (max-width: 767px) {
 
-    /* ── Hero: jedna obrazovka — svh zůstává stabilní při skrytí lišt (dvh by měnilo
-       výšku a object-fit: cover na pozadí působilo jako „přibližování“). ── */
+    /* ── Hero: jedna obrazovka (svh stabilní při skrytí lišt) ── */
     .prodej-hero {
       height: 100vh;
       height: 100svh;
@@ -4097,12 +4148,10 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      /* víc prostoru od okrajů — hlavně vpravo, ať lede není „utopené“ u grafiky */
-      padding-left: clamp(1.5rem, 5vw, 2.25rem);
-      padding-right: clamp(2.25rem, 10vw, 3.75rem);
-      padding-top: max(calc(0.5rem + env(safe-area-inset-top, 0px)), 4.75rem);
-      /* rezerva pod obsahem kvůli fixní pill + home indicator */
-      padding-bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
+      padding-left: clamp(1.25rem, 4.5vw, 2rem);
+      padding-right: clamp(1.25rem, 4.5vw, 2rem);
+      padding-top: max(calc(0.5rem + env(safe-area-inset-top, 0px)), 7rem);
+      padding-bottom: calc(2.5rem + env(safe-area-inset-bottom, 0px));
       row-gap: 0;
     }
     .prodej-hero-top {
@@ -4113,67 +4162,77 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       max-height: 100%;
       justify-content: flex-start;
     }
-    /* Lede: vlastní max šířka = vizuálně „v prostoru”, ne v rohu */
+    /* Lede: širší blok; 3. řádek vlevo — při rotaci slov fixní začátek (center na 100% šíři řádek posouval) */
     .prodej-hero-lede {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
       flex-shrink: 0;
-      max-width: min(20.5rem, 100%);
-      padding-right: 0.25rem;
-      margin-top: clamp(1.75rem, 7vw, 3rem);   /* trochu níž */
-      margin-left: clamp(0.75rem, 5vw, 1.75rem); /* dále doprava */
+      width: 100%;
+      max-width: 100%;
+      padding-left: clamp(0.25rem, 1.5vw, 0.75rem);
+      padding-right: clamp(0.25rem, 1.5vw, 0.75rem);
+      margin-top: clamp(1.25rem, 5vw, 2.5rem);
+      margin-left: 0;
+    }
+    .prodej-hero-lede .prodej-h1 {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      /* Velikost 3. řádku; 1.–2. řádek nesmí být větší (min u .prodej-h1-main) */
+      --prodej-h1-accent: clamp(1.75rem, 6.25vw, 2.5rem);
     }
     .prodej-eyebrow {
-      margin-bottom: 0.875rem;
+      margin-bottom: 1rem;
       font-size: 13px;
       letter-spacing: 0.2em;
     }
     .prodej-h1-main {
-      font-size: 1.875rem; /* 30 px */
-      line-height: 1.22;
-    }
-    .prodej-h1-big {
-      font-size: 2.5rem; /* 40 px — „Nyní i pro váš …” */
-      line-height: 1.1;
-      margin-top: 0.5rem;
-      /* bez odsazení doprava — řádek lícuje s hlavním nadpisem, nepůsobí v pravém rohu */
-      padding-left: 0;
-      width: 100%;
+      font-size: min(clamp(1.5rem, 5.1vw, 2.25rem), var(--prodej-h1-accent));
+      line-height: 1.18;
       max-width: 100%;
     }
-    /* Jeden spodní blok: perex + rámečky — celý přitáhnutý dolů, mezera od H1 jen prázdným prostorem */
+    .prodej-h1-big {
+      font-size: var(--prodej-h1-accent);
+      line-height: 1.08;
+      margin-top: 0.65rem;
+      padding-left: clamp(0.75rem, 3vw, 1.25rem);  /* lehce doprava */
+      width: 100%;
+      max-width: 100%;
+      align-self: stretch;
+      text-align: left;
+      white-space: nowrap;
+    }
+    @media (max-width: 380px) {
+      .prodej-hero-lede .prodej-h1 {
+        --prodej-h1-accent: clamp(1.5rem, 5.75vw, 2.125rem);
+      }
+    }
+    /* Spodní blok: flex: 1 = vyplní prostor po lede; pořadí pills → perex přes order */
     .prodej-hero-bottom {
       display: flex;
       flex-direction: column;
-      align-items: stretch;
+      align-items: flex-start;
       width: 100%;
-      margin-top: auto;
+      flex: 1;
+      margin-top: 0;
       flex-shrink: 0;
       gap: 0;
     }
-    /* Perex — větší odstup pod textem + hairline před rámečky služeb */
-    .prodej-hero-bottom .prodej-paragraph {
-      margin-top: 0;
-      max-width: 14rem;
-      width: 100%;
-      font-size: 12px;
-      line-height: 1.48;
-      flex-shrink: 0;
-      padding-bottom: clamp(1.2rem, 4vmin, 1.85rem);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.28);
-      margin-bottom: clamp(0.85rem, 3vmin, 1.35rem);
-    }
-    /* Mezery jen uvnitř .prodej-hero-bottom — ne mezi H1 a perexem */
+    /* Pills — nahoře hned pod lede, zúžené (align-self: flex-start) */
     .prodej-hero-pills {
-      margin-top: 0;
-      padding-top: 0;
+      order: -1;
+      align-self: flex-start;
+      margin-top: clamp(3.5rem, 13vw, 5.5rem);
       flex-shrink: 0;
       gap: 0.5rem;
+      flex-direction: column;
     }
     .prodej-hero-pills .prodej-badge {
-      padding: 0.45rem 0.75rem;
-      gap: 0.75rem;
+      padding: 0.45rem 0.85rem;
+      gap: 1rem;
+      width: auto;
     }
     .prodej-hero-pills .prodej-badge-title {
       font-size: 13px;
@@ -4184,6 +4243,21 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     .prodej-hero-pills .prodej-badge-label {
       font-size: 8.5px;
       margin-bottom: 2px;
+    }
+    /* Perex — přitáhnutý dolů s linkou nahoře */
+    .prodej-hero-bottom .prodej-paragraph {
+      order: 1;
+      margin-top: auto;
+      max-width: 100%;
+      width: 100%;
+      font-size: 12px;
+      line-height: 1.48;
+      flex-shrink: 0;
+      border-top: none;
+      padding-top: clamp(0.75rem, 3vmin, 1.25rem);
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
     }
 
     #prodej-pill {
@@ -4484,22 +4558,22 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     }
     .prodej-funnel-stats {
       margin-top: clamp(1.75rem, 5vw, 2.25rem);
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      column-gap: 0.35rem;
-      row-gap: 0.75rem;
-      padding: 0.875rem 0.5rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 1rem;
+      row-gap: 1.25rem;
+      padding: 1.125rem 1rem;
     }
     .prodej-funnel-stat {
       gap: 0.35rem;
-      text-align: center;
-      align-items: center;
+      text-align: left;
+      align-items: flex-start;
     }
     .prodej-funnel-stat-num {
-      font-size: 1.3125rem; /* 21 px — 4 sloupce, stále čitelné */
+      font-size: clamp(1.5rem, 6vw, 1.875rem);
     }
     .prodej-funnel-stat-label {
-      font-size: 9px;
-      line-height: 1.25;
+      font-size: 10.5px;
+      line-height: 1.3;
       letter-spacing: 0.01em;
     }
 
@@ -4727,15 +4801,15 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
     }
     .prodej-eyebrow {
-      margin-bottom: 0.875rem;
-      font-size: 10px;
+      margin-bottom: 0.75rem;
+      font-size: 11px;
     }
     .prodej-h1-main {
-      font-size: 1.1875rem; /* 19 px */
-      line-height: 1.26;
+      font-size: 1.5rem;
+      line-height: 1.2;
     }
     .prodej-h1-big {
-      font-size: 1.4375rem; /* 23 px */
+      font-size: 1.75rem;
       margin-top: 0.5rem;
     }
     .prodej-hero-bottom {
@@ -5385,4 +5459,119 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
 
   initProdejPoptavka();
   document.addEventListener('astro:page-load', initProdejPoptavka);
+
+  /* ── Scroll Reveal ──────────────────────────────────────────────────── */
+  function initProdejReveal() {
+    if (!('IntersectionObserver' in window)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    /* Skupiny, jejichž přímé children se staggerují kaskádovitě */
+    var STAGGER_PARENTS = [
+      '.prodej-services-grid',
+      '.prodej-funnel-stats',
+      '.prodej-campaign',
+    ];
+
+    /* Jednotlivé elementy, které se odhalují jako celek */
+    var SOLO_SELECTORS = [
+      '.prodej-services-head',
+      '.prodej-services-footnote',
+      '.prodej-process-h',
+      '.prodej-funnel-content',
+      '.prodej-funnel-detail-main',
+      '.prodej-funnel-benefits',
+      '.prodej-funnel-detail-divider',
+      '.prodej-postup-head',
+      '.prodej-poptavka-card',
+    ];
+
+    var toObserve = [];
+
+    /* Stagger: přímé children stagger parentů */
+    STAGGER_PARENTS.forEach(function(sel) {
+      var parent = document.querySelector(sel);
+      if (!parent) return;
+      Array.from(parent.children).forEach(function(child, i) {
+        child.classList.add('prodej-reveal');
+        child.style.transitionDelay = (i * 90) + 'ms';
+        toObserve.push(child);
+      });
+    });
+
+    /* Solo elementy */
+    SOLO_SELECTORS.forEach(function(sel) {
+      var els = document.querySelectorAll(sel);
+      els.forEach(function(el) {
+        /* Nepřidávat reveal pokud je uvnitř hero (má vlastní animaci) */
+        if (el.closest('#prodej-hero')) return;
+        el.classList.add('prodej-reveal');
+        toObserve.push(el);
+      });
+    });
+
+    /* Process items — vlastní stagger uvnitř osy */
+    var processItems = document.querySelectorAll('.prodej-process-item');
+    processItems.forEach(function(el, i) {
+      el.classList.add('prodej-reveal');
+      el.style.transitionDelay = (i * 70) + 'ms';
+      toObserve.push(el);
+    });
+
+    if (toObserve.length === 0) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-revealed');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -4% 0px' });
+
+    toObserve.forEach(function(el) { observer.observe(el); });
+  }
+
+  initProdejReveal();
+  document.addEventListener('astro:page-load', initProdejReveal);
+
+  /* ── Word-by-word quote reveal ──────────────────────────────────────── */
+  function initProdejQuoteReveal() {
+    var quote = document.querySelector('.prodej-process-quote');
+    if (!quote) return;
+
+    /* Split jednou — na re-init stačí jen přidat observer */
+    if (!quote.dataset.wordSplit) {
+      var text = quote.textContent.trim();
+      var words = text.split(' ');
+      quote.innerHTML = words.map(function(word, i) {
+        var safe = word
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+        return '<span class="prodej-quote-word" style="transition-delay:' + (i * 30) + 'ms">' + safe + '</span>';
+      }).join(' ');
+      quote.dataset.wordSplit = '1';
+    }
+
+    /* Fallback / reduced motion: okamžitě zobraz */
+    if (!('IntersectionObserver' in window) ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      quote.classList.add('is-word-revealed');
+      return;
+    }
+
+    quote.classList.remove('is-word-revealed');
+
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        quote.classList.add('is-word-revealed');
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.25, rootMargin: '0px 0px -6% 0px' });
+
+    obs.observe(quote);
+  }
+
+  initProdejQuoteReveal();
+  document.addEventListener('astro:page-load', initProdejQuoteReveal);
 </script>
