@@ -882,6 +882,40 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
             </div>
           </div>
 
+          <div class="prodej-poptavka-field prodej-poptavka-field--marketing-pkg" data-marketing-pkg-field hidden>
+            <span class="prodej-poptavka-label">Balíček marketingu</span>
+            <div class="prodej-poptavka-pkgs" data-choice-group="marketingBalicek" data-multiple="false">
+              <button type="button" class="prodej-poptavka-pkg-choice" data-value="basic">
+                <span class="prodej-poptavka-pkg-top">
+                  <span class="prodej-poptavka-pkg-name">Basic</span>
+                  <span class="prodej-poptavka-pkg-price">29&nbsp;900&nbsp;Kč</span>
+                </span>
+                <span class="prodej-poptavka-pkg-desc">Profesionální příprava nemovitosti k&nbsp;prodeji</span>
+              </button>
+              <button type="button" class="prodej-poptavka-pkg-choice" data-value="silver">
+                <span class="prodej-poptavka-pkg-top">
+                  <span class="prodej-poptavka-pkg-name">Silver</span>
+                  <span class="prodej-poptavka-pkg-price">59&nbsp;900&nbsp;Kč<span class="prodej-poptavka-pkg-asterisk" aria-hidden="true">*</span></span>
+                </span>
+                <span class="prodej-poptavka-pkg-desc">Aktivní marketing a&nbsp;kompletní správa propagace</span>
+              </button>
+              <button type="button" class="prodej-poptavka-pkg-choice" data-value="gold">
+                <span class="prodej-poptavka-pkg-top">
+                  <span class="prodej-poptavka-pkg-name">Gold</span>
+                  <span class="prodej-poptavka-pkg-price">99&nbsp;900&nbsp;Kč<span class="prodej-poptavka-pkg-asterisk" aria-hidden="true">*</span></span>
+                </span>
+                <span class="prodej-poptavka-pkg-desc">Prémiový marketing s&nbsp;právním dotažením</span>
+              </button>
+              <button type="button" class="prodej-poptavka-pkg-choice prodej-poptavka-pkg-choice--muted" data-value="nevim">
+                <span class="prodej-poptavka-pkg-top">
+                  <span class="prodej-poptavka-pkg-name">Zatím nevím</span>
+                </span>
+                <span class="prodej-poptavka-pkg-desc">Doporučte mi vhodný balíček podle nemovitosti</span>
+              </button>
+            </div>
+            <button type="button" class="prodej-poptavka-pkg-compare" data-pkg-open="basic">Porovnat detail balíčků</button>
+          </div>
+
         </div>
 
         <p class="prodej-poptavka-error" data-error-step="2" hidden></p>
@@ -1087,11 +1121,11 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
         </button>
         <button class="pkg-modal-tab" role="tab" aria-selected="false" aria-controls="pkg-panel-silver" id="pkg-tab-silver" data-pkg-tab="silver">
           <span class="pkg-modal-tab-name">Silver</span>
-          <span class="pkg-modal-tab-price">59&nbsp;900&nbsp;Kč</span>
+          <span class="pkg-modal-tab-price">59&nbsp;900&nbsp;Kč<span class="pkg-modal-asterisk" aria-hidden="true">*</span></span>
         </button>
         <button class="pkg-modal-tab" role="tab" aria-selected="false" aria-controls="pkg-panel-gold" id="pkg-tab-gold" data-pkg-tab="gold">
           <span class="pkg-modal-tab-name">Gold</span>
-          <span class="pkg-modal-tab-price">99&nbsp;900&nbsp;Kč</span>
+          <span class="pkg-modal-tab-price">99&nbsp;900&nbsp;Kč<span class="pkg-modal-asterisk" aria-hidden="true">*</span></span>
         </button>
       </div>
       <button type="button" class="pkg-modal-close" data-pkg-modal-close aria-label="Zavřít">×</button>
@@ -1134,7 +1168,7 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
             <h4 class="pkg-modal-h">Inzerce nemovitosti</h4>
             <ul class="pkg-modal-list">
               <li>Vytvoření inzerátu na&nbsp;Sreality.cz</li>
-              <li>Publikace a&nbsp;správa inzerátu <strong>na&nbsp;3&nbsp;měsíce</strong></li>
+              <li><strong>Publikace a&nbsp;správa inzerátu na&nbsp;3&nbsp;měsíce</strong></li>
               <li>Úpravy textu a&nbsp;prezentace během inzerce</li>
             </ul>
           </div>
@@ -1164,9 +1198,9 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
           <div class="pkg-modal-section">
             <h4 class="pkg-modal-h">Rozšířená prezentace</h4>
             <ul class="pkg-modal-list">
-              <li><strong>Video prohlídka</strong> nemovitosti</li>
+              <li><strong>Video prohlídka nemovitosti</strong></li>
               <li>Střih a&nbsp;úprava videa pro&nbsp;online použití</li>
-              <li>Prezentační <strong>landing page nebo&nbsp;miniweb</strong></li>
+              <li><strong>Prezentační landing page nebo&nbsp;miniweb</strong></li>
               <li>Rozšířená online prezentace nemovitosti</li>
             </ul>
           </div>
@@ -1243,7 +1277,7 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
             <ul class="pkg-modal-list">
               <li>Příprava rezervační smlouvy</li>
               <li>Příprava kupní smlouvy</li>
-              <li><strong>Advokátní úschova</strong> finančních prostředků</li>
+              <li><strong>Advokátní úschova finančních prostředků</strong></li>
               <li>Koordinace převodu nemovitosti</li>
               <li>Dohled nad&nbsp;průběhem transakce</li>
             </ul>
@@ -1261,8 +1295,11 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
 
     </div>
 
-    <!-- Footer — CTA -->
+    <!-- Footer — poznámka k rozpočtu + CTA -->
     <div class="pkg-modal-footer">
+      <p class="pkg-modal-budget-note" data-pkg-budget="basic">Bez rozpočtu na reklamu</p>
+      <p class="pkg-modal-budget-note" data-pkg-budget="silver" hidden><span class="pkg-modal-asterisk" aria-hidden="true">*</span> Obsahuje rozpočet <strong>20&nbsp;000&nbsp;Kč na reklamu</strong></p>
+      <p class="pkg-modal-budget-note" data-pkg-budget="gold" hidden><span class="pkg-modal-asterisk" aria-hidden="true">*</span> Obsahuje rozpočet <strong>25&nbsp;000&nbsp;Kč na reklamu</strong></p>
       <a
         href="#prodej-poptavka"
         class="pkg-modal-cta"
@@ -2154,21 +2191,12 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     letter-spacing: -0.02em;
     color: #fff;
   }
-  .prodej-service-card:first-child .prodej-service-price {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.5rem 1rem;
-    text-align: left;
-    min-width: min(100%, 17rem);
-  }
   .prodej-service-card:first-child .prodej-service-price-big {
     font-size: clamp(1.625rem, 2.85vw, 2.125rem);
-    text-align: right;
   }
-  .prodej-service-price-hint {
+  /* „Zvolte variantu“ — jen mobil (viz MOBILE REFINEMENTS); na desktopu skryté */
+  .prodej-service-card:first-child .prodej-service-price-hint {
+    display: none;
     font-size: 9px;
     font-weight: 600;
     letter-spacing: 0.14em;
@@ -2176,6 +2204,15 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     color: rgba(255, 255, 255, 0.52);
     white-space: nowrap;
     flex-shrink: 0;
+  }
+  @media (min-width: 768px) {
+    .prodej-service-card:first-child .prodej-service-price {
+      display: block;
+      text-align: right;
+    }
+    .prodej-service-card:first-child .prodej-service-price-hint {
+      display: none;
+    }
   }
   .prodej-service-price-sub {
     display: block;
@@ -2420,32 +2457,42 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
   .pkg-modal {
     position: fixed;
     inset: 0;
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
-    max-width: 100%;
-    max-height: 100%;
+    max-width: none;
+    max-height: none;
     margin: 0;
     padding: 0;
-    background: transparent;
     border: none;
+    background: transparent;
+    color: #0a0a0a;
   }
   .pkg-modal[open] {
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
   }
   .pkg-modal::backdrop {
     background: rgba(0, 0, 0, 0.45);
   }
   .pkg-modal-shell {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    min-height: 100%;
+    min-height: 100dvh;
+    height: 100%;
+    max-height: none;
     background: #fff;
     color: #0a0a0a;
     border-radius: 0;
-    width: 100%;
-    height: 100svh;
-    max-height: none;
-    display: flex;
-    flex-direction: column;
     overflow: hidden; /* clip animaci, scroll řeší .pkg-modal-body */
   }
   .pkg-modal[open] .pkg-modal-shell {
@@ -2519,6 +2566,21 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     font-variant-numeric: tabular-nums;
     line-height: 1.2;
   }
+  .pkg-modal-asterisk {
+    display: inline;
+    font-size: 0.7em;
+    font-weight: 600;
+    line-height: 1;
+    vertical-align: super;
+    color: rgba(10, 10, 10, 0.55);
+  }
+  .pkg-modal-tab-price .pkg-modal-asterisk {
+    margin-left: 0.1em;
+  }
+  .pkg-modal-budget-note .pkg-modal-asterisk {
+    margin-right: 0.15em;
+  }
+
   .pkg-modal-close {
     flex-shrink: 0;
     background: transparent;
@@ -2629,9 +2691,25 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     color: rgba(10, 10, 10, 0.75);
   }
 
+  .pkg-modal-budget-note {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    font-weight: 500;
+    color: rgba(10, 10, 10, 0.72);
+    letter-spacing: -0.01em;
+  }
+  .pkg-modal-footer .pkg-modal-budget-note[hidden] {
+    display: none;
+  }
+
   /* Footer */
   .pkg-modal-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
     padding: clamp(0.875rem, 2vw, 1.25rem) clamp(1.5rem, 4.5vw, 2.5rem) calc(clamp(1rem, 2vw, 1.25rem) + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid rgba(10, 10, 10, 0.12);
     flex-shrink: 0;
   }
   .pkg-modal-cta {
@@ -2651,8 +2729,22 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
   }
   .pkg-modal-cta:hover { opacity: 0.8; }
 
-  /* Mobil: full screen, vzdušnější, menší texty */
-  @media (max-width: 639px) {
+  /* Mobil: fullscreen + vzdušnější typografie */
+  @media (max-width: 767px) {
+    .pkg-modal[open] {
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+    }
+    .pkg-modal::backdrop {
+      background: #fff;
+    }
+    .pkg-modal-shell {
+      min-height: 100vh;
+      min-height: 100dvh;
+      height: 100vh;
+      height: 100dvh;
+    }
     .pkg-modal-header {
       padding-top: env(safe-area-inset-top, 0px);
     }
@@ -2681,17 +2773,34 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     .pkg-modal-tab-price {
       font-size: 13px;
     }
+    .pkg-modal-tab-price .pkg-modal-asterisk {
+      font-size: 0.75em;
+    }
+    .pkg-modal-budget-note {
+      font-size: 12.5px;
+    }
     .pkg-modal-footer {
-      padding: 1.25rem 1.75rem calc(1.25rem + env(safe-area-inset-bottom, 0px));
+      gap: 0.65rem;
+      padding: 1rem 1.75rem calc(1rem + env(safe-area-inset-bottom, 0px));
     }
   }
 
   /* Desktop: fixní výška = jeden rozměr pro všechny panely */
-  @media (min-width: 640px) {
-    .pkg-modal[open] { align-items: center; }
+  @media (min-width: 768px) {
+    .pkg-modal[open] {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+    .pkg-modal::backdrop {
+      background: rgba(0, 0, 0, 0.45);
+    }
     .pkg-modal-shell {
+      flex: 0 1 auto;
       width: min(1160px, 94vw);
       /* Pevná výška — všechny taby vypadají stejně */
+      min-height: 0;
       height: min(86vh, 720px);
       max-height: none;
       border-radius: 0;
@@ -4676,6 +4785,99 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     line-height: 1.45;
   }
 
+  /* Balíčky marketingu — podmíněný blok v kroku 2 */
+  .prodej-poptavka-field--marketing-pkg[hidden] {
+    display: none;
+  }
+  .prodej-poptavka-field--marketing-pkg {
+    margin-top: 0.25rem;
+  }
+  .prodej-poptavka-pkgs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .prodej-poptavka-pkg-choice {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: transparent;
+    border: 1px solid rgba(10, 10, 10, 0.18);
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  .prodej-poptavka-pkg-choice:hover {
+    border-color: rgba(10, 10, 10, 0.45);
+    background: rgba(255, 255, 255, 0.4);
+  }
+  .prodej-poptavka-pkg-choice.is-selected {
+    border-color: #0a0a0a;
+    background: #fff;
+  }
+  .prodej-poptavka-pkg-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+  }
+  .prodej-poptavka-pkg-name {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(10, 10, 10, 0.55);
+  }
+  .prodej-poptavka-pkg-price {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #0a0a0a;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .prodej-poptavka-pkg-asterisk {
+    display: inline;
+    font-size: 0.7em;
+    font-weight: 600;
+    vertical-align: super;
+    margin-left: 0.08em;
+    color: rgba(10, 10, 10, 0.5);
+  }
+  .prodej-poptavka-pkg-desc {
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: rgba(10, 10, 10, 0.65);
+  }
+  .prodej-poptavka-pkg-choice--muted .prodej-poptavka-pkg-name {
+    text-transform: none;
+    letter-spacing: -0.01em;
+    font-size: 13px;
+    color: #0a0a0a;
+  }
+  .prodej-poptavka-pkg-compare {
+    margin-top: 0.65rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: rgba(10, 10, 10, 0.55);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    transition: color 0.18s ease;
+  }
+  .prodej-poptavka-pkg-compare:hover {
+    color: #0a0a0a;
+  }
+
   /* Input — pouze spodní border (jako SmartContactModal) */
   .prodej-poptavka-input {
     width: 100%;
@@ -4735,6 +4937,9 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
   }
 
   /* Error states */
+  .prodej-poptavka-field--marketing-pkg.is-invalid .prodej-poptavka-pkg-choice {
+    border-color: rgba(194, 34, 34, 0.55);
+  }
   .prodej-poptavka-field.is-invalid .prodej-poptavka-input {
     border-color: #c22;
   }
@@ -5176,12 +5381,16 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       padding-top: clamp(1.25rem, 4vw, 1.5rem);
       border-top: 1px solid rgba(255, 255, 255, 0.12);
     }
+    .prodej-service-card:first-child .prodej-service-price-hint {
+      display: inline-block;
+    }
     .prodej-service-price-big {
       font-size: clamp(1.35rem, 4.2vw, 1.625rem);
       letter-spacing: -0.015em;
     }
     .prodej-service-card:first-child .prodej-service-price-big {
       font-size: clamp(1.2rem, 3.6vw, 1.45rem);
+      text-align: right;
     }
     .prodej-service-card:first-child .prodej-service-head {
       align-items: stretch;
@@ -6077,6 +6286,20 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
 
     let currentStep = 1;
 
+    const MARKETING_SLUZBA = 'Marketing nemovitosti';
+    const MARKETING_BALICEK_LABELS = {
+      basic: 'Basic — 29 900 Kč',
+      silver: 'Silver — 59 900 Kč',
+      gold: 'Gold — 99 900 Kč',
+      nevim: 'Zatím nevím — doporučit vhodný balíček',
+    };
+    const MARKETING_BALICEK_NAMES = {
+      basic: 'Basic',
+      silver: 'Silver',
+      gold: 'Gold',
+      nevim: 'Zatím nevím',
+    };
+
     /* Stav napříč kroky — jeden objekt drží všechny volby a inputy.
        Hlavní volby jsou single-select (string), doplňky multi-select (array). */
     const state = {
@@ -6085,6 +6308,7 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       stav: null,
       lokalita: '',
       hlavni: null,
+      marketingBalicek: null,
       jmeno: '',
       telefon: '',
       email: '',
@@ -6123,6 +6347,47 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       }
     }
 
+    function updateMarketingPkgField() {
+      const field = section.querySelector('[data-marketing-pkg-field]');
+      if (!field) return;
+      const show = state.hlavni === MARKETING_SLUZBA;
+      if (show) {
+        field.removeAttribute('hidden');
+      } else {
+        field.setAttribute('hidden', '');
+        state.marketingBalicek = null;
+        repaintChoices('marketingBalicek');
+      }
+    }
+
+    function getMarketingBalicekLabel() {
+      return state.marketingBalicek
+        ? (MARKETING_BALICEK_LABELS[state.marketingBalicek] || state.marketingBalicek)
+        : '';
+    }
+
+    function getSelectedServiceLabel() {
+      if (state.hlavni === MARKETING_SLUZBA && state.marketingBalicek) {
+        const tier = MARKETING_BALICEK_NAMES[state.marketingBalicek] || state.marketingBalicek;
+        return MARKETING_SLUZBA + ' — ' + tier;
+      }
+      return state.hlavni || 'Prodej nemovitosti';
+    }
+
+    function applyPoptavkaPreselect(sluzba, balicek) {
+      if (sluzba) {
+        state.hlavni = sluzba;
+        repaintChoices('hlavni');
+      }
+      if (balicek) {
+        state.hlavni = MARKETING_SLUZBA;
+        state.marketingBalicek = balicek;
+        repaintChoices('hlavni');
+        repaintChoices('marketingBalicek');
+      }
+      updateMarketingPkgField();
+    }
+
     function setChoice(group, value, multiple) {
       if (multiple) {
         const arr = state[group] || [];
@@ -6134,13 +6399,16 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
         state[group] = state[group] === value ? null : value;
       }
       repaintChoices(group);
+      if (group === 'hlavni') updateMarketingPkgField();
     }
 
     function repaintChoices(group) {
       const containers = section.querySelectorAll('[data-choice-group="' + group + '"]');
       containers.forEach(function (container) {
         const multiple = container.getAttribute('data-multiple') === 'true';
-        container.querySelectorAll('.prodej-poptavka-choice, .prodej-poptavka-card-choice').forEach(function (btn) {
+        container.querySelectorAll(
+          '.prodej-poptavka-choice, .prodej-poptavka-card-choice, .prodej-poptavka-pkg-choice'
+        ).forEach(function (btn) {
           const v = btn.getAttribute('data-value');
           if (multiple) {
             btn.classList.toggle('is-selected', (state[group] || []).indexOf(v) !== -1);
@@ -6155,7 +6423,9 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     section.querySelectorAll('[data-choice-group]').forEach(function (container) {
       const group = container.getAttribute('data-choice-group');
       const multiple = container.getAttribute('data-multiple') === 'true';
-      container.querySelectorAll('.prodej-poptavka-choice, .prodej-poptavka-card-choice').forEach(function (btn) {
+      container.querySelectorAll(
+        '.prodej-poptavka-choice, .prodej-poptavka-card-choice, .prodej-poptavka-pkg-choice'
+      ).forEach(function (btn) {
         btn.addEventListener('click', function () {
           setChoice(group, btn.getAttribute('data-value'), multiple);
         });
@@ -6211,6 +6481,12 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
         if (!state.lokalita.trim()) { markInvalidInput('lokalita', true); missing.push('lokalita'); valid = false; }
       } else if (step === 2) {
         if (!state.hlavni) { missing.push('hlavní volba služby'); valid = false; }
+        if (state.hlavni === MARKETING_SLUZBA && !state.marketingBalicek) {
+          const pkgField = section.querySelector('[data-marketing-pkg-field]');
+          if (pkgField) pkgField.classList.add('is-invalid');
+          missing.push('balíček marketingu');
+          valid = false;
+        }
       } else if (step === 3) {
         if (!state.jmeno.trim()) { markInvalidInput('jmeno', true); missing.push('jméno'); valid = false; }
         const hasTel = state.telefon.trim().length >= 9;
@@ -6287,13 +6563,14 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
           email: emailForApi,
           vzkaz: state.poznamka.trim(),
           userType: 'client',
-          selectedService: state.hlavni || 'Prodej nemovitosti',
+          selectedService: getSelectedServiceLabel(),
           /* Doplňkové fieldy — server je serializuje do emailu */
           typ_nemovitosti: state.typ || '',
           dispozice: state.dispozice || '',
           stav: state.stav || '',
           lokalita: state.lokalita.trim(),
           hlavni_volba: state.hlavni || '',
+          marketing_balicek: getMarketingBalicekLabel(),
           termin: state.termin || '',
           odkaz: state.odkaz.trim(),
           souhlas: state.souhlas ? 'ano' : 'ne',
@@ -6325,13 +6602,16 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
     /* Externí CTA na stránce s atributem [data-poptavka-link] míří na formulář.
        Pokud má [data-poptavka-preselect], předvybereme hlavní volbu v kroku 2.
        Smooth scroll provádíme ručně, aby fungoval i bez globální scroll-behavior. */
+    document.addEventListener('prodej-poptavka-preselect', function (e) {
+      const detail = e.detail || {};
+      applyPoptavkaPreselect(detail.sluzba, detail.balicek);
+    });
+
     document.querySelectorAll('[data-poptavka-link]').forEach(function (link) {
       link.addEventListener('click', function (e) {
         const preselect = link.getAttribute('data-poptavka-preselect');
-        if (preselect) {
-          state.hlavni = preselect;
-          repaintChoices('hlavni');
-        }
+        const pkgPreselect = link.getAttribute('data-pkg-preselect');
+        applyPoptavkaPreselect(preselect || null, pkgPreselect || null);
         e.preventDefault();
         try {
           section.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -6498,13 +6778,18 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
       });
     });
 
-    /* CTA: zavřít modal, pak scroll na formulář */
+    /* CTA: zavřít modal, předvyplnit formulář, scroll */
     var ctaBtn = modal.querySelector('[data-pkg-modal-cta]');
     if (ctaBtn) {
       ctaBtn.addEventListener('click', function(e) {
         e.preventDefault();
         var href = ctaBtn.getAttribute('href');
+        var activeTab = modal.querySelector('[data-pkg-tab][aria-selected="true"]');
+        var pkg = activeTab ? activeTab.dataset.pkgTab : 'basic';
         closePkgModal();
+        document.dispatchEvent(new CustomEvent('prodej-poptavka-preselect', {
+          detail: { sluzba: 'Marketing nemovitosti', balicek: pkg },
+        }));
         setTimeout(function() {
           var target = href ? document.querySelector(href) : null;
           if (target) target.scrollIntoView({ behavior: 'smooth' });
@@ -6536,6 +6821,13 @@ const kamp6 = '/images/Prodej/dum.png';           /* Small — Dům jako alterna
           panel.removeAttribute('hidden');
         } else {
           panel.setAttribute('hidden', '');
+        }
+      });
+      modal.querySelectorAll('[data-pkg-budget]').forEach(function(note) {
+        if (note.dataset.pkgBudget === pkg) {
+          note.removeAttribute('hidden');
+        } else {
+          note.setAttribute('hidden', '');
         }
       });
       /* Reset scroll na začátek panelu */

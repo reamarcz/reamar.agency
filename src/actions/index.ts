@@ -12,6 +12,15 @@ function buildEmailBody(payload: Record<string, unknown>): string {
     vzkaz: 'Vzkaz',
     userType: 'Jsem',
     selectedService: 'Mám zájem o',
+    hlavni_volba: 'Hlavní volba služby',
+    marketing_balicek: 'Balíček marketingu',
+    typ_nemovitosti: 'Typ nemovitosti',
+    dispozice: 'Dispozice',
+    stav: 'Stav',
+    lokalita: 'Lokalita',
+    termin: 'Termín prodeje',
+    odkaz: 'Odkaz na podklady',
+    souhlas: 'Souhlas',
   };
   const formLabels: Record<string, string> = {
     contact: 'Poptávkový formulář',
