@@ -35,13 +35,7 @@ const heroImage = '/images/pro-klienty-bg.webp';
       >
         Pomáháme vám kupovat, prodávat a zhodnocovat vaše nemovitosti
       </p>
-      <div
-        class="klienty-hero-ctas"
-        data-aos="fade-up"
-        data-aos-duration="800"
-        data-aos-easing="ease"
-        data-aos-delay="500"
-      >
+      <div class="klienty-hero-ctas">
         <a
           href="javascript:void(0)"
           class="klienty-hero-btn klienty-hero-btn--primary"
@@ -88,12 +82,9 @@ const heroImage = '/images/pro-klienty-bg.webp';
     line-height: 1;
     border-radius: 0;
     text-decoration: none;
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease,
-      border-color 0.3s ease,
-      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    border: 1px solid transparent;
     cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .klienty-hero-btn:hover {
     transform: translateY(-1px);
@@ -108,7 +99,11 @@ const heroImage = '/images/pro-klienty-bg.webp';
   .klienty-hero-btn--primary {
     background: #fff;
     color: #0a0a0a;
-    border: 1px solid #fff;
+    border-color: #fff;
+    transition:
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.3s ease,
+      border-color 0.3s ease;
   }
   .klienty-hero-btn--primary:hover {
     background: rgba(255, 255, 255, 0.92);
@@ -121,15 +116,29 @@ const heroImage = '/images/pro-klienty-bg.webp';
     transform: translate(2px, 2px);
   }
   .klienty-hero-btn--secondary {
-    background: rgba(255, 255, 255, 0.06);
     color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.5);
+    background: transparent;
+    isolation: isolate;
+    transition:
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.2s ease;
+  }
+  .klienty-hero-btn--secondary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(12px) saturate(140%);
     -webkit-backdrop-filter: blur(12px) saturate(140%);
+    transform: translateZ(0);
   }
   .klienty-hero-btn--secondary:hover {
-    background: rgba(255, 255, 255, 0.12);
     border-color: rgba(255, 255, 255, 0.8);
+  }
+  .klienty-hero-btn--secondary:hover::before {
+    background: rgba(255, 255, 255, 0.16);
   }
   .klienty-hero-btn:focus-visible {
     outline: 2px solid rgba(255, 255, 255, 0.9);
