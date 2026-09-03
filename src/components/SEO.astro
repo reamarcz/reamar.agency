@@ -31,6 +31,7 @@ const canonicalUrl = canonical?.startsWith('http') ? canonical : canonical ? `${
 <meta name="description" content={description} />
 {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 <meta name="robots" content={robots} />
+{robots.includes('noindex') && <meta name="googlebot" content={robots} />}
 
 <meta property="og:type" content={ogType} />
 <meta property="og:site_name" content="REAMAR | Reality. Marketing." />
