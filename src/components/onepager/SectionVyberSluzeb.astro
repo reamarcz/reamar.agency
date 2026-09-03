@@ -157,7 +157,7 @@ const Heading = headingAs;
             </li>
           ))}
         </ul>
-        <button type="button" class="sluzba-how-hint" aria-expanded="false">
+        <button type="button" class="sluzba-how-hint sluzba-how-hint--desk" aria-expanded="false">
           Jak to funguje
           <span aria-hidden="true">→</span>
         </button>
@@ -176,16 +176,22 @@ const Heading = headingAs;
             </span>
             <span class="sr-only">Podrobnosti k provizi z nákupu</span>
           </button>
-          <button
-            type="button"
-            class="mt-5 inline-flex items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-white transition-opacity hover:opacity-85"
-            data-smart-contact-open
-            data-smart-contact-type="client"
-            data-smart-contact-service="Monitoring projektů"
-          >
-            <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0 invert" width="12" height="12" />
-            Začít zdarma
-          </button>
+          <div class="sluzba-cta-row">
+            <button
+              type="button"
+              class="sluzba-cta inline-flex items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-white transition-opacity hover:opacity-85"
+              data-smart-contact-open
+              data-smart-contact-type="client"
+              data-smart-contact-service="Monitoring projektů"
+            >
+              <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0 invert" width="12" height="12" />
+              Začít zdarma
+            </button>
+            <button type="button" class="sluzba-how-hint sluzba-how-hint--mobile" aria-expanded="false">
+              Jak to funguje
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
         </div>
         </div>
       </article>
@@ -359,7 +365,7 @@ const Heading = headingAs;
             </li>
           ))}
         </ul>
-        <button type="button" class="sluzba-how-hint sluzba-how-hint--dark" aria-expanded="false">
+        <button type="button" class="sluzba-how-hint sluzba-how-hint--desk sluzba-how-hint--dark" aria-expanded="false">
           Jak to funguje
           <span aria-hidden="true">→</span>
         </button>
@@ -378,16 +384,22 @@ const Heading = headingAs;
             </span>
             <span class="sr-only">Podrobnosti k provizi z nákupu</span>
           </button>
-          <button
-            type="button"
-            class="mt-5 inline-flex items-center gap-1.5 bg-white px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-black transition-opacity hover:opacity-85"
-            data-smart-contact-open
-            data-smart-contact-type="client"
-            data-smart-contact-service="Osobní vyhledávání"
-          >
-            <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0" width="12" height="12" />
-            Zahájit spolupráci
-          </button>
+          <div class="sluzba-cta-row">
+            <button
+              type="button"
+              class="sluzba-cta inline-flex items-center gap-1.5 bg-white px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-black transition-opacity hover:opacity-85"
+              data-smart-contact-open
+              data-smart-contact-type="client"
+              data-smart-contact-service="Osobní vyhledávání"
+            >
+              <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0" width="12" height="12" />
+              Zahájit spolupráci
+            </button>
+            <button type="button" class="sluzba-how-hint sluzba-how-hint--mobile sluzba-how-hint--dark" aria-expanded="false">
+              Jak to funguje
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
         </div>
         </div>
       </article>
@@ -442,9 +454,8 @@ const Heading = headingAs;
   .sluzba-how {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
-  .sluzba-foot {
-    margin-top: auto;
-    padding-top: 2.5rem;
+  .sluzba-cta-row {
+    margin-top: 1.25rem;
   }
   .sluzba-price {
     display: flex;
@@ -636,13 +647,22 @@ const Heading = headingAs;
     .sluzba-paid {
       display: contents;
     }
-    .sluzba-how-hint {
+    .sluzba-how-hint--desk {
+      display: none;
+    }
+    .sluzba-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1.1rem;
+      margin-top: 1.25rem;
+    }
+    .sluzba-how-hint--mobile {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      order: 2;
       width: fit-content;
-      margin: 1.15rem 0 0;
+      margin: 0;
       padding: 0;
       border: 0;
       background: none;
@@ -654,7 +674,7 @@ const Heading = headingAs;
       letter-spacing: -0.01em;
       line-height: 1;
     }
-    .sluzba-how-hint--dark {
+    .sluzba-how-hint--dark.sluzba-how-hint--mobile {
       color: rgba(255, 255, 255, 0.45);
     }
     .sluzba-how-hint span {
@@ -668,8 +688,8 @@ const Heading = headingAs;
     }
     .sluzba-how {
       display: none;
-      order: 3;
-      margin-top: 0.85rem;
+      order: 5;
+      margin-top: 1.15rem;
       border-top: 0;
     }
     .sluzba-pair--paid .sluzba-how {
@@ -758,7 +778,7 @@ const Heading = headingAs;
       min-width: var(--sluzba-how-width);
       max-width: var(--sluzba-how-width);
     }
-    .sluzba-how-hint {
+    .sluzba-how-hint--desk {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
@@ -773,6 +793,9 @@ const Heading = headingAs;
       letter-spacing: -0.01em;
       color: rgba(0, 0, 0, 0.4);
       transition: opacity 0.25s ease;
+    }
+    .sluzba-how-hint--mobile {
+      display: none;
     }
     .sluzba-how-hint span {
       font-size: 14px;
@@ -812,8 +835,8 @@ const Heading = headingAs;
     .sluzba-pair--paid:focus-within .sluzba-how {
       border-left: 1px solid rgba(255, 255, 255, 0.14);
     }
-    .sluzba-pair:hover .sluzba-how-hint,
-    .sluzba-pair:focus-within .sluzba-how-hint {
+    .sluzba-pair:hover .sluzba-how-hint--desk,
+    .sluzba-pair:focus-within .sluzba-how-hint--desk {
       opacity: 0;
     }
   }
@@ -895,7 +918,9 @@ const Heading = headingAs;
       const pair = btn.closest('.sluzba-pair');
       if (!pair) return;
       const open = pair.classList.toggle('is-how-open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      pair.querySelectorAll('.sluzba-how-hint').forEach(function (el) {
+        el.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
     }
 
     wrap.addEventListener('click', onHowClick);

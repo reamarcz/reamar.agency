@@ -1,12 +1,12 @@
 <div
   id="provize-overlay"
-  class="provize-overlay fixed inset-0 z-[100] flex items-center justify-center bg-black/80 px-5 opacity-0 pointer-events-none transition-opacity duration-200"
+  class="provize-overlay fixed inset-0 z-[100] flex items-center justify-center bg-black/80 opacity-0 pointer-events-none transition-opacity duration-200"
   aria-hidden="true"
   data-provize
 >
   <div
     id="provize-modal"
-    class="provize-modal relative w-full max-w-[50rem] bg-[var(--color-muted)] text-black scale-95 transition-transform duration-200"
+    class="provize-modal relative w-[94vw] max-w-[50rem] max-h-[90vh] overflow-y-auto bg-[var(--color-muted)] text-black scale-95 transition-all duration-200"
     role="dialog"
     aria-labelledby="provize-title"
     aria-modal="true"
@@ -16,11 +16,12 @@
   >
     <button
       type="button"
-      class="absolute right-5 top-5 border-0 bg-transparent p-0 font-yellix text-[22px] font-medium leading-none text-black/45 transition-opacity hover:text-black hover:opacity-100"
+      class="absolute top-8 right-8 z-10 flex items-center gap-2 border-0 bg-transparent p-0 font-yellix text-[14px] font-medium text-[#000000] cursor-pointer hover:opacity-80 transition-opacity"
       aria-label="Zavřít"
       data-provize-close
     >
-      ×
+      <span>Zavřít</span>
+      <span class="text-[#000000]" aria-hidden="true">×</span>
     </button>
 
     <div class="provize-layout">
@@ -96,6 +97,7 @@
     display: grid;
     gap: 2rem;
     padding: 2rem 2.75rem 2rem 2rem;
+    padding-top: 3.5rem;
   }
   .provize-kicker {
     margin: 0;
@@ -288,6 +290,7 @@
       grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
       gap: 0;
       padding: 2.35rem 3.25rem 2rem 2.5rem;
+      padding-top: 2.35rem;
     }
     .provize-lead {
       display: flex;
