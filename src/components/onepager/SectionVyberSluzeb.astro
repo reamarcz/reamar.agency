@@ -157,10 +157,10 @@ const Heading = headingAs;
             </li>
           ))}
         </ul>
-        <p class="sluzba-how-hint">
+        <button type="button" class="sluzba-how-hint" aria-expanded="false">
           Jak to funguje
           <span aria-hidden="true">→</span>
-        </p>
+        </button>
         <div class="sluzba-foot">
           <p class="sluzba-price">
             <span class="sluzba-price-num">ZDARMA</span>
@@ -359,10 +359,10 @@ const Heading = headingAs;
             </li>
           ))}
         </ul>
-        <p class="sluzba-how-hint sluzba-how-hint--dark">
+        <button type="button" class="sluzba-how-hint sluzba-how-hint--dark" aria-expanded="false">
           Jak to funguje
           <span aria-hidden="true">→</span>
-        </p>
+        </button>
         <div class="sluzba-foot">
           <p class="sluzba-price">
             <span class="sluzba-price-num">15 000 Kč</span>
@@ -444,7 +444,7 @@ const Heading = headingAs;
   }
   .sluzba-foot {
     margin-top: auto;
-    padding-top: 1.5rem;
+    padding-top: 2.5rem;
   }
   .sluzba-price {
     display: flex;
@@ -611,6 +611,79 @@ const Heading = headingAs;
       top: 2.25rem;
     }
   }
+  @media (max-width: 1023px) {
+    .sluzba-pair {
+      display: flex;
+      flex-direction: column;
+      padding: 1.75rem 1.5rem 1.6rem;
+    }
+    .sluzba-pair--free {
+      color: #000;
+    }
+    .sluzba-pair--paid {
+      color: #fff;
+    }
+    .sluzba-pair--paid .sluzba-card {
+      order: 0;
+    }
+    .sluzba-card,
+    .sluzba-how {
+      padding: 0;
+      min-height: 0;
+    }
+    .sluzba-card,
+    .sluzba-monitor,
+    .sluzba-paid {
+      display: contents;
+    }
+    .sluzba-how-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      order: 2;
+      width: fit-content;
+      margin: 1.15rem 0 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: rgba(0, 0, 0, 0.45);
+      cursor: pointer;
+      font-family: 'Yellix', system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+    .sluzba-how-hint--dark {
+      color: rgba(255, 255, 255, 0.45);
+    }
+    .sluzba-how-hint span {
+      display: inline-block;
+      font-size: 14px;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+    .sluzba-how-hint[aria-expanded="true"] span {
+      transform: rotate(90deg);
+    }
+    .sluzba-how {
+      display: none;
+      order: 3;
+      margin-top: 0.85rem;
+      border-top: 0;
+    }
+    .sluzba-pair--paid .sluzba-how {
+      border-top: 0;
+    }
+    .sluzba-pair.is-how-open .sluzba-how {
+      display: flex;
+    }
+    .sluzba-foot {
+      order: 4;
+      margin-top: 0;
+      padding-top: 2.75rem;
+    }
+  }
   @media (min-width: 1024px) {
     .sluzby-grid {
       container-type: inline-size;
@@ -690,6 +763,10 @@ const Heading = headingAs;
       align-items: center;
       gap: 0.4rem;
       margin-top: 1.5rem;
+      padding: 0;
+      border: 0;
+      background: none;
+      pointer-events: none;
       font-family: 'Yellix', system-ui, sans-serif;
       font-size: 13px;
       font-weight: 500;
@@ -811,9 +888,25 @@ const Heading = headingAs;
     const items = [...wrap.querySelectorAll('.sluzby-in')];
     if (!items.length) return;
 
+    function onHowClick(event) {
+      const btn = event.target.closest('.sluzba-how-hint');
+      if (!btn) return;
+      if (window.matchMedia('(min-width: 1024px)').matches) return;
+      const pair = btn.closest('.sluzba-pair');
+      if (!pair) return;
+      const open = pair.classList.toggle('is-how-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    wrap.addEventListener('click', onHowClick);
+
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced) {
       items.forEach((el) => el.classList.add('is-in'));
+      wrap._sluzbyCleanup = () => {
+        wrap.removeEventListener('click', onHowClick);
+        wrap._sluzbyCleanup = null;
+      };
       return;
     }
 
@@ -830,6 +923,7 @@ const Heading = headingAs;
 
     wrap._sluzbyCleanup = () => {
       io.disconnect();
+      wrap.removeEventListener('click', onHowClick);
       wrap._sluzbyCleanup = null;
     };
   }
