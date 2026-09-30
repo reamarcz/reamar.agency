@@ -1,0 +1,48 @@
+---
+import CookieSystem from '../components/CookieSystem.astro';
+import SEO from '../components/SEO.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  canonical?: string;
+  ogType?: string;
+  robots?: string;
+}
+const {
+  title = 'REAMAR | Reality. Marketing.',
+  description = 'Propojujeme marketing a obchod pro realitní developery.',
+  image,
+  ogTitle,
+  ogDescription,
+  canonical,
+  ogType,
+  robots,
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="cs" class="overflow-x-clip w-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      ogTitle={ogTitle}
+      ogDescription={ogDescription}
+      canonical={canonical}
+      ogType={ogType}
+      robots={robots}
+    />
+    <link rel="icon" type="image/svg+xml" href="/images/Reamar%20SVG.svg" />
+  </head>
+  <body class="font-yellix overflow-x-clip w-full min-w-0 bg-white text-black antialiased">
+    <slot />
+    <CookieSystem />
+  </body>
+</html>
