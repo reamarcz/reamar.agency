@@ -48,14 +48,32 @@ const featurePoster = '/images/agency/hero-obhlidka.jpg';
           ))}
         </div>
       </div>
-      <div class="onas-c1-p" data-onas-in-item>
+      <div class="onas-c1-p video-decorative-wrap" data-onas-in-item data-cover-managed data-onas-story>
         <img
+          class="video-decorative-cover"
           src="/images/agency/Storyholder.jpeg"
           alt=""
-          width="1280"
-          height="1600"
+          width="1080"
+          height="1920"
           loading="lazy"
         />
+        <video
+          data-decorative-autoplay
+          data-onas-story-video
+          src="/videos/onas.mp4"
+          data-src="/videos/onas.mp4"
+          poster="/images/agency/Storyholder.jpeg"
+          muted
+          autoplay
+          loop
+          playsinline
+          webkit-playsinline="true"
+          preload="metadata"
+          disablepictureinpicture
+          aria-hidden="true"
+        >
+          <source src="/videos/onas.mp4" type="video/mp4" />
+        </video>
       </div>
     </div>
   </section>
@@ -232,6 +250,26 @@ const featurePoster = '/images/agency/hero-obhlidka.jpg';
 </div>
 
 <script>
+  import { bindHeroLoop, type HeroLoopHandle } from '../scripts/hero-loop';
+
+  function initOnasStoryLoop() {
+    const wrap = document.querySelector('[data-onas-story]') as HTMLElement | null;
+    const video = document.querySelector('[data-onas-story-video]') as HTMLVideoElement | null;
+    if (!wrap || !video) return;
+    const prev = (wrap as HTMLElement & { _onasStoryLoop?: HeroLoopHandle | null })._onasStoryLoop;
+    prev?.destroy();
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      (wrap as HTMLElement & { _onasStoryLoop?: HeroLoopHandle | null })._onasStoryLoop = null;
+      return;
+    }
+    (wrap as HTMLElement & { _onasStoryLoop?: HeroLoopHandle | null })._onasStoryLoop = bindHeroLoop(video, {
+      host: wrap,
+      markHost: wrap,
+      eager: false,
+      clickToPause: false,
+    });
+  }
+
   function initOnasVideo() {
     const section = document.querySelector('[data-onas-zazemi]');
     if (!section || section.dataset.onasVideoInit === '1') return;
@@ -432,6 +470,7 @@ const featurePoster = '/images/agency/hero-obhlidka.jpg';
 
   function initOnas() {
     initOnasFlow();
+    initOnasStoryLoop();
     initOnasVideo();
     initOnasScroll();
   }
