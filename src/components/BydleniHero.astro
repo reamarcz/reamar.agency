@@ -83,6 +83,30 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
         >
           <source src={mobileVideoSrc} type="video/mp4" />
         </video>
+        <script is:inline>
+          (function () {
+            if (!window.matchMedia('(max-width: 767px)').matches) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            var video = document.currentScript.parentElement.querySelector('[data-mhero-video]');
+            if (!video) return;
+            video.muted = true;
+            video.defaultMuted = true;
+            video.volume = 0;
+            video.playsInline = true;
+            video.setAttribute('muted', '');
+            video.setAttribute('playsinline', '');
+            video.setAttribute('webkit-playsinline', 'true');
+            video.preload = 'auto';
+            var mark = function () {
+              if (video.paused) return;
+              video.classList.add('is-playing');
+              video.closest('.video-decorative-wrap')?.classList.add('is-playing');
+            };
+            video.addEventListener('playing', mark, { once: true });
+            var play = video.play();
+            if (play && play.then) play.then(mark).catch(function () {});
+          })();
+        </script>
       </div>
       <div class="mhero__text">
         <span class="mhero__kicker">{kicker}</span>
@@ -1094,10 +1118,17 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
     reduceMotion.addEventListener('change', syncDeskVideo);
 
     const sticky = root.querySelector('.bh__sticky') as HTMLElement | null;
+    let videoIoArmed = false;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        videoIoArmed = true;
+        tryPlay();
+      });
+    });
     const videoIo = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.intersectionRatio > 0) tryPlay();
-        else if (entry.boundingClientRect.height > 1) video.pause();
+        else if (videoIoArmed && entry.boundingClientRect.height > 1) video.pause();
       });
     }, { threshold: [0, 0.01, 0.1] });
     videoIo.observe(sticky || video);

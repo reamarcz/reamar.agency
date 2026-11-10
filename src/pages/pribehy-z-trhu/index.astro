@@ -80,6 +80,24 @@ const itemList = {
             <source src={latest.data.nahled} type="video/mp4" />
           </video>
         )}
+        {latest.data.nahled && (
+          <script is:inline>
+            (function () {
+              var video = document.currentScript.parentElement.querySelector('[data-pz-loop]');
+              if (!video || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+              video.muted = true;
+              video.defaultMuted = true;
+              video.volume = 0;
+              video.playsInline = true;
+              video.setAttribute('muted', '');
+              video.setAttribute('playsinline', '');
+              video.setAttribute('webkit-playsinline', 'true');
+              video.preload = 'auto';
+              var play = video.play();
+              if (play && play.catch) play.catch(function () {});
+            })();
+          </script>
+        )}
       </div>
       <div class="pz-board-ov"></div>
 
@@ -292,12 +310,20 @@ const itemList = {
     play();
     [50, 150, 400, 900, 1800].forEach((ms) => window.setTimeout(play, ms));
 
-    // Only pause when fully off-screen (keep playing while any pixel is visible).
+    // Don't pause on the first IO callback — layout often reports ratio 0
+    // before paint and that cancels native/early autoplay until the user scrolls.
+    let ioArmed = false;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        ioArmed = true;
+        play();
+      });
+    });
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.intersectionRatio > 0) play();
-          else video.pause();
+          else if (ioArmed) video.pause();
         });
       },
       { threshold: [0, 0.01, 0.1] }

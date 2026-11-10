@@ -433,6 +433,15 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
     return video.getClientRects().length > 0;
   }
 
+  // Avoid pausing loops before first layout paint — early sync can see 0 rects
+  // and cancel the inline autoplay until the user scrolls.
+  var heroLayoutReady = false;
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      heroLayoutReady = true;
+    });
+  });
+
   function tryPlay(video) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!visible(video)) return;
@@ -457,7 +466,7 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (document.documentElement.classList.contains('intro-on') && !isDesktopFilm(video)) return;
     if (!visible(video)) {
-      if (!video.paused && !isDesktopFilm(video)) video.pause();
+      if (heroLayoutReady && !video.paused && !isDesktopFilm(video)) video.pause();
       return;
     }
     armSrc(video);

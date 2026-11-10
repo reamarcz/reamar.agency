@@ -135,10 +135,11 @@ const tiles = [
           data-src={videoSrc}
           poster={posterSrc}
           muted
+          autoplay
           loop
           playsinline
           webkit-playsinline="true"
-          preload="metadata"
+          preload="auto"
           disablepictureinpicture
           disableremoteplayback
           aria-hidden="true"
@@ -959,12 +960,19 @@ const tiles = [
     );
     icons.observe(sec);
 
+    let viewArmed = false;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        viewArmed = true;
+        if (!reduced && box.getClientRects().length) setPlaying(true);
+      });
+    });
     const view = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (mq.matches) return;
           if (entry.intersectionRatio > 0) setPlaying(!reduced);
-          else setPlaying(false);
+          else if (viewArmed) setPlaying(false);
         });
       },
       { threshold: [0, 0.01, 0.1] }
