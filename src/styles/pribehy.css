@@ -251,21 +251,35 @@
   display: block;
 }
 .pz-board-photo img {
-  object-position: 72% 12%;
+  object-position: center center;
   filter: grayscale(0.38) contrast(1.08);
   transform: scale(1.06);
+  transform-origin: center center;
+}
+/* Ken Burns only when there is no loop video to autoplay */
+.pz-board-photo:not(:has([data-pz-loop])) img {
+  object-position: 72% 12%;
   transform-origin: 72% 12%;
   animation: pz-ken 32s ease-out forwards;
 }
 .pz-board-photo video {
   position: absolute;
   inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   object-position: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.7s ease;
+  transition: opacity 0.45s ease;
 }
 .pz-board-photo.is-playing video { opacity: 1; }
+.pz-board-photo.is-playing img {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
 .pz-board-photo video::-webkit-media-controls,
 .pz-board-photo video::-webkit-media-controls-enclosure,
 .pz-board-photo video::-webkit-media-controls-start-playback-button,

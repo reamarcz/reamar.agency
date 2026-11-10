@@ -58,7 +58,7 @@ const itemList = {
           src={heroPoradu}
           alt=""
           width="1920"
-          height="1280"
+          height="1080"
           fetchpriority="high"
         />
         {latest.data.nahled && (
@@ -67,6 +67,7 @@ const itemList = {
             data-pz-loop
             src={latest.data.nahled}
             data-src={latest.data.nahled}
+            poster={heroPoradu}
             muted
             loop
             playsinline
@@ -228,68 +229,86 @@ const itemList = {
 <script>
   function initPzLoop() {
     const video = document.querySelector('[data-pz-loop]') as HTMLVideoElement | null;
-    const photo = video?.closest('.pz-board-photo');
+    const photo = video?.closest('.pz-board-photo') as HTMLElement | null;
     if (!video || !photo || video.dataset.init === '1') return;
     video.dataset.init = '1';
 
-    const src = video.dataset.src;
+    const src = video.dataset.src || video.getAttribute('src');
     if (!src) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-    if (connection?.saveData) return;
 
     const mute = () => {
       video.muted = true;
       video.defaultMuted = true;
       video.volume = 0;
       video.playsInline = true;
+      video.controls = false;
       video.setAttribute('muted', '');
       video.setAttribute('playsinline', '');
       video.setAttribute('webkit-playsinline', 'true');
+      video.removeAttribute('controls');
     };
 
-    const show = () => photo.classList.add('is-playing');
+    const show = () => {
+      if (video.paused) return;
+      photo.classList.add('is-playing');
+    };
+    const hide = () => photo.classList.remove('is-playing');
 
     const play = () => {
       mute();
-      if (video.getAttribute('src') !== src) video.src = src;
+      if (video.getAttribute('src') !== src) video.setAttribute('src', src);
+      const source = video.querySelector('source');
+      if (source && source.getAttribute('src') !== src) source.setAttribute('src', src);
+      video.preload = 'auto';
       const run = video.play();
-      if (run) run.then(show).catch(() => {});
-      else if (!video.paused) show();
+      if (run && typeof run.then === 'function') {
+        run.then(show).catch(() => {
+          hide();
+        });
+      } else if (!video.paused) {
+        show();
+      }
     };
 
     const unlock = () => {
       if (video.paused) play();
     };
-    window.addEventListener('pointerdown', unlock, { passive: true });
-    window.addEventListener('touchstart', unlock, { passive: true });
+    ['pointerdown', 'touchstart', 'touchend', 'click', 'keydown', 'scroll'].forEach((ev) => {
+      window.addEventListener(ev, unlock, { passive: true });
+    });
 
     video.addEventListener('playing', show);
+    video.addEventListener('canplay', play);
+    video.addEventListener('loadeddata', play);
+    video.addEventListener('pause', () => {
+      window.setTimeout(() => {
+        if (video.paused) hide();
+      }, 180);
+    });
     if (!video.paused) show();
 
-    let armed = false;
-    const arm = () => {
-      if (armed) return;
-      armed = true;
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) play();
-            else video.pause();
-          });
-        },
-        { threshold: 0.2 }
-      );
-      io.observe(photo);
-    };
+    // Max-effort autoplay: kick immediately and keep retrying.
+    play();
+    [50, 150, 400, 900, 1800].forEach((ms) => window.setTimeout(play, ms));
 
-    const poster = photo.querySelector('img');
-    if (poster && !poster.complete) {
-      poster.addEventListener('load', arm, { once: true });
-    } else {
-      requestAnimationFrame(arm);
-    }
-    window.setTimeout(arm, 900);
+    // Only pause when fully off-screen (keep playing while any pixel is visible).
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.intersectionRatio > 0) play();
+          else video.pause();
+        });
+      },
+      { threshold: [0, 0.01, 0.1] }
+    );
+    io.observe(photo);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') play();
+    });
+    window.addEventListener('pageshow', play);
+    window.addEventListener('focus', play);
   }
 
   initPzLoop();

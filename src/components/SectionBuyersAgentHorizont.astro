@@ -126,7 +126,7 @@ const tiles = [
         </div>
       </div>
 
-      <div class="bah__video video-decorative-wrap" data-bah-video data-cover-managed data-sm-parallax role="button" tabindex="0" aria-label="Zobrazit video na celou obrazovku">
+      <div class="bah__video video-decorative-wrap" data-bah-video data-cover-managed role="button" tabindex="0" aria-label="Zobrazit video na celou obrazovku">
         <img class="video-decorative-cover" src={posterSrc} alt="" />
         <video
           data-bah-media
@@ -426,25 +426,48 @@ const tiles = [
     aspect-ratio: 16 / 9;
     background: #111;
     cursor: pointer;
+    isolation: isolate;
   }
   .bah__video video,
   .bah__video .video-decorative-cover {
+    position: absolute;
+    inset: 0;
     display: block;
     width: 100%;
     height: 100%;
+    max-width: none;
+    border: 0;
     object-fit: cover;
-    object-position: 61% 40%;
+    object-position: center center;
   }
-  .bah__video .video-decorative-play {
-    display: none !important;
+  /* iOS Safari: prevent letterboxed intrinsic video inside the 16:9 frame */
+  .bah__video video {
+    z-index: 0;
+    min-width: 100%;
+    min-height: 100%;
+    background: transparent;
+  }
+  .bah__video .video-decorative-cover {
+    z-index: 2;
+  }
+  .bah__video.is-playing .video-decorative-cover {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
   .bah__video video::-webkit-media-controls,
+  .bah__video video::-webkit-media-controls-panel,
+  .bah__video video::-webkit-media-controls-play-button,
   .bah__video video::-webkit-media-controls-start-playback-button,
   .bah__video video::-webkit-media-controls-overlay-play-button,
+  .bah__video video::-webkit-media-controls-overlay-enclosure,
   .bah__video video::-webkit-media-controls-enclosure {
     display: none !important;
-    -webkit-appearance: none;
+    -webkit-appearance: none !important;
     opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
   }
   .bah__shade {
     display: none;
@@ -886,8 +909,9 @@ const tiles = [
     const tryPlay = () => {
       if (!wantPlay || reduced) return;
       armSrc();
-      const play = media.play();
-      if (play) play.catch(() => {});
+      media.preload = 'auto';
+      const run = media.play();
+      if (run) run.catch(() => {});
     };
     const setPlaying = (on: boolean) => {
       if (!on) {
@@ -900,12 +924,14 @@ const tiles = [
       tryPlay();
     };
     const unlock = () => {
-      if (!wantPlay || !media.paused) return;
-      tryPlay();
+      if (!media.paused) return;
+      // Any gesture can unlock autoplay — enable + kick.
+      if (box.getClientRects().length) setPlaying(true);
+      else tryPlay();
     };
-    window.addEventListener('pointerdown', unlock, { passive: true });
-    window.addEventListener('touchstart', unlock, { passive: true });
-    window.addEventListener('click', unlock, { passive: true });
+    ['pointerdown', 'touchstart', 'touchend', 'click', 'keydown', 'scroll'].forEach((ev) => {
+      window.addEventListener(ev, unlock, { passive: true });
+    });
 
     const near = new IntersectionObserver(
       (entries) => {
@@ -916,10 +942,10 @@ const tiles = [
             media.setAttribute('src', src);
           }
           media.preload = 'auto';
-          tryPlay();
+          if (!reduced) setPlaying(true);
         });
       },
-      { rootMargin: '300px 0px' }
+      { rootMargin: '700px 0px' }
     );
     near.observe(sec);
 
@@ -936,12 +962,21 @@ const tiles = [
     const view = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!mq.matches) setPlaying(entry.isIntersecting && !reduced);
+          if (mq.matches) return;
+          if (entry.intersectionRatio > 0) setPlaying(!reduced);
+          else setPlaying(false);
         });
       },
-      { threshold: 0.15 }
+      { threshold: [0, 0.01, 0.1] }
     );
     view.observe(box);
+
+    media.addEventListener('canplay', tryPlay);
+    media.addEventListener('loadeddata', tryPlay);
+    if (!reduced) {
+      setPlaying(box.getClientRects().length > 0);
+      [80, 250, 700, 1400].forEach((ms) => window.setTimeout(tryPlay, ms));
+    }
 
     const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
     const smoothstep = (t: number) => t * t * (3 - 2 * t);
@@ -1015,7 +1050,10 @@ const tiles = [
         'aria-label',
         k > 0.8 ? 'Přejít na Příběhy z trhu' : 'Zobrazit video na celou obrazovku'
       );
-      setPlaying(covering && k > 0.02 && !reduced);
+      // Desktop: keep the loop running whenever the video frame is on screen,
+      // not only after the full-bleed expand.
+      const inView = q.bottom > 0 && q.top < window.innerHeight;
+      setPlaying(inView && !reduced);
     };
 
     const tick = () => {

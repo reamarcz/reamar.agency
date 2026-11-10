@@ -206,25 +206,18 @@ const {
             video.classList.add('is-playing');
           };
           var markStill = function () {
-            wrap.classList.remove('is-playing');
+            wrap.classList.remove('is-playing', 'is-blocked');
             video.classList.remove('is-playing');
           };
           var revealWhenPainted = function () {
+            if (video.paused) return;
             if (typeof video.requestVideoFrameCallback === 'function') {
-              video.requestVideoFrameCallback(function () { markPlaying(); });
+              video.requestVideoFrameCallback(function () {
+                if (!video.paused) markPlaying();
+              });
               return;
             }
             markPlaying();
-          };
-          var ensurePlayBtn = function () {
-            if (wrap.querySelector('[data-video-decor-play]')) return;
-            var btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'video-decorative-play';
-            btn.setAttribute('data-video-decor-play', '');
-            btn.setAttribute('aria-label', 'Přehrát video');
-            btn.innerHTML = '<svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M3.2 1.6v8.8L10.4 6 3.2 1.6Z"/></svg>';
-            wrap.appendChild(btn);
           };
           var armVideo = function () {
             video.muted = true;
@@ -236,10 +229,6 @@ const {
             video.setAttribute('webkit-playsinline', 'true');
             video.removeAttribute('controls');
           };
-          var onBlocked = function () {
-            wrap.classList.add('is-blocked');
-            ensurePlayBtn();
-          };
 
           if (!video.paused && video.readyState >= 2) revealWhenPainted();
           if (wrap.dataset.videoDecorCoverInit === '1') return;
@@ -248,25 +237,38 @@ const {
           armVideo();
           video.addEventListener('playing', revealWhenPainted);
           video.addEventListener('pause', function () {
-            // Ignore brief stalls so poster/play overlay don't flash mid-loop.
+            // Ignore brief stalls so poster doesn't flash mid-loop.
             window.setTimeout(function () {
               if (!video.paused) return;
               markStill();
             }, 180);
           });
 
-          wrap.addEventListener('click', function () {
-            if (!video.paused) return;
+          var kick = function () {
             if (!video.getClientRects().length) return;
             armVideo();
             var p = video.play();
-            if (p) p.catch(onBlocked);
+            if (p) p.catch(markStill);
+          };
+
+          wrap.addEventListener('click', function () {
+            if (!video.paused) return;
+            kick();
+          });
+          ['pointerdown', 'touchstart', 'touchend', 'scroll'].forEach(function (ev) {
+            window.addEventListener(ev, function () {
+              if (!video.paused) return;
+              kick();
+            }, { passive: true });
           });
 
           if (wrap.hasAttribute('data-cover-managed')) return;
-          if (!video.getClientRects().length) return;
-          var autoplay = video.play();
-          if (autoplay) autoplay.catch(onBlocked);
+          kick();
+          [80, 250, 700, 1400].forEach(function (ms) {
+            window.setTimeout(kick, ms);
+          });
+          video.addEventListener('canplay', kick);
+          video.addEventListener('loadeddata', kick);
         });
       }
       initVideoDecorativeCovers();

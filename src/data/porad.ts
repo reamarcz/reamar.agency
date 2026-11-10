@@ -5,7 +5,7 @@ export const instagramPoradu = 'https://www.instagram.com/agentprokupujici';
 
 export const nazevPoradu = 'Agent pro kupující';
 export const zanrPoradu = 'Novostavby Praha';
-export const heroPoradu = '/images/agency/JVAGENT.jpeg';
+export const heroPoradu = '/video/penthouse-nahled.jpg';
 
 export const dalsiDil: {
   cislo: number;
