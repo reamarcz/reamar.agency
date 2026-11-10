@@ -1018,6 +1018,8 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
 </style>
 
 <script>
+  import { bindHeroLoop, type HeroLoopHandle } from '../scripts/hero-loop';
+
   function initBh() {
     const root = document.querySelector('[data-bh]') as HTMLElement | null;
     if (!root) return;
@@ -1047,92 +1049,30 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
     const N = caps.length;
     const clamp = (v: number) => Math.max(0, Math.min(1, v));
 
-    video.muted = true;
-    video.defaultMuted = true;
-    video.volume = 0;
-    video.playsInline = true;
-    video.controls = false;
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
-    video.setAttribute('webkit-playsinline', 'true');
-    video.removeAttribute('controls');
     const mediaWrap = video.closest('.video-decorative-wrap');
-    const markPlaying = () => {
-      if (video.paused) return;
-      video.classList.add('is-playing');
-      mediaWrap?.classList.add('is-playing');
-      mediaWrap?.classList.remove('is-blocked');
-    };
-    const markStopped = () => {
-      video.classList.remove('is-playing');
-      mediaWrap?.classList.remove('is-playing');
-    };
-    video.addEventListener('playing', markPlaying);
-    video.addEventListener('pause', () => {
-      window.setTimeout(() => {
-        if (video.paused) markStopped();
-      }, 180);
-    });
+    const sticky = root.querySelector('.bh__sticky') as HTMLElement | null;
+    let deskLoop: HeroLoopHandle | null = null;
 
-    let unlockDeskBound = false;
-    const unlockDesk = () => {
-      if (video.paused) tryPlay();
-    };
-    const armDeskUnlock = () => {
-      if (unlockDeskBound) return;
-      unlockDeskBound = true;
-      ['pointerdown', 'touchstart', 'keydown'].forEach((ev) => {
-        window.addEventListener(ev, unlockDesk, { passive: true });
-      });
-    };
-    const tryPlay = () => {
-      if (!deskVideoMq.matches || reduceMotion.matches) return;
-      video.muted = true;
-      video.defaultMuted = true;
-      video.volume = 0;
-      const play = video.play();
-      if (play) {
-        play.then(markPlaying).catch(() => {
-          markStopped();
-          armDeskUnlock();
-        });
-      } else if (!video.paused) {
-        markPlaying();
-      }
-    };
-    mediaWrap?.addEventListener('click', () => {
-      if (!video.paused) return;
-      tryPlay();
-    });
     const syncDeskVideo = () => {
+      deskLoop?.destroy();
+      deskLoop = null;
       if (deskVideoMq.matches && !reduceMotion.matches && deskSrc) {
-        if (video.getAttribute('src') !== deskSrc) {
-          video.src = deskSrc;
-        }
-        video.preload = 'auto';
-        // Hero video: play immediately at init — do not wait for IntersectionObserver.
-        tryPlay();
+        if (video.getAttribute('src') !== deskSrc) video.src = deskSrc;
+        // Single owner: eager play + geometry-checked IO pause/resume.
+        deskLoop = bindHeroLoop(video, {
+          host: sticky || mediaWrap || video,
+          markHost: mediaWrap,
+          eager: true,
+        });
       } else {
-        video.pause();
-        markStopped();
+        try { video.pause(); } catch { /* ignore */ }
+        video.classList.remove('is-playing', 'is-live');
+        mediaWrap?.classList.remove('is-playing');
       }
     };
     syncDeskVideo();
-    video.addEventListener('canplay', tryPlay);
-    video.addEventListener('loadeddata', tryPlay);
     deskVideoMq.addEventListener('change', syncDeskVideo);
     reduceMotion.addEventListener('change', syncDeskVideo);
-
-    const sticky = root.querySelector('.bh__sticky') as HTMLElement | null;
-    // IO only pauses when the hero leaves the viewport — never gates the first play.
-    const videoIo = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!deskVideoMq.matches || reduceMotion.matches) return;
-        if (entry.intersectionRatio > 0) tryPlay();
-        else if (entry.boundingClientRect.height > 1) video.pause();
-      });
-    }, { threshold: [0, 0.01, 0.1] });
-    videoIo.observe(sticky || video);
 
     const reset = () => {
       [claim, hint, ...fades].forEach((el) => el.removeAttribute('style'));
@@ -1223,14 +1163,8 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
     req();
 
     (root as any)._bhCleanup = () => {
-      videoIo.disconnect();
-      video.removeEventListener('playing', markPlaying);
-      video.removeEventListener('pause', markStopped);
-      video.removeEventListener('canplay', tryPlay);
-      video.removeEventListener('loadeddata', tryPlay);
-      ['pointerdown', 'touchstart', 'keydown'].forEach((ev) => {
-        window.removeEventListener(ev, unlockDesk);
-      });
+      deskLoop?.destroy();
+      deskLoop = null;
       deskVideoMq.removeEventListener('change', syncDeskVideo);
       reduceMotion.removeEventListener('change', syncDeskVideo);
       goBtns.forEach((btn) => btn.removeEventListener('click', onGo));
@@ -1251,97 +1185,34 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
     const src = vid.getAttribute('data-src') || '';
     const mobile = window.matchMedia('(max-width: 767px)');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-
     const wrap = vid.closest('.video-decorative-wrap');
-    const markPlaying = () => {
-      if (vid.paused) return;
-      vid.classList.add('is-playing');
-      wrap?.classList.add('is-playing');
-      wrap?.classList.remove('is-blocked');
-    };
-    const markStopped = () => {
-      vid.classList.remove('is-playing');
-      wrap?.classList.remove('is-playing');
-    };
-
-    const mute = () => {
-      vid.muted = true;
-      vid.defaultMuted = true;
-      vid.volume = 0;
-      vid.loop = true;
-      vid.playsInline = true;
-      vid.controls = false;
-      vid.setAttribute('muted', '');
-      vid.setAttribute('playsinline', '');
-      vid.setAttribute('webkit-playsinline', 'true');
-      vid.removeAttribute('controls');
-    };
-
-    let unlockBound = false;
-    const unlock = () => {
-      if (vid.paused) tryPlay();
-    };
-    const armUnlock = () => {
-      if (unlockBound) return;
-      unlockBound = true;
-      ['pointerdown', 'touchstart', 'keydown'].forEach((ev) => {
-        window.addEventListener(ev, unlock, { passive: true });
-      });
-    };
-
-    const tryPlay = () => {
-      if (!mobile.matches || reduced.matches || !src) return;
-      mute();
-      if (vid.getAttribute('src') !== src) vid.src = src;
-      vid.preload = 'auto';
-      const play = vid.play();
-      if (play) {
-        play.then(markPlaying).catch(() => {
-          markStopped();
-          armUnlock();
-        });
-      } else if (!vid.paused) {
-        markPlaying();
-      }
-    };
+    let loop: HeroLoopHandle | null = null;
 
     const sync = () => {
+      loop?.destroy();
+      loop = null;
       if (mobile.matches && !reduced.matches && src) {
-        // Mobile hero: play immediately — no IntersectionObserver, no scroll gate.
-        tryPlay();
+        if (vid.getAttribute('src') !== src) vid.src = src;
+        loop = bindHeroLoop(vid, {
+          host: wrap || vid,
+          markHost: wrap,
+          eager: true,
+        });
       } else {
-        vid.pause();
-        markStopped();
+        try { vid.pause(); } catch { /* ignore */ }
+        vid.classList.remove('is-playing', 'is-live');
+        wrap?.classList.remove('is-playing');
       }
     };
 
-    wrap?.addEventListener('click', () => {
-      if (!vid.paused) return;
-      tryPlay();
-    });
-
-    mute();
     sync();
-    vid.addEventListener('playing', markPlaying);
-    vid.addEventListener('pause', () => {
-      window.setTimeout(() => {
-        if (vid.paused) markStopped();
-      }, 180);
-    });
-    vid.addEventListener('canplay', tryPlay);
-    vid.addEventListener('loadeddata', tryPlay);
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') tryPlay();
-    });
     mobile.addEventListener('change', sync);
     reduced.addEventListener('change', sync);
     (vid as any)._mheroCleanup = () => {
-      vid.removeEventListener('playing', markPlaying);
-      vid.removeEventListener('canplay', tryPlay);
-      vid.removeEventListener('loadeddata', tryPlay);
-      ['pointerdown', 'touchstart', 'keydown'].forEach((ev) => {
-        window.removeEventListener(ev, unlock);
-      });
+      loop?.destroy();
+      loop = null;
+      mobile.removeEventListener('change', sync);
+      reduced.removeEventListener('change', sync);
     };
   }
 

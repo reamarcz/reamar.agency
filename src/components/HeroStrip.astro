@@ -368,214 +368,59 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
 
 
 <script>
-  function loopHost(video) {
-    return video.closest('.hero-strip-mobile-visual, .hero-strip-film') || video.parentElement;
-  }
+  import { bindHeroLoop, pauseOwnedLoops, resumeOwnedLoops } from '../scripts/hero-loop';
 
-  function muteLoop(video) {
-    video.muted = true;
-    video.defaultMuted = true;
-    video.volume = 0;
-    video.loop = true;
-    video.playsInline = true;
-    video.controls = false;
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
-    video.setAttribute('webkit-playsinline', 'true');
-    video.removeAttribute('controls');
+  function loopHost(video) {
+    return video.closest('.hero-strip-mobile-visual, .hero-strip-film, .video-decorative-wrap') || video.parentElement;
   }
 
   function isDesktopFilm(video) {
     return !!video.closest('.hero-strip-film') && window.matchMedia('(min-width: 1024px)').matches;
   }
 
-  function introBusy() {
-    const root = document.documentElement;
-    return root.classList.contains('intro-on')
-      || root.classList.contains('rmi-on')
-      || root.classList.contains('rmm-on');
-  }
-
-  function markLive(video) {
-    if (video.paused) return;
-    video.classList.add('is-playing', 'is-live');
-    video.closest('.video-decorative-wrap')?.classList.add('is-playing');
-  }
-
-  function markStill(video) {
-    video.classList.remove('is-playing', 'is-live');
-    video.closest('.video-decorative-wrap')?.classList.remove('is-playing');
-  }
-
-  function armSrc(video) {
-    const src = video.getAttribute('data-src');
-    if (!src) return;
-    if (video.getAttribute('src') !== src) video.setAttribute('src', src);
-    const source = video.querySelector('source');
-    if (source && source.getAttribute('src') !== src) source.setAttribute('src', src);
-  }
-
-  function armUnlock(video) {
-    if (video._heroUnlock) return;
-    video._heroUnlock = true;
-    const kick = function () {
-      if (!video.paused) return;
-      if (document.documentElement.classList.contains('intro-on') && !isDesktopFilm(video)) return;
-      if (!visible(video)) return;
-      tryPlay(video);
-    };
-    // Gesture fallback only when autoplay was rejected — never scroll/wheel.
-    ['pointerdown', 'touchstart', 'keydown'].forEach(function (ev) {
-      window.addEventListener(ev, kick, { passive: true });
-    });
-  }
-
   function visible(video) {
     return video.getClientRects().length > 0;
-  }
-
-  function tryPlay(video) {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    // Hero at top of page: do not require IntersectionObserver / scroll.
-    // Off-breakpoint twin (display:none) has no rects — skip it.
-    if (!visible(video)) return;
-    armSrc(video);
-    muteLoop(video);
-    const play = video.play();
-    if (play && typeof play.then === 'function') {
-      play.then(function () {
-        markLive(video);
-      }).catch(function () {
-        markStill(video);
-        armUnlock(video);
-      });
-    } else if (!video.paused) {
-      markLive(video);
-    }
-  }
-
-  function syncLoop(video) {
-    const modal = document.querySelector('[data-strip-modal]');
-    if (modal && !modal.hidden) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (document.documentElement.classList.contains('intro-on') && !isDesktopFilm(video)) return;
-    if (!visible(video)) {
-      // Off-breakpoint / unmounted twin — never pause the active hero based on this.
-      return;
-    }
-    armSrc(video);
-    muteLoop(video);
-    tryPlay(video);
-  }
-
-  function afterIntro(video) {
-    if (document.documentElement.classList.contains('intro-on')) {
-      const filmIntro = document.documentElement.classList.contains('intro-film');
-      if (filmIntro || isDesktopFilm(video)) {
-        if (video._introPrime) return;
-        video._introPrime = true;
-        const start = function () {
-          if (!document.documentElement.classList.contains('intro-on')) return;
-          tryPlay(video);
-        };
-        if (filmIntro) start();
-        else window.setTimeout(start, 1200);
-      } else {
-        video.pause();
-      }
-      return;
-    }
-    syncLoop(video);
-    requestAnimationFrame(function () { syncLoop(video); });
-  }
-
-  function revealWhenPainted(video) {
-    if (!video.hasAttribute('data-intro-video') || video.classList.contains('is-live')) return;
-    const show = function () { markLive(video); };
-    if (typeof video.requestVideoFrameCallback === 'function') video.requestVideoFrameCallback(show);
-    else if (!video.paused && video.readyState >= 2) show();
-    else video.addEventListener('playing', show, { once: true });
-  }
-
-  function bindLoop(video) {
-    revealWhenPainted(video);
-    video.addEventListener('loadeddata', function () { syncLoop(video); });
-    video.addEventListener('canplay', function () { syncLoop(video); });
-    video.addEventListener('playing', function () {
-      if (document.documentElement.classList.contains('intro-on') && !document.documentElement.classList.contains('intro-film') && !isDesktopFilm(video)) return;
-      markLive(video);
-    });
-    video.addEventListener('pause', function () {
-      if (introBusy() || !visible(video) || video.ended) return;
-      // Ignore transient stalls; only drop live state if it stays paused.
-      window.setTimeout(function () {
-        if (!video.paused || !visible(video) || introBusy()) return;
-        markStill(video);
-      }, 180);
-    });
-    document.addEventListener('visibilitychange', function () {
-      if (document.visibilityState === 'visible') syncLoop(video);
-    });
-    window.addEventListener('pageshow', function () { syncLoop(video); });
-    window.addEventListener('focus', function () { syncLoop(video); });
-    function onIntroDone() {
-      if (isDesktopFilm(video) && !video.paused) markLive(video);
-      afterIntro(video);
-      tryPlay(video);
-      setTimeout(function () { tryPlay(video); }, 200);
-      setTimeout(function () { tryPlay(video); }, 900);
-    }
-    window.addEventListener('hero-intro-done', onIntroDone);
-    window.addEventListener('rm:intro-done', onIntroDone);
-    window.addEventListener('resize', function () { syncLoop(video); });
-    const host = loopHost(video);
-    host?.addEventListener('click', function (event) {
-      if (document.documentElement.classList.contains('intro-on') || !visible(video)) return;
-      if (event.target.closest('a, button')) return;
-      if (!video.paused) return;
-      armSrc(video);
-      muteLoop(video);
-      const play = video.play();
-      if (play && typeof play.then === 'function') {
-        play.then(function () {
-          markLive(video);
-        }).catch(function () {
-          markStill(video);
-          armUnlock(video);
-        });
-      } else if (!video.paused) {
-        markLive(video);
-      }
-    });
   }
 
   function initLoops() {
     const videos = document.querySelectorAll('[data-hero-strip] [data-hero-loop]');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const introOn = document.documentElement.classList.contains('intro-on');
+
     videos.forEach(function (video) {
-      if (reduced) {
-        video.removeAttribute('autoplay');
-        video.pause();
-        markStill(video);
-        return;
-      }
-      // Off-breakpoint twin (display:none) must not compete for the iOS decoder.
+      // Off-breakpoint twin (display:none) must not compete for the decoder.
       if (!visible(video)) {
         video.removeAttribute('autoplay');
         video.preload = 'none';
+        if (video.__heroLoop) video.__heroLoop.destroy();
         try { video.pause(); } catch (e) {}
         return;
       }
-      muteLoop(video);
-      if (video.dataset.loopArmed !== '1') {
-        video.dataset.loopArmed = '1';
-        bindLoop(video);
+
+      if (reduced) {
+        video.removeAttribute('autoplay');
+        if (video.__heroLoop) video.__heroLoop.destroy();
+        try { video.pause(); } catch (e) {}
+        return;
       }
-      // First play attempt immediately at init — no IO, no scroll gate.
-      afterIntro(video);
-      if (!document.documentElement.classList.contains('intro-on')) {
-        tryPlay(video);
+
+      // During legacy intro-on (non-film), hold mobile until intro ends.
+      if (introOn && !document.documentElement.classList.contains('intro-film') && !isDesktopFilm(video)) {
+        if (video.__heroLoop) video.__heroLoop.destroy();
+        try { video.pause(); } catch (e) {}
+        const start = function () {
+          bindHeroLoop(video, { host: loopHost(video), markHost: loopHost(video), eager: true });
+        };
+        window.addEventListener('hero-intro-done', start, { once: true });
+        window.addEventListener('rm:intro-done', start, { once: true });
+        return;
       }
+
+      bindHeroLoop(video, {
+        host: loopHost(video),
+        markHost: loopHost(video),
+        eager: true,
+      });
     });
   }
 
@@ -754,9 +599,7 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
     function openModal() {
       const parts = current();
       if (!parts.modal || document.documentElement.classList.contains('intro-on')) return;
-      document.querySelectorAll('[data-hero-strip] [data-hero-loop], [data-bah-media]').forEach(function (video) {
-        if (!video.paused) video.pause();
-      });
+      pauseOwnedLoops(document);
       parts.modal.hidden = false;
       document.body.style.overflow = 'hidden';
       if (parts.feature) {
@@ -772,9 +615,7 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
       if (parts.feature) parts.feature.pause();
       parts.modal.hidden = true;
       document.body.style.overflow = '';
-      document.querySelectorAll('[data-hero-strip] [data-hero-loop]').forEach(function (video) {
-        syncLoop(video);
-      });
+      resumeOwnedLoops(document);
     }
 
     document.addEventListener('click', function (event) {

@@ -245,99 +245,23 @@ const itemList = {
 </Layout>
 
 <script>
+  import { bindHeroLoop } from '../../scripts/hero-loop';
+
   function initPzLoop() {
     const video = document.querySelector('[data-pz-loop]') as HTMLVideoElement | null;
     const photo = video?.closest('.pz-board-photo') as HTMLElement | null;
-    if (!video || !photo || video.dataset.init === '1') return;
-    video.dataset.init = '1';
+    if (!video || !photo) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      (video as any).__heroLoop?.destroy();
+      try { video.pause(); } catch { /* ignore */ }
+      return;
+    }
 
-    const src = video.dataset.src || video.getAttribute('src');
-    if (!src) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const mute = () => {
-      video.muted = true;
-      video.defaultMuted = true;
-      video.volume = 0;
-      video.playsInline = true;
-      video.controls = false;
-      video.setAttribute('muted', '');
-      video.setAttribute('playsinline', '');
-      video.setAttribute('webkit-playsinline', 'true');
-      video.removeAttribute('controls');
-    };
-
-    const show = () => {
-      if (video.paused) return;
-      photo.classList.add('is-playing');
-    };
-    const hide = () => photo.classList.remove('is-playing');
-
-    let unlockBound = false;
-    const unlock = () => {
-      if (video.paused) play();
-    };
-    const armUnlock = () => {
-      if (unlockBound) return;
-      unlockBound = true;
-      ['pointerdown', 'touchstart', 'keydown'].forEach((ev) => {
-        window.addEventListener(ev, unlock, { passive: true });
-      });
-    };
-
-    const play = () => {
-      mute();
-      if (video.getAttribute('src') !== src) video.setAttribute('src', src);
-      const source = video.querySelector('source');
-      if (source && source.getAttribute('src') !== src) source.setAttribute('src', src);
-      video.preload = 'auto';
-      const run = video.play();
-      if (run && typeof run.then === 'function') {
-        run.then(show).catch(() => {
-          hide();
-          armUnlock();
-        });
-      } else if (!video.paused) {
-        show();
-      }
-    };
-
-    video.addEventListener('playing', show);
-    video.addEventListener('canplay', play);
-    video.addEventListener('loadeddata', play);
-    video.addEventListener('pause', () => {
-      window.setTimeout(() => {
-        if (video.paused) hide();
-      }, 180);
+    bindHeroLoop(video, {
+      host: photo,
+      markHost: photo,
+      eager: true,
     });
-    if (!video.paused) show();
-
-    // Hero at top of page: play immediately — do not gate first start on IntersectionObserver.
-    play();
-
-    // IO only pauses when the hero leaves the viewport.
-    let ioArmed = false;
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        ioArmed = true;
-      });
-    });
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.intersectionRatio > 0) play();
-          else if (ioArmed) video.pause();
-        });
-      },
-      { threshold: [0, 0.01, 0.1] }
-    );
-    io.observe(photo);
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') play();
-    });
-    window.addEventListener('pageshow', play);
-    window.addEventListener('focus', play);
   }
 
   initPzLoop();

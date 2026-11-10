@@ -846,6 +846,8 @@ const tiles = [
 </style>
 
 <script>
+  import { bindHeroLoop, type HeroLoopHandle } from '../scripts/hero-loop';
+
   function initBuyersAgentHorizont() {
     const sec = document.querySelector<HTMLElement>('[data-bah]');
     if (!sec) return;
@@ -879,66 +881,17 @@ const tiles = [
       [0.5, 0.78],
     ];
 
-    media.muted = true;
-    media.defaultMuted = true;
-    media.volume = 0;
-    media.loop = true;
-    media.playsInline = true;
-    media.controls = false;
-    media.setAttribute('muted', '');
-    media.setAttribute('playsinline', '');
-    media.setAttribute('webkit-playsinline', 'true');
-
-    const armSrc = () => {
-      const src = media.dataset.src || media.getAttribute('src');
-      if (!src) return;
-      if (media.getAttribute('src') !== src) media.setAttribute('src', src);
-      const source = media.querySelector('source');
-      if (source && source.getAttribute('src') !== src) source.setAttribute('src', src);
-    };
-
-    let wantPlay = false;
-    const markLive = () => {
-      media.classList.add('is-playing');
-      box.classList.add('is-playing');
-    };
-    const markStill = () => {
-      media.classList.remove('is-playing');
-      box.classList.remove('is-playing');
-    };
-    media.addEventListener('playing', markLive);
-    let unlockBound = false;
-    const unlock = () => {
-      if (!media.paused) return;
-      if (!box.getClientRects().length) return;
-      setPlaying(true);
-    };
-    const armUnlock = () => {
-      if (unlockBound) return;
-      unlockBound = true;
-      ['pointerdown', 'touchstart', 'keydown'].forEach((ev) => {
-        window.addEventListener(ev, unlock, { passive: true });
+    // Single owner for the loop. Lazy: first play when the box enters the viewport.
+    let mediaLoop: HeroLoopHandle | null = null;
+    if (!reduced) {
+      mediaLoop = bindHeroLoop(media, {
+        host: box,
+        markHost: box,
+        eager: false,
       });
-    };
-    const tryPlay = () => {
-      if (!wantPlay || reduced) return;
-      armSrc();
-      media.preload = 'auto';
-      const run = media.play();
-      if (run) run.catch(() => { armUnlock(); });
-    };
-    const setPlaying = (on: boolean) => {
-      if (!on) {
-        wantPlay = false;
-        media.pause();
-        markStill();
-        return;
-      }
-      wantPlay = true;
-      tryPlay();
-    };
+    }
 
-    // Prefetch only when approaching — do NOT autoplay 700px early (steals iOS decoder from hero).
+    // Prefetch only when approaching — playback stays with mediaLoop.
     const near = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -963,30 +916,6 @@ const tiles = [
       { threshold: 0.12 }
     );
     icons.observe(sec);
-
-    // Play only when the video is actually in the viewport (lazy below-fold).
-    let viewArmed = false;
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        viewArmed = true;
-      });
-    });
-    const view = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.intersectionRatio > 0) {
-            if (!reduced) setPlaying(true);
-          } else if (viewArmed) {
-            setPlaying(false);
-          }
-        });
-      },
-      { threshold: [0, 0.01, 0.1] }
-    );
-    view.observe(box);
-
-    media.addEventListener('canplay', tryPlay);
-    media.addEventListener('loadeddata', tryPlay);
 
     const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
     const smoothstep = (t: number) => t * t * (3 - 2 * t);
@@ -1060,10 +989,7 @@ const tiles = [
         'aria-label',
         k > 0.8 ? 'Přejít na Příběhy z trhu' : 'Zobrazit video na celou obrazovku'
       );
-      // Desktop: keep the loop running whenever the video frame is on screen,
-      // not only after the full-bleed expand.
-      const inView = q.bottom > 0 && q.top < window.innerHeight;
-      setPlaying(inView && !reduced);
+      // Playback is owned by mediaLoop (geometry + IO) — scroll tick only drives layout.
     };
 
     const tick = () => {
@@ -1100,7 +1026,7 @@ const tiles = [
     };
     const onBox = (event: Event) => {
       event.preventDefault();
-      if (media.paused) tryPlay();
+      if (media.paused) mediaLoop?.play();
       if (mq.matches && k < 0.8) {
         pinTo(DWELL + SLIDE + PAUSE + EXP + HOLD * 0.35);
         return;
@@ -1136,21 +1062,16 @@ const tiles = [
     req();
 
     state._bahCleanup = () => {
+      mediaLoop?.destroy();
+      mediaLoop = null;
       near.disconnect();
       icons.disconnect();
-      view.disconnect();
-      media.removeEventListener('playing', markLive);
-      media.removeEventListener('canplay', tryPlay);
-      media.removeEventListener('loadeddata', tryPlay);
       box.removeEventListener('click', onBox);
       box.removeEventListener('keydown', onBoxKey);
       document.removeEventListener('click', onKonceptClick, true);
       window.removeEventListener('hashchange', onHash);
       window.removeEventListener('scroll', req);
       window.removeEventListener('resize', req);
-      window.removeEventListener('pointerdown', unlock);
-      window.removeEventListener('touchstart', unlock);
-      window.removeEventListener('keydown', unlock);
       mq.removeEventListener('change', req);
       if (raf) cancelAnimationFrame(raf);
       state._bahCleanup = undefined;
