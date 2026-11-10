@@ -378,7 +378,15 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
     return !!video.closest('.hero-strip-film') && window.matchMedia('(min-width: 1024px)').matches;
   }
 
-  function visible(video) {
+  function isActiveTwin(video) {
+    // Prefer breakpoint media queries over getClientRects(): during View Transitions
+    // rects can briefly be 0 and would permanently skip bind (preload=none).
+    if (video.closest('.hero-strip-film')) {
+      return window.matchMedia('(min-width: 1024px)').matches;
+    }
+    if (video.closest('.hero-strip-mobile')) {
+      return window.matchMedia('(max-width: 1023px)').matches;
+    }
     return video.getClientRects().length > 0;
   }
 
@@ -388,8 +396,8 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
     const introOn = document.documentElement.classList.contains('intro-on');
 
     videos.forEach(function (video) {
-      // Off-breakpoint twin (display:none) must not compete for the decoder.
-      if (!visible(video)) {
+      // Off-breakpoint twin must not compete for the decoder.
+      if (!isActiveTwin(video)) {
         video.removeAttribute('autoplay');
         video.preload = 'none';
         if (video.__heroLoop) video.__heroLoop.destroy();

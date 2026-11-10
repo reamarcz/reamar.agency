@@ -220,7 +220,6 @@ const isCurrent = (href: string) => {
         href="/#kontakt"
         class="font-yellix text-[21px] font-medium leading-tight text-black no-underline hover:opacity-70"
         data-nav-home-kontakt
-        data-astro-reload
         data-drawer-close
       >
         Kontakty
@@ -543,9 +542,6 @@ const isCurrent = (href: string) => {
       var drawer = document.querySelector('[data-menu-drawer]');
       if (drawer?.hasAttribute('data-open')) closeDrawer();
     });
-
-    document.addEventListener('astro:before-swap', closeDrawer);
-    document.addEventListener('astro:after-swap', closeDrawer);
 
     var compactOnScroll = null;
     var compactOnResize = null;

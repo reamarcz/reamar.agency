@@ -35,22 +35,8 @@ export type HeroLoopHandle = {
 
 type OwnedVideo = HTMLVideoElement & { __heroLoop?: HeroLoopHandle };
 
-let lifecycleBound = false;
-
-function ensureLifecycle() {
-  if (lifecycleBound || typeof document === 'undefined') return;
-  lifecycleBound = true;
-  document.addEventListener('astro:before-swap', () => {
-    document.querySelectorAll<OwnedVideo>('video[data-loop-owned]').forEach((video) => {
-      video.__heroLoop?.destroy();
-    });
-  });
-}
-
-/** Idempotent: register VT cleanup so owned loops never leak across soft navigations. */
-export function installHeroLoopLifecycle() {
-  ensureLifecycle();
-}
+/** No-op stub — View Transitions / ClientRouter removed; full page loads reset media. */
+export function installHeroLoopLifecycle() {}
 
 /** True when any pixel of the element intersects the viewport. */
 export function geometricallyVisible(el: Element): boolean {
@@ -88,7 +74,6 @@ function armVideo(video: HTMLVideoElement) {
  * Replaces any previous owner on the same element.
  */
 export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}): HeroLoopHandle {
-  ensureLifecycle();
   const owned = video as OwnedVideo;
   owned.__heroLoop?.destroy();
 
@@ -132,14 +117,22 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
 
   const revealWhenPainted = () => {
     if (destroyed || video.paused) return;
+    // Prefer a decoded frame callback, but never depend on it alone: after Astro
+    // View Transitions some engines stall rvfc until a later layout/paint (e.g.
+    // first scroll), which leaves the poster up while the element is already
+    // playing. timeupdate proves frames are advancing without scroll hacks.
     if (typeof video.requestVideoFrameCallback === 'function') {
+      let revealed = false;
+      const finish = (via: string) => {
+        if (revealed || destroyed || video.paused) return;
+        revealed = true;
+        dbg('reveal', { via });
+        markPlaying();
+      };
       dbg('rvfc:arm');
-      video.requestVideoFrameCallback(() => {
-        if (!destroyed && !video.paused) {
-          dbg('rvfc:frame');
-          markPlaying();
-        }
-      });
+      video.requestVideoFrameCallback(() => finish('rvfc'));
+      video.addEventListener('timeupdate', () => finish('timeupdate'), { once: true });
+      if (!video.paused && video.currentTime > 0) finish('currentTime');
       return;
     }
     markPlaying();
@@ -269,6 +262,12 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
         return;
       }
       entries.forEach((entry) => {
+        const rect = host.getBoundingClientRect();
+        // Zero-size during VT/layout settle is not proof the host left the viewport.
+        if (rect.width < 1 || rect.height < 1) {
+          dbg('io:skip-zero-size');
+          return;
+        }
         const visible = geometricallyVisible(host);
         dbg('io', {
           ratio: Math.round(entry.intersectionRatio * 1000) / 1000,

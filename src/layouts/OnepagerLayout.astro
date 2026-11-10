@@ -1,5 +1,4 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
 import Navigation from '../components/onepager/Navigation.astro';
 import SmartContactModal from '../components/onepager/SmartContactModal.astro';
 import SmartMeetingModal from '../components/onepager/SmartMeetingModal.astro';
@@ -48,7 +47,6 @@ const {
       robots={robots}
     />
     <link rel="icon" type="image/svg+xml" href="/images/Reamar%20SVG.svg" />
-    <ViewTransitions />
     <script is:inline>
       function handleModalClick(event) {
         var target = event.target.closest('[data-smart-contact-open], [data-smart-meeting-open], [data-provize-open]');
@@ -70,11 +68,6 @@ const {
       }
 
       document.addEventListener('click', handleModalClick, true);
-
-      document.addEventListener('astro:after-swap', function () {
-        document.removeEventListener('click', handleModalClick, true);
-        document.addEventListener('click', handleModalClick, true);
-      });
     </script>
   </head>
   <body class="font-yellix overflow-x-clip w-full min-w-0">
@@ -89,11 +82,7 @@ const {
     <FormThankYouModal />
     <script>
       import AOS from 'aos';
-      const aosOptions = { duration: 800, easing: 'ease', offset: 60, once: false };
-      AOS.init(aosOptions);
-      document.addEventListener('astro:page-load', function () {
-        AOS.init(aosOptions);
-      });
+      AOS.init({ duration: 800, easing: 'ease', offset: 60, once: false });
     </script>
   </body>
 </html>

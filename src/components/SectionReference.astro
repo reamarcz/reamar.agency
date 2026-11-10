@@ -3,7 +3,11 @@ const playIcon = `<svg viewBox="0 0 24 24"><path d="M8.2 5v14L19.5 12z" fill="cu
 
 const columns = [
   {
-    video: { src: '/images/agency/jan-shorts.jpg', pos: 'center 18%' },
+    video: {
+      src: '/images/agency/jan-shorts.jpg',
+      mp4: '/videos/agent-introduction.mp4',
+      pos: 'center 18%',
+    },
     quote: {
       text: 'K panu Vitverovi se vracím hlavně proto, že ten trh sleduje dlouhodobě. Když se objeví něco zajímavého, většinou o tom ví dřív, než se to začne řešit všude.',
       who: 'Petr S., 2+kk Malešice',
@@ -11,7 +15,11 @@ const columns = [
     flip: false,
   },
   {
-    video: { src: '/images/agency/jv-holder3.jpg', pos: '58% center' },
+    video: {
+      src: '/images/agency/jan-shorts.jpg',
+      mp4: '/videos/agent-office.mp4',
+      pos: 'center 18%',
+    },
     quote: {
       text: 'Nejvíc jsme s manželem ocenili, že nám pan Vitvera neříkal jen výhody. U každého projektu jsme si prošli i to, co nám na něm nemusí vyhovovat.',
       who: 'Markéta K., 3+kk Radlice',
@@ -52,16 +60,54 @@ const wideQuote = {
               <span>{col.quote.who}</span>
             </article>
           )}
-          <a href="/pribehy-z-trhu/" class="ref-video">
-            <img
-              src={col.video.src}
-              alt=""
-              width="640"
-              height="800"
-              loading="lazy"
-              style={`object-position: ${col.video.pos}`}
-            />
-            <span class="ref-play" aria-hidden="true" set:html={playIcon} />
+          <a
+            href="/pribehy-z-trhu/"
+            class:list={['ref-video', col.video.mp4 && 'video-decorative-wrap']}
+            {...(col.video.mp4 ? { 'data-cover-managed': true } : {})}
+          >
+            {col.video.mp4 ? (
+              <>
+                <img
+                  class="video-decorative-cover"
+                  src={col.video.src}
+                  alt=""
+                  width="640"
+                  height="800"
+                  loading="lazy"
+                  style={`object-position: ${col.video.pos}`}
+                />
+                <video
+                  data-decorative-autoplay
+                  data-ref-loop
+                  src={col.video.mp4}
+                  data-src={col.video.mp4}
+                  poster={col.video.src}
+                  muted
+                  autoplay
+                  loop
+                  playsinline
+                  webkit-playsinline="true"
+                  preload="metadata"
+                  disablepictureinpicture
+                  aria-hidden="true"
+                  style={`object-position: ${col.video.pos}`}
+                >
+                  <source src={col.video.mp4} type="video/mp4" />
+                </video>
+              </>
+            ) : (
+              <>
+                <img
+                  src={col.video.src}
+                  alt=""
+                  width="640"
+                  height="800"
+                  loading="lazy"
+                  style={`object-position: ${col.video.pos}`}
+                />
+                <span class="ref-play" aria-hidden="true" set:html={playIcon} />
+              </>
+            )}
             {col.video.name && (
               <span class="ref-video-meta">{col.video.name}</span>
             )}
@@ -77,6 +123,7 @@ const wideQuote = {
       <div class="ref-col ref-col--wide ref-in" style="--i: 3">
         <a href="/pribehy-z-trhu/" class="ref-video ref-video--wide" aria-label="Přehrát celý díl: 100 milionů na penthouse. Co vybereme?">
           <video
+            data-ref-loop
             muted
             loop
             playsinline
@@ -379,8 +426,10 @@ const wideQuote = {
 </style>
 
 <script>
+  import { bindHeroLoop, type HeroLoopHandle } from '../scripts/hero-loop';
+
   function initReference() {
-    const wrap = document.querySelector('[data-reference]');
+    const wrap = document.querySelector('[data-reference]') as HTMLElement & { _refCleanup?: (() => void) | null };
     if (!wrap) return;
     if (wrap._refCleanup) wrap._refCleanup();
 
@@ -391,42 +440,39 @@ const wideQuote = {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced) {
       items.forEach((el) => el.classList.add('is-in'));
-      return;
     }
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-        items.forEach((el) => el.classList.add('is-in'));
-        io.disconnect();
-      },
-      { threshold: 0.18, rootMargin: '0px 0px -10% 0px' }
-    );
+    const io = reduced
+      ? null
+      : new IntersectionObserver(
+          (entries) => {
+            if (!entries.some((entry) => entry.isIntersecting)) return;
+            items.forEach((el) => el.classList.add('is-in'));
+            io?.disconnect();
+          },
+          { threshold: 0.18, rootMargin: '0px 0px -10% 0px' }
+        );
 
-    io.observe(grid || wrap);
+    if (io) io.observe(grid || wrap);
 
-    const vid = wrap.querySelector('.ref-video--wide video');
-    let vio;
-    if (vid) {
-      vio = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const play = vid.play();
-              if (play && typeof play.catch === 'function') play.catch(() => {});
-            } else {
-              vid.pause();
-            }
-          });
-        },
-        { threshold: 0.2 }
-      );
-      vio.observe(vid);
+    const loops: HeroLoopHandle[] = [];
+    if (!reduced) {
+      wrap.querySelectorAll<HTMLVideoElement>('video[data-ref-loop]').forEach((video) => {
+        const host = video.closest('.ref-video') || video;
+        loops.push(
+          bindHeroLoop(video, {
+            host,
+            markHost: host.classList.contains('video-decorative-wrap') ? host : null,
+            eager: false,
+            clickToPause: false,
+          })
+        );
+      });
     }
 
     wrap._refCleanup = () => {
-      io.disconnect();
-      if (vio) vio.disconnect();
+      io?.disconnect();
+      loops.forEach((loop) => loop.destroy());
       wrap._refCleanup = null;
     };
   }
