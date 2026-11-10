@@ -248,8 +248,11 @@ const {
           armVideo();
           video.addEventListener('playing', revealWhenPainted);
           video.addEventListener('pause', function () {
-            if (!video.paused) return;
-            markStill();
+            // Ignore brief stalls so poster/play overlay don't flash mid-loop.
+            window.setTimeout(function () {
+              if (!video.paused) return;
+              markStill();
+            }, 180);
           });
 
           wrap.addEventListener('click', function () {
@@ -261,7 +264,7 @@ const {
           });
 
           if (wrap.hasAttribute('data-cover-managed')) return;
-          if (!(video.hasAttribute('autoplay') && video.getClientRects().length)) return;
+          if (!video.getClientRects().length) return;
           var autoplay = video.play();
           if (autoplay) autoplay.catch(onBlocked);
         });
