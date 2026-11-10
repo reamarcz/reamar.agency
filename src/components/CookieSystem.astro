@@ -1,11 +1,14 @@
 ---
 const STORAGE_KEY = 'reamar-cookie-consent';
+// temporarily off — desktop + mobile
+const SHOW_COOKIE_BANNER = false;
 const CATEGORIES = [
   { id: 'necessary', label: 'Nezbytné', alwaysOn: true },
   { id: 'analytical', label: 'Analytické', alwaysOn: false },
   { id: 'marketing', label: 'Marketingové', alwaysOn: false },
 ] as const;
 ---
+{SHOW_COOKIE_BANNER && (
 <div
   id="cookie-banner"
   class="cookie-banner"
@@ -24,6 +27,7 @@ const CATEGORIES = [
     </div>
   </div>
 </div>
+)}
 
 <!-- Cookie Modal: nastavení (styl jako poptávkový formulář) -->
 <div
@@ -241,12 +245,16 @@ const CATEGORIES = [
   }
 </style>
 
-<script define:vars={{ STORAGE_KEY }}>
+<script define:vars={{ STORAGE_KEY, SHOW_COOKIE_BANNER }}>
   function initCookieSystem() {
-    const banner = document.querySelector('[data-cookie-banner]');
+    const banner = SHOW_COOKIE_BANNER ? document.querySelector('[data-cookie-banner]') : null;
     const overlay = document.querySelector('[data-cookie-overlay]');
     const modal = document.querySelector('[data-cookie-modal]');
     if (!banner && !overlay && !modal) return;
+    if (window.__cookieBannerTimer) {
+      clearTimeout(window.__cookieBannerTimer);
+      window.__cookieBannerTimer = null;
+    }
 
     if (window.__cookieOpenSettingsHandler) {
       document.body.removeEventListener('click', window.__cookieOpenSettingsHandler);
@@ -380,7 +388,7 @@ const CATEGORIES = [
       }
     }
 
-    if (!window.__cookieBannerScheduled) {
+    if (SHOW_COOKIE_BANNER && !window.__cookieBannerScheduled) {
       window.__cookieBannerScheduled = true;
       scheduleBanner();
     }
