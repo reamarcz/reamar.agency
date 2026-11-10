@@ -424,7 +424,8 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
       if (!visible(video)) return;
       tryPlay(video);
     };
-    ['pointerdown', 'touchstart', 'touchend', 'click', 'keydown', 'scroll'].forEach(function (ev) {
+    // Gesture fallback only when autoplay was rejected — never scroll/wheel.
+    ['pointerdown', 'touchstart', 'keydown'].forEach(function (ev) {
       window.addEventListener(ev, kick, { passive: true });
     });
   }
@@ -433,17 +434,10 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
     return video.getClientRects().length > 0;
   }
 
-  // Avoid pausing loops before first layout paint — early sync can see 0 rects
-  // and cancel the inline autoplay until the user scrolls.
-  var heroLayoutReady = false;
-  requestAnimationFrame(function () {
-    requestAnimationFrame(function () {
-      heroLayoutReady = true;
-    });
-  });
-
   function tryPlay(video) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Hero at top of page: do not require IntersectionObserver / scroll.
+    // Off-breakpoint twin (display:none) has no rects — skip it.
     if (!visible(video)) return;
     armSrc(video);
     muteLoop(video);
@@ -466,7 +460,7 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (document.documentElement.classList.contains('intro-on') && !isDesktopFilm(video)) return;
     if (!visible(video)) {
-      if (heroLayoutReady && !video.paused && !isDesktopFilm(video)) video.pause();
+      // Off-breakpoint / unmounted twin — never pause the active hero based on this.
       return;
     }
     armSrc(video);
@@ -558,16 +552,6 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
   function initLoops() {
     const videos = document.querySelectorAll('[data-hero-strip] [data-hero-loop]');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // Fresh layout pass after View Transitions soft navigations.
-    heroLayoutReady = false;
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        heroLayoutReady = true;
-        videos.forEach(function (video) {
-          if (!reduced && visible(video)) tryPlay(video);
-        });
-      });
-    });
     videos.forEach(function (video) {
       if (reduced) {
         video.removeAttribute('autoplay');
@@ -575,20 +559,22 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
         markStill(video);
         return;
       }
+      // Off-breakpoint twin (display:none) must not compete for the iOS decoder.
+      if (!visible(video)) {
+        video.removeAttribute('autoplay');
+        video.preload = 'none';
+        try { video.pause(); } catch (e) {}
+        return;
+      }
       muteLoop(video);
-      armUnlock(video);
       if (video.dataset.loopArmed !== '1') {
         video.dataset.loopArmed = '1';
         bindLoop(video);
       }
+      // First play attempt immediately at init — no IO, no scroll gate.
       afterIntro(video);
       if (!document.documentElement.classList.contains('intro-on')) {
         tryPlay(video);
-        [50, 150, 400, 900, 1800].forEach(function (ms) {
-          setTimeout(function () {
-            if (visible(video) && video.paused) tryPlay(video);
-          }, ms);
-        });
       }
     });
   }

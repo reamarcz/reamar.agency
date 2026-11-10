@@ -273,6 +273,18 @@ const itemList = {
     };
     const hide = () => photo.classList.remove('is-playing');
 
+    let unlockBound = false;
+    const unlock = () => {
+      if (video.paused) play();
+    };
+    const armUnlock = () => {
+      if (unlockBound) return;
+      unlockBound = true;
+      ['pointerdown', 'touchstart', 'keydown'].forEach((ev) => {
+        window.addEventListener(ev, unlock, { passive: true });
+      });
+    };
+
     const play = () => {
       mute();
       if (video.getAttribute('src') !== src) video.setAttribute('src', src);
@@ -283,18 +295,12 @@ const itemList = {
       if (run && typeof run.then === 'function') {
         run.then(show).catch(() => {
           hide();
+          armUnlock();
         });
       } else if (!video.paused) {
         show();
       }
     };
-
-    const unlock = () => {
-      if (video.paused) play();
-    };
-    ['pointerdown', 'touchstart', 'touchend', 'click', 'keydown', 'scroll'].forEach((ev) => {
-      window.addEventListener(ev, unlock, { passive: true });
-    });
 
     video.addEventListener('playing', show);
     video.addEventListener('canplay', play);
@@ -306,17 +312,14 @@ const itemList = {
     });
     if (!video.paused) show();
 
-    // Max-effort autoplay: kick immediately and keep retrying.
+    // Hero at top of page: play immediately — do not gate first start on IntersectionObserver.
     play();
-    [50, 150, 400, 900, 1800].forEach((ms) => window.setTimeout(play, ms));
 
-    // Don't pause on the first IO callback — layout often reports ratio 0
-    // before paint and that cancels native/early autoplay until the user scrolls.
+    // IO only pauses when the hero leaves the viewport.
     let ioArmed = false;
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         ioArmed = true;
-        play();
       });
     });
     const io = new IntersectionObserver(

@@ -907,12 +907,25 @@ const tiles = [
       box.classList.remove('is-playing');
     };
     media.addEventListener('playing', markLive);
+    let unlockBound = false;
+    const unlock = () => {
+      if (!media.paused) return;
+      if (!box.getClientRects().length) return;
+      setPlaying(true);
+    };
+    const armUnlock = () => {
+      if (unlockBound) return;
+      unlockBound = true;
+      ['pointerdown', 'touchstart', 'keydown'].forEach((ev) => {
+        window.addEventListener(ev, unlock, { passive: true });
+      });
+    };
     const tryPlay = () => {
       if (!wantPlay || reduced) return;
       armSrc();
       media.preload = 'auto';
       const run = media.play();
-      if (run) run.catch(() => {});
+      if (run) run.catch(() => { armUnlock(); });
     };
     const setPlaying = (on: boolean) => {
       if (!on) {
@@ -924,16 +937,8 @@ const tiles = [
       wantPlay = true;
       tryPlay();
     };
-    const unlock = () => {
-      if (!media.paused) return;
-      // Any gesture can unlock autoplay — enable + kick.
-      if (box.getClientRects().length) setPlaying(true);
-      else tryPlay();
-    };
-    ['pointerdown', 'touchstart', 'touchend', 'click', 'keydown', 'scroll'].forEach((ev) => {
-      window.addEventListener(ev, unlock, { passive: true });
-    });
 
+    // Prefetch only when approaching — do NOT autoplay 700px early (steals iOS decoder from hero).
     const near = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -943,7 +948,6 @@ const tiles = [
             media.setAttribute('src', src);
           }
           media.preload = 'auto';
-          if (!reduced) setPlaying(true);
         });
       },
       { rootMargin: '700px 0px' }
@@ -960,19 +964,21 @@ const tiles = [
     );
     icons.observe(sec);
 
+    // Play only when the video is actually in the viewport (lazy below-fold).
     let viewArmed = false;
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         viewArmed = true;
-        if (!reduced && box.getClientRects().length) setPlaying(true);
       });
     });
     const view = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (mq.matches) return;
-          if (entry.intersectionRatio > 0) setPlaying(!reduced);
-          else if (viewArmed) setPlaying(false);
+          if (entry.intersectionRatio > 0) {
+            if (!reduced) setPlaying(true);
+          } else if (viewArmed) {
+            setPlaying(false);
+          }
         });
       },
       { threshold: [0, 0.01, 0.1] }
@@ -981,10 +987,6 @@ const tiles = [
 
     media.addEventListener('canplay', tryPlay);
     media.addEventListener('loadeddata', tryPlay);
-    if (!reduced) {
-      setPlaying(box.getClientRects().length > 0);
-      [80, 250, 700, 1400].forEach((ms) => window.setTimeout(tryPlay, ms));
-    }
 
     const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
     const smoothstep = (t: number) => t * t * (3 - 2 * t);
@@ -1138,6 +1140,8 @@ const tiles = [
       icons.disconnect();
       view.disconnect();
       media.removeEventListener('playing', markLive);
+      media.removeEventListener('canplay', tryPlay);
+      media.removeEventListener('loadeddata', tryPlay);
       box.removeEventListener('click', onBox);
       box.removeEventListener('keydown', onBoxKey);
       document.removeEventListener('click', onKonceptClick, true);
@@ -1146,7 +1150,7 @@ const tiles = [
       window.removeEventListener('resize', req);
       window.removeEventListener('pointerdown', unlock);
       window.removeEventListener('touchstart', unlock);
-      window.removeEventListener('click', unlock);
+      window.removeEventListener('keydown', unlock);
       mq.removeEventListener('change', req);
       if (raf) cancelAnimationFrame(raf);
       state._bahCleanup = undefined;

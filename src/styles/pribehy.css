@@ -251,10 +251,14 @@
   display: block;
 }
 .pz-board-photo img {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   object-position: center center;
   filter: grayscale(0.38) contrast(1.08);
   transform: scale(1.06);
   transform-origin: center center;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
 }
 /* Ken Burns only when there is no loop video to autoplay */
 .pz-board-photo:not(:has([data-pz-loop])) img {
@@ -270,11 +274,12 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  opacity: 0;
+  /* Keep video painted (WebKit blocks autoplay on opacity:0 / visibility:hidden).
+     Poster img sits above until .is-playing. */
+  opacity: 1;
+  visibility: visible;
   pointer-events: none;
-  transition: opacity 0.45s ease;
 }
-.pz-board-photo.is-playing video { opacity: 1; }
 .pz-board-photo.is-playing img {
   opacity: 0;
   visibility: hidden;

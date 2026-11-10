@@ -201,6 +201,24 @@ const {
         );
       }
 
+      // Hero loops at the top of the page — never gate first play on IO/scroll.
+      function isHeroLoopVideo(video) {
+        return !!(
+          video.hasAttribute('data-hero-loop') ||
+          video.hasAttribute('data-mhero-video') ||
+          video.hasAttribute('data-intro-video') ||
+          video.hasAttribute('data-pz-loop') ||
+          video.closest('[data-hero-strip], [data-mhero], [data-pz-hero], [data-bh]')
+        );
+      }
+
+      function videoInViewport(video) {
+        var rect = video.getBoundingClientRect();
+        if (!rect.width && !rect.height) return false;
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        return rect.bottom > 0 && rect.top < vh;
+      }
+
       function armLoopVideo(video) {
         video.muted = true;
         video.defaultMuted = true;
@@ -229,10 +247,20 @@ const {
         if (host) host.classList.remove('is-playing');
       }
 
+      function shouldKickVideo(video) {
+        if (!video.getClientRects().length) return false;
+        // Hero: kick immediately. Below-fold: only when already in the viewport.
+        if (isHeroLoopVideo(video)) return true;
+        return videoInViewport(video);
+      }
+
       function kickLoopVideos() {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         loopVideoNodes().forEach(function (video) {
-          if (!video.getClientRects().length) return;
+          if (!shouldKickVideo(video)) return;
+          // Below-fold loops own their play/pause via IntersectionObserver —
+          // don't steal the iOS decoder by force-playing them from here.
+          if (!isHeroLoopVideo(video) && video.hasAttribute('data-bah-media')) return;
           armLoopVideo(video);
           var play = video.play();
           if (play && typeof play.then === 'function') {
@@ -252,9 +280,6 @@ const {
 
       function scheduleLoopKicks() {
         kickLoopVideos();
-        [50, 150, 400, 900, 1800].forEach(function (ms) {
-          window.setTimeout(kickLoopVideos, ms);
-        });
         requestAnimationFrame(function () {
           requestAnimationFrame(kickLoopVideos);
         });
@@ -304,6 +329,7 @@ const {
           });
 
           var kick = function () {
+            if (!videoInViewport(video) && !isHeroLoopVideo(video)) return;
             if (!video.getClientRects().length) return;
             armVideo();
             var p = video.play();
@@ -316,15 +342,12 @@ const {
           });
 
           kick();
-          [80, 250, 700, 1400].forEach(function (ms) {
-            window.setTimeout(kick, ms);
-          });
           video.addEventListener('canplay', kick);
           video.addEventListener('loadeddata', kick);
         });
       }
 
-      // View Transitions: pause old page media, then force-play loops on the new page.
+      // View Transitions: pause old page media, then restart in-viewport / hero loops.
       document.addEventListener('astro:before-swap', pauseLoopVideos);
       document.addEventListener('astro:after-swap', scheduleLoopKicks);
       document.addEventListener('astro:page-load', function () {
@@ -334,9 +357,10 @@ const {
       initVideoDecorativeCovers();
       scheduleLoopKicks();
 
+      // Gesture fallback only (NotAllowedError / Low Power Mode) — never scroll/wheel.
       if (!window.__reamarLoopUnlock) {
         window.__reamarLoopUnlock = true;
-        ['pointerdown', 'touchstart', 'touchend', 'keydown', 'scroll', 'wheel'].forEach(function (ev) {
+        ['pointerdown', 'touchstart', 'keydown'].forEach(function (ev) {
           window.addEventListener(ev, kickLoopVideos, { passive: true });
         });
       }
