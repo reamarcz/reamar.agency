@@ -13,6 +13,12 @@ export type HeroLoopOptions = {
    * false → wait until the host enters the viewport (below-fold loops).
    */
   eager?: boolean;
+  /**
+   * When true (default), a click on the mark host while playing counts as a
+   * manual pause and will not auto-resume from IO / tab focus.
+   * Set false when the host has its own click semantics (e.g. BAH expand).
+   */
+  clickToPause?: boolean;
   onPlaying?: () => void;
   onStill?: () => void;
   onBlocked?: () => void;
@@ -20,6 +26,7 @@ export type HeroLoopOptions = {
 
 export type HeroLoopHandle = {
   play: () => void;
+  /** System pause (modal, off-screen). Does not mark a manual user pause. */
   pause: () => void;
   destroy: () => void;
 };
@@ -88,9 +95,12 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
     ? video.closest('.video-decorative-wrap, .pz-board-photo, .hero-strip-film, .hero-strip-mobile-visual')
     : opts.markHost;
   const eager = opts.eager !== false;
+  const clickToPause = opts.clickToPause !== false;
 
   let destroyed = false;
   let wantPlay = false;
+  /** Explicit user pause — must not be cleared by IO / tab focus alone. */
+  let userPaused = false;
   let unlockBound = false;
 
   const markPlaying = () => {
@@ -125,13 +135,17 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
   };
 
   const tryPlay = () => {
-    if (destroyed || !wantPlay || reduceMotion()) return;
+    if (destroyed || !wantPlay || userPaused || reduceMotion()) return;
     // Never start playback from a stale canplay while the host is off-screen.
     if (!geometricallyVisible(host)) return;
     armVideo(video);
     const run = video.play();
     if (run && typeof run.then === 'function') {
-      run.then(revealWhenPainted).catch(() => {
+      run.then(() => {
+        if (destroyed) return;
+        revealWhenPainted();
+      }).catch(() => {
+        if (destroyed) return;
         markBlocked();
         armUnlock();
       });
@@ -152,6 +166,8 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
       markStill();
       return;
     }
+    // Auto-resume paths must not override an explicit user pause.
+    if (on && userPaused) return;
     wantPlay = on;
     if (on) tryPlay();
     else {
@@ -167,6 +183,7 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
   const unlock = () => {
     if (destroyed || !video.paused) return;
     if (!geometricallyVisible(host)) return;
+    userPaused = false;
     setWantPlay(true);
   };
 
@@ -186,28 +203,43 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
     }, 180);
   };
   const onCanPlay = () => {
-    if (wantPlay) tryPlay();
+    if (wantPlay && !userPaused) tryPlay();
   };
   const onVisibility = () => {
+    if (destroyed) return;
+    // While hidden, leave wantPlay alone — IO often reports ratio 0 and must
+    // not permanently clear playback intent for the tab-return path.
     if (document.visibilityState !== 'visible') return;
-    if (wantPlay && geometricallyVisible(host)) tryPlay();
+    if (userPaused || reduceMotion()) return;
+    if (!geometricallyVisible(host)) return;
+    wantPlay = true;
+    tryPlay();
   };
   const onHostClick = (event: Event) => {
-    if (!video.paused) return;
+    if (destroyed) return;
     const target = event.target as Element | null;
     if (target?.closest?.('a, button')) return;
+    if (!video.paused) {
+      if (!clickToPause) return;
+      userPaused = true;
+      setWantPlay(false);
+      return;
+    }
+    userPaused = false;
     setWantPlay(true);
   };
 
   // IntersectionObserver: resume when visible, pause only when geometry confirms off-screen.
   // Never treat a lone intersectionRatio === 0 as proof if the element still intersects the viewport.
+  // Ignore IO while the tab is hidden (ratio often drops to 0 and would clear wantPlay).
   const io = new IntersectionObserver(
     (entries) => {
       if (destroyed) return;
+      if (document.visibilityState === 'hidden') return;
       entries.forEach((entry) => {
         const visible = geometricallyVisible(host);
         if (visible) {
-          setWantPlay(true);
+          if (!userPaused) setWantPlay(true);
           return;
         }
         if (entry.intersectionRatio === 0 && !visible) {
@@ -237,12 +269,16 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
   }
 
   const handle: HeroLoopHandle = {
-    play: () => setWantPlay(true),
+    play: () => {
+      userPaused = false;
+      setWantPlay(true);
+    },
     pause: () => setWantPlay(false),
     destroy: () => {
       if (destroyed) return;
       destroyed = true;
       wantPlay = false;
+      userPaused = false;
       io.disconnect();
       video.removeEventListener('playing', onPlaying);
       video.removeEventListener('pause', onPause);
@@ -278,10 +314,9 @@ export function pauseOwnedLoops(root: ParentNode = document) {
   });
 }
 
-/** Resume owned loops that are geometrically visible. */
+/** Resume owned loops (e.g. after modal close). play() clears manual-pause and respects geometry. */
 export function resumeOwnedLoops(root: ParentNode = document) {
   root.querySelectorAll<OwnedVideo>('video[data-loop-owned]').forEach((video) => {
-    const host = video.closest('.video-decorative-wrap, .pz-board-photo, .hero-strip-film, .hero-strip-mobile-visual') || video;
-    if (geometricallyVisible(host)) video.__heroLoop?.play();
+    video.__heroLoop?.play();
   });
 }

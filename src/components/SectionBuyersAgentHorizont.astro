@@ -888,6 +888,8 @@ const tiles = [
         host: box,
         markHost: box,
         eager: false,
+        // Box click opens/expands — must not steal that as a pause toggle.
+        clickToPause: false,
       });
     }
 
