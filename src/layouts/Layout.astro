@@ -59,7 +59,8 @@ const {
             var root = document.documentElement;
             root.classList.remove('rmi-on', 'rmi-skip', 'rmi-landing', 'rmm-on', 'rmm-skip', 'rmm-landing');
             root.classList.add(!reduce && !seen && desktop ? 'rmi-on' : 'rmi-skip');
-            root.classList.add(!reduce && !seen && phone ? 'rmm-on' : 'rmm-skip');
+            // Mobile intro temporarily disabled — was leaking page chrome under the fullscreen stage.
+            root.classList.add('rmm-skip');
           } catch (e) {}
         })();
       </script>
@@ -176,7 +177,7 @@ const {
   </head>
   <body class="font-yellix overflow-x-clip w-full min-w-0">
     {heroIntro && <IntroLoader />}
-    {heroIntro && <IntroLoaderMobile />}
+    {/* Mobile intro (IntroLoaderMobile) temporarily off */}
     {!hideNav && <Navigation currentPath={Astro.url.pathname} />}
     <main id="main" role="main" class="min-w-0 overflow-x-clip">
       <slot />
