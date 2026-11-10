@@ -73,10 +73,11 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
           data-src={mobileVideoSrc}
           poster={mobilePosterSrc}
           muted
+          autoplay
           loop
           playsinline
           webkit-playsinline="true"
-          preload="metadata"
+          preload="auto"
           disablepictureinpicture
           aria-hidden="true"
         >
@@ -117,10 +118,11 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
           data-src={videoSrc}
           poster={posterSrc}
           muted
+          autoplay
           loop
           playsinline
           webkit-playsinline="true"
-          preload="metadata"
+          preload="auto"
           disablepictureinpicture
           aria-hidden="true"
         >
@@ -1029,8 +1031,10 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
     video.setAttribute('muted', '');
     video.setAttribute('playsinline', '');
     video.setAttribute('webkit-playsinline', 'true');
+    video.removeAttribute('controls');
     const mediaWrap = video.closest('.video-decorative-wrap');
     const markPlaying = () => {
+      if (video.paused) return;
       video.classList.add('is-playing');
       mediaWrap?.classList.add('is-playing');
       mediaWrap?.classList.remove('is-blocked');
@@ -1040,12 +1044,25 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
       mediaWrap?.classList.remove('is-playing');
     };
     video.addEventListener('playing', markPlaying);
-    video.addEventListener('pause', markStopped);
+    video.addEventListener('pause', () => {
+      window.setTimeout(() => {
+        if (video.paused) markStopped();
+      }, 180);
+    });
 
     const tryPlay = () => {
       if (!deskVideoMq.matches || reduceMotion.matches) return;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.volume = 0;
       const play = video.play();
-      if (play) play.catch(() => { mediaWrap?.classList.add('is-blocked'); });
+      if (play) {
+        play.then(markPlaying).catch(() => {
+          markStopped();
+        });
+      } else if (!video.paused) {
+        markPlaying();
+      }
     };
     const unlockDesk = () => {
       if (video.paused) tryPlay();
@@ -1061,6 +1078,7 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
         }
         video.preload = 'auto';
         tryPlay();
+        [80, 250, 700, 1400].forEach((ms) => window.setTimeout(tryPlay, ms));
       } else {
         video.pause();
         markStopped();
@@ -1069,18 +1087,19 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
     syncDeskVideo();
     video.addEventListener('canplay', tryPlay);
     video.addEventListener('loadeddata', tryPlay);
-    window.addEventListener('pointerdown', unlockDesk, { passive: true });
-    window.addEventListener('touchstart', unlockDesk, { passive: true });
+    ['pointerdown', 'touchstart', 'touchend', 'click', 'keydown', 'scroll'].forEach((ev) => {
+      window.addEventListener(ev, unlockDesk, { passive: true });
+    });
     deskVideoMq.addEventListener('change', syncDeskVideo);
     reduceMotion.addEventListener('change', syncDeskVideo);
 
     const sticky = root.querySelector('.bh__sticky') as HTMLElement | null;
     const videoIo = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) tryPlay();
+        if (entry.intersectionRatio > 0) tryPlay();
         else if (entry.boundingClientRect.height > 1) video.pause();
       });
-    }, { threshold: 0.01 });
+    }, { threshold: [0, 0.01, 0.1] });
     videoIo.observe(sticky || video);
 
     const reset = () => {
@@ -1177,8 +1196,9 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
       video.removeEventListener('pause', markStopped);
       video.removeEventListener('canplay', tryPlay);
       video.removeEventListener('loadeddata', tryPlay);
-      window.removeEventListener('pointerdown', unlockDesk);
-      window.removeEventListener('touchstart', unlockDesk);
+      ['pointerdown', 'touchstart', 'touchend', 'click', 'keydown', 'scroll'].forEach((ev) => {
+        window.removeEventListener(ev, unlockDesk);
+      });
       deskVideoMq.removeEventListener('change', syncDeskVideo);
       reduceMotion.removeEventListener('change', syncDeskVideo);
       goBtns.forEach((btn) => btn.removeEventListener('click', onGo));
@@ -1229,12 +1249,20 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
       if (vid.getAttribute('src') !== src) vid.src = src;
       vid.preload = 'auto';
       const play = vid.play();
-      if (play) play.catch(() => { wrap?.classList.add('is-blocked'); });
+      if (play) {
+        play.then(markPlaying).catch(() => {
+          markStopped();
+        });
+      } else if (!vid.paused) {
+        markPlaying();
+      }
     };
 
     const sync = () => {
-      if (mobile.matches && !reduced.matches && src) tryPlay();
-      else {
+      if (mobile.matches && !reduced.matches && src) {
+        tryPlay();
+        [80, 250, 700, 1400].forEach((ms) => window.setTimeout(tryPlay, ms));
+      } else {
         vid.pause();
         markStopped();
       }
@@ -1251,11 +1279,16 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
     mute();
     sync();
     vid.addEventListener('playing', markPlaying);
-    vid.addEventListener('pause', markStopped);
+    vid.addEventListener('pause', () => {
+      window.setTimeout(() => {
+        if (vid.paused) markStopped();
+      }, 180);
+    });
     vid.addEventListener('canplay', tryPlay);
     vid.addEventListener('loadeddata', tryPlay);
-    window.addEventListener('pointerdown', unlock, { passive: true });
-    window.addEventListener('touchstart', unlock, { passive: true });
+    ['pointerdown', 'touchstart', 'touchend', 'click', 'keydown', 'scroll'].forEach((ev) => {
+      window.addEventListener(ev, unlock, { passive: true });
+    });
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') tryPlay();
     });
@@ -1263,11 +1296,11 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
     reduced.addEventListener('change', sync);
     (vid as any)._mheroCleanup = () => {
       vid.removeEventListener('playing', markPlaying);
-      vid.removeEventListener('pause', markStopped);
       vid.removeEventListener('canplay', tryPlay);
       vid.removeEventListener('loadeddata', tryPlay);
-      window.removeEventListener('pointerdown', unlock);
-      window.removeEventListener('touchstart', unlock);
+      ['pointerdown', 'touchstart', 'touchend', 'click', 'keydown', 'scroll'].forEach((ev) => {
+        window.removeEventListener(ev, unlock);
+      });
     };
   }
 

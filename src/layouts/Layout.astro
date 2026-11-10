@@ -199,6 +199,8 @@ const {
         document.querySelectorAll('.video-decorative-wrap').forEach(function (wrap) {
           var video = wrap.querySelector('video[data-decorative-autoplay]');
           if (!video) return;
+          // Component-owned loops (hero / bydleni / bah) manage play themselves.
+          if (wrap.hasAttribute('data-cover-managed')) return;
 
           var markPlaying = function () {
             wrap.classList.add('is-playing');
@@ -237,7 +239,6 @@ const {
           armVideo();
           video.addEventListener('playing', revealWhenPainted);
           video.addEventListener('pause', function () {
-            // Ignore brief stalls so poster doesn't flash mid-loop.
             window.setTimeout(function () {
               if (!video.paused) return;
               markStill();
@@ -262,7 +263,6 @@ const {
             }, { passive: true });
           });
 
-          if (wrap.hasAttribute('data-cover-managed')) return;
           kick();
           [80, 250, 700, 1400].forEach(function (ms) {
             window.setTimeout(kick, ms);
