@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BydleniHero from '../components/BydleniHero.astro';
+import InvesticeVyhody from '../components/InvesticeVyhody.astro';
+import SectionSpecializace from '../components/SectionSpecializace.astro';
+import SectionVyberSluzeb from '../components/SectionVyberSluzeb.astro';
+import SectionFooter from '../components/SectionFooter.astro';
+---
+
+<Layout
+  title="Investice | REAMAR Agency"
+  description="Nákupní agentura REAMAR pro investory. Sledujeme trh novostaveb, vybíráme jednotky a jednáme s developerem na vaší straně."
+  robots="noindex, nofollow"
+>
+  <div class="hero-cover">
+    <div class="hero-cover-pin">
+      <BydleniHero mode="trh" claim={['Zastupujeme investory', 'na developerském trhu']} />
+    </div>
+    <InvesticeVyhody />
+  </div>
+  <SectionSpecializace />
+  <SectionVyberSluzeb headingAs="h2" compactTop={false} showSubline={false} />
+  <SectionFooter />
+</Layout>
+
+<style>
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .hero-cover-pin {
+      position: sticky;
+      top: 0;
+    }
+    .hero-cover :global(.ivh) {
+      position: relative;
+      z-index: 1;
+    }
+  }
+</style>

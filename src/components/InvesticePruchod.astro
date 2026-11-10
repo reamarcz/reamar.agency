@@ -1,0 +1,231 @@
+---
+import InvesticeNastroje from './InvesticeNastroje.astro';
+import InvesticeObchody from './InvesticeObchody.astro';
+---
+
+<section class="invp" data-invp data-nav-hide-zone>
+  <div class="invp__track" data-invp-track>
+    <div class="invp__sticky" data-invp-sticky>
+      <div class="invp__row" data-invp-row>
+        <InvesticeNastroje />
+        <InvesticeObchody ctaInHead />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .invp__track {
+      position: relative;
+      height: calc(100vh + 160vh);
+    }
+    .invp__sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .invp__row {
+      display: flex;
+      height: 100%;
+      width: max-content;
+      will-change: transform;
+    }
+    .invp :global(.invn),
+    .invp :global(.ob) {
+      flex: 0 0 100vw;
+      width: 100vw;
+      height: 100vh;
+      box-sizing: border-box;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 2rem;
+    }
+    .invp :global(.invn) {
+      padding-top: 6rem;
+    }
+    @media (min-width: 1280px) {
+      .invp :global(.invn) {
+        padding-top: 7rem;
+      }
+    }
+    .invp :global(.ob) {
+      padding-top: calc(5.75rem - 10px);
+    }
+    .invp :global(.invn__inner),
+    .invp :global(.ob__inner) {
+      width: 100%;
+      max-width: 1440px;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .invp :global(.invn__head),
+    .invp :global(.ob__head) {
+      flex: 0 0 auto;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 3rem;
+      min-height: 0;
+    }
+    .invp :global(.invn__head) {
+      margin-bottom: 3.5rem;
+    }
+    .invp :global(.ob__head) {
+      margin-bottom: 1.65rem;
+    }
+    .invp :global(.invn__h2),
+    .invp :global(.ob__h2),
+    .invp :global(.ob__title .ob__note) {
+      white-space: nowrap;
+    }
+    .invp :global(.invn__grid) {
+      flex: 0 0 auto;
+      align-items: start;
+      max-width: 1360px;
+    }
+    .invp :global(.ob__grid) {
+      flex: 1;
+      min-height: 0;
+      grid-template-rows: 1fr;
+    }
+    .invp :global(.ob__feat) {
+      min-width: 0;
+      min-height: 0;
+      height: 100%;
+      overflow: hidden;
+      align-items: stretch;
+    }
+    .invp :global(.ob__plan-col) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+      min-height: 0;
+    }
+    .invp :global(.ob__plan-col h3) {
+      flex: 0 0 auto;
+      margin: 0 0 1.25rem;
+      text-align: center;
+    }
+    .invp :global(.ob__plan) {
+      flex: 0 1 auto;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .invp :global(.ob__plan img) {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+    .invp :global(.ob__data) {
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.15rem;
+    }
+    .invp :global(.ob__tags) {
+      margin-bottom: 0;
+    }
+    .invp :global(.ob__rows div) {
+      padding: 0.58rem 0;
+    }
+    .invp :global(.ob__result) {
+      margin-top: 0.15rem;
+    }
+    .invp :global(.ob__list) {
+      min-height: 0;
+      height: 100%;
+    }
+    .invp :global(.ob__deal) {
+      min-height: 0;
+      grid-template-columns: 6.25rem 1fr;
+      column-gap: 1.4rem;
+      padding: 1.65rem 1.85rem;
+    }
+    .invp :global(.ob__thumb) {
+      min-height: 0;
+    }
+    .invp :global(.ob__thumb img) {
+      max-width: 6rem;
+      max-height: 7.25rem;
+    }
+    .invp :global(.ob__head .ob__btn) {
+      flex: 0 0 auto;
+      align-self: flex-start;
+      margin-top: 0;
+    }
+    .invp :global(.ob__foot) {
+      flex: 0 0 auto;
+      margin-top: 1rem;
+    }
+  }
+</style>
+
+<script>
+  function initInvesticePruchod() {
+    const root = document.querySelector('[data-invp]') as HTMLElement | null;
+    if (!root) return;
+    const state = root as HTMLElement & { _invpCleanup?: () => void };
+    if (state._invpCleanup) state._invpCleanup();
+
+    const track = root.querySelector('[data-invp-track]') as HTMLElement | null;
+    const sticky = root.querySelector('[data-invp-sticky]') as HTMLElement | null;
+    const row = root.querySelector('[data-invp-row]') as HTMLElement | null;
+    if (!track || !sticky || !row) return;
+
+    const desk = window.matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)');
+    const DWELL = 0.15;
+    const SLIDE = 1.2;
+    const clamp = (v: number) => Math.max(0, Math.min(1, v));
+
+    const reset = () => {
+      row.removeAttribute('style');
+    };
+
+    let raf = 0;
+    const tick = () => {
+      raf = 0;
+      if (!desk.matches) {
+        reset();
+        return;
+      }
+      const vh = window.innerHeight;
+      const vw = sticky.clientWidth;
+      const sc = -track.getBoundingClientRect().top / vh;
+      const h = clamp((sc - DWELL) / SLIDE);
+      row.style.transform = `translateX(${-(vw * h)}px)`;
+    };
+    const req = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener('scroll', req, { passive: true });
+    window.addEventListener('resize', req);
+    desk.addEventListener('change', req);
+    req();
+
+    state._invpCleanup = () => {
+      window.removeEventListener('scroll', req);
+      window.removeEventListener('resize', req);
+      desk.removeEventListener('change', req);
+      if (raf) cancelAnimationFrame(raf);
+      state._invpCleanup = undefined;
+    };
+  }
+
+  initInvesticePruchod();
+  document.addEventListener('astro:page-load', initInvesticePruchod);
+</script>

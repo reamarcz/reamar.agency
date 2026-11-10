@@ -1,0 +1,1223 @@
+---
+// Hero podstránky Bydlení + „Jak to probíhá“.
+// Desktop: fullscreen video zůstane přilepené, scrollem se střídá 5 kroků + osa.
+// Mobil: hero video a pod ním swipe karty kroků. Tablet: svislá osa.
+// mode="trh": místo osy jeden citát na videu (hlavní věta + doplnění + CTA).
+interface Props {
+  videoSrc?: string;
+  posterSrc?: string;
+  mobileVideoSrc?: string;
+  mobilePosterSrc?: string;
+  kicker?: string;
+  episodeHref?: string;
+  claim?: string[];
+  mode?: 'steps' | 'trh';
+}
+
+const {
+  videoSrc = '/videos/agentprokupujici.mp4',
+  posterSrc = '/images/agency/jv-holder1.png',
+  mobileVideoSrc = videoSrc,
+  mobilePosterSrc = posterSrc,
+  kicker = 'Agentura pro kupující',
+  episodeHref = 'https://www.youtube.com/watch?v=MIYbJdRJYGY',
+  claim = ['Zastupujeme vás', 'při výběru nového bydlení'],
+  mode = 'steps',
+} = Astro.props;
+
+const isTrh = mode === 'trh';
+const hintHref = isTrh ? '#co-delame' : '#jak-to-probiha';
+
+const claimText = claim.join(' ');
+
+const steps = [
+  {
+    label: 'Zadání',
+    title: 'Ujasníme si, co hledáte.',
+    text: 'Probereme rozpočet, lokalitu, dispozici i důvod nákupu. Naším cílem není ukázat co nejvíce možností, ale vybrat ty správné.',
+  },
+  {
+    label: 'Výběr',
+    title: 'Projdeme za vás celý trh novostaveb.',
+    text: 'Vlastní monitoring a AI vyhodnotí téměř 10 000 jednotek v Praze a okolí. Uvidíte jen ty, které dávají smysl právě vám.',
+  },
+  {
+    label: 'Neveřejné nabídky',
+    title: 'Otevřeme vám i nabídky, které nejsou veřejné.',
+    text: 'U vybraných projektů se dostáváme k jednotkám dřív, než se objeví na webu projektu nebo na portálech.',
+  },
+  {
+    label: 'Vyjednávání',
+    title: 'Vyjednáme lepší podmínky, než byste získali sami.',
+    text: 'Řešíme cenu, splátkový kalendář, rezervaci i další výhody, které mohou nákup posunout o stovky tisíc korun.',
+  },
+  {
+    label: 'Smlouvy',
+    title: 'Prověříme developera i smlouvy, než podepíšete.',
+    text: 'Zkontrolujeme smlouvy, termíny, platební režim i závazky, které z nákupu vyplývají.',
+  },
+];
+
+const n = (i: number) => String(i + 1).padStart(2, '0');
+---
+
+<section class:list={['bh', isTrh && 'bh--trh']} data-bh data-bh-mode={mode} id="koncept" aria-label={claimText}>
+  <div data-hero-alt>
+    <div class="mhero" data-mhero>
+      <div class="mhero__win">
+        <img src={mobilePosterSrc} alt="" />
+        <video
+          data-mhero-video
+          data-src={mobileVideoSrc}
+          poster={mobilePosterSrc}
+          autoplay
+          muted
+          loop
+          playsinline
+          webkit-playsinline
+          preload="none"
+          disablepictureinpicture
+          aria-hidden="true"
+        ></video>
+      </div>
+      <div class="mhero__text">
+        <span class="mhero__kicker">{kicker}</span>
+        <h1 class="mhero__h1">{claimText}</h1>
+        <div class="mhero__btns">
+          <a class="mhero__b1" href={hintHref}>
+            Jak to probíhá
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <path d="M6 6 L18 18"></path>
+              <path d="M18 9 L18 18 L9 18"></path>
+            </svg>
+          </a>
+          <a class="mhero__b2" href={episodeHref} target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="13" viewBox="0 0 18 13" aria-hidden="true">
+              <rect width="18" height="13" rx="3.5" fill="#ff0033"></rect>
+              <path d="M7 3.6v5.8L12 6.5z" fill="#fff"></path>
+            </svg>
+            Přehrát díl
+          </a>
+        </div>
+      </div>
+    </div>
+
+  <div class="bh__track" data-bh-track>
+    <div class="bh__sticky">
+      <video
+        class="bh__video"
+        data-bh-video
+        data-src={videoSrc}
+        poster={posterSrc}
+        autoplay
+        muted
+        loop
+        playsinline
+        webkit-playsinline
+        preload="none"
+        disablepictureinpicture
+        aria-hidden="true"
+      ></video>
+      <div class="bh__shade"></div>
+
+      <div class="bh__ui">
+        <div class="bh__well">
+          <div class="bh__intro" data-bh-claim>
+            <div class="bh__intro-head">
+              <p class="bh__eyebrow font-yellix">Agentura pro kupující</p>
+              <h1 class="bh__claim font-yellix">
+                {claim.map((line, i) => (
+                  <>
+                    {i > 0 && <br />}
+                    {line}
+                  </>
+                ))}
+              </h1>
+            </div>
+            <div class="bh__intro-ctas">
+              <a class="bh__cta-btn bh__cta-btn--solid font-yellix" href={hintHref} data-bh-hint>
+                Jak to probíhá
+                <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+              </a>
+              <a
+                class="bh__cta-btn bh__cta-btn--glass font-yellix"
+                href={episodeHref}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg class="bh__cta-yt" viewBox="0 0 24 17" width="16" height="11" aria-hidden="true">
+                  <path fill="#FF0000" d="M23.5 2.65A3.02 3.02 0 0 0 21.38.5C19.5 0 12 0 12 0S4.5 0 2.62.5A3.02 3.02 0 0 0 .5 2.65 31.9 31.9 0 0 0 0 8.5a31.9 31.9 0 0 0 .5 5.85 3.02 3.02 0 0 0 2.12 2.15C4.5 17 12 17 12 17s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.15A31.9 31.9 0 0 0 24 8.5a31.9 31.9 0 0 0-.5-5.85Z"/>
+                  <path fill="#fff" d="M9.75 12.15V4.85L15.7 8.5 9.75 12.15Z"/>
+                </svg>
+                Přehrát díl
+              </a>
+            </div>
+          </div>
+
+          {isTrh ? (
+            <div class="bh__trh" data-bh-trh>
+              <p class="bh__cite-q font-yellix">
+                „Pražský trh je rychlý a nejlepší jednotky se často<br class="hidden md:block" />
+                ani neobjeví ve veřejné nabídce.“
+              </p>
+              <p class="bh__cite-s font-yellix">
+                Na straně investora proto rozhoduje přístup k informacím, rychlost vyhodnocení
+                a schopnost poznat příležitost dřív než ostatní.
+              </p>
+              <button
+                type="button"
+                class="bh__btn bh__btn--light font-yellix"
+                data-smart-contact-open
+                data-smart-contact-type="client"
+              >
+                <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+                První krok
+              </button>
+            </div>
+          ) : (
+            <div class="bh__desk" aria-label="Jak to probíhá">
+              {steps.map((s, i) => (
+                <div class="bh__cap" data-bh-cap>
+                  <span class="bh__kick font-yellix">{n(i)} / 05 · {s.label}</span>
+                  <h2 class="font-yellix">{s.title}</h2>
+                  <p class="font-yellix">{s.text}</p>
+                </div>
+              ))}
+              <div class="bh__cta" data-bh-cta>
+                <button
+                  type="button"
+                  class="bh__btn bh__btn--light font-yellix"
+                  data-smart-contact-open
+                  data-smart-contact-type="client"
+                >
+                  <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+                  První krok
+                </button>
+              </div>
+              <nav class="bh__axis" data-bh-fade>
+                <div class="bh__axline"><i data-bh-fill></i></div>
+                <ol>
+                  {steps.map((s, i) => (
+                    <li data-bh-ax>
+                      <button type="button" data-bh-go={i}>
+                        <span class="bh__mk"></span>
+                        <span class="bh__an font-yellix">{n(i)}</span>
+                        <span class="bh__al font-yellix">{s.label}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  {isTrh ? (
+    <div class="bh__trh-page" id="prazsky-trh">
+      <p class="bh__cite-q font-yellix">
+        „Pražský trh je rychlý a nejlepší jednotky se často<br class="hidden md:block" />
+        ani neobjeví ve veřejné nabídce.“
+      </p>
+      <div class="bh__cite-follow">
+        <p class="bh__cite-q font-yellix">
+          Na straně investora proto rozhoduje přístup k informacím, rychlost vyhodnocení<br class="hidden md:block" />
+          a schopnost poznat příležitost dřív než ostatní.
+        </p>
+        <button
+          type="button"
+          class="bh__btn font-yellix"
+          data-smart-contact-open
+          data-smart-contact-type="client"
+        >
+          <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+          První krok
+        </button>
+      </div>
+    </div>
+  ) : (
+    <div class="bh__list" id="jak-to-probiha">
+      <h2 class="bh__lh font-yellix">Jak to probíhá</h2>
+      <p class="bh__lsub font-yellix">Od prvního zadání po podpis smlouvy stojíme na vaší straně.</p>
+      <ol class="bh__lsteps" data-bh-swipe>
+        {steps.map((s, i) => (
+          <li>
+            <span class="bh__lmk"></span>
+            <span class="bh__lnum font-yellix">{n(i)} · {s.label}</span>
+            <h3 class="font-yellix">{s.title}</h3>
+            <p class="font-yellix">{s.text}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="bh__dots" data-bh-dots aria-hidden="true">
+        {steps.map((_, i) => (
+          <span class:list={[i === 0 && 'is-on']}></span>
+        ))}
+      </div>
+      <div class="bh__lcta">
+        <a class="bh__btn font-yellix" href="#vyber-sluzeb">
+          <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+          Vybrat služby
+        </a>
+      </div>
+    </div>
+  )}
+</section>
+
+<style>
+  .bh {
+    --pad: 1.25rem;
+    --ease: cubic-bezier(.22, 1, .36, 1);
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+    color: #000;
+    background: #fff;
+  }
+  @media (min-width: 768px) {
+    .bh { --pad: 2.5rem; }
+  }
+  @media (min-width: 1280px) {
+    .bh { --pad: 3.5rem; }
+  }
+  .bh :is(h1, h2, h3, p, a, span, button) {
+    font-weight: 500;
+  }
+
+  .mhero {
+    display: none;
+    position: relative;
+    background: #0b0b0b;
+    color: #fff;
+    overflow: hidden;
+  }
+  .mhero__win {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #111;
+  }
+  .mhero__win video,
+  .mhero__win img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 25%;
+  }
+  .mhero__win::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 120px;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(rgba(11, 11, 11, 0.55), rgba(11, 11, 11, 0));
+  }
+  .mhero__win::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 55%;
+    pointer-events: none;
+    background: linear-gradient(rgba(11, 11, 11, 0), rgba(11, 11, 11, 0.75) 50%, #0b0b0b);
+  }
+  .mhero__text {
+    position: relative;
+    z-index: 2;
+    margin-top: -120px;
+    padding: 0 20px 28px;
+    text-align: center;
+  }
+  .mhero__kicker {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 12px;
+  }
+  .mhero__h1 {
+    margin: 0 0 18px;
+    font-size: 31px;
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+  .mhero__btns {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .mhero__btns a {
+    height: 42px;
+    padding: 0 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    white-space: nowrap;
+    text-decoration: none;
+    box-sizing: border-box;
+  }
+  .mhero__b1 {
+    background: #fff;
+    color: #000;
+  }
+  .mhero__b2 {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+  }
+  .mhero__btns svg {
+    display: block;
+    flex-shrink: 0;
+  }
+  @media (max-width: 380px) {
+    .mhero__win { aspect-ratio: 4 / 5; }
+  }
+  @media (max-width: 767px) {
+    .mhero { display: block; }
+    .bh__track { display: none; }
+  }
+
+  .bh__sticky {
+    position: relative;
+    height: 100svh;
+    min-height: 28rem;
+    overflow: hidden;
+    background: #111;
+    color: #fff;
+  }
+  .bh__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 35%;
+  }
+  .bh__video::-webkit-media-controls,
+  .bh__video::-webkit-media-controls-start-playback-button,
+  .bh__video::-webkit-media-controls-overlay-play-button,
+  .bh__video::-webkit-media-controls-enclosure {
+    display: none !important;
+    -webkit-appearance: none;
+    opacity: 0 !important;
+  }
+  .bh__shade {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(to top, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.18) 42%, rgba(0, 0, 0, 0) 68%),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0) 26%);
+  }
+  .bh__ui {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+  }
+  .bh__well {
+    position: relative;
+    height: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+  .bh__intro {
+    position: absolute;
+    left: var(--pad);
+    right: var(--pad);
+    top: 66.666%;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.75rem;
+    text-align: center;
+  }
+  .bh__intro-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .bh__eyebrow {
+    margin: 0;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1;
+  }
+  .bh__claim {
+    margin: 0;
+    font-size: 32px;
+    line-height: 1.16;
+    letter-spacing: -0.025em;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.28);
+  }
+  .bh__intro-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+  }
+  .bh__cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 40px;
+    padding: 0 1rem;
+    font-size: 13px;
+    line-height: 1;
+    text-decoration: none;
+    pointer-events: auto;
+    transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  }
+  .bh__cta-btn img,
+  .bh__cta-yt {
+    display: block;
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+  .bh__cta-btn--solid {
+    background: #fff;
+    color: #000;
+    border: 1px solid #fff;
+  }
+  .bh__cta-btn--solid img {
+    width: 12px;
+    height: 12px;
+    filter: brightness(0);
+  }
+  .bh__cta-btn--solid:hover {
+    opacity: 0.88;
+  }
+  .bh__cta-btn--glass {
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(18px) saturate(1.25);
+    -webkit-backdrop-filter: blur(18px) saturate(1.25);
+  }
+  .bh__cta-yt {
+    width: 16px;
+    height: 11px;
+    transform-origin: 50% 50%;
+    animation: bh-yt-pulse 2.4s ease-in-out infinite;
+  }
+  .bh__cta-btn--glass:hover {
+    background: rgba(255, 255, 255, 0.28);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+  .bh__cta-btn--glass:hover .bh__cta-yt {
+    animation: none;
+    transform: scale(1.18);
+  }
+  @keyframes bh-yt-pulse {
+    0%, 18%, 100% { transform: scale(1); }
+    28% { transform: scale(1.42); }
+    36% { transform: scale(1); }
+    44% { transform: scale(1.22); }
+    52% { transform: scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bh__cta-yt { animation: none; }
+  }
+  .bh__desk,
+  .bh__trh {
+    display: none;
+  }
+
+  .bh__list,
+  .bh__trh-page {
+    padding: 4rem var(--pad) 5rem;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .bh__trh-page {
+    padding: 3.25rem var(--pad) 3.5rem;
+  }
+  .bh__trh-page .bh__cite-q {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.32;
+    letter-spacing: -0.02em;
+  }
+  .bh__cite-follow {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .bh__trh-page .bh__cite-follow {
+    gap: 1.35rem;
+    margin-top: 1.75rem;
+  }
+  .bh__trh-page .bh__btn {
+    align-self: flex-start;
+    margin-top: 0.75rem;
+  }
+  .bh__cite-follow .bh__cite-q {
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  @media (min-width: 768px) {
+    .bh__trh-page .bh__cite-q { font-size: 26px; }
+    .bh__cite-follow .bh__cite-q { font-size: 20px; }
+  }
+  .bh__lh {
+    margin: 0;
+    font-size: 28px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+  .bh__lsub {
+    margin: 1rem 0 2.25rem;
+    font-size: 15px;
+    line-height: 1.55;
+    color: rgba(0, 0, 0, 0.62);
+    text-align: center;
+  }
+  .bh__lsteps {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1.75rem;
+    border-left: 1px solid rgba(0, 0, 0, 0.16);
+  }
+  .bh__lsteps li {
+    position: relative;
+    padding: 0 0 2rem;
+  }
+  .bh__lsteps li:last-child {
+    padding-bottom: 0;
+  }
+  .bh__lmk {
+    position: absolute;
+    left: -2.1rem;
+    top: 0.35rem;
+    width: 9px;
+    height: 9px;
+    background: #000;
+  }
+  .bh__lnum {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: 0.5rem;
+  }
+  .bh__lsteps h3 {
+    margin: 0 0 0.5rem;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .bh__lsteps p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgba(0, 0, 0, 0.62);
+    max-width: 52ch;
+  }
+  .bh__dots {
+    display: none;
+  }
+  .bh__lcta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+  .bh__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    background: #000;
+    color: #fff;
+    font-size: 13px;
+    line-height: 1;
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .bh__btn:hover {
+    opacity: 0.85;
+  }
+  .bh__btn img {
+    display: block;
+    width: 12px;
+    height: 12px;
+  }
+  .bh__btn--light {
+    background: #fff;
+    color: #000;
+  }
+  .bh__btn--light img {
+    filter: brightness(0);
+  }
+  .bh__link {
+    font-size: 13px;
+    color: #000;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid #000;
+    padding: 0 0 3px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  @media (min-width: 640px) {
+    .bh__claim { font-size: 40px; }
+  }
+  @media (min-width: 768px) {
+    .bh__lh {
+      font-size: 36px;
+      text-align: left;
+    }
+    .bh__lsub {
+      text-align: left;
+    }
+    .bh__lsteps h3 { font-size: 26px; }
+    .bh__lsteps p { font-size: 15px; }
+  }
+  @media (max-width: 767px) {
+    .bh__lsteps {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      gap: 0.75rem;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--pad);
+      scrollbar-width: none;
+      margin-inline: calc(-1 * var(--pad));
+      padding: 0 var(--pad);
+      border-left: 0;
+      -webkit-overflow-scrolling: touch;
+    }
+    .bh__lsteps::-webkit-scrollbar {
+      display: none;
+    }
+    .bh__lsteps::after {
+      content: '';
+      flex: 0 0 var(--pad);
+    }
+    .bh__lsteps li {
+      flex: 0 0 min(82vw, 24rem);
+      width: min(82vw, 24rem);
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      padding: 1.75rem 1.45rem 1.6rem;
+      background: #f5f5f5;
+      box-sizing: border-box;
+    }
+    .bh__lmk {
+      display: none;
+    }
+    .bh__lsteps h3 {
+      font-size: 22px;
+    }
+    .bh__lsteps p {
+      max-width: none;
+      font-size: 15px;
+    }
+    .bh__dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.35rem;
+      margin-top: 1.1rem;
+    }
+    .bh__dots span {
+      width: 1.15rem;
+      height: 2px;
+      background: rgba(0, 0, 0, 0.18);
+    }
+    .bh__dots span.is-on {
+      background: #000;
+    }
+    .bh__lcta {
+      justify-content: center;
+      margin-top: 1.75rem;
+    }
+  }
+
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .bh__track {
+      position: relative;
+      height: calc(100vh + 480vh);
+    }
+    .bh--trh .bh__track {
+      height: 100vh;
+    }
+    .bh__sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      min-height: 0;
+    }
+    .bh__shade {
+      background:
+        linear-gradient(to top, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.38) 42%, rgba(0, 0, 0, 0.06) 70%),
+        linear-gradient(to right, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0) 55%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0) 28%);
+    }
+    .bh__intro {
+      will-change: transform, opacity;
+    }
+    .bh__claim {
+      font-size: 42px;
+    }
+    .bh__desk {
+      display: block;
+    }
+    .bh__trh {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      left: var(--pad);
+      right: var(--pad);
+      top: 66.666%;
+      bottom: 0;
+      z-index: 1;
+      gap: 1.25rem;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      will-change: opacity;
+    }
+    .bh__trh.is-on {
+      z-index: 3;
+      pointer-events: auto;
+    }
+    .bh__cite-q {
+      margin: 0;
+      max-width: 42rem;
+      font-size: 28px;
+      line-height: 1.22;
+      letter-spacing: -0.02em;
+      text-shadow: 0 1px 14px rgba(0, 0, 0, 0.28);
+    }
+    .bh__cite-s {
+      margin: 0;
+      max-width: 36rem;
+      font-size: 16px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.82);
+    }
+    .bh__trh .bh__btn {
+      margin-top: 0.35rem;
+      pointer-events: none;
+    }
+    .bh__trh.is-on .bh__btn {
+      pointer-events: auto;
+    }
+    .bh__trh-page {
+      display: none;
+    }
+    .bh__cap {
+      position: absolute;
+      left: var(--pad);
+      bottom: 9.5rem;
+      width: min(36rem, 58vw);
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: opacity 0.55s var(--ease), transform 0.65s var(--ease);
+    }
+    .bh__cap.is-on {
+      opacity: 1;
+      transform: none;
+    }
+    .bh__kick {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.72);
+      margin-bottom: 0.85rem;
+    }
+    .bh__cap h2 {
+      margin: 0 0 0.75rem;
+      font-size: 32px;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+    }
+    .bh__cap p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.82);
+      max-width: 44ch;
+    }
+    .bh__cta {
+      position: absolute;
+      right: var(--pad);
+      bottom: 9.5rem;
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 0.45s ease, transform 0.55s var(--ease);
+    }
+    .bh__cta.is-on {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+    .bh__axis {
+      position: absolute;
+      left: var(--pad);
+      right: var(--pad);
+      bottom: 2.5rem;
+      opacity: 0;
+    }
+    .bh__axline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 5px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.28);
+    }
+    .bh__axline i {
+      position: absolute;
+      left: 0;
+      top: -0.5px;
+      height: 2px;
+      width: 100%;
+      background: #fff;
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.4s var(--ease);
+    }
+    .bh__axis ol {
+      position: relative;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      column-gap: 1.5rem;
+    }
+    .bh__axis li {
+      opacity: 0.45;
+      transition: opacity 0.45s ease;
+    }
+    .bh__axis li.is-done { opacity: 0.75; }
+    .bh__axis li.is-on { opacity: 1; }
+    .bh__axis button {
+      all: unset;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+      pointer-events: auto;
+    }
+    .bh__axis button:focus-visible {
+      outline: 1px solid #fff;
+      outline-offset: 6px;
+    }
+    .bh__mk {
+      width: 9px;
+      height: 9px;
+      box-sizing: border-box;
+      border: 1px solid #fff;
+      background: transparent;
+      margin-bottom: 0.85rem;
+      transition: background 0.35s ease;
+    }
+    .bh__axis li.is-on .bh__mk,
+    .bh__axis li.is-done .bh__mk {
+      background: #fff;
+    }
+    .bh__an {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: rgba(255, 255, 255, 0.68);
+      margin-bottom: 0.3rem;
+    }
+    .bh__al {
+      font-size: 13px;
+      line-height: 1.25;
+    }
+    .bh__list {
+      display: none;
+    }
+  }
+  @media (min-width: 1280px) {
+    .bh__cap h2 { font-size: 36px; }
+    .bh__cite-q { font-size: 32px; }
+    .bh__cite-s { font-size: 17px; }
+  }
+</style>
+
+<script>
+  function initBh() {
+    const root = document.querySelector('[data-bh]') as HTMLElement | null;
+    if (!root) return;
+    if ((root as any)._bhCleanup) (root as any)._bhCleanup();
+
+    const isTrh = root.getAttribute('data-bh-mode') === 'trh';
+    const track = root.querySelector('[data-bh-track]') as HTMLElement | null;
+    const video = root.querySelector('[data-bh-video]') as HTMLVideoElement | null;
+    const claim = root.querySelector('[data-bh-claim]') as HTMLElement | null;
+    const hint = root.querySelector('[data-bh-hint]') as HTMLElement | null;
+    const trh = root.querySelector('[data-bh-trh]') as HTMLElement | null;
+    const fades = Array.from(root.querySelectorAll('[data-bh-fade]')) as HTMLElement[];
+    const caps = Array.from(root.querySelectorAll('[data-bh-cap]')) as HTMLElement[];
+    const axis = Array.from(root.querySelectorAll('[data-bh-ax]')) as HTMLElement[];
+    const fill = root.querySelector('[data-bh-fill]') as HTMLElement | null;
+    const cta = root.querySelector('[data-bh-cta]') as HTMLElement | null;
+    if (!track || !video || !claim || !hint) return;
+    if (!isTrh && (!fill || !cta)) return;
+
+    const desk = window.matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)');
+    const deskVideoMq = window.matchMedia('(min-width: 768px)');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const deskSrc = video.getAttribute('data-src') || '';
+    const INTRO = isTrh ? 0.38 : 0.45;
+    const START = isTrh ? 0.4 : 0.55;
+    const STEP = 0.8;
+    const N = caps.length;
+    const clamp = (v: number) => Math.max(0, Math.min(1, v));
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.volume = 0;
+    video.playsInline = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', 'true');
+
+    const tryPlay = () => {
+      if (!deskVideoMq.matches || reduceMotion.matches) return;
+      const play = video.play();
+      if (play) play.catch(() => {});
+    };
+    const syncDeskVideo = () => {
+      if (deskVideoMq.matches && !reduceMotion.matches && deskSrc) {
+        if (video.getAttribute('src') !== deskSrc) {
+          video.src = deskSrc;
+          video.preload = 'auto';
+        }
+        tryPlay();
+      } else {
+        video.pause();
+        if (video.hasAttribute('src')) {
+          video.removeAttribute('src');
+          video.load();
+        }
+      }
+    };
+    syncDeskVideo();
+    video.addEventListener('canplay', tryPlay);
+    video.addEventListener('loadeddata', tryPlay);
+    deskVideoMq.addEventListener('change', syncDeskVideo);
+    reduceMotion.addEventListener('change', syncDeskVideo);
+
+    const sticky = root.querySelector('.bh__sticky') as HTMLElement | null;
+    const videoIo = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) tryPlay();
+        else if (entry.boundingClientRect.height > 1) video.pause();
+      });
+    }, { threshold: 0.01 });
+    videoIo.observe(sticky || video);
+
+    const reset = () => {
+      [claim, hint, ...fades].forEach((el) => el.removeAttribute('style'));
+      if (trh) {
+        trh.removeAttribute('style');
+        trh.classList.remove('is-on');
+      }
+      caps.forEach((cap) => cap.classList.remove('is-on'));
+      axis.forEach((item) => item.classList.remove('is-on', 'is-done'));
+      cta?.classList.remove('is-on');
+      fill?.removeAttribute('style');
+    };
+
+    let raf = 0;
+    let last = -2;
+    const tick = () => {
+      raf = 0;
+      if (!desk.matches) {
+        reset();
+        last = -2;
+        return;
+      }
+      const sc = -track.getBoundingClientRect().top / window.innerHeight;
+      const intro = clamp(sc / INTRO);
+      claim.style.opacity = String(1 - intro);
+      claim.style.transform = `translateY(${-30 * intro}px)`;
+
+      if (isTrh && trh) {
+        const show = clamp((sc - 0.26) / 0.18);
+        trh.style.opacity = String(show);
+        trh.classList.toggle('is-on', show > 0.5);
+        return;
+      }
+
+      const fade = String(clamp((sc - 0.35) / 0.2));
+      fades.forEach((el) => {
+        el.style.opacity = fade;
+      });
+
+      const raw = (sc - START) / STEP;
+      const idx = sc < START ? -1 : Math.min(N - 1, Math.floor(raw));
+      if (fill) fill.style.transform = `scaleX(${clamp(raw / Math.max(1, N - 1))})`;
+      if (idx !== last) {
+        last = idx;
+        caps.forEach((cap, i) => cap.classList.toggle('is-on', i === idx));
+        axis.forEach((item, i) => {
+          item.classList.toggle('is-on', i === idx);
+          item.classList.toggle('is-done', i < idx);
+        });
+        cta?.classList.toggle('is-on', idx === N - 1);
+      }
+    };
+    const req = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+
+    const onGo = (event: Event) => {
+      const btn = (event.currentTarget as HTMLElement);
+      const i = Number(btn.dataset.bhGo);
+      const top = track.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: top + (START + STEP * i + 0.05) * window.innerHeight, behavior: 'smooth' });
+    };
+    const goBtns = Array.from(root.querySelectorAll('[data-bh-go]'));
+    goBtns.forEach((btn) => btn.addEventListener('click', onGo));
+
+    const onHint = (event: Event) => {
+      event.preventDefault();
+      if (isTrh) {
+        const target = document.getElementById('co-delame');
+        if (target) {
+          const top = target.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+        return;
+      }
+      if (!desk.matches) {
+        document.getElementById('jak-to-probiha')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      const top = track.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: top + (START + 0.05) * window.innerHeight, behavior: 'smooth' });
+    };
+    hint.addEventListener('click', onHint);
+
+    window.addEventListener('scroll', req, { passive: true });
+    window.addEventListener('resize', req);
+    desk.addEventListener('change', req);
+    req();
+
+    (root as any)._bhCleanup = () => {
+      videoIo.disconnect();
+      video.removeEventListener('canplay', tryPlay);
+      video.removeEventListener('loadeddata', tryPlay);
+      deskVideoMq.removeEventListener('change', syncDeskVideo);
+      reduceMotion.removeEventListener('change', syncDeskVideo);
+      goBtns.forEach((btn) => btn.removeEventListener('click', onGo));
+      hint.removeEventListener('click', onHint);
+      window.removeEventListener('scroll', req);
+      window.removeEventListener('resize', req);
+      desk.removeEventListener('change', req);
+      if (raf) cancelAnimationFrame(raf);
+      (root as any)._bhCleanup = null;
+    };
+  }
+
+  function initMhero() {
+    const vid = document.querySelector('[data-mhero-video]') as HTMLVideoElement | null;
+    if (!vid) return;
+    if ((vid as any)._mheroCleanup) (vid as any)._mheroCleanup();
+
+    const src = vid.getAttribute('data-src') || '';
+    const mobile = window.matchMedia('(max-width: 767px)');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const sync = () => {
+      const want = mobile.matches && !reduced.matches && src;
+      if (want) {
+        if (vid.getAttribute('src') !== src) {
+          vid.src = src;
+          vid.preload = 'metadata';
+        }
+        vid.muted = true;
+        vid.playsInline = true;
+        vid.setAttribute('playsinline', '');
+        vid.setAttribute('webkit-playsinline', 'true');
+        const play = vid.play();
+        if (play) play.catch(() => {});
+      } else {
+        vid.pause();
+        if (vid.hasAttribute('src')) {
+          vid.removeAttribute('src');
+          vid.load();
+        }
+      }
+    };
+
+    sync();
+    mobile.addEventListener('change', sync);
+    reduced.addEventListener('change', sync);
+    (vid as any)._mheroCleanup = () => {
+      mobile.removeEventListener('change', sync);
+      reduced.removeEventListener('change', sync);
+      (vid as any)._mheroCleanup = null;
+    };
+  }
+
+  function initBhSwipe() {
+    const scroller = document.querySelector('[data-bh-swipe]') as HTMLElement | null;
+    const dots = [...document.querySelectorAll('[data-bh-dots] span')];
+    if (!scroller || !dots.length) return;
+    if (scroller.dataset.bhSwipeBound === '1') return;
+    scroller.dataset.bhSwipeBound = '1';
+
+    const cards = [...scroller.querySelectorAll('li')];
+    const update = () => {
+      const step = (cards[0]?.offsetWidth || 0) + 12 || 1;
+      const active = Math.min(dots.length - 1, Math.max(0, Math.round(scroller.scrollLeft / step)));
+      dots.forEach((dot, i) => dot.classList.toggle('is-on', i === active));
+    };
+
+    scroller.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
+  initBh();
+  initBhSwipe();
+  initMhero();
+  document.addEventListener('astro:page-load', () => {
+    initBh();
+    initBhSwipe();
+    initMhero();
+  });
+</script>

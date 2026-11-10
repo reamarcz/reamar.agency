@@ -1,4 +1,6 @@
 ---
+import { SITE_URL } from '../lib/site';
+
 interface Props {
   title: string;
   description: string;
@@ -21,7 +23,7 @@ const {
   ogType = 'website',
   robots = 'index, follow',
 } = Astro.props;
-const baseUrl = 'https://www.reamar.cz';
+const baseUrl = SITE_URL;
 const ogImage = image?.startsWith('http') ? image : image ? `${baseUrl}${image.startsWith('/') ? image : '/' + image}` : `${baseUrl}/images/og-image.jpg`;
 const ogTitleVal = ogTitle ?? title;
 const ogDescVal = ogDescription ?? description;

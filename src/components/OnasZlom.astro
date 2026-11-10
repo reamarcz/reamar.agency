@@ -1,0 +1,77 @@
+<section class="onas-zl" id="zlom" aria-labelledby="onas-zl-q" data-onas-zlom>
+  <div class="onas-zl-a" id="zlom-a">
+    <div class="onas-wrap">
+      <span class="onas-ch"><b>II</b>Bod zlomu</span>
+      <p class="onas-zl-lead">
+        Zlom přišel, když začal sám nakupovat nemovitosti jako investor. Jakmile si sedl na druhou stranu stolu, naplno si uvědomil jednu zásadní věc.
+      </p>
+      <p class="onas-zl-rule" data-words>Každý přirozeně hájí zájmy toho, koho zastupuje.</p>
+      <div class="onas-zl-cols">
+        <div class="onas-zl-col">
+          <small>Developer</small>
+          <p>chce co nejlépe prodat svůj projekt.</p>
+          <span class="onas-zl-st ok">✓ Zastoupen</span>
+        </div>
+        <div class="onas-zl-col">
+          <small>Realitní makléř</small>
+          <p>potřebuje udat portfolio svých nemovitostí.</p>
+          <span class="onas-zl-st ok">✓ Zastoupen</span>
+        </div>
+        <div class="onas-zl-col you">
+          <small>Vy</small>
+          <p>chcete hlavně dobře nakoupit.</p>
+          <span class="onas-zl-st no">✕ Nezastoupen</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="onas-zl-b" id="zlom-b">
+    <div class="onas-wrap">
+      <h2 class="onas-zl-q" id="onas-zl-q"><span>Ale kdo</span><span>zastupuje vás?</span></h2>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initOnasZlom() {
+    const root = document.querySelector('[data-onas-zlom]');
+    if (!root || root.dataset.onasZlomInit === '1') return;
+    root.dataset.onasZlomInit = '1';
+
+    const rule = root.querySelector('[data-words]');
+    if (rule && !rule.querySelector('.w')) {
+      const text = (rule.textContent || '').trim();
+      const words = text.split(/\s+/);
+      rule.setAttribute('aria-label', text);
+      rule.innerHTML = words
+        .map((word, i) => `<span class="w" aria-hidden="true" style="animation-delay:${(0.55 + i * 0.08).toFixed(2)}s">${word}</span>`)
+        .join(' ');
+    }
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function watch(id, threshold) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (!('IntersectionObserver' in window) || reduced) {
+        el.classList.add('is-in');
+        return;
+      }
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (!entries[0] || !entries[0].isIntersecting) return;
+          el.classList.add('is-in');
+          io.disconnect();
+        },
+        { threshold }
+      );
+      io.observe(el);
+    }
+
+    watch('zlom-a', 0.3);
+    watch('zlom-b', 0.4);
+  }
+
+  initOnasZlom();
+  document.addEventListener('astro:page-load', initOnasZlom);
+</script>

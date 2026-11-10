@@ -10,7 +10,7 @@ function buildEmailBody(payload: Record<string, unknown>): string {
     phone: 'Telefon',
     email: 'E-mail',
     vzkaz: 'Vzkaz',
-    userType: 'Jsem',
+    userType: 'Typ poptávky',
     selectedService: 'Mám zájem o',
     hlavni_volba: 'Hlavní volba služby',
     marketing_balicek: 'Balíček marketingu',
@@ -27,6 +27,7 @@ function buildEmailBody(payload: Record<string, unknown>): string {
     contact: 'Poptávkový formulář',
     meeting: 'Domluvit schůzku',
     newsletter: 'Newsletter – přihlášení k odběru',
+    'pribehy-alert': 'Příběhy z trhu — upozornit na další díl',
     callback: 'Zanechat kontakt – ozveme se vám',
     'pozemek-husinec-rez': 'Prohlídka pozemku Husinec–Řež',
   };
@@ -50,7 +51,7 @@ export const server = {
       const telefon = String(input?.telefon ?? '').trim();
       const email = String(input?.email ?? '').trim();
       const phone = String(input?.phone ?? '').trim();
-      if (formSource === 'newsletter') {
+      if (formSource === 'newsletter' || formSource === 'pribehy-alert') {
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
           throw new ActionError({ code: 'BAD_REQUEST', message: 'Zadejte platný e-mail.' });
         }

@@ -1,0 +1,160 @@
+---
+import HeroLayout from './HeroLayout.astro';
+
+interface Props {
+  tilesLeft?: boolean;
+}
+
+const { tilesLeft = false } = Astro.props;
+
+const tiles = [
+  { img: '/images/agency/int-14-scaled.webp', height: 380 },
+  { img: '/images/zizkov.webp', height: 300 },
+  { img: '/images/Alterna/Alterna-hero.webp', height: 230 },
+  { img: '/images/agency/vyjednavani.webp', height: 340 },
+  { img: '/images/seconddreamhome.webp', height: 200 },
+  { img: '/images/agency/story.webp', height: 280 },
+];
+---
+
+<HeroLayout tiles={tiles} id="dotaznik" tilesLeft={tilesLeft}>
+  <h2 id="dotaznik-heading" class="dotaznik-title hl-in" style="--i: 0">
+    Kolik bytů odpovídá vaší představě?
+  </h2>
+  <p class="dotaznik-lead hl-in" style="--i: 1">
+    Zadejte své preference a okamžitě zjistíte, kolik jednotek pro vás aktuálně máme v našem systému.
+  </p>
+  <div class="hl-in" style="--i: 2">
+    <a
+      href="https://www.reamar-konzultace.cz/c/dotaznik"
+      class="dotaznik-cta"
+    >
+      <svg class="dotaznik-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 3.5h7.5L19 7v13.5H8V3.5Z"/>
+        <path d="M15.5 3.5V7H19"/>
+        <path d="M10.5 11.5h5"/>
+        <path d="M10.5 15h5"/>
+        <path d="M10.5 18.5h3"/>
+      </svg>
+      Zadat preference
+    </a>
+  </div>
+  <p class="dotaznik-hint hl-in" style="--i: 3">
+    Zabere přibližně 3 minuty. Výsledek uvidíte hned.
+  </p>
+  <div class="dotaznik-live hl-in" style="--i: 4">
+    <p class="dotaznik-live-kicker">Aktuální nabídka v Praze a okolí</p>
+    <p class="dotaznik-live-row">
+      <span class="dotaznik-live-dot" aria-hidden="true"></span>
+      <span class="font-medium">562 projektů</span>
+      <span class="font-medium text-black/55">9 689 jednotek</span>
+    </p>
+  </div>
+</HeroLayout>
+
+<style>
+  .dotaznik-title {
+    margin: 0;
+    max-width: 18ch;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.18;
+    color: #000;
+  }
+  .dotaznik-lead {
+    margin: 1rem 0 0;
+    max-width: 42ch;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .dotaznik-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: 2.25rem;
+    width: fit-content;
+    background: #000;
+    padding: 0.7rem 0.95rem;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1;
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+  .dotaznik-cta-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+  .dotaznik-cta:hover {
+    opacity: 0.85;
+  }
+  .dotaznik-hint {
+    margin: 0.7rem 0 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .dotaznik-live {
+    margin-top: 2rem;
+  }
+  .dotaznik-live-kicker {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .dotaznik-live-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.5rem;
+    margin: 0.375rem 0 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    line-height: 1;
+    color: #000;
+  }
+  .dotaznik-live-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #16a34a;
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.45);
+    animation: dotaznik-live-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes dotaznik-live-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.45); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(22, 163, 74, 0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dotaznik-live-dot {
+      animation: none;
+    }
+  }
+  @media (min-width: 768px) {
+    .dotaznik-title {
+      font-size: 32px;
+    }
+    .dotaznik-lead {
+      font-size: 15px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .dotaznik-title {
+      font-size: 36px;
+    }
+  }
+</style>

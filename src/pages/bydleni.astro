@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BydleniHero from '../components/BydleniHero.astro';
+import SectionSpecializace from '../components/SectionSpecializace.astro';
+import SectionZastoupeni from '../components/SectionZastoupeni.astro';
+import SectionVyberSluzeb from '../components/SectionVyberSluzeb.astro';
+import SectionPrilecitosti from '../components/SectionPrilecitosti.astro';
+import SectionFooter from '../components/SectionFooter.astro';
+---
+
+<Layout
+  title="Bydlení | REAMAR Agency"
+  description="Nákupní agentura REAMAR pro kupující bydlení. Sledujeme trh novostaveb, vybíráme jednotky a jednáme s developerem na vaší straně."
+  canonical="/bydleni"
+>
+  <BydleniHero
+    videoSrc="/videos/agentprokupujici.mp4"
+    posterSrc="/images/agency/jv-holder1.png"
+  />
+  <div class="bydleni-flow">
+    <SectionSpecializace />
+    <SectionZastoupeni />
+    <SectionVyberSluzeb headingAs="h2" compactTop={false} showSubline={false} />
+    <SectionPrilecitosti ctaLabel="První krok" openContact />
+  </div>
+  <SectionFooter showIntro={false} />
+</Layout>
+
+<style>
+  .bydleni-flow {
+    display: flex;
+    flex-direction: column;
+  }
+  @media (max-width: 767px) {
+    .bydleni-flow :global(#prilezitosti) {
+      order: -1;
+    }
+  }
+</style>

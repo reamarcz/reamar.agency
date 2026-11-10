@@ -1,0 +1,101 @@
+---
+import './hero-layout.css';
+
+interface Tile {
+  img: string;
+  height: number;
+}
+
+interface Props {
+  tiles?: Tile[];
+  splitTiles?: [Tile[], Tile[]];
+  durations?: [number, number];
+  offsetB?: number;
+  id?: string;
+  tilesLeft?: boolean;
+}
+
+const {
+  tiles = [],
+  splitTiles,
+  durations = [26, 21],
+  offsetB = -190,
+  id,
+  tilesLeft = false,
+} = Astro.props;
+
+const [colA, colB] = splitTiles ?? [
+  tiles.filter((_, i) => i % 2 === 0),
+  tiles.filter((_, i) => i % 2 === 1),
+];
+
+const doubledA = [...colA, ...colA];
+const doubledB = [...colB, ...colB];
+---
+
+<section class:list={['hl-hero', tilesLeft && 'is-tiles-left']} id={id} aria-labelledby="dotaznik-heading" data-dotaznik>
+  <div class="hl-grid">
+    <div class="hl-left">
+      <slot />
+    </div>
+
+    <div class="hl-right hl-in" style="--i: 3">
+      <div class="hl-fade hl-fade--top"></div>
+      <div class="hl-fade hl-fade--bottom"></div>
+      <div class="hl-col">
+        <div class="hl-stream" style={`margin-top: 0; animation-duration: ${durations[0]}s`}>
+          {doubledA.map((t, i) => (
+            <div class="hl-tile" style={`height: ${t.height}px`}>
+              <div class="hl-tile-img" style={`background-image: url(${t.img})`}></div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="hl-col">
+        <div class="hl-stream" style={`margin-top: ${offsetB}px; animation-duration: ${durations[1]}s`}>
+          {doubledB.map((t, i) => (
+            <div class="hl-tile" style={`height: ${t.height}px`}>
+              <div class="hl-tile-img" style={`background-image: url(${t.img})`}></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initDotaznikMotion() {
+    const wrap = document.querySelector('[data-dotaznik]');
+    if (!wrap) return;
+    if (wrap._dotaznikCleanup) wrap._dotaznikCleanup();
+
+    const items = [...wrap.querySelectorAll('.hl-in')];
+    if (!items.length) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      items.forEach((el) => el.classList.add('is-in'));
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        items.forEach((el) => el.classList.add('is-in'));
+        io.disconnect();
+      },
+      { threshold: 0.18 }
+    );
+
+    io.observe(wrap);
+
+    wrap._dotaznikCleanup = () => {
+      io.disconnect();
+      wrap._dotaznikCleanup = null;
+    };
+  }
+
+  initDotaznikMotion();
+  document.addEventListener('astro:page-load', initDotaznikMotion);
+</script>

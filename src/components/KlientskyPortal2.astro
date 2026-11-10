@@ -1,0 +1,806 @@
+---
+import KlientskyPortalNahled2 from './KlientskyPortalNahled2.astro';
+import KlientskyPortalHeroMobile from './KlientskyPortalHeroMobile.astro';
+
+interface Props {
+  loginHref: string;
+  screenImage: string;
+  mobileImage?: string;
+}
+const { loginHref, screenImage, mobileImage } = Astro.props;
+
+const User = (s: number) =>
+  `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21 c1-4 4-6 8-6 s7 2 8 6"/></svg>`;
+
+const demoHref = '/portal-demo/mobil/';
+const miniProjects = [
+  { name: 'Mallard', loc: 'Hrdlořezy', price: '10,5 mil.', rank: '01' },
+  { name: 'Kolbenova park - B', loc: 'Vysočany', price: '12,8 mil.', rank: '02' },
+  { name: 'Dvory Vysočany', loc: 'Vysočany', price: '10,9 mil.', rank: '03' },
+  { name: 'Harfa Living - C', loc: 'Vysočany', price: '15,7 mil.', rank: '04' },
+];
+const findScreens: { tab: string; label: string; kind: 'vyber' | 'mapa' | 'detail' | 'zpravy' }[] = [
+  { tab: 'vyber', label: 'Výběr', kind: 'vyber' },
+  { tab: 'mapa', label: 'Mapa', kind: 'mapa' },
+  { tab: 'detail', label: 'Detail', kind: 'detail' },
+  { tab: 'zpravy', label: 'Zprávy', kind: 'zpravy' },
+];
+---
+
+<div class="kpp" data-kpp>
+  <KlientskyPortalHeroMobile
+    loginHref={loginHref}
+    demoHref={demoHref}
+    coverUrl="https://yardhrdlorezy.cz/wp-content/uploads/2026/07/ext_05_3-scaled.webp"
+  />
+  <section class="kpp-track" data-kpp-track>
+    <div class="kpp-sticky">
+      <div class="kpp-stage">
+        <div class="kpp-app" data-kpp-app>
+          <picture>
+            {mobileImage && <source media="(max-width: 1023px)" srcset={mobileImage} />}
+            <img
+              class="kpp-shot"
+              src={screenImage}
+              alt="Klientský portál REAMAR – mapa novostaveb"
+              fetchpriority="high"
+            />
+          </picture>
+        </div>
+        <div class="kpp-shade" data-kpp-shade></div>
+        <div class="kpp-hero" data-kpp-hero>
+          <p class="kpp-kick font-yellix">Klientský portál</p>
+          <h1 class="font-yellix">Trh novostaveb tak, jak ho vidíme my.</h1>
+          <div class="kpp-row">
+            <a class="kpp-btn font-yellix" href={demoHref} data-kpp-jump>
+              <span class="kpp-btn-desk">Projít ukázku</span>
+              <span class="kpp-btn-mob">Vyzkoušet ukázku</span>
+              <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+            </a>
+            <a class="kpp-login font-yellix" href={loginHref}>
+              <Fragment set:html={User(16)} />
+              Přihlásit se
+            </a>
+          </div>
+        </div>
+        <a class="kpp-phone" href={demoHref} aria-label="Otevřít ukázku portálu">
+          <div class="kpp-phone-bezel">
+            <div class="kpp-phone-screen" transition:name="kp-phone">
+              <div class="kpp-mini">
+                <div class="kpp-mini-top">
+                  <span class="kpp-mini-ava font-yellix">TK</span>
+                  <div>
+                    <b class="font-yellix">Tereza K.</b>
+                    <span class="font-yellix">Váš výběr · 4 projekty</span>
+                  </div>
+                </div>
+                {miniProjects.map((p) => (
+                  <article class="kpp-mini-card">
+                    <i></i>
+                    <div>
+                      <em class="font-yellix">{p.rank}</em>
+                      <strong class="font-yellix">{p.name}</strong>
+                      <span class="font-yellix">{p.loc} · od {p.price}</span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="kpp-demo" data-kpp-demo id="ukazka">
+        <KlientskyPortalNahled2 />
+        <div class="kpp-panel" data-kpp-panel>
+          <div class="kpp-panelhead">
+            <span class="font-yellix">Ukázka výběru</span>
+            <button type="button" class="kpp-x" data-kpp-close aria-label="Zavřít">×</button>
+          </div>
+          <p class="font-yellix">
+            Takhle vypadá výběr, který pro vás připraví makléř. Klient i data jsou smyšlené.
+          </p>
+          <div class="kpp-panelbtns">
+            <button type="button" class="kpp-pb1 font-yellix" data-smart-meeting-open data-smart-meeting-type="client">
+              Domluvit schůzku
+            </button>
+            <a class="kpp-pb2 font-yellix" href={loginHref}>
+              <Fragment set:html={User(12)} />
+              Přihlásit se
+            </a>
+          </div>
+        </div>
+        <button type="button" class="kpp-pill font-yellix" data-kpp-open>Ukázka výběru · info</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="kpp-find" aria-labelledby="kpp-find-h">
+    <h2 class="font-yellix" id="kpp-find-h">Co v portálu najdete</h2>
+    <div class="kpp-find-row">
+      {findScreens.map((item) => (
+        <a class="kpp-find-item" href={`${demoHref}?tab=${item.tab}`}>
+          <div class="kpp-find-phone" data-kind={item.kind}>
+            {item.kind === 'vyber' && (
+              <div class="kpp-find-ui">
+                <b></b><b></b><b></b>
+              </div>
+            )}
+            {item.kind === 'mapa' && (
+              <div class="kpp-find-map">
+                <i class="is-a"></i><i class="is-b"></i><i class="is-c"></i>
+              </div>
+            )}
+            {item.kind === 'detail' && (
+              <div class="kpp-find-detail">
+                <span></span>
+                <strong></strong>
+                <em></em>
+              </div>
+            )}
+            {item.kind === 'zpravy' && (
+              <div class="kpp-find-msg">
+                <p></p><p></p>
+              </div>
+            )}
+          </div>
+          <span class="font-yellix">{item.label}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</div>
+
+<style is:global>
+  .kpp {
+    --pad: 1.25rem;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    padding-top: var(--nav-h);
+    background: #fff;
+    color: #fff;
+    font-family: Yellix, system-ui, sans-serif;
+    font-weight: 500;
+  }
+  @media (min-width: 768px) { .kpp { --pad: 2.5rem; } }
+  @media (min-width: 1280px) { .kpp { --pad: 3.5rem; } }
+  .kpp a { color: inherit; }
+  body:has([data-kpp]) [data-nav] {
+    background: #fff;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+  }
+  @media (max-width: 767px) {
+    html:has([data-kph]),
+    body:has([data-kph]) {
+      height: 100%;
+      overflow: hidden;
+    }
+    body:has([data-kph]) .kpp {
+      padding-top: 0;
+      background: #0b0b0b;
+    }
+    body:has([data-kph]) .kpp-track,
+    body:has([data-kph]) .kpp-find {
+      display: none !important;
+    }
+    body:has([data-kph]) [data-nav] {
+      box-shadow: none;
+    }
+    body:has([data-kph]) [data-nav]:not([data-nav-solid]) {
+      background: transparent;
+    }
+    body:has([data-kph]) [data-nav]:not([data-nav-solid]) .nav-logo-b { display: none; }
+    body:has([data-kph]) [data-nav]:not([data-nav-solid]) .nav-logo-w { display: block; }
+    body:has([data-kph]) [data-nav]:not([data-nav-solid]) .nav-fg,
+    body:has([data-kph]) [data-nav]:not([data-nav-solid]) .nav-title { color: #fff; }
+    body:has([data-kph]) [data-nav][data-nav-solid] {
+      background: #fff;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  .kpp-sticky {
+    position: relative;
+    min-height: calc(100svh - var(--nav-h));
+    overflow: visible;
+    background: #0e0e0e;
+  }
+  .kpp-stage {
+    position: relative;
+    height: calc(100svh - var(--nav-h));
+    min-height: 520px;
+    overflow: hidden;
+    background: #0e0e0e;
+  }
+  .kpp-app {
+    position: absolute;
+    inset: 0;
+  }
+  .kpp-shot {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left top;
+    display: block;
+    transform-origin: 62% 50%;
+    animation: kpp-pan 26s ease-in-out infinite alternate;
+  }
+  @keyframes kpp-pan {
+    from { transform: scale(1.02); }
+    to { transform: scale(1.1) translate(-2%, 1.5%); }
+  }
+  .kpp-demo {
+    position: relative;
+    z-index: 1;
+    padding: 0 0 8px;
+    background: #fff;
+  }
+  .kpp-demo .kp {
+    height: min(42rem, calc(100dvh - var(--nav-h) - 4rem));
+    min-height: 32rem;
+    border-color: #2a2a2a;
+  }
+  @media (max-width: 959px) {
+    .kpp-demo { padding: 0; }
+    .kpp-demo .kp {
+      height: calc(100dvh - var(--nav-h));
+      min-height: 36rem;
+      border: 0;
+    }
+  }
+  .kpp-shade {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.90) 0%,
+      rgba(0, 0, 0, 0.58) 36%,
+      rgba(0, 0, 0, 0.22) 62%,
+      transparent 84%
+    );
+  }
+  .kpp-hero {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 66.666%;
+    bottom: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    padding: 0 var(--pad);
+    text-align: center;
+  }
+  @media (min-width: 1024px) {
+    .kpp-hero {
+      top: calc(66.666% - 15px);
+      bottom: 15px;
+    }
+  }
+  @media (min-width: 640px) {
+    .kpp-hero { gap: 1.5rem; }
+  }
+  .kpp-kick {
+    margin: 0;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1;
+  }
+  .kpp-hero h1 {
+    margin: 0;
+    font-size: 32px;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.28);
+  }
+  .kpp-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+  }
+  .kpp-btn,
+  .kpp-login {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 40px;
+    padding: 0 1rem;
+    font-size: 13px;
+    line-height: 1;
+    text-decoration: none;
+  }
+  .kpp-btn {
+    background: #fff;
+    color: #000 !important;
+    border: 1px solid #fff;
+  }
+  .kpp-btn img {
+    width: 12px;
+    height: 12px;
+    filter: brightness(0);
+  }
+  .kpp-btn-mob { display: none; }
+  .kpp-btn:hover { opacity: 0.88; }
+  .kpp-login {
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(18px) saturate(1.25);
+    -webkit-backdrop-filter: blur(18px) saturate(1.25);
+  }
+  .kpp-login:hover {
+    background: rgba(255, 255, 255, 0.28);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+  .kpp-login svg { width: 16px; height: 16px; }
+  .kpp-panel, .kpp-pill { display: none; }
+  .kpp-phone,
+  .kpp-find { display: none; }
+  @media (min-width: 640px) {
+    .kpp-hero h1 { font-size: 40px; }
+  }
+
+  @media (max-width: 1023px) {
+    .kpp-app,
+    .kpp-shade { display: none; }
+    .kpp-demo { display: none !important; }
+    .kpp-btn-desk { display: none; }
+    .kpp-btn-mob { display: inline; }
+    .kpp-sticky {
+      min-height: 0;
+      height: auto;
+      overflow: visible;
+      background: #111;
+    }
+    .kpp-stage {
+      display: flex;
+      flex-direction: column;
+      height: calc(100svh - var(--nav-h));
+      min-height: 34rem;
+      background: #111;
+    }
+    .kpp-hero {
+      position: relative;
+      top: auto;
+      bottom: auto;
+      flex: 0 0 auto;
+      padding: 1.35rem var(--pad) 0.85rem;
+      justify-content: flex-start;
+    }
+    .kpp-hero h1 {
+      font-size: 30px;
+      white-space: normal;
+    }
+    .kpp-phone {
+      display: flex;
+      flex: 1 1 auto;
+      align-items: flex-start;
+      justify-content: center;
+      min-height: 0;
+      overflow: hidden;
+      padding: 0 1.4rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    .kpp-phone-bezel {
+      width: min(21.5rem, 100%);
+      height: 118%;
+      padding: 11px 11px 0;
+      background: #1c1c1c;
+      border-radius: 28px 28px 0 0;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    }
+    .kpp-phone-screen {
+      height: 100%;
+      overflow: hidden;
+      background: #fff;
+      border-radius: 20px 20px 0 0;
+    }
+    .kpp-mini {
+      padding: 0.85rem 0.75rem 0;
+      color: #111;
+    }
+    .kpp-mini-top {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 0.75rem;
+    }
+    .kpp-mini-ava {
+      display: flex;
+      width: 2.2rem;
+      height: 2.2rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #022d20;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .kpp-mini-top b {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .kpp-mini-top span {
+      display: block;
+      margin-top: 0.12rem;
+      font-size: 11px;
+      color: rgba(0, 0, 0, 0.48);
+    }
+    .kpp-mini-card {
+      display: flex;
+      gap: 0.65rem;
+      margin-bottom: 0.55rem;
+      padding: 0.45rem;
+      background: #f6f6f4;
+    }
+    .kpp-mini-card i {
+      width: 3.4rem;
+      height: 3.4rem;
+      flex-shrink: 0;
+      background: #d7e2d9;
+    }
+    .kpp-mini-card:nth-child(3) i { background: #e4ddd4; }
+    .kpp-mini-card:nth-child(4) i { background: #d9e0e6; }
+    .kpp-mini-card:nth-child(5) i { background: #e8e4dc; }
+    .kpp-mini-card em {
+      display: block;
+      font-style: normal;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: rgba(0, 0, 0, 0.4);
+    }
+    .kpp-mini-card strong {
+      display: block;
+      margin-top: 0.1rem;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .kpp-mini-card span {
+      display: block;
+      margin-top: 0.12rem;
+      font-size: 11px;
+      color: rgba(0, 0, 0, 0.5);
+    }
+    .kpp-find {
+      display: block;
+      padding: 2.1rem var(--pad) 2.75rem;
+      background: #fff;
+      color: #111;
+    }
+    .kpp-find h2 {
+      margin: 0 0 1.1rem;
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+    }
+    .kpp-find-row {
+      display: flex;
+      gap: 0.85rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.4rem;
+      scrollbar-width: none;
+    }
+    .kpp-find-row::-webkit-scrollbar { display: none; }
+    .kpp-find-item {
+      flex: 0 0 9.6rem;
+      scroll-snap-align: start;
+      text-decoration: none;
+      color: inherit;
+    }
+    .kpp-find-phone {
+      height: 13.5rem;
+      margin-bottom: 0.55rem;
+      padding: 8px 8px 0;
+      background: #1c1c1c;
+      border-radius: 18px 18px 0 0;
+      overflow: hidden;
+    }
+    .kpp-find-phone > div {
+      height: 100%;
+      background: #f4f4f3;
+      border-radius: 12px 12px 0 0;
+      overflow: hidden;
+    }
+    .kpp-find-item span {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .kpp-find-ui { padding: 0.7rem 0.6rem; }
+    .kpp-find-ui b {
+      display: block;
+      height: 2.1rem;
+      margin-bottom: 0.4rem;
+      background: #e2e6e3;
+    }
+    .kpp-find-map {
+      position: relative;
+      background: #dce6df !important;
+    }
+    .kpp-find-map i {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+    .kpp-find-map .is-a { top: 32%; left: 28%; background: #2f9e6b; }
+    .kpp-find-map .is-b { top: 48%; left: 58%; background: #d4a017; }
+    .kpp-find-map .is-c { top: 62%; left: 40%; background: #e24b4a; }
+    .kpp-find-detail span {
+      display: block;
+      height: 5.2rem;
+      background: #d7e2d9;
+    }
+    .kpp-find-detail strong,
+    .kpp-find-detail em {
+      display: block;
+      margin: 0.55rem 0.6rem 0;
+      height: 0.7rem;
+      background: #ddd;
+    }
+    .kpp-find-detail em { width: 40%; height: 0.5rem; }
+    .kpp-find-msg { padding: 0.8rem 0.6rem; }
+    .kpp-find-msg p {
+      height: 2.4rem;
+      margin: 0 0 0.45rem;
+      background: #e8eeff;
+    }
+    .kpp-find-msg p:last-child { width: 70%; background: #eee; }
+  }
+
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .kpp-track { position: relative; height: calc(100vh + 70vh); }
+    .kpp { padding-top: 0; }
+    .kpp-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      min-height: 0;
+      overflow: hidden;
+      background: #fff;
+    }
+    .kpp-stage {
+      position: absolute;
+      top: var(--nav-h);
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: auto;
+      min-height: 0;
+    }
+    .kpp-shot { opacity: 0; animation: none; }
+    .kpp-demo {
+      position: absolute;
+      top: var(--nav-h);
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: none;
+    }
+    .kpp.is-live .kpp-demo {
+      z-index: 5;
+      pointer-events: auto;
+    }
+    .kpp-demo .kp {
+      height: 100%;
+      min-height: 0;
+      border: 0;
+    }
+    .kpp-shade { z-index: 3; }
+    .kpp-shade,
+    .kpp-hero { will-change: opacity, transform; }
+    .kpp-hero h1 {
+      font-size: 42px;
+      white-space: nowrap;
+    }
+
+    .kpp-panel {
+      display: block;
+      position: absolute;
+      right: var(--pad);
+      left: auto;
+      bottom: 24px;
+      z-index: 6;
+      width: 22rem;
+      padding: 16px 16px 14px;
+      background: #fff;
+      color: #111;
+      border: 1px solid #e3e3e3;
+      opacity: 0;
+      transform: translateY(16px);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.4s var(--ease);
+    }
+    .kpp.is-live .kpp-panel:not(.is-min) {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+    .kpp-panelhead { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+    .kpp-panelhead span { font-size: 15px; letter-spacing: -0.025em; line-height: 1.2; }
+    .kpp-x { all: unset; cursor: pointer; padding: 2px 4px; color: #999; font-size: 16px; line-height: 1; font-weight: 500; }
+    .kpp-x:hover { color: #111; }
+    .kpp-panel p { margin: 0 0 12px; font-size: 13px; line-height: 1.45; color: rgba(0, 0, 0, 0.5); }
+    .kpp-panelbtns { display: flex; gap: 8px; }
+    .kpp-panelbtns a,
+    .kpp-panelbtns button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border: 0;
+      font-family: Yellix, system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .kpp-pb1 { background: #111; color: #fff !important; }
+    .kpp-pb2 { background: #fff; color: #111 !important; border: 1px solid #e3e3e3; }
+    .kpp-pb1 svg,
+    .kpp-pb2 svg { width: 12px; height: 12px; }
+    .kpp-pill {
+      all: unset;
+      cursor: pointer;
+      position: absolute;
+      right: var(--pad);
+      left: auto;
+      bottom: 24px;
+      z-index: 6;
+      display: none;
+      padding: 9px 12px;
+      background: #fff;
+      color: #111;
+      border: 1px solid #e3e3e3;
+      font-size: 13px;
+    }
+    .kpp.is-live .kpp-pill.is-on { display: inline-flex; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .kpp-shot { animation: none; }
+  }
+</style>
+
+<script>
+  const REVEAL = 0.7;
+
+  let raf = 0;
+  let desk: MediaQueryList | null = null;
+  let onScroll: (() => void) | null = null;
+  let onResize: (() => void) | null = null;
+  let onDesk: (() => void) | null = null;
+  let jumpHandler: ((e: Event) => void) | null = null;
+  let closeHandler: (() => void) | null = null;
+  let openHandler: (() => void) | null = null;
+
+  function setNavSolid(on: boolean) {
+    const header = document.querySelector('[data-nav]');
+    if (!header) return;
+    if (on) header.setAttribute('data-nav-solid', '');
+    else header.removeAttribute('data-nav-solid');
+  }
+
+  function cleanup() {
+    if (onScroll) window.removeEventListener('scroll', onScroll);
+    if (onResize) window.removeEventListener('resize', onResize);
+    if (desk && onDesk) desk.removeEventListener('change', onDesk);
+    const root = document.querySelector('[data-kpp]');
+    if (root && jumpHandler) root.querySelector('[data-kpp-jump]')?.removeEventListener('click', jumpHandler);
+    if (root && closeHandler) root.querySelector('[data-kpp-close]')?.removeEventListener('click', closeHandler);
+    if (root && openHandler) root.querySelector('[data-kpp-open]')?.removeEventListener('click', openHandler);
+    raf = 0;
+    onScroll = onResize = onDesk = jumpHandler = closeHandler = openHandler = null;
+    desk = null;
+  }
+
+  function init() {
+    cleanup();
+    const root = document.querySelector('[data-kpp]') as HTMLElement | null;
+    if (!root) return;
+    const track = root.querySelector('[data-kpp-track]') as HTMLElement;
+    const shade = root.querySelector('[data-kpp-shade]') as HTMLElement;
+    const hero = root.querySelector('[data-kpp-hero]') as HTMLElement;
+    const panel = root.querySelector('[data-kpp-panel]') as HTMLElement;
+    const pill = root.querySelector('[data-kpp-open]') as HTMLElement;
+    desk = window.matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)');
+
+    const clamp = (v: number) => Math.max(0, Math.min(1, v));
+    const tick = () => {
+      raf = 0;
+      if (!desk?.matches) {
+        [shade, hero].forEach((el) => el.removeAttribute('style'));
+        root.classList.remove('is-live');
+        const nav = document.querySelector('[data-nav]');
+        const navH = nav ? nav.getBoundingClientRect().height : 80;
+        const kph = document.querySelector('[data-kph]') as HTMLElement | null;
+        const mobileHero = window.matchMedia('(max-width: 767px)').matches && kph;
+        setNavSolid(
+          mobileHero
+            ? kph.getBoundingClientRect().bottom <= navH + 8
+            : shade.getBoundingClientRect().bottom <= navH + 8
+        );
+        return;
+      }
+      const vh = window.innerHeight;
+      const sc = -track.getBoundingClientRect().top / vh;
+      const p0 = clamp(sc / REVEAL);
+      const p = p0 * p0 * (3 - 2 * p0);
+      shade.style.opacity = String(1 - p);
+      hero.style.opacity = String(Math.max(0, 1 - p * 1.6));
+      hero.style.transform = `translateY(${40 * p}px)`;
+      hero.style.pointerEvents = p > 0.3 ? 'none' : 'auto';
+      const live = p0 >= 0.999;
+      const wasLive = root.classList.contains('is-live');
+      root.classList.toggle('is-live', live);
+      setNavSolid(live);
+      if (live && !wasLive) window.dispatchEvent(new Event('resize'));
+    };
+
+    const req = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+
+    const jump = root.querySelector('[data-kpp-jump]') as HTMLAnchorElement | null;
+    const syncJump = () => {
+      if (jump) jump.setAttribute('href', desk?.matches ? '#ukazka' : '/portal-demo/mobil/');
+    };
+    jumpHandler = (e: Event) => {
+      if (!desk?.matches) return;
+      e.preventDefault();
+      const top = track.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: top + REVEAL * window.innerHeight + 2, behavior: 'smooth' });
+    };
+    closeHandler = () => {
+      panel.classList.add('is-min');
+      pill.classList.add('is-on');
+    };
+    openHandler = () => {
+      panel.classList.remove('is-min');
+      pill.classList.remove('is-on');
+    };
+
+    root.querySelector('[data-kpp-jump]')?.addEventListener('click', jumpHandler);
+    root.querySelector('[data-kpp-close]')?.addEventListener('click', closeHandler);
+    pill.addEventListener('click', openHandler);
+
+    onScroll = req;
+    onResize = req;
+    onDesk = () => {
+      syncJump();
+      req();
+    };
+    syncJump();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    desk.addEventListener('change', onDesk);
+    req();
+  }
+
+  init();
+  document.addEventListener('astro:page-load', init);
+  document.addEventListener('astro:before-swap', cleanup);
+</script>

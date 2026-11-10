@@ -1,0 +1,474 @@
+---
+import AgentSocialIcon from './AgentSocialIcon.astro';
+
+const banner = '/images/agency/JVAGENT.jpeg';
+const youtubeHref = 'https://www.youtube.com/@agentprokupujici';
+const videoSrc = '/videos/Pro klienty.mp4';
+const poster = '/images/agency/jv-holder3.jpg';
+
+type SocialIcon = 'youtube' | 'linkedin' | 'instagram' | 'x';
+
+const socials: { name: string; href: string; icon: SocialIcon }[] = [
+  {
+    name: 'YouTube',
+    href: 'https://www.youtube.com/@agentprokupujici',
+    icon: 'youtube',
+  },
+  {
+    name: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/jan-vitvera-6162b1164',
+    icon: 'linkedin',
+  },
+  {
+    name: 'Instagram',
+    href: '',
+    icon: 'instagram',
+  },
+  {
+    name: 'X',
+    href: '',
+    icon: 'x',
+  },
+];
+---
+
+<section class="agent-banner" aria-labelledby="agent-heading" data-agent-banner>
+  <img
+    src={banner}
+    alt=""
+    width="1280"
+    height="853"
+    class="agent-banner-img"
+  />
+  <div class="agent-banner-inner mx-auto max-w-[1440px] px-5 md:px-10 xl:px-14">
+    <div class="agent-banner-copy">
+      <h1
+        id="agent-heading"
+        class="agent-banner-title font-yellix font-medium uppercase tracking-[-0.03em] text-white"
+      >
+        <span class="agent-title-agent">Agent</span>
+        <span class="agent-title-rest">pro <span class="agent-em">kupující</span></span>
+      </h1>
+      <div class="agent-banner-body">
+      <p
+        class="mt-7 font-yellix text-[14px] font-medium leading-[1.55] text-white/90 md:text-[15px]"
+        data-aos="fade-up"
+        data-aos-delay="280"
+      >
+        V realitách jsem začínal na straně developerů. Pomáhal jsem nastavovat prodejní strategie, marketing a procesy, které mají jediný cíl: prodat projekt.
+      </p>
+      <p
+        class="mt-4 font-yellix text-[14px] font-medium leading-[1.55] text-white/90 md:text-[15px]"
+        data-aos="fade-up"
+        data-aos-delay="360"
+      >
+        Zároveň jsem sám nakupoval investiční byty v novostavbách. A čím víc jsem trh poznával z obou stran, tím jasnější mi bylo jedno pravidlo.
+      </p>
+      <p
+        class="mt-6 font-yellix text-[18px] font-medium leading-[1.35] tracking-[-0.02em] text-white md:text-[20px]"
+        data-aos="fade-up"
+        data-aos-delay="920"
+      >
+        „Opravdu nezávislá nabídka na trhu skoro neexistuje. Každý přirozeně zastupuje stranu, která ho platí.“
+      </p>
+      <a
+        href={youtubeHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="agent-yt"
+        data-aos="fade-up"
+        data-aos-delay="1100"
+      >
+        <svg viewBox="0 0 24 17" aria-hidden="true">
+          <path fill="#FF0000" d="M23.5 2.65A3.02 3.02 0 0 0 21.38.5C19.5 0 12 0 12 0S4.5 0 2.62.5A3.02 3.02 0 0 0 .5 2.65 31.9 31.9 0 0 0 0 8.5a31.9 31.9 0 0 0 .5 5.85 3.02 3.02 0 0 0 2.12 2.15C4.5 17 12 17 12 17s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.15A31.9 31.9 0 0 0 24 8.5a31.9 31.9 0 0 0-.5-5.85Z"/>
+          <path fill="#fff" d="M9.75 12.15V4.85L15.7 8.5 9.75 12.15Z"/>
+        </svg>
+        Sledovat na YouTube
+      </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="agent-panel-wrap" aria-labelledby="agent-panel-heading">
+  <div class="mx-auto max-w-[1440px] px-5 md:px-10 xl:px-14">
+    <article class="agent-panel" data-aos="fade-up">
+      <div class="agent-panel-media" data-agent-video>
+        <button type="button" class="agent-video-cover" data-agent-play aria-label="Přehrát video">
+          <img
+            src={poster}
+            alt=""
+            width="1280"
+            height="720"
+            class="agent-video-img"
+          />
+          <span class="agent-play" aria-hidden="true">
+            <svg viewBox="0 0 68 48">
+              <path class="agent-play-bg" d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55C3.97 2.33 2.27 4.81 1.48 7.74.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26Z"/>
+              <path fill="#fff" d="M45 24 27 14v20l18-10Z"/>
+            </svg>
+          </span>
+        </button>
+        <video
+          class="agent-video-el hidden"
+          data-agent-player
+          controls
+          playsinline
+          preload="none"
+          poster={poster}
+        >
+          <source src={videoSrc} type="video/mp4" />
+        </video>
+      </div>
+
+      <div class="agent-panel-copy">
+        <h2
+          id="agent-panel-heading"
+          class="font-yellix text-[26px] font-medium leading-[1.18] tracking-[-0.02em] text-black md:text-[32px] xl:text-[36px]"
+        >
+          Proto dnes stojím na straně kupujících.
+        </h2>
+        <p class="mt-5 font-yellix text-[14px] font-medium leading-[1.55] text-black/75 md:text-[15px]">
+          Pomáhám klientům najít vhodný byt, prověřit projekt, porovnat nabídky a jednat s developerem tak, aby do nákupu vstupovali připraveně.
+        </p>
+        <div class="mt-8">
+          <p class="font-yellix text-[18px] font-semibold leading-none tracking-[-0.02em] text-black md:text-[20px]">
+            Jan Vitvera
+          </p>
+          <p class="mt-2 font-yellix text-[13px] font-medium leading-none text-black/50">
+              zástupce kupujících na trhu novostaveb
+          </p>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+            {socials.map((item) => (
+              item.href ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="agent-social"
+                  aria-label={item.name}
+                >
+                  <AgentSocialIcon icon={item.icon} />
+                </a>
+              ) : (
+                <span class="agent-social" aria-label={item.name} title={`${item.name} — odkaz doplníme`}>
+                  <AgentSocialIcon icon={item.icon} />
+                </span>
+              )
+            ))}
+        </div>
+        <button
+          type="button"
+          class="agent-panel-cta inline-flex w-fit items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-white transition-opacity hover:opacity-85"
+          data-smart-contact-open
+          data-smart-contact-type="client"
+        >
+          Kontaktovat
+          <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
+        </button>
+      </div>
+    </article>
+  </div>
+</section>
+
+<style>
+  .agent-banner {
+    position: relative;
+    width: 100%;
+    margin-top: -80px;
+    padding: 108px 0 8.5rem;
+    overflow: hidden;
+    background: #111;
+  }
+  @media (min-width: 768px) {
+    .agent-banner {
+      margin-top: -108px;
+      padding: 140px 0 10.5rem;
+    }
+  }
+  .agent-banner-img {
+    position: absolute;
+    top: -170px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: left 22%;
+    transform-origin: 22% 40%;
+    animation: agent-banner-zoom 22s ease-out forwards;
+  }
+  @keyframes agent-banner-zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.06); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .agent-banner-img {
+      animation: none;
+    }
+  }
+  .agent-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.16) 32%, transparent 52%),
+      linear-gradient(90deg, transparent 18%, rgba(0, 0, 0, 0.22) 48%, rgba(0, 0, 0, 0.52) 78%, rgba(0, 0, 0, 0.58) 100%);
+    pointer-events: none;
+  }
+  .agent-banner-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+  }
+  @media (min-width: 1024px) {
+    .agent-banner-inner {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 4.5rem;
+      align-items: center;
+    }
+  }
+  .agent-banner-copy {
+    max-width: none;
+  }
+  @media (min-width: 1024px) {
+    .agent-banner-copy {
+      grid-column: 2;
+    }
+  }
+  .agent-banner-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 0.82;
+    overflow: hidden;
+  }
+  .agent-title-agent {
+    font-size: clamp(52px, 6.4vw, 92px);
+    opacity: 0;
+    animation: agent-from-left 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .agent-title-rest {
+    font-size: clamp(28px, 3.5vw, 50px);
+    margin-top: 0.06em;
+    opacity: 0;
+    animation: agent-from-right 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes agent-from-left {
+    from { opacity: 0; transform: translateX(-5.5rem); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes agent-from-right {
+    from { opacity: 0; transform: translateX(5.5rem); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .agent-title-agent,
+    .agent-title-rest {
+      opacity: 1;
+      animation: none;
+    }
+  }
+  .agent-banner-body {
+    max-width: 54ch;
+  }
+  .agent-em {
+    display: inline;
+    border-bottom: 0.065em solid #fff;
+    padding-bottom: 0.02em;
+  }
+  .agent-yt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    margin-top: 1.75rem;
+    padding: 0.5rem 0.85rem 0.5rem 0.65rem;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    color: #000;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+  .agent-yt:hover {
+    opacity: 0.85;
+  }
+  .agent-yt svg {
+    display: block;
+    width: 18px;
+    height: 13px;
+    flex-shrink: 0;
+  }
+  .agent-panel-wrap {
+    position: relative;
+    z-index: 4;
+    margin-top: -62px;
+    padding-bottom: 2.5rem;
+  }
+  @media (min-width: 768px) {
+    .agent-panel-wrap {
+      margin-top: -70px;
+      padding-bottom: 3rem;
+    }
+  }
+  .agent-panel {
+    display: grid;
+    gap: 1.75rem;
+    padding: 1.5rem;
+    background: #fff;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
+  }
+  @media (min-width: 768px) {
+    .agent-panel {
+      padding: 2rem;
+      gap: 2.25rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .agent-panel {
+      grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+      gap: 3rem;
+      padding: 2.25rem;
+      align-items: stretch;
+    }
+  }
+  .agent-panel-copy {
+    display: flex;
+    flex-direction: column;
+  }
+  .agent-panel-cta {
+    margin-top: 1.5rem;
+    margin-left: auto;
+    margin-right: 130px;
+  }
+  @media (min-width: 1024px) {
+    .agent-panel-cta {
+      margin-top: auto;
+      margin-left: auto;
+      margin-bottom: 15px;
+    }
+  }
+  .agent-panel-media {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #111;
+    border-radius: 8px;
+  }
+  .agent-video-cover {
+    position: absolute;
+    inset: 0;
+    display: block;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    background: #111;
+  }
+  .agent-video-cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.18);
+    pointer-events: none;
+  }
+  .agent-video-img,
+  .agent-video-el {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+  .agent-video-img {
+    transition: transform 0.55s ease;
+  }
+  .agent-video-cover:hover .agent-video-img {
+    transform: scale(1.04);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .agent-video-img {
+      transition: none;
+    }
+    .agent-video-cover:hover .agent-video-img {
+      transform: none;
+    }
+  }
+  .agent-video-el {
+    position: absolute;
+    inset: 0;
+    background: #000;
+  }
+  .agent-play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    display: flex;
+    width: 56px;
+    height: 40px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .agent-play svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.35));
+    transform-origin: 50% 50%;
+  }
+  .agent-play-bg {
+    fill: #f00;
+    fill-opacity: 0.9;
+    transition: fill-opacity 0.15s ease;
+  }
+  .agent-video-cover:hover .agent-play-bg {
+    fill-opacity: 1;
+  }
+  .agent-video-cover:hover .agent-play svg {
+    transform: scale(1.08);
+  }
+  .agent-social {
+    display: flex;
+    width: 18px;
+    height: 18px;
+    transition: opacity 0.2s ease;
+  }
+  .agent-social:hover {
+    opacity: 0.85;
+  }
+  .agent-social svg {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script>
+  function initAgentVideo() {
+    const wrap = document.querySelector('[data-agent-video]');
+    if (!wrap || wrap.dataset.init === '1') return;
+    wrap.dataset.init = '1';
+
+    const cover = wrap.querySelector('[data-agent-play]');
+    const player = wrap.querySelector('[data-agent-player]');
+    if (!cover || !player) return;
+
+    cover.addEventListener('click', function () {
+      cover.classList.add('hidden');
+      player.classList.remove('hidden');
+      player.play();
+    });
+  }
+
+  initAgentVideo();
+  document.addEventListener('astro:page-load', initAgentVideo);
+</script>

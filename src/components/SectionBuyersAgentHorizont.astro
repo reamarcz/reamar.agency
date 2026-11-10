@@ -1,0 +1,960 @@
+---
+interface Props {
+  videoSrc?: string;
+  posterSrc?: string;
+  episodeLabel?: string;
+  episodeHref?: string;
+}
+
+const {
+  videoSrc = '/video/penthouse-nahled.mp4',
+  posterSrc = '/video/penthouse-nahled.jpg',
+  episodeLabel = 'Příběhy z trhu · 100 milionů na penthouse. Co vybereme?',
+  episodeHref = '/pribehy-z-trhu/',
+} = Astro.props;
+
+const [episodeKicker, episodeTitle] = episodeLabel.split(/\s·\s/);
+const episodeExternal = /^https?:\/\//.test(episodeHref);
+
+const tiles = [
+  {
+    num: '01',
+    image: '/images/agency/statistiky.webp',
+    position: '50% 0%',
+    alt: 'Přehled developerského trhu a jednotek',
+    title: 'Vyhledávání na celém trhu<br />novostaveb',
+    text: 'V Praze sledujeme téměř <strong>10&nbsp;000 bytů</strong>. Bez hluboké znalosti trhu a správných technologií je prakticky nemožné tak rozsáhlou nabídku porovnat.',
+    icon: 'search',
+  },
+  {
+    num: '02',
+    image: '/images/agency/projekty-seznam.webp',
+    position: '50% 12%',
+    alt: 'Výběr projektů a neveřejných nabídek',
+    title: 'Předprodej projektů<br />a neveřejné nabídky',
+    text: 'Díky kontaktům na developerském trhu řešíme předprodeje, <strong>neveřejné nabídky</strong> a podmínky, ke kterým se kupující sám často nedostane.',
+    icon: 'reserve',
+  },
+  {
+    num: '03',
+    image: '/images/agency/vyjednavani.webp',
+    position: '50% 40%',
+    alt: 'Jednání u stolu nad dokumentací projektu',
+    title: 'Vyjednávání s developerem<br />a právní servis',
+    text: 'Od rezervace po podpis smluv stojíme <strong>na vaší straně</strong>. Hlídáme podmínky, termíny, dokumentaci i body, které se v nákupu snadno přehlédnou.',
+    icon: 'deal',
+  },
+];
+---
+
+<section id="koncept" class="bah" aria-labelledby="koncept-heading" data-bah data-nav-hide-zone>
+  <div class="bah__track" data-bah-track>
+    <div class="bah__sticky" data-bah-sticky>
+      <header class="bah__head" data-bah-head>
+        <div>
+          <h2 id="koncept-heading" class="bah__h font-yellix">Buyer’s agent</h2>
+          <p class="bah__sub font-yellix">
+            <span class="bah__arrow" aria-hidden="true"></span>
+            <span>Na západních trzích běžný princip odborného zastoupení kupujícího.</span>
+          </p>
+        </div>
+        <button type="button" class="bah__play font-yellix" data-strip-open>
+          <span>Přehrát video</span>
+          <span class="bah__play-line" aria-hidden="true"></span>
+        </button>
+      </header>
+
+      <div class="bah__viewport" data-bah-viewport>
+        <div class="bah__row" data-bah-row>
+          {tiles.map((tile) => (
+            <article class="bah__tile" data-bah-tile>
+              <div class="bah__img">
+                <img src={tile.image} alt={tile.alt} width="1000" height="760" loading="lazy" style={`object-position:${tile.position}`} />
+              </div>
+              <div class="bah__bar"><span data-bah-fill></span></div>
+              <div class="bah__body">
+                <div class="bah__meta">
+                  <span class="bah__num font-yellix">{tile.num}</span>
+                  <span class:list={['bah__icon', `bah__icon--${tile.icon}`]} aria-hidden="true">
+                    {tile.icon === 'search' && (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="6.2"/>
+                        <path d="M16.2 16.2 21 21"/>
+                      </svg>
+                    )}
+                    {tile.icon === 'reserve' && (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="5" width="16" height="15"/>
+                        <path d="M4 10h16M8 3v4M16 3v4"/>
+                      </svg>
+                    )}
+                    {tile.icon === 'deal' && (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M7 4h10v16H7z"/>
+                        <path d="M10 8h4M10 12h4M10 16h2.5"/>
+                      </svg>
+                    )}
+                  </span>
+                </div>
+                <h3 class="font-yellix" set:html={tile.title} />
+                <p class="font-yellix" set:html={tile.text} />
+              </div>
+            </article>
+          ))}
+          <div class="bah__vph" data-bah-vph aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="bah__video" data-bah-video role="button" tabindex="0" aria-label="Zobrazit video na celou obrazovku">
+        <video
+          data-bah-media
+          data-src={videoSrc}
+          poster={posterSrc}
+          muted
+          loop
+          playsinline
+          preload="none"
+          disablepictureinpicture
+          disableremoteplayback
+          aria-hidden="true"
+        ></video>
+        <div class="bah__shade" data-bah-fade></div>
+      </div>
+
+      <div class="bah__cap" data-bah-cap data-bah-fade>
+        <a
+          class="bah__yt font-yellix"
+          href={episodeHref}
+          target={episodeExternal ? '_blank' : undefined}
+          rel={episodeExternal ? 'noopener noreferrer' : undefined}
+          data-bah-play
+          aria-label="Přejít na Příběhy z trhu"
+        >
+          <span class="bah__yt-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 17">
+              <path fill="#FF0000" d="M23.5 2.65A3.02 3.02 0 0 0 21.38.5C19.5 0 12 0 12 0S4.5 0 2.62.5A3.02 3.02 0 0 0 .5 2.65 31.9 31.9 0 0 0 0 8.5a31.9 31.9 0 0 0 .5 5.85 3.02 3.02 0 0 0 2.12 2.15C4.5 17 12 17 12 17s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.15A31.9 31.9 0 0 0 24 8.5a31.9 31.9 0 0 0-.5-5.85Z"/>
+              <path fill="#fff" d="M9.75 12.15V4.85L15.7 8.5 9.75 12.15Z"/>
+            </svg>
+          </span>
+          <span class="bah__yt-copy">
+            <span class="bah__yt-kicker">{episodeKicker ?? 'YouTube'}</span>
+            <span class="bah__yt-title">{episodeTitle ?? episodeLabel}</span>
+            <span class="bah__yt-short">Příběhy z trhu</span>
+          </span>
+        </a>
+        <p class="bah__quote font-yellix">Klient má při nákupu nemovitosti partnera, který nestojí na straně konkrétní nabídky, ale na straně jeho rozhodnutí.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .bah {
+    --pad: 1.25rem;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    background: #f1f1f1;
+    color: #000;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern" 1;
+    text-rendering: optimizeLegibility;
+  }
+  .bah h2,
+  .bah h3,
+  .bah p,
+  .bah a,
+  .bah span {
+    font-weight: 500;
+  }
+
+  .bah__sticky {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 3.5rem 0;
+  }
+  .bah__head {
+    padding: 0 var(--pad);
+  }
+  .bah__h {
+    margin: 0;
+    font-size: clamp(36px, 8vw, 52px);
+    font-weight: 500;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: #000;
+  }
+  .bah__sub {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0.75rem 0 0;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: #000;
+  }
+  .bah__arrow {
+    flex: 0 0 auto;
+    display: block;
+    width: 0.7em;
+    height: 0.7em;
+    background: currentColor;
+    -webkit-mask: url('/images/arrow-1.svg') center / contain no-repeat;
+    mask: url('/images/arrow-1.svg') center / contain no-repeat;
+  }
+  .bah__play {
+    display: none;
+  }
+
+  .bah__viewport {
+    overflow: visible;
+  }
+  .bah__row {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 var(--pad);
+  }
+  .bah__row::after {
+    display: none;
+    content: '';
+  }
+  .bah__tile {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    width: 100%;
+    background: #fff;
+  }
+  .bah__img {
+    display: none;
+    aspect-ratio: 5 / 2;
+    overflow: hidden;
+    background: #111;
+  }
+  .bah__img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .bah__bar {
+    display: none;
+  }
+  .bah__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.35rem 1.4rem 1.6rem;
+  }
+  .bah__meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 0.85rem;
+  }
+  .bah__num {
+    display: none;
+  }
+  .bah__icon {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    overflow: visible;
+  }
+  .bah__icon svg {
+    width: 32px;
+    height: 32px;
+    transform-origin: center;
+  }
+  @media (max-width: 1023px) {
+    .bah__tile.is-in .bah__icon--search svg {
+      animation: bah-search 7.5s ease-in-out infinite;
+    }
+    .bah__tile.is-in .bah__icon--reserve svg {
+      animation: bah-reserve 7.5s ease-in-out infinite;
+    }
+    .bah__tile.is-in .bah__icon--deal svg {
+      animation: bah-deal 7.5s ease-in-out infinite;
+    }
+  }
+  @keyframes bah-search {
+    0%, 10%, 100% { transform: scale(1); }
+    5% { transform: scale(1.48); }
+  }
+  @keyframes bah-reserve {
+    0%, 32%, 46%, 100% { transform: rotate(0deg); }
+    36% { transform: rotate(-30deg); }
+    41% { transform: rotate(22deg); }
+    45% { transform: rotate(0deg); }
+  }
+  @keyframes bah-deal {
+    0%, 64%, 80%, 100% { transform: translateY(0); }
+    68% { transform: translateY(-11px); }
+    72% { transform: translateY(0); }
+    75% { transform: translateY(-5px); }
+    79% { transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bah__icon svg {
+      animation: none !important;
+    }
+  }
+  .bah__tile h3 {
+    margin: 0 0 0.55rem;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.022em;
+    color: #000;
+  }
+  .bah__tile p {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.55;
+    letter-spacing: 0;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .bah__tile p :global(strong) {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.85);
+  }
+  .bah__vph {
+    display: none;
+  }
+
+  .bah__video {
+    position: relative;
+    margin: 0 var(--pad);
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background: #111;
+    cursor: pointer;
+  }
+  .bah__video video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 61% 40%;
+  }
+  .bah__shade {
+    display: none;
+  }
+
+  .bah__cap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-top: -0.5rem;
+    padding: 0 var(--pad);
+  }
+  .bah__quote {
+    margin: 0;
+    max-width: 32ch;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: #000;
+  }
+  .bah__yt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px 10px 10px;
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .bah__yt:hover {
+    background: rgba(255, 255, 255, 0.96);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  }
+  .bah__yt-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .bah__yt-icon svg {
+    width: 16px;
+    height: 11px;
+    transform-origin: 50% 50%;
+    animation: bah-yt-pulse 2.4s ease-in-out infinite;
+  }
+  .bah__yt:hover .bah__yt-icon svg {
+    animation: none;
+    transform: scale(1.28);
+  }
+  .bah__yt-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .bah__yt-kicker {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.55);
+    line-height: 1;
+  }
+  .bah__yt-title {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #000;
+    line-height: 1;
+  }
+  .bah__yt-short { display: none; }
+  @keyframes bah-yt-pulse {
+    0%, 18%, 100% { transform: scale(1); }
+    28% { transform: scale(1.48); }
+    36% { transform: scale(1); }
+    44% { transform: scale(1.28); }
+    52% { transform: scale(1); }
+  }
+
+  @media (min-width: 768px) {
+    .bah {
+      --pad: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .bah {
+      --pad: 3.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .bah {
+      --tile-h: clamp(400px, 51vh, 480px);
+      --tile-w: calc(var(--tile-h) * 1.13);
+      --vid-w: calc(var(--tile-h) * 1.78);
+      scroll-margin-top: calc(-1 * var(--nav-h));
+    }
+    .bah__track {
+      position: relative;
+      height: calc(100vh + 335vh);
+    }
+    .bah__sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      justify-content: flex-start;
+      gap: clamp(5rem, 13vh, 7.5rem);
+      box-sizing: border-box;
+      padding: clamp(4.75rem, 12vh, 7rem) 0 clamp(3rem, 7vh, 4.5rem);
+    }
+
+    .bah__head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2.5rem;
+      padding: 0 var(--pad);
+    }
+    .bah__h {
+      font-size: 52px;
+    }
+    .bah__sub {
+      margin-top: 0.75rem;
+      font-size: 20px;
+      white-space: nowrap;
+    }
+    .bah__play {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      height: 35px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      line-height: 1;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.55);
+    }
+    .bah__play-line {
+      display: block;
+      width: 2.25rem;
+      height: 35px;
+      background: linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
+    }
+    .bah__play:hover {
+      color: #000;
+    }
+
+    .bah__viewport {
+      overflow: visible;
+      height: var(--tile-h);
+      margin-top: 0;
+      scroll-snap-type: none;
+    }
+    .bah__row {
+      flex-direction: row;
+      gap: 24px;
+      padding: 0 var(--pad);
+    }
+    .bah__tile {
+      flex: 0 0 var(--tile-w);
+      width: auto;
+      height: var(--tile-h);
+      box-sizing: border-box;
+      transform-origin: center bottom;
+      transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+    }
+    .bah__img {
+      display: block;
+      height: 45%;
+      aspect-ratio: auto;
+    }
+    .bah__img img {
+      transform: scale(1.06);
+      transition: transform 0.9s var(--ease), filter 0.7s var(--ease);
+    }
+    .bah__bar {
+      display: block;
+      position: relative;
+      height: 2px;
+      background: rgba(0, 0, 0, 0.08);
+    }
+    .bah__bar span {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+    .bah__body {
+      padding: 1.5rem 2rem 1.75rem;
+    }
+    .bah__meta {
+      justify-content: space-between;
+      margin-bottom: 1.1rem;
+    }
+    .bah__num {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: 0.12em;
+      font-variant-numeric: proportional-nums;
+      color: rgba(0, 0, 0, 0.5);
+    }
+    .bah__icon {
+      width: 22px;
+      height: 22px;
+    }
+    .bah__icon svg {
+      width: 22px;
+      height: 22px;
+    }
+    .bah__tile h3 {
+      margin-bottom: 0.6rem;
+      font-size: 26px;
+    }
+
+    .bah__tile.is-active {
+      opacity: 1;
+      transform: translateY(-10px) scale(1.04);
+      z-index: 1;
+    }
+    .bah__tile.is-active .bah__img img {
+      transform: scale(1);
+      filter: none;
+    }
+    .bah__tile.is-dim {
+      opacity: 0.28;
+      transform: translateY(32px) scale(0.93);
+    }
+    .bah__tile.is-dim .bah__img img {
+      filter: grayscale(1) contrast(0.82) brightness(0.86);
+    }
+    .bah__tile.is-dim:hover {
+      opacity: 0.48;
+    }
+    .bah__tile.is-active:hover .bah__img img {
+      transform: scale(1.03);
+    }
+
+    .bah__vph {
+      display: block;
+      flex: 0 0 var(--vid-w);
+      height: var(--tile-h);
+    }
+
+    .bah__video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 3;
+      margin: 0;
+      aspect-ratio: auto;
+    }
+    .bah__video video {
+      will-change: transform;
+    }
+    .bah__shade {
+      display: block;
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.1) 34%, rgba(0, 0, 0, 0) 52%),
+        linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.55) 32%, rgba(0, 0, 0, 0.18) 52%, rgba(0, 0, 0, 0) 68%);
+    }
+
+    .bah__cap {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      display: block;
+      margin: 0;
+      padding: 0;
+      color: #fff;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .bah__quote {
+      position: absolute;
+      top: clamp(2.5rem, 6vh, 4rem);
+      left: var(--pad);
+      margin: 0;
+      max-width: min(16em, 36vw);
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 1.22;
+      letter-spacing: -0.02em;
+      color: #fff;
+      text-shadow: 0 1px 18px rgba(0, 0, 0, 0.35);
+    }
+    .bah__yt {
+      position: absolute;
+      right: calc(var(--pad) + 1.25rem);
+      bottom: clamp(3.5rem, 8vh, 5.5rem);
+      width: auto;
+      max-width: none;
+      align-items: center;
+      gap: 12px;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    .bah__yt:hover {
+      background: transparent;
+      transform: none;
+      box-shadow: none;
+      opacity: 0.78;
+    }
+    .bah__yt-icon {
+      width: auto;
+      height: auto;
+      min-height: 0;
+      background: transparent;
+      border: 0;
+    }
+    .bah__yt-icon svg {
+      width: 24px;
+      height: 17px;
+      filter: drop-shadow(0 1px 8px rgba(0, 0, 0, 0.45));
+    }
+    .bah__yt-copy {
+      justify-content: center;
+      gap: 0;
+      padding: 0;
+    }
+    .bah__yt-kicker,
+    .bah__yt-title { display: none; }
+    .bah__yt-short {
+      display: block;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: #fff;
+      text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55);
+    }
+    .bah.is-expanded .bah__video {
+      cursor: pointer;
+    }
+    .bah.is-expanded .bah__yt {
+      pointer-events: auto;
+    }
+  }
+</style>
+
+<script>
+  function initBuyersAgentHorizont() {
+    const sec = document.querySelector<HTMLElement>('[data-bah]');
+    if (!sec) return;
+    const state = sec as HTMLElement & { _bahCleanup?: () => void };
+    if (state._bahCleanup) state._bahCleanup();
+
+    const track = sec.querySelector<HTMLElement>('[data-bah-track]')!;
+    const sticky = sec.querySelector<HTMLElement>('[data-bah-sticky]')!;
+    const head = sec.querySelector<HTMLElement>('[data-bah-head]')!;
+    const viewport = sec.querySelector<HTMLElement>('[data-bah-viewport]')!;
+    const row = sec.querySelector<HTMLElement>('[data-bah-row]')!;
+    const vph = sec.querySelector<HTMLElement>('[data-bah-vph]')!;
+    const box = sec.querySelector<HTMLElement>('[data-bah-video]')!;
+    const media = sec.querySelector<HTMLVideoElement>('[data-bah-media]')!;
+    const cap = sec.querySelector<HTMLElement>('[data-bah-cap]')!;
+    const play = sec.querySelector<HTMLAnchorElement>('[data-bah-play]')!;
+    const tiles = [...sec.querySelectorAll<HTMLElement>('[data-bah-tile]')];
+    const fills = [...sec.querySelectorAll<HTMLElement>('[data-bah-fill]')];
+    const fadeIns = [...sec.querySelectorAll<HTMLElement>('[data-bah-fade]')];
+    const mq = window.matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const DWELL = 0.3;
+    const SLIDE = 1.6;
+    const PAUSE = 0.35;
+    const EXP = 0.75;
+    const HOLD = 0.35;
+    const RANGES: [number, number][] = [
+      [0, 0.22],
+      [0.22, 0.5],
+      [0.5, 0.78],
+    ];
+
+    media.muted = true;
+    media.controls = false;
+
+    let wantPlay = false;
+    const setPlaying = (on: boolean) => {
+      if (on === wantPlay) return;
+      wantPlay = on;
+      if (!on) {
+        media.pause();
+        return;
+      }
+      const src = media.dataset.src;
+      if (src && media.getAttribute('src') !== src) media.setAttribute('src', src);
+      media.play().catch(() => {});
+    };
+
+    const near = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const src = media.dataset.src;
+          if (src && media.getAttribute('src') !== src) {
+            media.setAttribute('src', src);
+            media.preload = 'auto';
+          }
+        });
+      },
+      { rootMargin: '300px 0px' }
+    );
+    near.observe(sec);
+
+    const icons = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        tiles.forEach((tile) => tile.classList.add('is-in'));
+        icons.disconnect();
+      },
+      { threshold: 0.12 }
+    );
+    icons.observe(sec);
+
+    const view = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!mq.matches) setPlaying(entry.isIntersecting && !reduced);
+        });
+      },
+      { threshold: 0.35 }
+    );
+    view.observe(box);
+
+    const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+    const smoothstep = (t: number) => t * t * (3 - 2 * t);
+    let raf = 0;
+    let target = 0;
+    let current = 0;
+    let activeIdx = -2;
+    let k = 0;
+
+    const dockY = () => Math.round(track.getBoundingClientRect().top + window.scrollY);
+    const setInstantScroll = (on: boolean) => {
+      document.documentElement.style.scrollBehavior = on ? 'auto' : '';
+    };
+
+    const reset = () => {
+      [head, viewport, row, box, media, cap, ...fills, ...fadeIns].forEach((el) =>
+        el.removeAttribute('style')
+      );
+      tiles.forEach((tile) => tile.classList.remove('is-active', 'is-dim'));
+      sec.classList.remove('is-expanded');
+      activeIdx = -2;
+      k = 0;
+      current = 0;
+      target = 0;
+      setInstantScroll(false);
+    };
+
+    const setActive = (i: number) => {
+      if (i === activeIdx) return;
+      activeIdx = i;
+      tiles.forEach((tile, n) => {
+        tile.classList.toggle('is-active', n === i);
+        tile.classList.toggle('is-dim', n !== i && i < tiles.length);
+      });
+    };
+
+    const render = (sc: number) => {
+      const h = clamp01((sc - DWELL) / SLIDE);
+      k = smoothstep(clamp01((sc - DWELL - SLIDE - PAUSE) / EXP));
+      const lerp = (a: number, b: number) => a + (b - a) * k;
+
+      const maxTx = Math.max(0, vph.offsetLeft + vph.offsetWidth - sticky.clientWidth);
+      row.style.transform = `translateX(${-(maxTx * smoothstep(h)) - 40 * k}px)`;
+
+      const idx = RANGES.findIndex(([, b]) => h < b);
+      setActive(idx === -1 ? tiles.length : idx);
+      fills.forEach((fill, n) => {
+        const [a, b] = RANGES[n];
+        fill.style.transform = `scaleX(${clamp01((h - a) / (b - a))})`;
+      });
+      const fade = String(Math.max(0, 1 - k * 1.6));
+      viewport.style.opacity = fade;
+      head.style.opacity = fade;
+      head.style.transform = `translateY(${-36 * k}px)`;
+
+      const s = sticky.getBoundingClientRect();
+      const q = vph.getBoundingClientRect();
+      box.style.left = lerp(q.left - s.left, 0) + 'px';
+      box.style.top = lerp(q.top - s.top, 0) + 'px';
+      box.style.width = lerp(q.width, s.width) + 'px';
+      box.style.height = lerp(q.height, s.height) + 'px';
+      media.style.transform = `scale(${1.08 - 0.08 * k})`;
+
+      const covering = s.top <= 1 && s.bottom >= window.innerHeight - 1;
+      const c = k > 0.8 ? (k - 0.8) / 0.2 : 0;
+      fadeIns.forEach((el) => {
+        el.style.opacity = String(c);
+      });
+      sec.classList.toggle('is-expanded', k > 0.8 && covering);
+      box.setAttribute(
+        'aria-label',
+        k > 0.8 ? 'Přejít na Příběhy z trhu' : 'Zobrazit video na celou obrazovku'
+      );
+      setPlaying(covering && k > 0.02 && !reduced);
+    };
+
+    const tick = () => {
+      raf = 0;
+      if (!mq.matches) {
+        reset();
+        return;
+      }
+      target = -track.getBoundingClientRect().top / window.innerHeight;
+      current += (target - current) * 0.16;
+      if (Math.abs(target - current) < 0.0005) current = target;
+      render(current);
+      if (current !== target) raf = requestAnimationFrame(tick);
+    };
+
+    function req() {
+      if (!raf) raf = requestAnimationFrame(tick);
+    }
+
+    const pinTo = (p: number) => {
+      setInstantScroll(true);
+      const y = dockY() + Math.round((window.innerHeight || 1) * p);
+      const root = document.scrollingElement || document.documentElement;
+      root.scrollTop = y;
+      window.scrollTo({ top: y, behavior: 'auto' });
+      current = target = p;
+      req();
+      requestAnimationFrame(() => setInstantScroll(false));
+    };
+
+    const openEpisode = () => {
+      if (play.host === location.host) location.assign(play.href);
+      else window.open(play.href, '_blank', 'noopener,noreferrer');
+    };
+    const onBox = (event: Event) => {
+      event.preventDefault();
+      if (mq.matches && k < 0.8) {
+        pinTo(DWELL + SLIDE + PAUSE + EXP + HOLD * 0.35);
+        return;
+      }
+      openEpisode();
+    };
+    const onBoxKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      onBox(event);
+    };
+    box.addEventListener('click', onBox);
+    box.addEventListener('keydown', onBoxKey);
+
+    const onKonceptClick = (event: Event) => {
+      const targetEl = event.target;
+      if (!(targetEl instanceof Element) || !targetEl.closest('a[href="#koncept"]')) return;
+      if (!mq.matches) return;
+      event.preventDefault();
+      pinTo(0);
+      if (location.hash !== '#koncept') history.pushState(null, '', '#koncept');
+    };
+    const onHash = () => {
+      if (location.hash === '#koncept' && mq.matches) pinTo(0);
+    };
+
+    document.addEventListener('click', onKonceptClick, true);
+    window.addEventListener('hashchange', onHash);
+    window.addEventListener('scroll', req, { passive: true });
+    window.addEventListener('resize', req);
+    mq.addEventListener('change', req);
+    if (location.hash === '#koncept') onHash();
+    req();
+
+    state._bahCleanup = () => {
+      near.disconnect();
+      icons.disconnect();
+      view.disconnect();
+      box.removeEventListener('click', onBox);
+      box.removeEventListener('keydown', onBoxKey);
+      document.removeEventListener('click', onKonceptClick, true);
+      window.removeEventListener('hashchange', onHash);
+      window.removeEventListener('scroll', req);
+      window.removeEventListener('resize', req);
+      mq.removeEventListener('change', req);
+      if (raf) cancelAnimationFrame(raf);
+      state._bahCleanup = undefined;
+    };
+  }
+
+  initBuyersAgentHorizont();
+  document.addEventListener('astro:page-load', initBuyersAgentHorizont);
+</script>

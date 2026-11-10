@@ -1,0 +1,3298 @@
+---
+const brief = ['3+kk', 'do 12 mil. Kč', 'Praha 9', 'dokončení do 2028', 'balkon / terasa', 'MHD do 10 min.'];
+const menu: { id: string; label: string; count?: number; current?: boolean; lock?: string }[] = [
+  { id: 'vyber', label: 'Můj výběr', count: 4, current: true },
+  { id: 'zpravy', label: 'Zprávy', count: 2, lock: 'zpravy' },
+  { id: 'porovnani', label: 'Porovnání' },
+  { id: 'prohlidky', label: 'Prohlídky', count: 2 },
+  { id: 'dokumenty', label: 'Dokumenty' },
+];
+---
+
+<div class="kp" data-kp>
+  <div class="kp-app" data-kp-app>
+    <aside class="kp-nav" aria-label="Klientský výběr">
+      <div class="kp-nav-main">
+        <div class="kp-client">
+          <span class="kp-ava font-yellix" aria-hidden="true">TK</span>
+          <div>
+            <p class="kp-client-name font-yellix">Tereza K.</p>
+            <p class="kp-client-meta font-yellix">Aktualizováno 6. 11.</p>
+          </div>
+        </div>
+        <div class="kp-brief">
+          <div class="kp-brief-head">
+            <p class="kp-nav-kicker font-yellix">Vaše zadání</p>
+            <button
+              type="button"
+              class="kp-brief-edit"
+              data-kp-locked="zadani"
+              aria-label="Upravit zadání s makléřem"
+              title="Upravit zadání s makléřem"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+              </svg>
+            </button>
+          </div>
+          <ul>
+            {brief.map((tag) => (
+              <li class="font-yellix">{tag}</li>
+            ))}
+          </ul>
+        </div>
+        <nav class="kp-menu" aria-label="Sekce výběru">
+          <ul>
+            {menu.map((item) => (
+              <li>
+                {item.current ? (
+                  <span class="kp-nav-item is-on" aria-current="page">
+                    {item.label}
+                    {item.count != null && <em>{item.count}</em>}
+                  </span>
+                ) : (
+                  <button type="button" class="kp-nav-item" data-kp-locked={item.lock || true}>
+                    {item.label}
+                    {item.count != null && <em class={item.id === 'zpravy' ? 'is-new' : undefined}>{item.count}</em>}
+                  </button>
+                )}
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+      <button type="button" class="kp-prio" data-kp-locked="predprodeje">
+        <span class="kp-prio-copy">
+          <span class="kp-prio-kicker font-yellix">Priority list</span>
+          <span class="kp-prio-name font-yellix">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+              <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+            </svg>
+            Předprodej projektu
+          </span>
+          <span class="kp-prio-meta font-yellix">Jste zařazení · 3 projekty</span>
+        </span>
+        <span class="kp-prio-go" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 6l6 6-6 6"/>
+          </svg>
+        </span>
+      </button>
+      <div class="kp-agent">
+        <p class="kp-nav-kicker font-yellix">Konzultant</p>
+        <div class="kp-agent-row">
+          <img src="/images/agency/jan-prochazka.jpg" alt="" width="40" height="40" />
+          <p class="kp-agent-name font-yellix">Jan Procházka</p>
+          <div class="kp-agent-acts" aria-hidden="true">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6.7 3.8h2.4l1.2 3.3-1.9 1.2a13 13 0 0 0 6.3 6.3l1.2-1.9 3.3 1.2v2.4c0 1.3-1.4 2.6-3 2.6C8.8 19 4 14.2 4 6.8c0-1.6 1.3-3 2.7-3z"/>
+              </svg>
+            </span>
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/>
+                <path d="m4.2 7.2 7.8 6 7.8-6"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <aside class="kp-side" data-kp-side>
+      <header class="kp-mhead">
+        <span class="kp-mava font-yellix" aria-hidden="true">TK</span>
+        <div class="kp-mhi">
+          <b class="font-yellix">Tereza K.</b>
+          <small class="font-yellix">Aktualizováno 6. 11.</small>
+        </div>
+        <button type="button" class="kp-mkp font-yellix" data-kp-agent-open>
+          <img src="/images/agency/jan-prochazka.jpg" alt="" width="28" height="28" />
+          Konzultant
+        </button>
+      </header>
+      <div class="kp-stk">
+        <b class="font-yellix">Váš výběr</b>
+        <span class="font-yellix">4 projekty</span>
+        <div class="kp-stk-r">
+          <button type="button" class="kp-ic-s" data-kp-locked="porovnani" aria-label="Porovnání, zamčeno v ukázce">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7h.01M8 12h.01M8 17h.01M12 7h8M12 12h8M12 17h8"/></svg>
+            <span class="kp-lk-s" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="8" height="8" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="6" y="11" width="12" height="9"/><path d="M8 11V8.5a4 4 0 0 1 8 0V11"/></svg>
+            </span>
+          </button>
+          <button type="button" class="kp-ic-s" data-kp-locked="filtr" aria-label="Filtr, zamčeno v ukázce">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="kp-ttl">
+        <h1 class="font-yellix">Váš výběr</h1>
+        <span class="font-yellix">4 projekty</span>
+      </div>
+      <div class="kp-zd">
+        <div class="kp-zd-h">
+          <span class="font-yellix">Vaše zadání</span>
+          <button type="button" data-kp-locked="zadani" aria-label="Upravit zadání, zamčeno v ukázce">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          </button>
+        </div>
+        <div class="kp-chips">
+          {brief.map((tag) => (
+            <span class="font-yellix">{tag}</span>
+          ))}
+        </div>
+      </div>
+      <button type="button" class="kp-prl" data-kp-locked="predprodeje">
+        <i aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        </i>
+        <span>
+          <small class="font-yellix">Priority list</small>
+          <b class="font-yellix">Předprodej projektu</b>
+          <em class="font-yellix">Jste zařazení · 3 projekty</em>
+        </span>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <div class="kp-side-top">
+        <div class="kp-side-head">
+          <span class="font-yellix">Váš výběr</span>
+          <b class="font-yellix">4 projekty</b>
+        </div>
+      </div>
+      <div class="kp-cards" data-kp-cards></div>
+      <p class="kp-empty font-yellix" data-kp-empty hidden>V tomhle výběru teď nic není.</p>
+    </aside>
+    <div class="kp-mapwrap">
+      <div class="kp-map" data-kp-mapbox></div>
+      <div class="kp-mtop">
+        <div class="kp-mttl">
+          <b class="font-yellix">Váš výběr</b>
+          <span class="font-yellix">4 projekty · Praha 9</span>
+        </div>
+        <button type="button" class="kp-mlist" data-kp-tab="vyber" aria-label="Seznam projektů">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M8 7h.01M8 12h.01M8 17h.01M12 7h8M12 12h8M12 17h8"/></svg>
+        </button>
+      </div>
+      <aside class="kp-mleg" aria-label="Barva pinu podle ceny za metr">
+        <small class="font-yellix">Cena / m²</small>
+        <b class="kp-mleg-bar" aria-hidden="true"></b>
+        <div>
+          <span class="font-yellix"><i class="is-low"></i>nižší</span>
+          <span class="font-yellix"><i class="is-mid"></i>střed</span>
+          <span class="font-yellix"><i class="is-high"></i>vyšší</span>
+          <span class="font-yellix"><i class="is-rest"></i>mimo výběr</span>
+        </div>
+      </aside>
+      <div class="kp-mcards" data-kp-mcards></div>
+      <aside class="kp-legend" aria-label="Barva pinu podle ceny za metr">
+        <div class="kp-legend-head">
+          <span>Barva podle ceny / m²</span>
+        </div>
+        <div class="kp-legend-bar" aria-hidden="true"></div>
+        <div class="kp-legend-scale" aria-hidden="true">
+          <span>levnější</span>
+          <span>dražší</span>
+        </div>
+        <ul>
+          <li><i class="is-low"></i>Nižší cena</li>
+          <li><i class="is-mid"></i>Střed spektra</li>
+          <li><i class="is-high"></i>Vyšší cena</li>
+          <li><i class="is-rest"></i>Mimo váš výběr</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+  <div class="kp-detail" data-kp-detail hidden></div>
+  <div class="kp-chat" data-kp-chat hidden>
+    <div class="kp-chat-head">
+      <button type="button" class="kp-chat-back" data-kp-tab="vyber" aria-label="Zpět">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg>
+      </button>
+      <img src="/images/agency/jan-prochazka.jpg" alt="" width="40" height="40" />
+      <div>
+        <p class="kp-chat-name font-yellix">Jan Procházka</p>
+        <p class="kp-chat-meta font-yellix"><i class="kp-on" aria-hidden="true"></i>Konzultant · online</p>
+      </div>
+      <button type="button" class="kp-chat-call" data-kp-locked="telefon" aria-label="Zavolat, zamčeno v ukázce">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.7 3.8h2.4l1.2 3.3-1.9 1.2a13 13 0 0 0 6.3 6.3l1.2-1.9 3.3 1.2v2.4c0 1.3-1.4 2.6-3 2.6C8.8 19 4 14.2 4 6.8c0-1.6 1.3-3 2.7-3z"/></svg>
+      </button>
+    </div>
+    <div class="kp-chat-log">
+      <p class="c-day font-yellix">Dnes</p>
+      <p class="msg m-in is-them font-yellix">Terezo, posílám výběr 3+kk na Praze 9. Mallard dává nejlíp smysl k zadání.</p>
+      <button type="button" class="att" data-kp-open="d5dd1a8d-f2da-40e3-ae83-28b2db25063c">
+        <img src="" alt="" data-kp-att-photo />
+        <span>
+          <small class="rk font-yellix">01 · Doporučujeme</small>
+          <b class="font-yellix">Mallard</b>
+          <small class="font-yellix">Hrdlořezy · od 10,5 mil. Kč</small>
+        </span>
+      </button>
+      <p class="msg m-out is-me font-yellix">Díky. Můžeme se na Mallard podívat příští týden?</p>
+      <p class="msg m-in is-them font-yellix">Ano, prohlídka 12. 11. v 16:00. Ještě potvrdím termín developerovi.</p>
+      <div class="ev">
+        <div class="ev-d"><small class="font-yellix">LIS</small><b class="font-yellix">12</b></div>
+        <div class="ev-t">
+          <b class="font-yellix">Prohlídka · Mallard</b>
+          <small class="font-yellix">čt 16:00 · Praha 9, Hrdlořezy</small>
+        </div>
+        <span class="ev-ok" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5 10 17l9-10"/></svg>
+        </span>
+      </div>
+      <span class="ev-add font-yellix" data-kp-locked="kalendar" role="button" tabindex="0">+ Přidat do kalendáře</span>
+    </div>
+    <div class="c-in kp-chat-compose" data-kp-locked="compose" role="button" tabindex="0" aria-label="Napsat makléři, zamčeno v ukázce">
+      <span class="c-fld font-yellix">Napište makléři…</span>
+      <span class="c-snd" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </div>
+  </div>
+  <nav class="kp-tabbar" data-kp-tabbar aria-label="Sekce portálu">
+    <button type="button" class="is-on" data-kp-tab="vyber">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg>
+      Výběr
+    </button>
+    <button type="button" data-kp-tab="mapa">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.2"/></svg>
+      Mapa
+    </button>
+    <button type="button" data-kp-tab="zpravy">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6h14v10H8l-3 3V6z"/></svg>
+      Zprávy
+      <em>2</em>
+    </button>
+    <button type="button" class="is-lk" data-kp-locked="prohlidky" aria-disabled="true" aria-label="Prohlídky, zamčeno v ukázce">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="1.5"/><path d="M8 5V3.8A2.2 2.2 0 0 1 10.2 1.6h3.6A2.2 2.2 0 0 1 16 3.8V5"/><path d="M8 11h8M8 15h5"/></svg>
+      Prohlídky
+      <span class="kp-tb-lk" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="8" height="8" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="6" y="11" width="12" height="9"/><path d="M8 11V8.5a4 4 0 0 1 8 0V11"/></svg>
+      </span>
+    </button>
+    <button type="button" class="is-lk" data-kp-locked="dokumenty" aria-disabled="true" aria-label="Dokumenty, zamčeno v ukázce">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3.5h7.5L19 8v12.5H7z"/><path d="M14.5 3.5V8H19"/><path d="M9.5 12.5h5M9.5 16h5"/></svg>
+      Dokumenty
+      <span class="kp-tb-lk" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="8" height="8" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="6" y="11" width="12" height="9"/><path d="M8 11V8.5a4 4 0 0 1 8 0V11"/></svg>
+      </span>
+    </button>
+  </nav>
+  <div class="kp-ash" data-kp-ash hidden>
+    <div class="kp-ash-card" role="dialog" aria-modal="true" aria-labelledby="kp-ash-title" data-kp-ash-card>
+      <button type="button" class="kp-lock-close" data-kp-ash-close aria-label="Zavřít">×</button>
+      <img src="/images/agency/jan-prochazka.jpg" alt="" width="56" height="56" />
+      <h2 class="font-yellix" id="kp-ash-title">Jan Procházka</h2>
+      <p class="font-yellix">Konzultant</p>
+      <div class="kp-ash-btns">
+        <button type="button" class="font-yellix" data-kp-locked="telefon">Zavolat</button>
+        <button type="button" class="font-yellix" data-kp-locked="email">E-mail</button>
+      </div>
+    </div>
+  </div>
+  <div class="kp-lock" data-kp-lock hidden>
+    <div class="kp-lock-card" role="dialog" aria-modal="true" aria-labelledby="kp-lock-title" data-kp-lock-card>
+      <button type="button" class="kp-lock-close" data-kp-lock-close aria-label="Zavřít">×</button>
+      <div class="kp-lock-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5.5" y="11" width="13" height="9" rx="0"/>
+          <path d="M8 11V8.4a4 4 0 0 1 8 0V11"/>
+        </svg>
+      </div>
+      <h2 class="kp-lock-title font-yellix" id="kp-lock-title">Tohle otevřeme na schůzce</h2>
+      <p class="kp-lock-text font-yellix">Porovnání, prohlídky a dokumenty řeší makléř s vámi. Tahle ukázka ukazuje jen výběr projektů.</p>
+      <button type="button" class="kp-lock-cta font-yellix" data-smart-meeting-open data-smart-meeting-type="client">
+        <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+        Domluvit schůzku
+      </button>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .kp {
+    --kp-green: #022d20;
+    --kp-blue: #1d3b8a;
+    --kp-blue-soft: #e8eeff;
+    --kp-blue-mid: #5b8def;
+    --kp-blue-line: #c9d6f5;
+    --kp-line: rgba(0, 0, 0, 0.1);
+    --kp-soft: #f4f4f3;
+    --kp-low: #2f9e6b;
+    --kp-mid: #d4a017;
+    --kp-high: #e24b4a;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--kp-line);
+    background: #fff;
+    color: #111;
+    min-height: 36rem;
+    height: min(74rem, calc(100dvh - var(--nav-h) - 8.5rem));
+  }
+  .kp [hidden] { display: none !important; }
+  .kp .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  @media (max-width: 959px) {
+    .kp {
+      height: calc(100dvh - var(--nav-h));
+      min-height: 36rem;
+      border: 0;
+    }
+  }
+
+  .kp-app {
+    display: grid;
+    grid-template-columns: 16.75rem minmax(18rem, 24rem) 1fr;
+    flex: 1;
+    height: auto;
+    min-height: 0;
+    max-height: 100%;
+    overflow: hidden;
+  }
+  @media (max-width: 959px) {
+    .kp-app {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto minmax(13rem, 1fr) auto auto auto;
+      grid-template-areas:
+        "head"
+        "map"
+        "prio"
+        "cards"
+        "agent";
+      height: 100%;
+      min-height: 0;
+    }
+  }
+
+  .kp-nav {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: 1rem 0.9rem 1rem;
+    background: #fbfbfb;
+    color: #111;
+    border-right: 1px solid var(--kp-line);
+  }
+  @media (max-width: 959px) {
+    .kp-nav {
+      display: contents;
+    }
+    .kp-nav-main {
+      grid-area: head;
+      padding: 0.7rem 0.8rem 0.5rem;
+      background: #fff;
+      border-bottom: 1px solid var(--kp-line);
+    }
+    .kp-brief {
+      margin-top: 0.55rem;
+      padding-top: 0;
+      border-top: 0;
+    }
+    .kp-brief ul {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .kp-brief ul::-webkit-scrollbar { display: none; }
+    .kp-menu { margin-top: 0.65rem; }
+    .kp-menu ul {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .kp-menu ul::-webkit-scrollbar { display: none; }
+  }
+  .kp-client {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .kp-ava {
+    display: flex;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--kp-green);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+  .kp-client-name {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: #111;
+  }
+  .kp-client-meta {
+    margin: 0.22rem 0 0;
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.48);
+  }
+  .kp-brief {
+    margin-top: 1.15rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--kp-line);
+  }
+  .kp-brief-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.55rem;
+  }
+  .kp-brief-head .kp-nav-kicker { margin: 0; }
+  .kp-brief ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .kp-brief li {
+    width: auto;
+    padding: 0.32rem 0.62rem;
+    background: #eef1ee;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.25;
+    color: #2a2a28;
+  }
+  .kp-brief-edit {
+    display: inline-flex;
+    width: 1.7rem;
+    height: 1.7rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: rgba(0, 0, 0, 0.55);
+    cursor: pointer;
+  }
+  .kp-brief-edit svg {
+    width: 14px;
+    height: 14px;
+    display: block;
+  }
+  .kp-brief-edit:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: #111;
+  }
+  .kp-menu { margin-top: 1.15rem; }
+  .kp-nav-item em {
+    margin-left: auto;
+    font-style: normal;
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.42);
+  }
+  .kp-nav-item.is-on em { color: #1d3b8a; }
+  .kp-nav-item em.is-new {
+    width: 1.15rem;
+    height: 1.15rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--kp-green);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .kp-agent {
+    margin-top: auto;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--kp-line);
+  }
+  .kp-agent-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .kp-agent-row img {
+    width: 2.1rem;
+    height: 2.1rem;
+    object-fit: cover;
+    flex-shrink: 0;
+    border-radius: 50%;
+  }
+  .kp-agent-name {
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: #111;
+  }
+  .kp-agent-acts {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.1rem;
+    margin-left: auto;
+  }
+  .kp-agent-acts span {
+    display: inline-flex;
+    width: 1.7rem;
+    height: 1.7rem;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+  }
+  .kp-agent-acts svg {
+    width: 14px;
+    height: 14px;
+    display: block;
+  }
+  @media (max-width: 959px) {
+    .kp-agent {
+      grid-area: agent;
+      margin-top: 0;
+      padding: 0.55rem 0.8rem calc(0.55rem + env(safe-area-inset-bottom, 0px));
+      border-top: 1px solid var(--kp-line);
+      background: #fff;
+    }
+    .kp-agent .kp-nav-kicker { display: none; }
+    .kp-menu ul { flex-direction: row; overflow-x: auto; }
+  }
+  .kp-nav-kicker {
+    margin: 0 0 0.55rem;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .kp-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  @media (max-width: 959px) {
+    .kp-menu ul {
+      flex-direction: row;
+      gap: 0.25rem;
+    }
+  }
+  .kp-nav-item {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.48rem 0.55rem;
+    border: 0;
+    background: none;
+    color: rgba(0, 0, 0, 0.72);
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+    border-radius: 8px;
+  }
+  @media (max-width: 959px) {
+    .kp-nav-item {
+      width: auto;
+      white-space: nowrap;
+      padding: 0.4rem 0.55rem;
+    }
+  }
+  .kp-nav-item:hover { color: #111; background: rgba(0, 0, 0, 0.04); }
+  .kp-nav-item.is-on {
+    background: #e8eeff;
+    color: #1d3b8a;
+    cursor: default;
+  }
+  .kp-nav-ico {
+    display: flex;
+    width: 1.05rem;
+    height: 1.05rem;
+    flex-shrink: 0;
+    opacity: 0.8;
+  }
+  .kp-nav-ico svg { width: 100%; height: 100%; display: block; }
+  .kp-nav-item.is-on .kp-nav-ico { opacity: 1; }
+
+  .kp-prio {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 0.85rem;
+    padding: 0.55rem 0.6rem;
+    border: 1px solid var(--kp-line);
+    border-radius: 10px;
+    background: #fff;
+    color: #111;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Yellix', system-ui, sans-serif;
+  }
+  .kp-prio:hover {
+    background: #f7f7f6;
+    border-color: rgba(0, 0, 0, 0.16);
+  }
+  .kp-prio-copy {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  .kp-prio-kicker {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .kp-prio-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: #111;
+  }
+  .kp-prio-name svg {
+    width: 14px;
+    height: 14px;
+    display: block;
+    color: rgba(0, 0, 0, 0.55);
+  }
+  .kp-prio-meta {
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.48);
+  }
+  .kp-prio-go {
+    display: flex;
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    color: rgba(0, 0, 0, 0.28);
+  }
+  .kp-prio-go svg { width: 100%; height: 100%; display: block; }
+
+  .kp-side {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: #f7f7f6;
+    border-right: 1px solid var(--kp-line);
+  }
+  .kp-side-top {
+    flex-shrink: 0;
+    padding: 0.85rem 0.85rem 0.7rem;
+    background: #f7f7f6;
+    border-bottom: 1px solid var(--kp-line);
+  }
+  @media (max-width: 959px) {
+    .kp-side {
+      grid-area: cards;
+      display: flex;
+      background: #fff;
+      border-right: 0;
+      border-top: 1px solid var(--kp-line);
+    }
+    .kp-side-top {
+      padding: 0.55rem 0.85rem 0.15rem;
+      background: #fff;
+      border-bottom: 0;
+    }
+    .kp-prio {
+      grid-area: prio;
+      width: auto;
+      margin: 0;
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+    }
+  }
+  .kp-side-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-family: 'Yellix', system-ui, sans-serif;
+  }
+  .kp-side-head span {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .kp-side-head b {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.55);
+  }
+  .kp-filters-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--kp-blue-line);
+    background: var(--kp-blue-soft);
+    color: var(--kp-blue);
+    cursor: pointer;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .kp-filters-btn:hover { background: #dce6ff; }
+  .kp-filters-btn[aria-expanded="true"] {
+    background: var(--kp-blue-mid);
+    border-color: var(--kp-blue-mid);
+    color: #fff;
+  }
+  .kp-filters-ico {
+    display: flex;
+    width: 1.05rem;
+    height: 1.05rem;
+    flex-shrink: 0;
+  }
+  .kp-filters-ico svg { width: 100%; height: 100%; display: block; }
+  .kp-filters-btn em {
+    display: inline-flex;
+    min-width: 1.15rem;
+    height: 1.15rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.28rem;
+    border-radius: 99px;
+    background: var(--kp-blue);
+    color: #fff;
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .kp-filters-btn[aria-expanded="true"] em { background: #fff; color: var(--kp-blue); }
+  .kp-ff {
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.1rem;
+    background: rgba(2, 20, 16, 0.58);
+  }
+  @media (max-width: 959px) {
+    .kp-ff { align-items: flex-start; padding: 0.65rem; }
+  }
+  .kp-ff-card {
+    display: flex;
+    flex-direction: column;
+    width: min(72rem, 100%);
+    max-height: 100%;
+    min-height: 0;
+    background: #fff;
+    overflow: hidden;
+  }
+  .kp-ff-head {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex-shrink: 0;
+    padding: 0.85rem 1.15rem;
+    background: var(--kp-blue-soft);
+    border-bottom: 1px solid var(--kp-blue-line);
+  }
+  .kp-ff-head h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex: 1;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--kp-blue);
+  }
+  .kp-ff-head h2 .kp-filters-ico { width: 1.15rem; height: 1.15rem; }
+  .kp-ff-clear {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--kp-blue);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0.72;
+  }
+  .kp-ff-clear:hover { opacity: 1; }
+  .kp-ff-x {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--kp-blue);
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 1;
+    opacity: 0.55;
+  }
+  .kp-ff-x:hover { opacity: 1; }
+  .kp-ff-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+    min-height: 0;
+    overflow: auto;
+    padding: 0.8rem;
+  }
+  @media (min-width: 960px) {
+    .kp-ff-grid { grid-template-columns: 1fr 1fr 1fr; }
+  }
+  .kp-ff-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    min-width: 0;
+  }
+  .kp-ff-box {
+    padding: 0.95rem 1rem 1rem;
+    background: #f7f7f6;
+    border: 1px solid var(--kp-line);
+  }
+  .kp-ff-box h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 0 0.15rem;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .kp-ff-field { margin-top: 0.8rem; }
+  .kp-ff-label {
+    margin: 0 0 0.32rem;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.52);
+  }
+  .kp-ff-sub {
+    margin: 0.55rem 0 0.28rem;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.52);
+  }
+  .kp-ff-hint {
+    margin: 0.45rem 0 0;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.42);
+  }
+  .kp-ff-input {
+    width: 100%;
+    min-width: 0;
+    padding: 0.42rem 0.55rem;
+    border: 1px solid var(--kp-line);
+    background: #fff;
+    color: #111;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .kp-ff-input::placeholder { color: rgba(0, 0, 0, 0.34); }
+  .kp-ff-range {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .kp-ff-range span {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.42);
+  }
+  .kp-ff-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+  }
+  .kp-ff-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.4rem;
+  }
+  .kp-ff-field > .kp-ff-chips { margin-top: 0; }
+  .kp-ff-chip {
+    padding: 0.32rem 0.55rem;
+    border: 1px solid var(--kp-line);
+    background: #fff;
+    color: #111;
+    cursor: pointer;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .kp-ff-chip.is-on {
+    background: var(--kp-blue-soft);
+    border-color: var(--kp-blue-line);
+    color: var(--kp-blue);
+    cursor: default;
+  }
+  .kp-ff-add {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--kp-green);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .kp-ff-check {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 0.45rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #111;
+    cursor: pointer;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .kp-ff-check i {
+    width: 0.9rem;
+    height: 0.9rem;
+    flex-shrink: 0;
+    border: 1px solid rgba(0, 0, 0, 0.28);
+    background: #fff;
+  }
+  .kp-ff-rooms {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+  @media (max-width: 1100px) {
+    .kp-ff-rooms { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  .kp-ff-rooms > div span {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .kp-ff-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-shrink: 0;
+    padding: 0.75rem 1.15rem;
+    border-top: 1px solid var(--kp-line);
+  }
+  .kp-ff-foot p {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .kp-ff-done {
+    padding: 0.48rem 0.95rem;
+    border: 0;
+    background: var(--kp-blue);
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .kp-ff-done:hover { opacity: 0.85; }
+  [data-kp-locked] { cursor: pointer; }
+
+  .kp-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: 0.75rem 0.75rem 1rem;
+  }
+  @media (max-width: 959px) {
+    .kp-cards {
+      flex-direction: row;
+      gap: 0.6rem;
+      flex: none;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 0.75rem;
+      padding: 0.45rem 0.75rem 0.85rem;
+      scrollbar-width: none;
+    }
+    .kp-cards::-webkit-scrollbar { display: none; }
+    .kp-card {
+      flex: 0 0 min(78%, 18.5rem);
+      flex-direction: row;
+      scroll-snap-align: start;
+      min-height: 0;
+    }
+    .kp-card:hover,
+    .kp-card.is-on { transform: none; }
+    .kp-card-photo {
+      width: 6.4rem;
+      aspect-ratio: 1;
+      flex-shrink: 0;
+    }
+    .kp-card-body { padding: 0.55rem 0.65rem 0.6rem; }
+    .kp-card-body h3 { font-size: 15px; }
+    .kp-card-note { display: none; }
+    .kp-card-pps { font-size: 16px; margin-top: 0.3rem; }
+    .kp-badge { font-size: 10px; padding: 0.12rem 0.32rem; }
+    .kp-badge-av { max-width: 5.5rem; }
+  }
+  .kp-empty {
+    margin: 0;
+    padding: 1.25rem 0.9rem 1.5rem;
+    text-align: center;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.55);
+  }
+  @media (max-width: 959px) {
+    .kp-empty { padding: 0.8rem 0.9rem 1rem; }
+  }
+
+  .kp-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    border: 1px solid transparent;
+    background: #fff;
+    color: #111;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .kp-card:hover,
+  .kp-card.is-on {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+  }
+  .kp-card.is-on { border-color: #111; }
+  @media (prefers-reduced-motion: reduce) {
+    .kp-card,
+    .kp-card:hover,
+    .kp-card.is-on { transform: none; }
+  }
+  .kp-card-photo {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--kp-fallback, #d7e2d9);
+  }
+  .kp-card-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .kp-badge {
+    position: absolute;
+    padding: 0.18rem 0.42rem;
+    background: rgba(255, 255, 255, 0.92);
+    color: #111;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .kp-badge-trend { top: 0.45rem; left: 0.45rem; }
+  .kp-badge-trend.is-up { color: #1f7a4d; }
+  .kp-badge-trend.is-down { color: #c13b3a; }
+  .kp-badge-av {
+    top: 0.45rem;
+    right: 0.45rem;
+    max-width: 11.5rem;
+    background: #111;
+    color: #fff;
+    text-align: right;
+  }
+  .kp-badge-date {
+    left: 0.45rem;
+    bottom: 0.45rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+  }
+  .kp-card-body { padding: 0.7rem 0.8rem 0.85rem; }
+  .kp-card-rank {
+    margin: 0 0 0.35rem;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.42);
+  }
+  .kp-card-rank.is-top { color: #1d3b8a; }
+  .kp-card-body h3 {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: #111;
+  }
+  .kp-card-loc {
+    margin: 0.18rem 0 0;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .kp-card-note {
+    margin: 0.55rem 0 0;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.45;
+    color: rgba(0, 0, 0, 0.72);
+  }
+  .kp-card-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 0.85rem;
+    margin-top: 0.75rem;
+  }
+  .kp-card-status {
+    display: inline-flex;
+    flex-shrink: 0;
+    padding: 0.28rem 0.5rem;
+    background: #f0f0ee;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+  .kp-card-status.is-view { background: #e8eeff; color: #1d3b8a; }
+  .kp-card-status.is-hold { background: #111; color: #fff; }
+  .kp-card-status.is-wait { background: #f0f0ee; color: rgba(0, 0, 0, 0.62); }
+  .kp-card-pps {
+    margin: 0 0 0 auto;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: #111;
+    text-align: right;
+  }
+  .kp-card-pps span {
+    margin-right: 0.22rem;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .kp-poi {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.7rem;
+    margin: 0.55rem 0 0;
+    padding: 0;
+    list-style: none;
+    color: rgba(0, 0, 0, 0.55);
+    font-size: 11px;
+  }
+  .kp-poi li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+  }
+  .kp-poi svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+  .kp-mapwrap {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    background: #e4e9e6;
+  }
+  @media (max-width: 959px) {
+    .kp-mapwrap {
+      grid-area: map;
+      height: auto;
+      min-height: 0;
+    }
+    .kp-legend {
+      top: auto;
+      bottom: 0.55rem;
+      right: 0.55rem;
+      width: 9.5rem;
+      padding: 0.4rem 0.5rem 0.45rem;
+    }
+    .kp-legend-head,
+    .kp-legend ul { display: none; }
+    .kp-legend-bar { margin: 0 0 0.2rem; }
+    .kp-legend-scale { margin: 0; }
+  }
+  .kp-map { width: 100%; height: 100%; }
+  .kp-legend {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 2;
+    width: 13.5rem;
+    padding: 0.7rem 0.75rem 0.75rem;
+    background: rgba(255, 255, 255, 0.94);
+    color: #111;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    font-family: 'Yellix', system-ui, sans-serif;
+  }
+  .kp-legend-head span {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .kp-legend-bar {
+    height: 6px;
+    margin: 0.5rem 0 0.28rem;
+    background: linear-gradient(90deg, var(--kp-low), var(--kp-mid), var(--kp-high));
+  }
+  .kp-legend-scale {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.55rem;
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .kp-legend ul { margin: 0; padding: 0; list-style: none; }
+  .kp-legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.28rem;
+    font-size: 12px;
+    color: #3a3a38;
+  }
+  .kp-legend i {
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+  }
+  .kp-legend i.is-low { background: var(--kp-low); }
+  .kp-legend i.is-mid { background: var(--kp-mid); }
+  .kp-legend i.is-high { background: var(--kp-high); }
+  .kp-legend i.is-rest {
+    width: 7px;
+    height: 7px;
+    background: #9a9a96;
+  }
+
+  .kp-pin {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+  }
+  .kp-pin.is-on {
+    transform: scale(1.45);
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.16), 0 1px 5px rgba(0, 0, 0, 0.35);
+    z-index: 3;
+  }
+  .kp-pin-rest {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    background: #8e8e8a;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.16);
+    pointer-events: none;
+  }
+  .kp-tip {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    line-height: 1.35;
+    color: #111;
+  }
+  .kp-tip strong { display: block; font-size: 13px; font-weight: 500; }
+  .kp-pop { width: 16.75rem; font-family: 'Yellix', system-ui, sans-serif; color: #111; }
+  .kp-pop .kp-card-photo { height: 8rem; aspect-ratio: auto; }
+  .kp-pop img { width: 100%; height: 8rem; object-fit: cover; display: block; }
+  .kp-pop-body { padding: 0.7rem 0.75rem 0.8rem; }
+  .kp-pop-body h3 { margin: 0 0 0.15rem; font-size: 15px; font-weight: 500; color: #111; }
+  .kp-pop-body p { margin: 0; font-size: 12px; color: rgba(0, 0, 0, 0.5); }
+  .kp-pop-body strong {
+    display: block;
+    margin: 0.4rem 0 0.65rem;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+  .kp-pop-body button {
+    width: 100%;
+    padding: 0.48rem 0.6rem;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    background: #fff;
+    color: #111;
+    cursor: pointer;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .kp-pop-body button:hover {
+    background: #f6f6f4;
+  }
+
+  .kp-detail {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    overflow: auto;
+    background: #fff;
+    color: #111;
+    padding: 1.1rem 1.2rem 2.4rem;
+  }
+  @media (min-width: 768px) {
+    .kp-detail { padding: 1.35rem 2.1rem 3rem; }
+  }
+  .kp-back {
+    margin: 0 0 1rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: rgba(0, 0, 0, 0.55);
+    cursor: pointer;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .kp-back:hover { color: #000; }
+  .kp-d-hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+    margin-bottom: 2.4rem;
+    align-items: start;
+  }
+  @media (min-width: 900px) {
+    .kp-d-hero {
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+      gap: 2.6rem;
+      align-items: stretch;
+    }
+  }
+  .kp-d-photo {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--kp-fallback, #d7e2d9);
+  }
+  @media (min-width: 900px) {
+    .kp-d-photo {
+      aspect-ratio: auto;
+      min-height: 22rem;
+      height: 100%;
+    }
+  }
+  .kp-d-photo > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  .kp-d-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    padding-top: 0.15rem;
+  }
+  .kp-d-name {
+    margin: 0 0 0.55rem;
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+    color: #111;
+  }
+  .kp-d-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.55rem;
+    margin: 0 0 1.35rem;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .kp-d-meta svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    color: rgba(0, 0, 0, 0.4);
+  }
+  .kp-d-meta i {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.28);
+    flex-shrink: 0;
+  }
+  .kp-d-buy {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.05rem 0 1.15rem;
+    border-top: 1px solid var(--kp-line);
+  }
+  .kp-d-buy p span {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.42);
+  }
+  .kp-d-buy strong {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: clamp(22px, 2.4vw, 30px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: #111;
+  }
+  .kp-d-web {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    height: 2.35rem;
+    padding: 0 0.9rem;
+    border: 1px solid rgba(0, 0, 0, 0.22);
+    background: #fff;
+    color: #111;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .kp-d-web svg {
+    width: 11px;
+    height: 11px;
+    display: block;
+    flex-shrink: 0;
+  }
+  .kp-d-facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: auto;
+    border-top: 1px solid var(--kp-line);
+  }
+  .kp-d-facts div {
+    padding: 0.95rem 0.9rem 1rem;
+    border-bottom: 1px solid var(--kp-line);
+  }
+  .kp-d-facts div:nth-child(odd) { padding-left: 0; border-right: 1px solid var(--kp-line); }
+  .kp-d-facts div:nth-child(even) { padding-right: 0; }
+  .kp-d-facts span {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.42);
+  }
+  .kp-d-facts strong {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: #111;
+  }
+  .kp-d-sec { margin: 0 0 2.35rem; }
+  .kp-d-sec h3 {
+    margin: 0 0 0.35rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+    font-size: clamp(22px, 2.2vw, 28px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+  }
+  .kp-d-lead {
+    margin: 0 0 0.85rem;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.48);
+  }
+
+  .kp-d-units { position: relative; }
+  .kp-d-units-box { position: relative; min-height: 22rem; }
+  .kp-d-units-ghost {
+    pointer-events: none;
+    user-select: none;
+    filter: blur(6px);
+    opacity: 0.78;
+  }
+  .kp-unit {
+    display: grid;
+    grid-template-columns: 4.2rem 3.6rem 5.4rem minmax(0, 1fr) auto auto;
+    gap: 0.85rem;
+    align-items: center;
+    padding: 0.82rem 0;
+    border-bottom: 1px solid var(--kp-line);
+    font-size: 14px;
+  }
+  .kp-unit b { font-weight: 500; }
+  .kp-unit span { color: rgba(0, 0, 0, 0.55); }
+  .kp-unit em {
+    font-style: normal;
+    font-weight: 500;
+    color: #111;
+    white-space: nowrap;
+  }
+  .kp-unit i {
+    font-style: normal;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 13px;
+  }
+  .kp-unit-tag {
+    display: inline-flex;
+    margin-left: 0.45rem;
+    padding: 0.12rem 0.4rem;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  @media (max-width: 720px) {
+    .kp-unit {
+      grid-template-columns: 3.6rem 3.2rem 1fr auto;
+      gap: 0.45rem 0.65rem;
+    }
+    .kp-unit span:nth-child(3),
+    .kp-unit span:nth-child(4) { display: none; }
+  }
+  .kp-d-units-veil {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.55) 38%,
+      rgba(255, 255, 255, 0.92) 100%
+    );
+    cursor: pointer;
+  }
+  .kp-d-lock-card {
+    width: min(22rem, 100%);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+  }
+
+  .kp-around-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0.35rem 0 1rem;
+    border-bottom: 1px solid var(--kp-line);
+  }
+  @media (min-width: 860px) {
+    .kp-around-stats { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  }
+  .kp-around-stats div {
+    padding: 0.7rem 0.85rem 0.9rem 0;
+    border-right: 1px solid var(--kp-line);
+  }
+  .kp-around-stats div:last-child { border-right: 0; }
+  .kp-around-stats span {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.42);
+  }
+  .kp-around-stats strong {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .kp-around-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+  @media (min-width: 900px) {
+    .kp-around-body { grid-template-columns: 1.35fr 0.95fr; }
+  }
+  .kp-d-amap {
+    position: relative;
+    min-height: 18.5rem;
+    height: 18.5rem;
+    background: #e8ece9;
+    overflow: hidden;
+  }
+  .kp-d-amap .maplibregl-map {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .kp-d-map-name {
+    padding: 0.28rem 0.55rem;
+    background: #111;
+    color: #fff;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  }
+  .kp-d-poi {
+    display: flex;
+    width: 1.7rem;
+    height: 1.7rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    color: #111;
+  }
+  .kp-d-poi svg { width: 13px; height: 13px; }
+  .kp-around-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--kp-line);
+  }
+  @media (min-width: 520px) {
+    .kp-around-grid { grid-template-columns: 1fr 1fr 1fr; }
+  }
+  .kp-around-grid div {
+    padding: 0.85rem 0.9rem 0.95rem;
+    border-right: 1px solid var(--kp-line);
+    border-bottom: 1px solid var(--kp-line);
+  }
+  .kp-around-grid div:nth-child(2n) { border-right: 0; }
+  @media (min-width: 520px) {
+    .kp-around-grid div:nth-child(2n) { border-right: 1px solid var(--kp-line); }
+    .kp-around-grid div:nth-child(3n) { border-right: 0; }
+    .kp-around-grid div:nth-last-child(-n + 3) { border-bottom: 0; }
+  }
+  @media (max-width: 519px) {
+    .kp-around-grid div:nth-last-child(-n + 2) { border-bottom: 0; }
+  }
+  .kp-around-grid svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin-bottom: 0.45rem;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .kp-around-grid b {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .kp-around-grid span {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.48);
+  }
+
+  .kp-pay-bar {
+    display: flex;
+    height: 2.55rem;
+    margin: 0.35rem 0 0.7rem;
+    overflow: hidden;
+    background: #9aa0a8;
+  }
+  .kp-pay-bar b,
+  .kp-pay-bar i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-style: normal;
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+  }
+  .kp-pay-bar b { background: #111; }
+  .kp-pay-bar i { background: #9aa0a8; }
+  .kp-pay-legs {
+    display: flex;
+    gap: 0;
+    margin: 0 0 0.2rem;
+  }
+  .kp-pay-legs div { min-width: 0; padding-right: 1rem; }
+  .kp-pay-legs b {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .kp-pay-legs span {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .kp-doc {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+    padding: 0.85rem 0;
+    border: 0;
+    border-bottom: 1px solid var(--kp-line);
+    background: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #111;
+  }
+  .kp-doc svg {
+    width: 16px;
+    height: 16px;
+    color: rgba(0, 0, 0, 0.45);
+    flex-shrink: 0;
+  }
+  .kp-doc em {
+    margin-left: auto;
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .kp-d-more {
+    position: relative;
+    min-height: 22rem;
+    margin-top: 0.15rem;
+  }
+  .kp-d-more-ghost {
+    pointer-events: none;
+    user-select: none;
+    filter: blur(6px);
+    opacity: 0.78;
+  }
+  .kp-d-more-ghost .kp-d-sec {
+    margin: 0 0 1.6rem;
+  }
+  .kp-d-note {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--kp-line);
+    font-size: 14px;
+  }
+  .kp-d-note b { display: block; font-weight: 500; margin-bottom: 0.15rem; }
+  .kp-d-note span { color: rgba(0, 0, 0, 0.5); }
+  .kp-d-time {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.7rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--kp-line);
+    font-size: 14px;
+  }
+  .kp-d-time b { font-weight: 500; }
+  .kp-d-time span { color: rgba(0, 0, 0, 0.5); }
+
+  @keyframes kp-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes kp-d-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes kp-d-photo {
+    from { opacity: 0; transform: scale(1.05); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes kp-shimmer {
+    from { background-position: 120% 0; }
+    to { background-position: -40% 0; }
+  }
+  .kp-d-in {
+    animation: kp-d-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--d, 0s);
+  }
+  .kp-d-photo > img { animation: kp-d-photo 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .kp-d-skel {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #e8ece9 0%, #f6f6f5 48%, #e8ece9 100%);
+    background-size: 220% 100%;
+    animation: kp-shimmer 1.15s linear infinite;
+  }
+  .kp-pay-bar { transform-origin: left; animation: kp-bar 0.85s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .kp-d-facts div,
+  .kp-around-stats div,
+  .kp-around-grid div {
+    animation: kp-d-in 0.48s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(0.16s + var(--i, 0) * 0.05s);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .kp-d-in,
+    .kp-d-photo > img,
+    .kp-d-skel,
+    .kp-pay-bar,
+    .kp-d-facts div,
+    .kp-around-stats div,
+    .kp-around-grid div {
+      animation: none !important;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .kp .maplibregl-popup-content {
+    padding: 0;
+    border-radius: 0;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+  }
+  .kp .maplibregl-popup-close-button { font-size: 16px; padding: 0 6px; }
+  .kp .kp-hover-pop .maplibregl-popup-content { padding: 0.45rem 0.6rem; }
+  .kp .maplibregl-ctrl-group { border-radius: 0; }
+
+  .kp-lock {
+    position: absolute;
+    inset: 0;
+    z-index: 12;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: rgba(2, 20, 16, 0.72);
+  }
+  .kp-lock-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: min(22rem, 100%);
+    padding: 2.6rem 2.1rem 2.15rem;
+    background: #f1f1f1;
+    text-align: center;
+  }
+  .kp-lock-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: rgba(0, 0, 0, 0.38);
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+  }
+  .kp-lock-close:hover { color: #111; }
+  .kp-lock-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid rgba(2, 45, 32, 0.22);
+    color: var(--kp-green);
+  }
+  .kp-lock-mark svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+  .kp-lock-title {
+    margin: 0 0 0.5rem;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: #111;
+  }
+  .kp-lock-text {
+    margin: 0 0 1.45rem;
+    max-width: 26ch;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.55);
+  }
+  .kp-lock-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.9rem;
+    border: 0;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .kp-lock-cta img {
+    width: 12px;
+    height: 12px;
+    filter: brightness(0) invert(1);
+  }
+  .kp-lock-cta:hover { opacity: 0.85; }
+
+  .kp-tabbar,
+  .kp-chat,
+  .kp-mhead,
+  .kp-stk,
+  .kp-demo-tag,
+  .kp-ttl,
+  .kp-zd,
+  .kp-prl,
+  .kp-mtop,
+  .kp-mleg,
+  .kp-mcards,
+  .kp-ash,
+  .kp-d-cta,
+  .kp-d-acts,
+  .kp-d-rank,
+  .kp-d-stick,
+  .kp-why { display: none; }
+
+  @media (max-width: 959px) {
+    .kp {
+      --kp-tabbar: calc(3.4rem + env(safe-area-inset-bottom, 0px));
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+    }
+    .kp-app {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      grid-template-columns: none;
+      grid-template-rows: none;
+      grid-template-areas: none;
+    }
+    .kp-nav { display: contents; }
+    .kp-nav-main {
+      flex: 0 0 auto;
+      padding: 0.7rem 0.9rem 0.55rem;
+      border-bottom: 1px solid var(--kp-line);
+      background: #fff;
+    }
+    .kp-brief,
+    .kp-menu,
+    .kp-prio,
+    .kp-agent { display: none !important; }
+    .kp-side {
+      display: none;
+      flex: 1;
+      min-height: 0;
+      border: 0;
+      background: #f7f7f6;
+    }
+    .kp-side-top {
+      padding: 0.7rem 0.9rem 0.35rem;
+      background: #f7f7f6;
+      border-bottom: 0;
+    }
+    .kp-cards {
+      flex-direction: column;
+      flex: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scroll-snap-type: none;
+      padding: 0.35rem 0.75rem 1rem;
+    }
+    .kp-card {
+      flex: none;
+      width: 100%;
+      flex-direction: row;
+    }
+    .kp-mapwrap {
+      display: none;
+      flex: 1;
+      min-height: 0;
+      height: auto;
+    }
+    .kp.is-tab-vyber .kp-side { display: flex; }
+    .kp.is-tab-mapa .kp-mapwrap { display: block; }
+    .kp.is-tab-zpravy .kp-app { display: none; }
+    .kp-detail {
+      top: 0;
+      bottom: var(--kp-tabbar);
+    }
+    .kp-tabbar {
+      display: flex;
+      flex-shrink: 0;
+      height: var(--kp-tabbar);
+      padding: 0 0.2rem env(safe-area-inset-bottom, 0px);
+      border-top: 1px solid var(--kp-line);
+      background: #fff;
+      z-index: 8;
+    }
+    .kp-tabbar button {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.18rem;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: rgba(0, 0, 0, 0.42);
+      cursor: pointer;
+      font-family: 'Yellix', system-ui, sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+    }
+    .kp-tabbar button svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+    .kp-tabbar button.is-on { color: var(--kp-green); }
+    .kp-chat {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      background: #f7f7f6;
+    }
+    .kp.is-tab-zpravy .kp-chat { display: flex; }
+    .kp-chat-head {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.75rem 0.95rem;
+      background: #fff;
+      border-bottom: 1px solid var(--kp-line);
+    }
+    .kp-chat-head img {
+      width: 2.2rem;
+      height: 2.2rem;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .kp-chat-name {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 500;
+    }
+    .kp-chat-meta {
+      margin: 0.12rem 0 0;
+      font-size: 11px;
+      color: rgba(0, 0, 0, 0.48);
+    }
+    .kp-chat-log {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      padding: 1rem 0.95rem;
+    }
+    .kp-chat-log p {
+      max-width: 85%;
+      margin: 0 0 0.65rem;
+      padding: 0.7rem 0.8rem;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .kp-chat-log .is-them {
+      background: #fff;
+      color: #111;
+    }
+    .kp-chat-log .is-me {
+      margin-left: auto;
+      background: var(--kp-green);
+      color: #fff;
+    }
+    .kp-chat-compose {
+      margin: 0 0.85rem calc(0.75rem);
+      padding: 0.7rem 0.85rem;
+      background: #fff;
+      color: rgba(0, 0, 0, 0.38);
+      font-size: 13px;
+      border: 1px solid var(--kp-line);
+    }
+  }
+</style>
+
+<script>
+  type Project = {
+    id: string;
+    name: string;
+    developer?: string;
+    quarter: string;
+    address?: string;
+    lat: number;
+    lng: number;
+    completion?: string | null;
+    coverUrl?: string | null;
+    projectUrl?: string | null;
+    priceFrom: number;
+    pricePerSmFrom: number;
+    layouts: string[];
+    counts: { available: number; reserved: number; sold: number; total: number };
+    header?: {
+      payments?: { contractPct: number; constructionPct: number; moveInPct: number };
+      priceFromByLayout?: { layout: string; priceFrom: number | null; note?: string | null }[];
+    };
+    surroundings?: { category: string; label: string; name: string | null; distanceM: number }[];
+    summary?: {
+      available: number;
+      sold: number;
+      total: number;
+      soldPct: number;
+      layoutMix: { layout: string; available: number; total: number }[];
+      pricePerSm: { min: number; median: number; max: number };
+    };
+    priceTrend?: { month: string; medianPerSm: number | null }[];
+    standards?: Record<string, unknown>;
+  };
+
+  const MONTHS = ['leden', 'únor', 'březen', 'duben', 'květen', 'červen', 'červenec', 'srpen', 'září', 'říjen', 'listopad', 'prosinec'];
+  const FALLBACKS = ['#d7e2d9', '#e4ddd4', '#d9e0e6', '#e8e4dc', '#dce6df'];
+  const PIN = { low: '#2f9e6b', mid: '#d4a017', high: '#e24b4a' };
+  const PIN_DEMO = { low: '#3e9a5f', mid: '#d4a32a', high: '#d9534f' };
+  const ML_CSS = 'https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css';
+  const ML_JS = 'https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js';
+  const STYLE = 'https://tiles.openfreemap.org/styles/positron';
+  const WANT = '3+kk';
+  const VYBER = [
+    {
+      id: 'd5dd1a8d-f2da-40e3-ae83-28b2db25063c',
+      note: 'Nejlepší poměr v Hrdlořezích. 3+kk od 10,5 mil., část s terasou.',
+      status: { kind: 'view', label: 'K prohlídce 12. 11.' },
+    },
+    {
+      id: 'e58c0de2-a10b-46fb-874f-13f712932aa1',
+      note: 'Nejvíc volných 3+kk a termín 2028. Cena je kousek nad zadáním.',
+      status: { kind: 'hold', label: 'Rezervace do 20. 11.' },
+    },
+    {
+      id: '04baac53-a76d-4a09-abed-d76b3655748f',
+      note: 'Velký výběr 3+kk. Termín 2029 je za zadáním, ale dispozice a cena sedí.',
+      status: { kind: 'view', label: 'K prohlídce 12. 11.' },
+    },
+    {
+      id: 'ce1767bd-1620-45a6-bbc7-fcb88ab3aa01',
+      note: 'Jediný volný 3+kk v etapě. Hodí se, pokud chcete bydlet dřív – kolaudace 2026.',
+      status: { kind: 'view', label: 'K prohlídce 12. 11.' },
+    },
+  ] as const;
+
+  let root: HTMLElement | null = null;
+  let payloadJson: { projects: Project[] } | null = null;
+  let allProjects: Project[] = [];
+  let projects: Project[] = [];
+  let state = { selected: '', hover: '', tab: 'vyber' };
+  let prevTab = 'vyber';
+  let skipPop = false;
+  let mapBooted = false;
+  let map: any = null;
+  let mini: any = null;
+  let markers: { id: string; marker: any; el: HTMLElement }[] = [];
+  let hoverPop: any = null;
+  let clickPop: any = null;
+  let t1 = 0;
+  let t2 = 0;
+
+  function qs<T extends Element>(sel: string) {
+    return root!.querySelector(sel) as T;
+  }
+  function prefersLess() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+  function czk(n: number) {
+    return `${Math.round(n).toLocaleString('cs-CZ')}\u00a0Kč`;
+  }
+  function odCzk(n: number) {
+    if (n >= 1_000_000) {
+      const mil = n / 1_000_000;
+      const t = mil.toLocaleString('cs-CZ', { maximumFractionDigits: 1 });
+      return `od ${t}\u00a0mil.\u00a0Kč`;
+    }
+    return `od ${czk(n)}`;
+  }
+  function milLabel(n: number) {
+    return `${(n / 1_000_000).toLocaleString('cs-CZ', { maximumFractionDigits: 1 })}\u00a0mil.\u00a0Kč`;
+  }
+  function priceFromWanted(p: Project) {
+    const row = p.header?.priceFromByLayout?.find((r) => r.layout === WANT);
+    return row?.priceFrom || p.priceFrom;
+  }
+  function matchCount(p: Project) {
+    const row = p.summary?.layoutMix?.find((m) => m.layout === WANT);
+    if (row) return row.available;
+    return hasLayout(p, WANT) ? 1 : 0;
+  }
+  function matchLabel(n: number) {
+    if (n === 1) return '1 byt 3+kk';
+    if (n >= 2 && n <= 4) return `${n} byty 3+kk`;
+    return `${n} bytů 3+kk`;
+  }
+  function dist(m: number) {
+    if (m >= 1000) return `${(m / 1000).toLocaleString('cs-CZ', { maximumFractionDigits: 1 })}\u00a0km`;
+    return `${Math.round(m)}\u00a0m`;
+  }
+  function doneWhen(raw?: string | null) {
+    if (!raw) return 'termín upřesníme';
+    const [y, m] = raw.split('-');
+    if (!m) return y;
+    return `${MONTHS[Number(m) - 1] || m} ${y}`;
+  }
+  function fallback(id: string) {
+    let h = 0;
+    for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+    return FALLBACKS[h % FALLBACKS.length];
+  }
+  function pinBand(pps: number): 'low' | 'mid' | 'high' {
+    if (pps <= t1) return 'low';
+    if (pps <= t2) return 'mid';
+    return 'high';
+  }
+  function pinColor(pps: number) {
+    return (isDemoPage() ? PIN_DEMO : PIN)[pinBand(pps)];
+  }
+  function esc(s: string) {
+    return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
+  }
+  function photo(url: string | null | undefined, alt: string) {
+    if (!url) return '';
+    return `<img src="${url}" alt="${esc(alt)}" loading="lazy" onerror="this.remove()">`;
+  }
+  function hasLayout(p: Project, layout: string) {
+    const row = p.summary?.layoutMix?.find((m) => m.layout === layout);
+    if (row) return row.available > 0;
+    return (p.layouts || []).includes(layout);
+  }
+  function trendOf(p: Project) {
+    const pts = (p.priceTrend || []).filter((t) => t.medianPerSm != null) as { medianPerSm: number }[];
+    if (pts.length < 2) return null;
+    const a = pts[0].medianPerSm;
+    const b = pts[pts.length - 1].medianPerSm;
+    if (!a) return null;
+    const pct = ((b - a) / a) * 100;
+    const dir = Math.abs(pct) < 0.15 ? 'flat' : pct > 0 ? 'up' : 'down';
+    const n = `${pct > 0 ? '+' : ''}${pct.toLocaleString('cs-CZ', { maximumFractionDigits: 1 })}`;
+    return { dir, text: `Cena vs. trh ${n}\u00a0%` };
+  }
+  function ico(kind: string) {
+    const s = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
+    const wrap = (d: string) => `<svg viewBox="0 0 16 16" aria-hidden="true"><path ${s} d="${d}"/></svg>`;
+    if (kind === 'supermarket') return wrap('M2.5 3.5h2l.8 8h7.4l1.3-6H5.2M6.5 13.5h.1M11.5 13.5h.1');
+    if (kind === 'school') return wrap('M2 12.5 8 4l6 8.5M8 4v8.5M4.5 12.5h7');
+    if (kind === 'kindergarten') return wrap('M8 3.5v9M4 7.5c0-2 1.8-4 4-4s4 2 4 4M4.5 13h7');
+    if (kind === 'metro') return wrap('M3.5 3.5h9v9h-9zM6 12.5v-6M10 12.5v-6');
+    if (kind === 'tram') return wrap('M4 5.5h8v6H4zM6 3.5h4M5 14h.1M11 14h.1M4 8.5h8');
+    if (kind === 'bus') return wrap('M4 3.5h8v8H4zM5.5 13.5h.1M10.5 13.5h.1M4 9.5h8');
+    if (kind === 'vlak') return wrap('M4 4.5h8v7H4zM6 13.5h4M4 8.5h8');
+    if (kind === 'cafe') return wrap('M4 5.5h7.5v5A3.5 3.5 0 0 1 8 14 3.5 3.5 0 0 1 4.5 10.5v-5H4M11.5 6.5h1.4A1.6 1.6 0 0 1 14.5 8a1.6 1.6 0 0 1-1.6 1.5H11.5');
+    if (kind === 'restaurant') return wrap('M5 2.5v11M5 6.5h2.2M11 2.5c0 3-1.6 4-1.6 4v7');
+    if (kind === 'playground') return wrap('M3.5 13.5h9M8 13.5V6.5M5 8.5h6M4 6.5h8');
+    if (kind === 'green' || kind === 'park') return wrap('M8 13.5V8M4.5 11c0-3 1.6-5.5 3.5-5.5S11.5 8 11.5 11M6 7c.4-2 1.4-3.5 2-3.5s1.6 1.5 2 3.5');
+    return wrap('M8 13.5s-5-3.2-5-7A5 5 0 0 1 8 1.5a5 5 0 0 1 5 5c0 3.8-5 7-5 7z');
+  }
+  function seed(s: string) {
+    let h = 0;
+    for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+    return h;
+  }
+  function aroundM(p: Project, cat: string) {
+    const hit = (p.surroundings || []).find((s) => s.category === cat);
+    if (hit?.distanceM != null) return hit.distanceM;
+    return 70 + (seed(p.id + cat) % 280);
+  }
+  function doneDot(raw?: string | null) {
+    if (!raw) return 'termín upřesníme';
+    const [y, m] = raw.split('-');
+    if (!m) return y;
+    const last = new Date(Number(y), Number(m), 0).getDate();
+    return `${last}. ${Number(m)}. ${y}`;
+  }
+  function unitRows(p: Project) {
+    const base = priceFromWanted(p);
+    const rows = [
+      { layout: '3+kk', area: 85, floor: '-1. patro', extra: 'balkon 5 m²', k: 1.12 },
+      { layout: '2+kk', area: 45, floor: '-1. patro', extra: 'balkon 11 m²', k: 0.74 },
+      { layout: '2+kk', area: 47, floor: '1. patro', extra: 'balkon 7 m² · zahrada 51,1 m²', k: 0.735 },
+      { layout: '2+kk', area: 53, floor: '1. patro', extra: 'balkon 16 m² · zahrada 55 m²', k: 0.85 },
+      { layout: '2+kk', area: 59, floor: '1. patro', extra: 'balkon 4 m² · zahrada 101,6 m²', k: 0.875 },
+      { layout: '2+kk', area: 49, floor: '2. patro', extra: 'balkon 3 m²', k: 0.725 },
+      { layout: '3+kk', area: 92, floor: '2. patro', extra: 'balkon 6 m²', k: 1.17 },
+      { layout: '3+kk', area: 92, floor: '4. patro', extra: 'balkon 6 m²', k: 1.2, reserved: true },
+    ];
+    return rows.map((r) => ({
+      ...r,
+      price: Math.round((base * r.k) / 1000) * 1000,
+    }));
+  }
+  function lockCard(title: string, text: string) {
+    return `
+      <div class="kp-lock-card kp-d-lock-card">
+        <div class="kp-lock-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5.5" y="11" width="13" height="9" rx="0"/>
+            <path d="M8 11V8.4a4 4 0 0 1 8 0V11"/>
+          </svg>
+        </div>
+        <h2 class="kp-lock-title font-yellix">${title}</h2>
+        <p class="kp-lock-text font-yellix">${text}</p>
+        <button type="button" class="kp-lock-cta font-yellix" data-smart-meeting-open data-smart-meeting-type="client">
+          <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+          Domluvit schůzku
+        </button>
+      </div>
+    `;
+  }
+  function filtered() {
+    return projects;
+  }
+  function pickMeta(id: string) {
+    const i = VYBER.findIndex((item) => item.id === id);
+    return i < 0 ? null : { ...VYBER[i], rank: i + 1 };
+  }
+  function cardHtml(p: Project) {
+    if (isDemoPage()) return cardHtmlMobile(p);
+    const color = fallback(p.id);
+    const tr = trendOf(p);
+    const meta = pickMeta(p.id);
+    const rank = String(meta?.rank || 0).padStart(2, '0');
+    const rankLabel = meta?.rank === 1 ? `${rank} · Doporučujeme` : rank;
+    const units = matchLabel(matchCount(p));
+    return `<button type="button" class="kp-card" data-kp-card="${p.id}" style="--kp-fallback:${color}">
+      <div class="kp-card-photo">
+        ${photo(p.coverUrl, p.name)}
+        ${tr ? `<span class="kp-badge kp-badge-trend is-${tr.dir}">${esc(tr.text)}</span>` : ''}
+        <span class="kp-badge kp-badge-av">${esc(units)}</span>
+      </div>
+      <div class="kp-card-body">
+        <p class="kp-card-rank${meta?.rank === 1 ? ' is-top' : ''}">${esc(rankLabel)}</p>
+        <h3>${esc(p.name)}</h3>
+        <p class="kp-card-loc">Praha · ${esc(p.quarter)}</p>
+        ${meta?.note ? `<p class="kp-card-note">${esc(meta.note)}</p>` : ''}
+        <div class="kp-card-foot">
+          ${meta ? `<span class="kp-card-status is-${meta.status.kind}">${esc(meta.status.label)}</span>` : ''}
+          <p class="kp-card-pps"><span>od</span> ${milLabel(priceFromWanted(p))}</p>
+        </div>
+      </div>
+    </button>`;
+  }
+  function cardHtmlMobile(p: Project) {
+    const color = fallback(p.id);
+    const tr = trendOf(p);
+    const meta = pickMeta(p.id);
+    const rank = String(meta?.rank || 0).padStart(2, '0');
+    const rankLabel = meta?.rank === 1 ? `${rank} · Doporučujeme` : rank;
+    const units = matchLabel(matchCount(p));
+    const bdg = tr ? (tr.dir === 'down' ? 'is-dn' : tr.dir === 'up' ? 'is-up' : 'is-flat') : '';
+    return `<button type="button" class="kp-card" data-kp-card="${p.id}" style="--kp-fallback:${color}">
+      <div class="kp-card-photo">
+        ${photo(p.coverUrl, p.name)}
+        ${tr ? `<span class="kp-bdg ${bdg}">${esc(tr.text)}</span>` : ''}
+        <span class="kp-bdg is-units">${esc(units)}</span>
+      </div>
+      <div class="kp-card-body">
+        <span class="kp-card-rank${meta?.rank === 1 ? ' is-top' : ''}">${esc(rankLabel)}</span>
+        <h3 class="font-yellix">${esc(p.name)}</h3>
+        <p class="kp-card-loc font-yellix">Praha · ${esc(p.quarter)}</p>
+        ${meta?.note ? `<p class="kp-card-note font-yellix">${esc(meta.note)}</p>` : ''}
+        <div class="kp-cf">
+          ${meta ? `<span class="kp-card-status is-${meta.status.kind}">${esc(meta.status.label)}</span>` : ''}
+          <p class="kp-card-pps"><span>od</span> ${milLabel(priceFromWanted(p))}</p>
+        </div>
+      </div>
+    </button>`;
+  }
+  function mapCardHtml(p: Project) {
+    const color = fallback(p.id);
+    const meta = pickMeta(p.id);
+    const rank = String(meta?.rank || 0).padStart(2, '0');
+    const rankLabel = meta?.rank === 1 ? `${rank} · Doporučujeme` : rank;
+    return `<button type="button" class="kp-mc" data-kp-card="${p.id}" style="--kp-fallback:${color}">
+      ${p.coverUrl ? `<img src="${esc(p.coverUrl)}" alt="" loading="lazy">` : `<span class="ph"></span>`}
+      <span>
+        <span class="rk font-yellix">${esc(rankLabel)}</span>
+        <h4 class="font-yellix">${esc(p.name)}</h4>
+        <p class="font-yellix">${esc(p.quarter)} · ${esc(odCzk(priceFromWanted(p)))}</p>
+        ${meta ? `<span class="kp-card-status is-${meta.status.kind}">${esc(meta.status.label)}</span>` : ''}
+      </span>
+    </button>`;
+  }
+
+  function isDemoPage() {
+    return location.pathname.replace(/\/+$/, '').endsWith('/portal-demo/mobil');
+  }
+  function isMobileApp() {
+    return isDemoPage() || window.matchMedia('(max-width: 959px)').matches;
+  }
+  function shouldBoot() {
+    return isDemoPage() || window.matchMedia('(min-width: 1024px)').matches;
+  }
+  function syncTabClass() {
+    if (!root) return;
+    const tab = isMobileApp() ? state.tab : 'vyber';
+    root.classList.remove('is-tab-vyber', 'is-tab-mapa', 'is-tab-detail', 'is-tab-zpravy');
+    root.classList.add(`is-tab-${tab}`);
+    root.querySelectorAll('[data-kp-tab]').forEach((btn) => {
+      const on = (btn as HTMLElement).dataset.kpTab === tab;
+      btn.classList.toggle('is-on', on);
+      if (on) btn.setAttribute('aria-current', 'page');
+      else btn.removeAttribute('aria-current');
+    });
+    const chat = root.querySelector('[data-kp-chat]') as HTMLElement | null;
+    if (chat) chat.hidden = tab !== 'zpravy';
+    window.dispatchEvent(new CustomEvent('kp-demo-detail', { detail: { open: tab === 'detail' } }));
+  }
+  function applyStartTab() {
+    if (!isMobileApp()) {
+      state.tab = 'vyber';
+      return;
+    }
+    const q = new URLSearchParams(location.search).get('tab') || 'vyber';
+    if (q === 'detail' && projects[0]) {
+      state.tab = 'detail';
+      state.selected = projects[0].id;
+      prevTab = 'vyber';
+      return;
+    }
+    const allowed = ['vyber', 'mapa', 'zpravy'];
+    state.tab = allowed.includes(q) ? q : 'vyber';
+  }
+  function maybeNudge() {
+    if (!isDemoPage()) return;
+    try {
+      if (sessionStorage.getItem('kp-nudge')) return;
+      sessionStorage.setItem('kp-nudge', '1');
+    } catch {}
+    window.dispatchEvent(new Event('kp-demo-nudge'));
+  }
+  function pushLayer() {
+    if (!isDemoPage()) return;
+    history.pushState({ kp: true }, '');
+  }
+  function bootMap() {
+    if (mapBooted && map) {
+      requestAnimationFrame(() => map?.resize());
+      return;
+    }
+    mapBooted = true;
+    loadMapLibre().then(() => {
+      ensureMap();
+      syncMap(filtered());
+    }).catch(() => {});
+  }
+  function setTab(tab: string) {
+    const allowed = ['vyber', 'mapa', 'zpravy'];
+    state.tab = allowed.includes(tab) ? tab : 'vyber';
+    state.selected = '';
+    syncTabClass();
+    render();
+    if (state.tab === 'mapa') bootMap();
+  }
+
+  function render() {
+    const list = filtered();
+    const empty = qs<HTMLElement>('[data-kp-empty]');
+    const cards = qs<HTMLElement>('[data-kp-cards]');
+    const app = qs<HTMLElement>('[data-kp-app]');
+    const detail = qs<HTMLElement>('[data-kp-detail]');
+    const mobile = isMobileApp();
+    const showDetail = mobile ? (state.tab === 'detail' && !!state.selected) : !!state.selected;
+
+    syncTabClass();
+    app.toggleAttribute('inert', showDetail);
+    app.setAttribute('aria-hidden', showDetail ? 'true' : 'false');
+
+    if (showDetail) {
+      detail.hidden = false;
+      renderDetail(projects.find((p) => p.id === state.selected)!);
+      return;
+    }
+
+    detail.hidden = true;
+    destroyMini();
+    const none = list.length === 0;
+    empty.hidden = !none;
+    cards.hidden = none;
+    cards.innerHTML = list.map((p) => cardHtml(p)).join('');
+    if (isDemoPage()) {
+      const mcards = root?.querySelector('[data-kp-mcards]') as HTMLElement | null;
+      if (mcards) mcards.innerHTML = list.map((p) => mapCardHtml(p)).join('');
+    }
+    requestAnimationFrame(() => {
+      map?.resize();
+      if (map) syncMap(list);
+    });
+  }
+
+  function setHover(id: string, opts: { fly?: boolean; pop?: boolean } = {}) {
+    state.hover = id;
+    root!.querySelectorAll('[data-kp-card]').forEach((el) => {
+      el.classList.toggle('is-on', (el as HTMLElement).dataset.kpCard === id);
+    });
+    markers.forEach(({ id: mid, el }) => {
+      if (!el.classList.contains('kp-pin')) return;
+      el.classList.toggle('is-on', !!id && mid === id);
+    });
+    const p = projects.find((x) => x.id === id);
+    if (id && p) {
+      const card = qs<HTMLElement>('[data-kp-cards]').querySelector(`[data-kp-card="${id}"]`) as HTMLElement | null;
+      card?.scrollIntoView({ block: 'nearest' });
+      const mcard = root?.querySelector('[data-kp-mcards]')?.querySelector(`[data-kp-card="${id}"]`) as HTMLElement | null;
+      mcard?.scrollIntoView({ inline: 'center', block: 'nearest', behavior: prefersLess() ? 'auto' : 'smooth' });
+      if (opts.pop && hoverPop && map) {
+        hoverPop.setLngLat([p.lng, p.lat]).setHTML(
+          `<div class="kp-tip"><strong>${esc(p.name)}</strong>${esc(p.quarter)}<br>${odCzk(priceFromWanted(p))}</div>`
+        ).addTo(map);
+      }
+      if (opts.fly && map && !prefersLess()) {
+        map.easeTo({ center: [p.lng, p.lat], duration: 450, essential: true });
+      }
+    } else {
+      hoverPop?.remove();
+    }
+  }
+
+  function loadMapLibre() {
+    return new Promise<void>((resolve, reject) => {
+      if ((window as any).maplibregl) return resolve();
+      if (!document.getElementById('kp-ml-css')) {
+        const link = document.createElement('link');
+        link.id = 'kp-ml-css';
+        link.rel = 'stylesheet';
+        link.href = ML_CSS;
+        document.head.appendChild(link);
+      }
+      if (document.getElementById('kp-ml-js')) {
+        const wait = () => ((window as any).maplibregl ? resolve() : setTimeout(wait, 40));
+        wait();
+        return;
+      }
+      const s = document.createElement('script');
+      s.id = 'kp-ml-js';
+      s.src = ML_JS;
+      s.onload = () => resolve();
+      s.onerror = () => reject(new Error('maplibre'));
+      document.head.appendChild(s);
+    });
+  }
+
+  function ensureMap() {
+    const box = qs<HTMLElement>('[data-kp-mapbox]');
+    const ml = (window as any).maplibregl;
+    if (!ml || !box) return;
+    if (map) {
+      map.resize();
+      return;
+    }
+    map = new ml.Map({
+      container: box,
+      style: STYLE,
+      center: [14.505, 50.105],
+      zoom: 12,
+      attributionControl: true,
+    });
+    map.addControl(new ml.NavigationControl({ showCompass: false }), 'bottom-right');
+    hoverPop = new ml.Popup({ closeButton: false, closeOnClick: false, offset: 14, className: 'kp-hover-pop' });
+    clickPop = new ml.Popup({ offset: 16, maxWidth: '280px' });
+    map.on('load', () => syncMap(filtered()));
+  }
+
+  function clearMarkers() {
+    markers.forEach(({ marker }) => marker.remove());
+    markers = [];
+  }
+
+  function syncMap(list: Project[]) {
+    if (!map) return;
+    const ml = (window as any).maplibregl;
+    clearMarkers();
+    hoverPop?.remove();
+    clickPop?.remove();
+    const bounds = new ml.LngLatBounds();
+    const selected = new Set(list.map((p) => p.id));
+    allProjects.forEach((p) => {
+      if (selected.has(p.id)) return;
+      const el = document.createElement('span');
+      el.className = 'kp-pin-rest';
+      el.setAttribute('aria-hidden', 'true');
+      const marker = new ml.Marker({ element: el, anchor: 'center' }).setLngLat([p.lng, p.lat]).addTo(map);
+      markers.push({ id: p.id, marker, el });
+    });
+    list.forEach((p) => {
+      const meta = pickMeta(p.id);
+      const el = document.createElement('button');
+      el.type = 'button';
+      el.className = 'kp-pin';
+      el.style.background = pinColor(p.pricePerSmFrom);
+      el.dataset.id = p.id;
+      el.setAttribute('aria-label', p.name);
+      if (isDemoPage() && meta?.rank) el.textContent = String(meta.rank);
+      el.addEventListener('mouseenter', () => {
+        setHover(p.id, { pop: true });
+      });
+      el.addEventListener('mouseleave', () => {
+        setHover('');
+      });
+      el.addEventListener('click', (event) => {
+        event.stopPropagation();
+        if (isDemoPage()) {
+          setHover(p.id, { fly: true });
+          return;
+        }
+        if (isMobileApp()) {
+          openDetail(p.id);
+          return;
+        }
+        hoverPop?.remove();
+        const color = fallback(p.id);
+        const tr = trendOf(p);
+        const units = matchLabel(matchCount(p));
+        clickPop.setLngLat([p.lng, p.lat]).setHTML(
+          `<div class="kp-pop">
+            <div class="kp-card-photo" style="--kp-fallback:${color}">
+              ${photo(p.coverUrl, p.name)}
+              ${tr ? `<span class="kp-badge kp-badge-trend is-${tr.dir}">${esc(tr.text)}</span>` : ''}
+              <span class="kp-badge kp-badge-av">${esc(units)}</span>
+            </div>
+            <div class="kp-pop-body">
+              <h3>${esc(p.name)}</h3>
+              <p>Praha · ${esc(p.quarter)}</p>
+              <strong><span style="font-size:12px;font-weight:500;color:rgba(0,0,0,.45)">od</span> ${milLabel(priceFromWanted(p))}</strong>
+              <button type="button" data-kp-open="${p.id}">Otevřít detail</button>
+            </div>
+          </div>`
+        ).addTo(map);
+        clickPop.getElement()?.querySelector('[data-kp-open]')?.addEventListener('click', (e: Event) => {
+          e.preventDefault();
+          e.stopPropagation();
+          openDetail(p.id);
+        });
+      });
+      const marker = new ml.Marker({ element: el, anchor: 'center' }).setLngLat([p.lng, p.lat]).addTo(map);
+      markers.push({ id: p.id, marker, el });
+      bounds.extend([p.lng, p.lat]);
+    });
+    if (list.length) {
+      const pad = isDemoPage()
+        ? { top: 96, right: 56, bottom: 168, left: 24 }
+        : { top: 56, right: 88, bottom: 48, left: 40 };
+      map.fitBounds(bounds, { padding: pad, maxZoom: 12.7, duration: prefersLess() ? 0 : 500 });
+    }
+  }
+
+  function destroyMap() {
+    clearMarkers();
+    hoverPop?.remove();
+    clickPop?.remove();
+    map?.remove();
+    map = null;
+    hoverPop = null;
+    clickPop = null;
+  }
+  function destroyMini() {
+    mini?.remove();
+    mini = null;
+  }
+  function yesNo(v: unknown) {
+    if (v === true || v === 'ano') return 'Ano';
+    if (v === 'příprava') return 'Příprava';
+    if (v === false || v === 'ne') return 'Ne';
+    return '';
+  }
+
+  function renderDetail(p: Project) {
+    const color = fallback(p.id);
+    const pay = p.header?.payments;
+    const days = 90 + (seed(p.id) % 260);
+    const noiseDay = 52 + (seed(p.id + 'd') % 11);
+    const noiseNight = Math.max(45, noiseDay - 5);
+    const roadM = 90 + (seed(p.id + 'road') % 180);
+    const amenities = [
+      { cat: 'bus', label: 'Autobus', m: aroundM(p, 'bus') },
+      { cat: 'green', label: 'Zeleň', m: aroundM(p, 'park') },
+      { cat: 'cafe', label: 'Kavárna', m: aroundM(p, 'cafe') },
+      { cat: 'tram', label: 'Tramvaj', m: aroundM(p, 'tram') },
+      { cat: 'park', label: 'Park / zeleň', m: aroundM(p, 'park') + 40 },
+      { cat: 'restaurant', label: 'Restaurace', m: aroundM(p, 'restaurant') },
+      { cat: 'school', label: 'Základní škola', m: aroundM(p, 'school') },
+      { cat: 'kindergarten', label: 'Mateřská škola', m: aroundM(p, 'kindergarten') },
+      { cat: 'playground', label: 'Dětské hřiště', m: aroundM(p, 'playground') },
+    ];
+    const payParts = pay
+      ? [
+          { pct: pay.contractPct, title: 'Při podpisu smlouvy', note: 'Rezervace a podpis kupní smlouvy', tone: 'dark' as const },
+          ...(pay.constructionPct ? [{ pct: pay.constructionPct, title: 'Během stavby', note: 'Platby podle harmonogramu výstavby', tone: 'mid' as const }] : []),
+          { pct: pay.moveInPct, title: 'Při předání', note: 'Doplatek při kolaudaci a předání bytu', tone: 'mid' as const },
+        ].filter((x) => x.pct > 0)
+      : [];
+
+    const demo = isDemoPage();
+    const meta = pickMeta(p.id);
+    const rank = String(meta?.rank || 0).padStart(2, '0');
+    qs<HTMLElement>('[data-kp-detail]').innerHTML = `
+      <button type="button" class="kp-back kp-d-in" data-kp-back style="--d:0s" aria-label="Zpět">${demo ? '' : '← Zpět na mapu'}</button>
+      ${demo ? `
+        <div class="kp-d-acts">
+          <button type="button" data-kp-locked="sdilet" aria-label="Sdílet, zamčeno v ukázce">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7h16v-7M12 3v12M8 7l4-4 4 4"/></svg>
+          </button>
+          <button type="button" data-kp-locked="ulozit" aria-label="Uložit, zamčeno v ukázce">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19s-7-4.4-7-9a4.5 4.5 0 0 1 7-3.5A4.5 4.5 0 0 1 19 10c0 4.6-7 9-7 9z"/></svg>
+          </button>
+        </div>
+        <span class="kp-d-rank font-yellix">${rank} ve výběru</span>
+      ` : ''}
+      <div class="kp-d-hero kp-d-in" style="--d:.04s">
+        <div class="kp-d-photo" style="--kp-fallback:${color}">
+          <img src="${esc(p.coverUrl || '')}" alt="${esc(p.name)}" onerror="this.remove()">
+        </div>
+        <div class="kp-d-info">
+          <h2 class="kp-d-name font-yellix">${esc(p.name)}</h2>
+          <p class="kp-d-meta font-yellix">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.2-6.5-10A6.5 6.5 0 0 1 12 4.5a6.5 6.5 0 0 1 6.5 6.5c0 4.8-6.5 10-6.5 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
+            Praha 9 · ${esc(p.quarter)}
+            <i></i>
+            dokončení ${esc(doneDot(p.completion))}
+            ${p.developer ? `<i></i>${esc(p.developer)}` : ''}
+          </p>
+          <div class="kp-d-buy">
+            <p>
+              <span class="font-yellix">Cena</span>
+              <strong class="font-yellix">od ${czk(priceFromWanted(p))}</strong>
+            </p>
+            <span class="kp-d-web font-yellix" aria-hidden="true">
+              Web projektu
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4.5 2.5h5v5"/>
+                <path d="M9.5 2.5 2.5 9.5"/>
+              </svg>
+            </span>
+          </div>
+          <div class="kp-d-facts">
+            <div style="--i:0"><span class="font-yellix">Jednotek celkem</span><strong class="font-yellix">${p.counts.total}</strong></div>
+            <div style="--i:1"><span class="font-yellix">Volných jednotek</span><strong class="font-yellix">${p.counts.available}</strong></div>
+            <div style="--i:2"><span class="font-yellix">Dokončení</span><strong class="font-yellix">${esc(doneDot(p.completion))}</strong></div>
+            <div style="--i:3"><span class="font-yellix">Dní na trhu</span><strong class="font-yellix">${days}</strong></div>
+          </div>
+          ${demo && meta?.note ? `
+          <div class="kp-why">
+            <img src="/images/agency/jan-prochazka.jpg" alt="" width="36" height="36" />
+            <div>
+              <small class="font-yellix">Proč ve výběru</small>
+              <p class="font-yellix">${esc(meta.note)}</p>
+            </div>
+          </div>` : ''}
+        </div>
+      </div>
+
+      <section class="kp-d-sec kp-d-units kp-d-in" style="--d:.14s">
+        <h3 class="font-yellix">Jednotky dle vašich požadavků</h3>
+        <p class="kp-d-lead font-yellix">Aktuální nabídka projektu, která odpovídá vašemu zadání</p>
+        <div class="kp-d-units-box">
+          <div class="kp-d-units-ghost" aria-hidden="true">
+            ${unitRows(p).map((u) => `
+              <div class="kp-unit font-yellix">
+                <b>${esc(u.layout)}</b>
+                <span>${u.area}\u00a0m²</span>
+                <span>${esc(u.floor)}</span>
+                <span>${esc(u.extra)}${u.reserved ? '<em class="kp-unit-tag">Rezervováno</em>' : ''}</span>
+                <em>${czk(u.price)}</em>
+                <i>detail</i>
+              </div>
+            `).join('')}
+          </div>
+          <div class="kp-d-units-veil" data-kp-locked="jednotky">
+            ${lockCard('Jednotky otevřeme na schůzce', 'Konkrétní byty, ceny a rezervace řeší makléř s vámi. Tahle ukázka ukazuje jen výběr projektů.')}
+          </div>
+        </div>
+      </section>
+
+      <section class="kp-d-sec kp-d-in" style="--d:.22s">
+        <h3 class="font-yellix">Okolí a dostupnost</h3>
+        <div class="kp-around-stats">
+          <div style="--i:0"><span class="font-yellix">Železnice</span><strong class="font-yellix">${dist(aroundM(p, 'vlak'))}</strong></div>
+          <div style="--i:1"><span class="font-yellix">Hlavní silnice</span><strong class="font-yellix">${dist(roadM)}</strong></div>
+          <div style="--i:2"><span class="font-yellix">Tramvajová trať</span><strong class="font-yellix">${dist(aroundM(p, 'tram'))}</strong></div>
+          <div style="--i:3"><span class="font-yellix">Hluk přes den</span><strong class="font-yellix">${noiseDay}\u00a0dB</strong></div>
+          <div style="--i:4"><span class="font-yellix">Hluk v noci</span><strong class="font-yellix">${noiseNight}\u00a0dB</strong></div>
+        </div>
+        <div class="kp-around-body">
+          <div class="kp-d-amap" data-kp-mini><span class="kp-d-skel" aria-hidden="true"></span></div>
+          <div class="kp-around-grid">
+            ${amenities.map((a, i) => `
+              <div class="font-yellix" style="--i:${i}">${ico(a.cat)}<b>${esc(a.label)}</b><span>${dist(a.m)}</span></div>
+            `).join('')}
+          </div>
+        </div>
+      </section>
+
+      ${payParts.length ? `
+      <section class="kp-d-sec kp-d-in" style="--d:.3s">
+        <h3 class="font-yellix">Jak se novostavba platí</h3>
+        <div class="kp-pay-bar" aria-hidden="true">
+          ${payParts.map((part) => part.tone === 'dark'
+            ? `<b class="font-yellix" style="width:${part.pct}%">${part.pct}\u00a0%</b>`
+            : `<i class="font-yellix" style="width:${part.pct}%">${part.pct}\u00a0%</i>`
+          ).join('')}
+        </div>
+        <div class="kp-pay-legs">
+          ${payParts.map((part) => `
+            <div class="font-yellix" style="width:${part.pct}%">
+              <b>${esc(part.title)}</b>
+              <span>${esc(part.note)}</span>
+            </div>
+          `).join('')}
+        </div>
+      </section>` : ''}
+
+      <section class="kp-d-sec kp-d-in" style="--d:.38s">
+        <h3 class="font-yellix">Dokumenty</h3>
+        <button type="button" class="kp-doc" data-kp-locked="dokumenty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 3.5h7.5L19 8v12.5H7z"/>
+            <path d="M14.5 3.5V8H19"/>
+            <path d="M9.5 12.5h5M9.5 16h5"/>
+          </svg>
+          <span class="font-yellix">Standardy projektu</span>
+          <em class="font-yellix">PDF</em>
+        </button>
+      </section>
+
+      <div class="kp-d-more kp-d-in" style="--d:.44s">
+        <div class="kp-d-more-ghost" aria-hidden="true">
+          <section class="kp-d-sec">
+            <h3 class="font-yellix">Další podklady</h3>
+            ${['Půdorysy jednotek', 'Ceník', 'Smlouva o smlouvě budoucí', 'Energetický štítek'].map((name) => `
+              <div class="kp-doc font-yellix">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 3.5h7.5L19 8v12.5H7z"/>
+                  <path d="M14.5 3.5V8H19"/>
+                  <path d="M9.5 12.5h5M9.5 16h5"/>
+                </svg>
+                <span>${esc(name)}</span>
+                <em>PDF</em>
+              </div>
+            `).join('')}
+          </section>
+          <section class="kp-d-sec">
+            <h3 class="font-yellix">Harmonogram</h3>
+            <div class="kp-d-time font-yellix"><b>Q2 2026</b><span>Zahájení hrubé stavby</span></div>
+            <div class="kp-d-time font-yellix"><b>Q4 2027</b><span>Dokončení konstrukcí a fasády</span></div>
+            <div class="kp-d-time font-yellix"><b>Q2 2028</b><span>Kolaudace a předání jednotek</span></div>
+          </section>
+          <section class="kp-d-sec">
+            <h3 class="font-yellix">Poznámky makléře</h3>
+            <div class="kp-d-note font-yellix">
+              <div>
+                <b>Dispozice 3+kk</b>
+                <span>Nejvhodnější byty jsou v 2. až 4. patře, část s terasou do vnitrobloku.</span>
+              </div>
+            </div>
+            <div class="kp-d-note font-yellix">
+              <div>
+                <b>Jednání o ceně</b>
+                <span>U vybraných jednotek je prostor o 2–4 % pod ceník při rezervaci v tomto kvartálu.</span>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="kp-d-units-veil" data-kp-locked="podklady">
+          ${lockCard('Další podklady otevřeme na schůzce', 'Půdorysy, ceník, harmonogram i poznámky k jednotkám řeší makléř s vámi. Tahle ukázka ukazuje jen výběr projektů.')}
+        </div>
+      </div>
+      ${demo ? `
+      <div class="kp-d-cta">
+        <button type="button" class="ic-o" data-kp-tab="zpravy" aria-label="Zprávy">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6h14v10H8l-3 3V6z"/></svg>
+        </button>
+        <button type="button" class="btn-b font-yellix" data-smart-meeting-open data-smart-meeting-type="client">
+          <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+          Domluvit schůzku
+        </button>
+      </div>` : ''}
+    `;
+
+    setupMini(p);
+  }
+
+  async function setupMini(p: Project) {
+    const box = root!.querySelector('[data-kp-mini]') as HTMLElement | null;
+    if (!box) return;
+    try {
+      await loadMapLibre();
+    } catch {
+      return;
+    }
+    const ml = (window as any).maplibregl;
+    destroyMini();
+    mini = new ml.Map({
+      container: box,
+      style: STYLE,
+      center: [p.lng, p.lat],
+      zoom: 13.5,
+      interactive: true,
+      scrollZoom: false,
+      attributionControl: true,
+    });
+    mini.addControl(new ml.NavigationControl({ showCompass: false }), 'top-right');
+    mini.on('load', () => {
+      box.querySelector('.kp-d-skel')?.remove();
+      mini.resize();
+      const pin = document.createElement('div');
+      pin.className = 'kp-pin is-on';
+      pin.style.background = pinColor(p.pricePerSmFrom);
+      new ml.Marker({ element: pin, anchor: 'center' }).setLngLat([p.lng, p.lat]).addTo(mini);
+      const label = document.createElement('div');
+      label.className = 'kp-d-map-name';
+      label.textContent = p.name;
+      new ml.Marker({ element: label, anchor: 'bottom', offset: [0, -18] }).setLngLat([p.lng, p.lat]).addTo(mini);
+      const spots = [
+        { cat: 'bus', dlat: 0.0018, dlng: -0.0022 },
+        { cat: 'tram', dlat: -0.0015, dlng: 0.0024 },
+        { cat: 'park', dlat: 0.0022, dlng: 0.0009 },
+        { cat: 'school', dlat: -0.002, dlng: -0.0015 },
+        { cat: 'kindergarten', dlat: 0.0007, dlng: 0.0027 },
+        { cat: 'supermarket', dlat: -0.0009, dlng: -0.0025 },
+        { cat: 'vlak', dlat: 0.0025, dlng: -0.0005 },
+        { cat: 'cafe', dlat: -0.0024, dlng: 0.0006 },
+        { cat: 'restaurant', dlat: 0.0012, dlng: 0.002 },
+      ];
+      spots.forEach((s) => {
+        const el = document.createElement('div');
+        el.className = 'kp-d-poi';
+        el.innerHTML = ico(s.cat);
+        new ml.Marker({ element: el, anchor: 'center' }).setLngLat([p.lng + s.dlng, p.lat + s.dlat]).addTo(mini);
+      });
+    });
+  }
+
+  function openDetail(id: string) {
+    if (!id) return;
+    if (isDemoPage() && state.tab !== 'detail') {
+      prevTab = state.tab === 'detail' ? 'vyber' : state.tab;
+      pushLayer();
+    }
+    state.selected = id;
+    if (isMobileApp()) state.tab = 'detail';
+    clickPop?.remove();
+    hoverPop?.remove();
+    render();
+  }
+  function closeDetail(tab?: string) {
+    state.selected = '';
+    state.tab = tab || (isMobileApp() ? prevTab || 'vyber' : 'vyber');
+    render();
+    requestAnimationFrame(() => {
+      map?.resize();
+      if (map) syncMap(filtered());
+      if (state.tab === 'mapa') bootMap();
+    });
+  }
+
+  function openLock(kind = '') {
+    const lock = qs<HTMLElement>('[data-kp-lock]');
+    const title = lock.querySelector('#kp-lock-title') as HTMLElement;
+    const text = lock.querySelector('.kp-lock-text') as HTMLElement;
+    if (kind === 'predprodeje') {
+      title.textContent = 'Předprodej projektu otevřeme na schůzce';
+      text.textContent = 'Jste na našem priority listu. Předprodej projektu makléř ukáže osobně – neposíláme ho e-mailem.';
+    } else if (kind === 'zadani') {
+      title.textContent = 'Zadání upravíme na schůzce';
+      text.textContent = 'Dispozici, rozpočet a lokalitu mění makléř s vámi. Tahle ukázka ukazuje jen aktuální výběr.';
+    } else if (kind === 'zpravy') {
+      title.textContent = 'Zprávy otevřeme na schůzce';
+      text.textContent = 'V portálu si s makléřem píšete o výběru, prohlídkách i dokumentech. Tahle ukázka ukazuje jen výběr projektů.';
+    } else if (kind === 'compose') {
+      title.textContent = 'Psát makléři můžete po podpisu smlouvy.';
+      text.textContent = 'V ukázce je vlákno jen ke čtení. Po podpisu smlouvy si s makléřem píšete přímo v portálu.';
+    } else if (kind === 'telefon' || kind === 'email') {
+      title.textContent = 'Kontakt otevřeme na schůzce';
+      text.textContent = 'Telefon a e-mail na makléře dostanete po podpisu smlouvy. Tahle ukázka ukazuje jen výběr projektů.';
+    } else if (kind === 'jednotky') {
+      title.textContent = 'Jednotky otevřeme na schůzce';
+      text.textContent = 'Konkrétní byty, ceny a rezervace řeší makléř s vámi. Tahle ukázka ukazuje jen výběr projektů.';
+    } else if (kind === 'dokumenty') {
+      title.textContent = 'Dokumenty otevřeme na schůzce';
+      text.textContent = 'Standardy, půdorysy a smlouvy posílá makléř osobně. Tahle ukázka ukazuje jen výběr projektů.';
+    } else if (kind === 'podklady') {
+      title.textContent = 'Další podklady otevřeme na schůzce';
+      text.textContent = 'Půdorysy, ceník, harmonogram i poznámky k jednotkám řeší makléř s vámi. Tahle ukázka ukazuje jen výběr projektů.';
+    } else {
+      title.textContent = 'Tohle otevřeme na schůzce';
+      text.textContent = 'Porovnání, prohlídky a dokumenty řeší makléř s vámi. Tahle ukázka ukazuje jen výběr projektů.';
+    }
+    if (isDemoPage() && lock.hidden) pushLayer();
+    lock.hidden = false;
+    (qs<HTMLElement>('[data-kp-lock-close]') as HTMLButtonElement).focus();
+  }
+  function closeLock() {
+    const lock = root?.querySelector('[data-kp-lock]') as HTMLElement | null;
+    if (lock) lock.hidden = true;
+  }
+  function requestCloseLock() {
+    if (isDemoPage() && history.state?.kp) history.back();
+    else closeLock();
+  }
+  function openAgent() {
+    const ash = qs<HTMLElement>('[data-kp-ash]');
+    if (!ash) return;
+    if (isDemoPage() && ash.hidden) pushLayer();
+    ash.hidden = false;
+  }
+  function closeAgent() {
+    const ash = root?.querySelector('[data-kp-ash]') as HTMLElement | null;
+    if (ash) ash.hidden = true;
+  }
+
+  function onClick(event: Event) {
+    const t = event.target as HTMLElement;
+    if (t.closest('[data-kp-lock-close]')) {
+      requestCloseLock();
+      return;
+    }
+    if (t.closest('[data-kp-lock]') && !t.closest('[data-kp-lock-card]')) {
+      requestCloseLock();
+      return;
+    }
+    if (t.closest('[data-kp-ash-close]') || (t.closest('[data-kp-ash]') && !t.closest('[data-kp-ash-card]'))) {
+      if (isDemoPage() && history.state?.kp) history.back();
+      else closeAgent();
+      return;
+    }
+    if (t.closest('[data-kp-agent-open]')) {
+      openAgent();
+      return;
+    }
+    if (t.closest('[data-smart-meeting-open]')) {
+      closeLock();
+      closeAgent();
+      return;
+    }
+    const tabBtn = t.closest('[data-kp-tab]') as HTMLElement | null;
+    if (tabBtn) {
+      if (state.tab === 'detail' && isDemoPage() && history.state?.kp) {
+        skipPop = true;
+        history.back();
+      }
+      setTab(tabBtn.dataset.kpTab || 'vyber');
+      return;
+    }
+    const locked = t.closest('[data-kp-locked]') as HTMLElement | null;
+    if (locked) {
+      openLock(locked.dataset.kpLocked || '');
+      return;
+    }
+    const open = t.closest('[data-kp-open]') as HTMLElement | null;
+    if (open) {
+      openDetail(open.dataset.kpOpen || '');
+      return;
+    }
+    const card = t.closest('[data-kp-card]') as HTMLElement | null;
+    if (card) {
+      openDetail(card.dataset.kpCard || '');
+      return;
+    }
+    if (t.closest('[data-kp-back]')) {
+      if (isDemoPage() && history.state?.kp) history.back();
+      else closeDetail();
+    }
+  }
+
+  function onFocusIn(event: Event) {
+    const t = event.target as HTMLElement;
+    if (t.closest('[data-smart-meeting-open]')) return;
+    const locked = t.closest?.('[data-kp-locked]') as HTMLElement | null;
+    if (!locked || !root?.contains(locked)) return;
+    t.blur?.();
+    openLock(locked.dataset.kpLocked || '');
+  }
+
+  function onKey(event: KeyboardEvent) {
+    if (event.key !== 'Escape') return;
+    const lock = root?.querySelector('[data-kp-lock]') as HTMLElement | null;
+    if (lock && !lock.hidden) {
+      requestCloseLock();
+      event.stopPropagation();
+      return;
+    }
+    const ash = root?.querySelector('[data-kp-ash]') as HTMLElement | null;
+    if (ash && !ash.hidden) {
+      if (isDemoPage() && history.state?.kp) history.back();
+      else closeAgent();
+      event.stopPropagation();
+    }
+  }
+
+  function onOver(event: Event) {
+    if (state.selected) return;
+    const card = (event.target as HTMLElement).closest('[data-kp-card]') as HTMLElement | null;
+    if (!card || !root!.contains(card)) return;
+    const id = card.dataset.kpCard || '';
+    if (id === state.hover) return;
+    setHover(id, { fly: true, pop: true });
+  }
+  function onOut(event: Event) {
+    const card = (event.target as HTMLElement).closest('[data-kp-card]') as HTMLElement | null;
+    if (!card) return;
+    const next = (event as MouseEvent).relatedTarget as Node | null;
+    if (next && card.contains(next)) return;
+    if (next && (next as HTMLElement).closest?.('.kp-pin')) return;
+    setHover('');
+  }
+
+  function onPop() {
+    if (skipPop) {
+      skipPop = false;
+      return;
+    }
+    const sheet = document.querySelector('[data-pdm-sheet]') as HTMLElement | null;
+    if (sheet && !sheet.hidden) return;
+    const ash = root?.querySelector('[data-kp-ash]') as HTMLElement | null;
+    if (ash && !ash.hidden) {
+      closeAgent();
+      return;
+    }
+    const lock = root?.querySelector('[data-kp-lock]') as HTMLElement | null;
+    if (lock && !lock.hidden) {
+      closeLock();
+      return;
+    }
+    if (state.tab === 'detail' || state.selected) {
+      closeDetail();
+    }
+  }
+  function onSideScroll() {
+    const side = root?.querySelector('[data-kp-side]') as HTMLElement | null;
+    const ttl = side?.querySelector('.kp-ttl') as HTMLElement | null;
+    if (!side || !ttl) return;
+    side.classList.toggle('is-stuck', ttl.getBoundingClientRect().bottom < side.getBoundingClientRect().top + 10);
+  }
+
+  function cleanup() {
+    if (!root) return;
+    root.removeEventListener('click', onClick);
+    root.removeEventListener('focusin', onFocusIn);
+    root.removeEventListener('mouseover', onOver);
+    root.removeEventListener('mouseout', onOut);
+    document.removeEventListener('keydown', onKey);
+    window.removeEventListener('resize', onWinResize);
+    window.removeEventListener('popstate', onPop);
+    root.querySelector('[data-kp-side]')?.removeEventListener('scroll', onSideScroll);
+    destroyMap();
+    destroyMini();
+    mapBooted = false;
+    root = null;
+  }
+
+  function onWinResize() {
+    map?.resize();
+    mini?.resize();
+  }
+
+  async function init() {
+    const next = document.querySelector('[data-kp]') as HTMLElement | null;
+    if (!next) return;
+    if (!shouldBoot()) return;
+    if (root === next) return;
+    cleanup();
+    root = next;
+    if (!payloadJson) {
+      const mod = await import('../data/praha9-nahled.json');
+      payloadJson = ((mod as { default?: { projects: Project[] } }).default || mod) as { projects: Project[] };
+    }
+    allProjects = payloadJson.projects || [];
+    const byId = new Map(allProjects.map((p) => [p.id, p]));
+    projects = VYBER.map((item) => byId.get(item.id)).filter(Boolean) as Project[];
+    const pps = [...allProjects.map((p) => p.pricePerSmFrom)].sort((a, b) => a - b);
+    t1 = pps[Math.floor(pps.length / 3)] || 0;
+    t2 = pps[Math.floor((pps.length * 2) / 3)] || 0;
+    state = { selected: '', hover: '', tab: 'vyber' };
+    applyStartTab();
+    root.addEventListener('click', onClick);
+    root.addEventListener('focusin', onFocusIn);
+    root.addEventListener('mouseover', onOver);
+    root.addEventListener('mouseout', onOut);
+    document.addEventListener('keydown', onKey);
+    window.addEventListener('resize', onWinResize);
+    window.addEventListener('popstate', onPop);
+    root.querySelector('[data-kp-side]')?.addEventListener('scroll', onSideScroll, { passive: true });
+    const att = root.querySelector('[data-kp-att-photo]') as HTMLImageElement | null;
+    if (att && projects[0]?.coverUrl) att.src = projects[0].coverUrl;
+    render();
+    if (!isMobileApp() || state.tab === 'mapa') bootMap();
+    if (isDemoPage() && state.tab === 'detail') pushLayer();
+    maybeNudge();
+  }
+
+  init();
+  document.addEventListener('astro:page-load', () => { init(); });
+  document.addEventListener('astro:before-swap', cleanup);
+</script>

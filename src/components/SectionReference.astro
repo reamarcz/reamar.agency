@@ -1,0 +1,436 @@
+---
+const playIcon = `<svg viewBox="0 0 24 24"><path d="M8.2 5v14L19.5 12z" fill="currentColor"/></svg>`;
+
+const columns = [
+  {
+    video: { src: '/images/agency/jan-shorts.jpg', pos: 'center 18%' },
+    quote: {
+      text: 'K panu Vitverovi se vracím hlavně proto, že ten trh sleduje dlouhodobě. Když se objeví něco zajímavého, většinou o tom ví dřív, než se to začne řešit všude.',
+      who: 'Petr S., 2+kk Malešice',
+    },
+    flip: false,
+  },
+  {
+    video: { src: '/images/agency/jv-holder3.jpg', pos: '58% center' },
+    quote: {
+      text: 'Nejvíc jsme s manželem ocenili, že nám pan Vitvera neříkal jen výhody. U každého projektu jsme si prošli i to, co nám na něm nemusí vyhovovat.',
+      who: 'Markéta K., 3+kk Radlice',
+    },
+    flip: true,
+  },
+];
+
+const wideQuote = {
+  text: 'Investičních bytů jsem s Honzou řešil už několik a vždycky jsme se bavili hlavně o tom, proč ano a proč ne. To je pro mě důležitější než samotný výběr.',
+  who: 'Jakub V., 1+kk Holešovice',
+};
+---
+
+<section id="pribehy-z-trhu" class="bg-[var(--color-muted)]" aria-labelledby="reference-heading" data-reference>
+  <div class="mx-auto max-w-[1440px] px-5 py-16 md:px-10 md:py-24 xl:px-14 xl:py-28">
+    <h2
+      id="reference-heading"
+      class="ref-in flex items-center gap-3 font-yellix text-[28px] font-medium leading-[1.12] tracking-[-0.02em] text-black md:gap-3.5 md:text-[36px] xl:text-[40px]"
+      style="--i: 0"
+    >
+      <img
+        src="/images/arrow-1.svg"
+        alt=""
+        class="h-5 w-5 shrink-0 brightness-0 md:h-6 md:w-6"
+        width="20"
+        height="20"
+      />
+      Příběhy z trhu
+    </h2>
+
+    <div class="ref-grid mt-10 md:mt-14">
+      {columns.map((col, index) => (
+        <div class="ref-col ref-in" style={`--i: ${index + 1}`}>
+          {col.flip && col.quote && (
+            <article class="ref-card">
+              <p>„{col.quote.text}“</p>
+              <span>{col.quote.who}</span>
+            </article>
+          )}
+          <a href="/pribehy-z-trhu/" class="ref-video">
+            <img
+              src={col.video.src}
+              alt=""
+              width="640"
+              height="800"
+              loading="lazy"
+              style={`object-position: ${col.video.pos}`}
+            />
+            <span class="ref-play" aria-hidden="true" set:html={playIcon} />
+            {col.video.name && (
+              <span class="ref-video-meta">{col.video.name}</span>
+            )}
+          </a>
+          {!col.flip && col.quote && (
+            <article class="ref-card">
+              <p>„{col.quote.text}“</p>
+              <span>{col.quote.who}</span>
+            </article>
+          )}
+        </div>
+      ))}
+      <div class="ref-col ref-col--wide ref-in" style="--i: 3">
+        <a href="/pribehy-z-trhu/" class="ref-video ref-video--wide" aria-label="Přehrát celý díl: 100 milionů na penthouse. Co vybereme?">
+          <video
+            muted
+            loop
+            playsinline
+            autoplay
+            preload="metadata"
+            poster="/video/penthouse-nahled.jpg"
+            disablepictureinpicture
+            aria-hidden="true"
+          >
+            <source src="/videos/penthouse-intro.mp4" type="video/mp4" />
+          </video>
+          <span class="ref-video-bar">
+            <span class="ref-video-title">100 milionů na penthouse.<br />Co vybereme?</span>
+            <span class="ref-video-btn">
+              Přehrát celý díl
+              <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+            </span>
+          </span>
+        </a>
+        <div class="ref-wide-foot">
+          <article class="ref-card">
+            <p>„{wideQuote.text}“</p>
+            <span>{wideQuote.who}</span>
+          </article>
+          <a href="/pribehy-z-trhu/" class="ref-cta">
+            <span class="ref-cta-yt" aria-hidden="true">
+              <svg viewBox="0 0 24 17">
+                <path fill="#FF0000" d="M23.5 2.65A3.02 3.02 0 0 0 21.38.5C19.5 0 12 0 12 0S4.5 0 2.62.5A3.02 3.02 0 0 0 .5 2.65 31.9 31.9 0 0 0 0 8.5a31.9 31.9 0 0 0 .5 5.85 3.02 3.02 0 0 0 2.12 2.15C4.5 17 12 17 12 17s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.15A31.9 31.9 0 0 0 24 8.5a31.9 31.9 0 0 0-.5-5.85Z"/>
+                <path fill="#fff" d="M9.75 12.15V4.85L15.7 8.5 9.75 12.15Z"/>
+              </svg>
+            </span>
+            <span class="ref-cta-copy">
+              <span class="ref-cta-kicker">Příběhy z trhu</span>
+              <span class="ref-cta-title">Agent pro kupující</span>
+            </span>
+            <img src="/images/arrow-1.svg" alt="" class="ref-cta-arrow" width="12" height="12" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ref-in {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  .ref-in.is-in {
+    animation: ref-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(var(--i) * 180ms);
+  }
+  @keyframes ref-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .ref-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .ref-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .ref-video {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background: #111;
+    text-decoration: none;
+  }
+  .ref-video img,
+  .ref-video video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+  .ref-video--wide {
+    aspect-ratio: 3 / 2;
+  }
+  .ref-video--wide::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 46%;
+    background: linear-gradient(transparent, rgba(0, 0, 0, .62));
+    pointer-events: none;
+  }
+  .ref-video--wide video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+  .ref-wide-foot {
+    display: grid;
+    gap: 1.25rem;
+    flex: 1;
+  }
+  .ref-play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    padding-left: 3px;
+    border-radius: 50%;
+    background: #fff;
+    color: #0b0b0b;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: transform 0.22s ease;
+  }
+  .ref-play svg {
+    width: 18px;
+    height: 18px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .ref-video:hover .ref-play {
+      transform: translate(-50%, -50%) scale(1.06);
+    }
+  }
+  .ref-video-bar {
+    position: absolute;
+    left: 0;
+    right: auto;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    max-width: min(100%, 28rem);
+    padding: 18px 20px;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+    color: #fff;
+  }
+  .ref-video-title {
+    font-size: 18px;
+    letter-spacing: -.03em;
+    line-height: 1.15;
+  }
+  @media (min-width: 768px) {
+    .ref-video-title { font-size: 20px; }
+  }
+  .ref-video-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, .5);
+    font-size: 12px;
+    line-height: 1;
+    white-space: nowrap;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .ref-video-btn img {
+    width: 12px;
+    height: 12px;
+    filter: brightness(0) invert(1);
+  }
+  .ref-video--wide:hover .ref-video-btn {
+    background: #fff;
+    border-color: #fff;
+    color: #000;
+  }
+  .ref-video--wide:hover .ref-video-btn img {
+    filter: brightness(0);
+  }
+  @media (max-width: 639px) {
+    .ref-video-bar {
+      max-width: 100%;
+      padding: 14px;
+      gap: 10px;
+    }
+  }
+  .ref-card,
+  .ref-cta {
+    background: #fff;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    flex: 1;
+  }
+  .ref-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.35rem 1.25rem 1.25rem;
+  }
+  .ref-card p {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #000;
+  }
+  @media (min-width: 768px) {
+    .ref-card p { font-size: 15px; }
+  }
+  .ref-card span {
+    display: block;
+    margin-top: 1rem;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .ref-cta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 1.35rem 1.25rem;
+    text-decoration: none;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .ref-cta:hover {
+    background: #fafafa;
+    transform: translateY(-1px);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
+  }
+  .ref-cta-yt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    background: #f5f5f5;
+  }
+  .ref-cta-yt svg {
+    width: 20px;
+    height: 14px;
+  }
+  .ref-cta-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    flex: 1;
+  }
+  .ref-cta-kicker {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.42);
+    line-height: 1;
+  }
+  .ref-cta-title {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #000;
+    line-height: 1.15;
+  }
+  .ref-cta-arrow {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    filter: brightness(0);
+    opacity: 0.45;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .ref-cta:hover .ref-cta-arrow {
+    transform: translate(1px, 1px);
+    opacity: 1;
+  }
+  @media (min-width: 640px) {
+    .ref-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .ref-col--wide { grid-column: span 2; }
+    .ref-wide-foot { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 1024px) {
+    .ref-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ref-in,
+    .ref-in.is-in {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  function initReference() {
+    const wrap = document.querySelector('[data-reference]');
+    if (!wrap) return;
+    if (wrap._refCleanup) wrap._refCleanup();
+
+    const items = [...wrap.querySelectorAll('.ref-in')];
+    if (!items.length) return;
+    const grid = wrap.querySelector('.ref-grid');
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      items.forEach((el) => el.classList.add('is-in'));
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        items.forEach((el) => el.classList.add('is-in'));
+        io.disconnect();
+      },
+      { threshold: 0.18, rootMargin: '0px 0px -10% 0px' }
+    );
+
+    io.observe(grid || wrap);
+
+    const vid = wrap.querySelector('.ref-video--wide video');
+    let vio;
+    if (vid) {
+      vio = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const play = vid.play();
+              if (play && typeof play.catch === 'function') play.catch(() => {});
+            } else {
+              vid.pause();
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+      vio.observe(vid);
+    }
+
+    wrap._refCleanup = () => {
+      io.disconnect();
+      if (vio) vio.disconnect();
+      wrap._refCleanup = null;
+    };
+  }
+
+  initReference();
+  document.addEventListener('astro:page-load', initReference);
+</script>

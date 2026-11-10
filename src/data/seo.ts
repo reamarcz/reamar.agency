@@ -3,7 +3,7 @@
  * Pro samostatné stránky sekcí (např. /pro-developery) importuj příslušný objekt.
  */
 
-const BASE = 'https://www.reamar.cz';
+const BASE = 'https://reamar.agency';
 const DEFAULT_IMAGE = '/images/og-image.jpg';
 
 export const seoHomepage = {

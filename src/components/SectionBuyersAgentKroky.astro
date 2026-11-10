@@ -1,0 +1,1567 @@
+---
+// SectionBuyersAgentKroky — předchozí druhá sekce homepage.
+// Sticky kroky vlevo + postupně se roztahující video. Na `/` se teď nepoužívá.
+// Vrácení: importovat místo SectionBuyersAgentHorizont.
+interface Props {
+  videoSrc?: string;
+  posterSrc?: string;
+  episodeLabel?: string;
+  episodeHref?: string;
+  hero?: boolean;
+}
+
+const {
+  videoSrc = '/videos/agentprokupujici.mp4',
+  posterSrc = '/images/agency/hero-obhlidka.jpg',
+  episodeLabel = 'Příběhy z trhu · 100 milionů na penthouse. Co vybereme?',
+  episodeHref = 'https://www.youtube.com/watch?v=MIYbJdRJYGY',
+  hero = false,
+} = Astro.props;
+
+const [episodeKicker, episodeTitle] = episodeLabel.split(/\s·\s/);
+
+const rows = [
+  {
+    title: 'Vyhledávání na celém trhu<br class="ba__br" /> novostaveb',
+    text: 'V Praze sledujeme téměř <strong class="ba-em">10&nbsp;000 bytů</strong>. Bez hluboké znalosti trhu a správných technologií je prakticky nemožné tak rozsáhlou nabídku porovnat.',
+    icon: 'search',
+  },
+  {
+    title: 'Zvýhodněné podmínky<br class="ba__br" /> u developerů',
+    text: 'Díky kontaktům na developerském trhu řešíme předprodeje, <strong class="ba-em">neveřejné nabídky</strong> a podmínky, ke kterým se kupující sám často nedostane.',
+    icon: 'reserve',
+  },
+  {
+    title: 'Komunikace s developerem<br class="ba__br" /> a právní servis',
+    text: 'Od rezervace po podpis smluv stojíme <strong class="ba-em">na vaší straně</strong>. Hlídáme podmínky, termíny, dokumentaci i body, které se v nákupu snadno přehlédnou.',
+    icon: 'deal',
+  },
+];
+---
+
+<section
+  id="koncept"
+  class:list={['ba', hero && 'ba--hero']}
+  aria-labelledby="koncept-heading"
+  data-ba
+  data-nav-hide-zone
+  data-hero-alt={hero ? '' : undefined}
+>
+  <div class="ba__track" data-ba-track>
+    <div class="ba__sticky" data-ba-sticky>
+      <div class="ba__grid">
+        <div class="ba__left" data-ba-left>
+          {rows.map((row) => (
+            <article class="ba__row" data-ba-row>
+              <span class:list={['ba__icon', `ba__icon--${row.icon}`]} aria-hidden="true">
+                {row.icon === 'search' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="6.2"/>
+                    <path d="M16.2 16.2 21 21"/>
+                  </svg>
+                )}
+                {row.icon === 'reserve' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="5" width="16" height="15"/>
+                    <path d="M4 10h16M8 3v4M16 3v4"/>
+                  </svg>
+                )}
+                {row.icon === 'deal' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 4h10v16H7z"/>
+                    <path d="M10 8h4M10 12h4M10 16h2.5"/>
+                  </svg>
+                )}
+              </span>
+              <h3 class="ba__row-title font-yellix" set:html={row.title} />
+              <p class="ba__row-text font-yellix" set:html={row.text} />
+            </article>
+          ))}
+        </div>
+
+        <div class="ba__right" data-ba-right>
+          <div class="ba__head" data-ba-head>
+            {!hero && (
+              <>
+                <h2 id="koncept-heading" class="ba__h font-yellix">Buyer’s agent</h2>
+                <p class="ba__sub font-yellix">
+                  <span class="ba__sub-arrow" aria-hidden="true"></span>Na západních trzích běžný princip odborného zastoupení kupujícího.
+                </p>
+              </>
+            )}
+          </div>
+
+          <div class="ba__ph" data-ba-ph>
+            <div
+              class="ba__video"
+              data-ba-video
+              role={hero ? undefined : 'button'}
+              tabindex={hero ? undefined : 0}
+              aria-label={hero ? undefined : 'Zobrazit video na celou obrazovku'}
+            >
+              <video
+                data-ba-media
+                data-src={videoSrc}
+                src={hero ? videoSrc : undefined}
+                poster={posterSrc}
+                muted
+                loop
+                playsinline
+                preload={hero ? 'auto' : 'none'}
+                disablepictureinpicture
+                disableremoteplayback
+                aria-hidden="true"
+              ></video>
+              <img class="ba__poster" data-ba-poster src={posterSrc} alt="" width="1920" height="1080" loading="lazy" decoding="async" />
+              <div class="ba__shade" data-ba-fade></div>
+            </div>
+          </div>
+
+          <div class="ba__cap" data-ba-cap>
+            {hero ? (
+              <div class="ba__hero-copy">
+                <h1 id="koncept-heading" class="ba__hero-title font-yellix">
+                  Zastupujeme vás<br />při výběru nového bydlení
+                </h1>
+                <a class="ba__hero-cta font-yellix" href="#vyber-sluzeb">
+                  <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+                  Vybrat službu
+                </a>
+              </div>
+            ) : (
+              <p class="ba__quote font-yellix">Klient má při nákupu nemovitosti partnera, který nestojí na straně konkrétní nabídky, ale na straně jeho rozhodnutí.<span class="ba__quote-more"> Tento přístup přinášíme do Prahy se specializací na developerské projekty.</span></p>
+            )}
+            <div class="ba__cap-meta">
+              <p class="ba__ep font-yellix">
+                <span class="ba__ep-kicker">{episodeKicker}</span>
+                <span class="ba__ep-dot" aria-hidden="true">·</span>
+                <span class="ba__ep-title">{episodeTitle ?? episodeLabel}</span>
+              </p>
+            </div>
+            <a
+              class="ba__yt"
+              href={episodeHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-ba-play
+              aria-label={`Přehrát díl na YouTube: ${episodeTitle ?? episodeLabel}`}
+            >
+              <span class="ba__yt-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 17">
+                  <path fill="#FF0000" d="M23.5 2.65A3.02 3.02 0 0 0 21.38.5C19.5 0 12 0 12 0S4.5 0 2.62.5A3.02 3.02 0 0 0 .5 2.65 31.9 31.9 0 0 0 0 8.5a31.9 31.9 0 0 0 .5 5.85 3.02 3.02 0 0 0 2.12 2.15C4.5 17 12 17 12 17s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.15A31.9 31.9 0 0 0 24 8.5a31.9 31.9 0 0 0-.5-5.85Z"/>
+                  <path fill="#fff" d="M9.75 12.15V4.85L15.7 8.5 9.75 12.15Z"/>
+                </svg>
+              </span>
+              <span class="ba__yt-copy">
+                <span class="ba__yt-kicker">{episodeKicker ?? 'YouTube'}</span>
+                <span class="ba__yt-title">{episodeTitle ?? episodeLabel}</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ba {
+    --ba-pad: 1.25rem;
+    --ba-hair: rgba(0, 0, 0, 0.12);
+    --ba-max: 1440px;
+    background: #f1f1f1;
+    color: #000;
+  }
+
+  .ba__sticky {
+    padding: 3.5rem var(--ba-pad) 3rem;
+  }
+  .ba__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .ba__right {
+    display: contents;
+  }
+  .ba__head,
+  .ba__quote,
+  .ba__left,
+  .ba__ph,
+  .ba__cap-meta {
+    grid-column: 1;
+  }
+  .ba__head { grid-row: 1; }
+  .ba__quote { grid-row: 2; }
+  .ba__left { grid-row: 3; }
+  .ba__ph { grid-row: 4; }
+  .ba__cap-meta { grid-row: 4; }
+  :global(.ba__br) {
+    display: inline;
+  }
+
+  .ba__h {
+    margin: 0;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+  .ba__sub {
+    margin: 0.9rem 0 0;
+    max-width: 22em;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: -0.015em;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .ba__sub-arrow {
+    display: none;
+    width: 0.7em;
+    height: 0.7em;
+    margin-right: 0.55em;
+    vertical-align: 0;
+    background: currentColor;
+    -webkit-mask: url('/images/arrow-1.svg') center / contain no-repeat;
+    mask: url('/images/arrow-1.svg') center / contain no-repeat;
+  }
+
+  .ba__left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .ba__row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 1.25rem 1.15rem 1.4rem;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.06);
+  }
+  .ba__icon {
+    display: flex;
+    align-self: start;
+    width: 32px;
+    height: 32px;
+    margin-top: 0;
+    overflow: visible;
+  }
+  .ba__icon svg {
+    width: 32px;
+    height: 32px;
+    transform-origin: center;
+  }
+  .ba__row-title {
+    margin: 0;
+    align-self: start;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .ba__row-text {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  :global(.ba-em) {
+    font-weight: 600;
+  }
+
+  .ba__ph {
+    position: relative;
+    align-self: start;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+  .ba__video {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #111;
+    cursor: pointer;
+  }
+  .ba__video:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 3px;
+  }
+  .ba__poster {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    transition: opacity 0.25s ease;
+  }
+  .ba__video.is-playing .ba__poster,
+  .ba__video.has-played .ba__poster {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .ba__video video,
+  .ba__poster {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 35%;
+  }
+  .ba__poster {
+    object-position: 61% 40%;
+    transform: scale(2.25);
+    transform-origin: 61% 40%;
+  }
+  .ba__video video::-webkit-media-controls,
+  .ba__video video::-webkit-media-controls-start-playback-button,
+  .ba__video video::-webkit-media-controls-overlay-play-button,
+  .ba__video video::-webkit-media-controls-enclosure {
+    display: none !important;
+    -webkit-appearance: none;
+    opacity: 0 !important;
+  }
+  .ba__shade {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 48%;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.18) 55%, rgba(0, 0, 0, 0) 100%);
+  }
+
+  .ba__cap {
+    display: contents;
+  }
+  .ba__cap-meta {
+    z-index: 3;
+    align-self: end;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 0;
+    padding: 0.95rem 1rem 1rem;
+    pointer-events: none;
+    color: inherit;
+    text-decoration: none;
+  }
+  .ba__pill-chevron {
+    display: none;
+  }
+  .ba__yt {
+    display: none;
+  }
+  .ba__quote {
+    margin: -0.55rem 0 0.65rem;
+    max-width: 38ch;
+    padding-left: 1rem;
+    border-left: 1px solid rgba(0, 0, 0, 0.16);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.55;
+    letter-spacing: 0;
+    color: rgba(0, 0, 0, 0.62);
+  }
+  .ba__ep {
+    margin: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: #fff;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35);
+  }
+  .ba__ep-kicker {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+  }
+  .ba__ep-dot {
+    display: none;
+  }
+  .ba__pill {
+    display: none;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #000;
+    text-decoration: none;
+    pointer-events: auto;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    transition: opacity 0.2s ease;
+  }
+  .ba__pill:hover {
+    opacity: 0.85;
+  }
+  .ba__pill svg {
+    width: 11px;
+    height: 11px;
+    margin-left: 1px;
+  }
+  .ba__pill-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  .ba__row.is-in .ba__icon--search svg {
+    animation: ba-search 7.5s ease-in-out infinite;
+  }
+  .ba__row.is-in .ba__icon--reserve svg {
+    animation: ba-reserve 7.5s ease-in-out infinite;
+  }
+  .ba__row.is-in .ba__icon--deal svg {
+    animation: ba-deal 7.5s ease-in-out infinite;
+  }
+  @keyframes ba-search {
+    0%, 10%, 100% { transform: scale(1); }
+    5% { transform: scale(1.48); }
+  }
+  @keyframes ba-reserve {
+    0%, 32%, 46%, 100% { transform: rotate(0deg); }
+    36% { transform: rotate(-30deg); }
+    41% { transform: rotate(22deg); }
+    45% { transform: rotate(0deg); }
+  }
+  @keyframes ba-deal {
+    0%, 64%, 80%, 100% { transform: translateY(0); }
+    68% { transform: translateY(-11px); }
+    72% { transform: translateY(0); }
+    75% { transform: translateY(-5px); }
+    79% { transform: translateY(0); }
+  }
+  @keyframes ba-yt-pulse {
+    0%, 18%, 100% { transform: scale(1); }
+    28% { transform: scale(1.48); }
+    36% { transform: scale(1); }
+    44% { transform: scale(1.28); }
+    52% { transform: scale(1); }
+  }
+
+  @media (min-width: 768px) {
+    .ba {
+      --ba-pad: 2.5rem;
+    }
+    .ba__sticky {
+      padding-top: 4.5rem;
+      padding-bottom: 4.5rem;
+    }
+    .ba__h {
+      font-size: 40px;
+    }
+    .ba__sub {
+      font-size: 18px;
+    }
+    .ba__quote {
+      margin-top: -0.35rem;
+      margin-bottom: 0.85rem;
+      font-size: 15px;
+    }
+    .ba__row-text {
+      font-size: 15px;
+    }
+    .ba__left {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+    }
+    .ba__row-title {
+      font-size: 20px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .ba {
+      --ba-pad: 3.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .ba__sticky {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    .ba__grid {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr 1.25fr;
+      gap: 0;
+      max-width: var(--ba-max);
+      padding-left: var(--ba-pad);
+      padding-right: var(--ba-pad);
+    }
+    .ba__right {
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+    }
+    .ba__head,
+    .ba__left,
+    .ba__ph,
+    .ba__cap,
+    .ba__quote,
+    .ba__cap-meta {
+      order: 0;
+      grid-row: auto;
+      grid-column: auto;
+    }
+    .ba__left {
+      grid-column: 1;
+      position: relative;
+      z-index: 0;
+      background: #f1f1f1;
+    }
+    .ba__right {
+      grid-column: 2 / -1;
+      position: relative;
+      z-index: 0;
+    }
+    .ba__left::before,
+    .ba__right::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100vw;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .ba__left::before {
+      right: 100%;
+      background: #f1f1f1;
+    }
+    .ba__right::before {
+      left: 100%;
+      background: #fff;
+    }
+    .ba__cap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    :global(.ba__br) {
+      display: none;
+    }
+    .ba__left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0;
+    }
+    .ba__head {
+      padding-bottom: 0;
+    }
+    .ba__h {
+      font-size: clamp(50px, 4.2vw, 58px);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+    }
+    .ba__sub {
+      margin: 0.75rem 0 0;
+      max-width: none;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+      color: inherit;
+    }
+    .ba__sub-arrow {
+      display: inline-block;
+    }
+    .ba__quote-more {
+      display: none;
+    }
+    .ba__row {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      align-content: start;
+      column-gap: 1.1rem;
+      row-gap: 0.5rem;
+      padding: 1.5rem 0;
+      background: none;
+      border: 0;
+      border-top: 1px solid var(--ba-hair);
+      box-shadow: none;
+    }
+    .ba__row:last-child {
+      border-bottom: 1px solid var(--ba-hair);
+    }
+    .ba__icon {
+      display: flex;
+      width: 40px;
+      height: 40px;
+      margin-top: 4px;
+    }
+    .ba__icon svg {
+      width: 40px;
+      height: 40px;
+    }
+    .ba__row-title {
+      font-size: 26px;
+      line-height: 1.1;
+    }
+    .ba__row-text {
+      grid-column: 2;
+      max-width: 44ch;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    .ba__quote {
+      margin: 0;
+      max-width: 30ch;
+      padding-left: 0;
+      border-left: 0;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: inherit;
+    }
+    .ba__shade {
+      display: none;
+    }
+    .ba__cap-meta {
+      z-index: auto;
+      align-self: auto;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0;
+      pointer-events: auto;
+    }
+    .ba__ep {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      line-height: 1.35;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.55);
+      text-shadow: none;
+    }
+    .ba__ep-kicker {
+      font-size: inherit;
+      letter-spacing: inherit;
+      color: inherit;
+    }
+    .ba__ep-dot {
+      display: inline;
+    }
+    .ba__ep-title {
+      font-size: inherit;
+    }
+    .ba__pill {
+      display: none;
+    }
+    .ba__yt {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      max-width: min(22rem, 42vw);
+      padding: 10px 14px 10px 10px;
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .ba__yt:hover {
+      background: rgba(255, 255, 255, 0.96);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    }
+    .ba__yt-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .ba__yt-icon svg {
+      width: 16px;
+      height: 11px;
+      transform-origin: 50% 50%;
+      animation: ba-yt-pulse 2.4s ease-in-out infinite;
+    }
+    .ba__yt:hover .ba__yt-icon svg {
+      animation: none;
+      transform: scale(1.28);
+    }
+    .ba__yt-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .ba__yt-kicker {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.42);
+      line-height: 1;
+    }
+    .ba__yt-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: #000;
+      line-height: 1.25;
+    }
+  }
+  @media (min-width: 1280px) {
+    .ba__quote {
+      font-size: 32px;
+    }
+  }
+
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .ba {
+      scroll-margin-top: calc(-1 * var(--nav-h));
+    }
+    .ba__track {
+      position: relative;
+      height: calc(100vh + 250vh);
+    }
+    .ba__sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      padding: 0;
+    }
+    .ba__grid {
+      position: absolute;
+      inset: 0;
+      box-sizing: border-box;
+      display: grid;
+      grid-template-columns: 1fr 1.25fr 1.25fr;
+      gap: 0;
+      grid-template-rows: minmax(0, 1fr);
+      max-width: var(--ba-max);
+      margin: 0 auto;
+      padding: 0 var(--ba-pad);
+      --ba-gutter: 2rem;
+    }
+    .ba__left,
+    .ba__right {
+      order: 0;
+    }
+    .ba__left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0;
+      min-height: 0;
+      background: #f1f1f1;
+      padding: clamp(3rem, 10vh, 6rem) 2.5rem clamp(3rem, 10vh, 6rem) 0;
+    }
+    .ba__row {
+      position: relative;
+      align-content: start;
+      column-gap: 1.25rem;
+      padding: clamp(1rem, 3.5vh, 2rem) 0 clamp(0.75rem, 2.5vh, 1.5rem) 14px;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease;
+    }
+    .ba__row::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: clamp(1rem, 3.5vh, 2rem);
+      bottom: clamp(0.75rem, 2.5vh, 1.5rem);
+      width: 2px;
+      background: #000;
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .ba.is-stepping .ba__row {
+      opacity: 0.3;
+    }
+    .ba.is-stepping .ba__row.is-active {
+      opacity: 1;
+      border-top-color: #000;
+    }
+    .ba.is-stepping .ba__row.is-active::before {
+      transform: scaleY(1);
+    }
+    .ba__right {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: #f1f1f1;
+      padding: clamp(3rem, 10vh, 6rem) 0 clamp(3rem, 10vh, 6rem) clamp(2.75rem, 3.8vw, 4rem);
+      container-type: inline-size;
+      transition: background 0.5s ease;
+    }
+    .ba__right::before {
+      background: #f1f1f1;
+      transition: background 0.5s ease;
+    }
+    .ba.is-split .ba__right,
+    .ba.is-split .ba__right::before {
+      background: #fff;
+    }
+    .ba.is-split-snap .ba__right,
+    .ba.is-split-snap .ba__right::before {
+      transition: none;
+    }
+    .ba__head {
+      padding-top: clamp(0.75rem, 3vh, 1.75rem);
+    }
+    .ba__sub {
+      margin: clamp(1rem, 3vh, 1.75rem) 0 clamp(1.5rem, 4vh, 2.25rem);
+    }
+    .ba__row-title {
+      font-size: 26px;
+      line-height: 1.1;
+    }
+    .ba__ph {
+      flex: 1;
+      align-self: stretch;
+      min-height: 0;
+      aspect-ratio: auto;
+    }
+    .ba__video {
+      z-index: 2;
+      inset: auto;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .ba__video video {
+      transform: scale(1.08);
+      will-change: transform;
+    }
+    .ba__shade {
+      display: block;
+      position: absolute;
+      inset: 0;
+      height: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.26) 45%, rgba(0, 0, 0, 0) 72%);
+    }
+    .ba__cap {
+      position: absolute;
+      left: var(--ba-pad);
+      bottom: 4rem;
+      z-index: 3;
+      color: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .ba.is-expanded .ba__right {
+      position: static;
+    }
+    .ba.is-expanded .ba__cap {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      display: block;
+      padding: 0;
+      opacity: 1;
+    }
+    .ba.is-expanded .ba__shade {
+      opacity: 1;
+      background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.1) 34%, rgba(0, 0, 0, 0) 52%),
+        linear-gradient(to top, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0) 36%);
+    }
+    .ba.is-expanded .ba__quote {
+      position: absolute;
+      top: clamp(2.5rem, 6vh, 4rem);
+      left: var(--ba-pad);
+      margin: 0;
+      max-width: min(14em, 36vw);
+      font-size: clamp(24px, 2.3vw, 32px);
+      font-weight: 500;
+      line-height: 1.28;
+      letter-spacing: -0.02em;
+      text-shadow: 0 1px 18px rgba(0, 0, 0, 0.35);
+    }
+    .ba.is-expanded .ba__cap-meta {
+      display: none;
+    }
+    .ba.is-expanded .ba__yt {
+      position: absolute;
+      right: var(--ba-pad);
+      bottom: clamp(2.25rem, 5vh, 3.5rem);
+      align-items: stretch;
+      gap: 14px;
+      max-width: min(26rem, 44vw);
+      padding: 12px 18px 12px 12px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
+      pointer-events: auto;
+    }
+    .ba.is-expanded .ba__yt-icon {
+      width: 52px;
+      height: auto;
+      min-height: 52px;
+      background: #fff;
+      border: 0;
+    }
+    .ba.is-expanded .ba__yt-icon svg {
+      width: 28px;
+      height: 20px;
+    }
+    .ba.is-expanded .ba__yt-copy {
+      justify-content: center;
+      gap: 6px;
+      padding: 2px 0;
+    }
+    .ba.is-expanded .ba__yt-kicker {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+    }
+    .ba.is-expanded .ba__yt-title {
+      font-size: 16px;
+      line-height: 1.28;
+      letter-spacing: -0.015em;
+    }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .ba__row-title {
+      font-size: 24px;
+    }
+  }
+  @media (min-width: 1024px) and (max-width: 1279px) and (prefers-reduced-motion: no-preference) {
+    .ba__grid {
+      --ba-gutter: 2rem;
+    }
+    .ba__sub {
+      font-size: 18px;
+    }
+    .ba__row {
+      padding: clamp(0.75rem, 2.2vh, 1.25rem) 0 clamp(0.5rem, 1.6vh, 1rem);
+    }
+  }
+
+  @media (min-width: 1024px) and (min-height: 951px) and (prefers-reduced-motion: no-preference) {
+    .ba__grid {
+      grid-template-rows: auto;
+      align-content: center;
+    }
+    .ba__ph {
+      flex: none;
+      height: calc(100cqw * 9 / 16);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ba__icon svg,
+    .ba__yt-icon svg {
+      animation: none !important;
+    }
+  }
+
+  .ba.ba--hero {
+    --ba-peek: 4.75rem;
+    background: #111;
+    color: #fff;
+    height: calc(100svh - var(--ba-peek));
+    min-height: 28rem;
+    scroll-margin-top: 0;
+  }
+  .ba.ba--hero .ba__track,
+  .ba.ba--hero .ba__sticky,
+  .ba.ba--hero .ba__grid,
+  .ba.ba--hero .ba__right,
+  .ba.ba--hero .ba__ph {
+    position: relative;
+    inset: auto;
+    display: block;
+    height: 100%;
+    min-height: 0;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: transparent;
+  }
+  .ba.ba--hero .ba__left {
+    display: none;
+  }
+  .ba.ba--hero .ba__left::before,
+  .ba.ba--hero .ba__right::before {
+    content: none;
+    display: none;
+  }
+  .ba.ba--hero .ba__head {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .ba.ba--hero .ba__ph {
+    aspect-ratio: auto;
+  }
+  .ba.ba--hero .ba__video {
+    position: absolute;
+    inset: 0;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: auto;
+    height: auto;
+    cursor: default;
+  }
+  .ba.ba--hero .ba__video video {
+    transform: none;
+  }
+  .ba.ba--hero .ba__shade {
+    display: block;
+    position: absolute;
+    inset: 0;
+    height: auto;
+    z-index: 2;
+    opacity: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(to right, rgba(0, 0, 0, 0.34) 0%, rgba(0, 0, 0, 0.12) 38%, rgba(0, 0, 0, 0) 64%),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0) 28%),
+      linear-gradient(to top, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0) 36%);
+  }
+  .ba.ba--hero .ba__cap {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 1rem;
+    width: min(1440px, 100%);
+    margin: 0;
+    padding: 0 var(--ba-pad) clamp(1.25rem, 3vh, 2.5rem);
+    transform: translateX(-50%);
+    box-sizing: border-box;
+    opacity: 1;
+    pointer-events: none;
+    color: #fff;
+  }
+  .ba.ba--hero .ba__hero-copy {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    pointer-events: auto;
+  }
+  .ba.ba--hero .ba__hero-title {
+    margin: 0;
+    color: #fff;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.28);
+  }
+  .ba.ba--hero .ba__hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    background: #fff;
+    color: #000;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+  .ba.ba--hero .ba__hero-cta:hover {
+    opacity: 0.85;
+  }
+  .ba.ba--hero .ba__hero-cta img {
+    display: block;
+    width: 12px;
+    height: 12px;
+    filter: brightness(0);
+  }
+  @media (min-width: 640px) {
+    .ba.ba--hero .ba__hero-title {
+      font-size: 40px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .ba.ba--hero .ba__cap {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .ba.ba--hero .ba__hero-title {
+      font-size: 42px;
+    }
+  }
+  .ba.ba--hero .ba__cap-meta {
+    display: none;
+  }
+  .ba.ba--hero .ba__yt {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    align-self: flex-end;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    max-width: min(22rem, 100%);
+    padding: 8px 12px 8px 8px;
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    pointer-events: auto;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .ba.ba--hero .ba__yt:hover {
+    background: rgba(255, 255, 255, 0.96);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+  }
+  .ba.ba--hero .ba__yt-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    min-height: 0;
+    flex-shrink: 0;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .ba.ba--hero .ba__yt-icon svg {
+    width: 16px;
+    height: 11px;
+    transform-origin: 50% 50%;
+    animation: ba-yt-pulse 2.4s ease-in-out infinite;
+  }
+  .ba.ba--hero .ba__yt:hover .ba__yt-icon svg {
+    animation: none;
+    transform: scale(1.28);
+  }
+  .ba.ba--hero .ba__yt-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    padding: 0;
+  }
+  .ba.ba--hero .ba__yt-kicker {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.42);
+    line-height: 1;
+  }
+  .ba.ba--hero .ba__yt-title {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .ba.ba--hero .ba__track {
+      height: 100%;
+    }
+    .ba.ba--hero .ba__sticky {
+      position: relative;
+      top: auto;
+      height: 100%;
+      overflow: hidden;
+      padding: 0;
+    }
+    .ba.ba--hero .ba__grid {
+      display: block;
+      grid-template-columns: none;
+      grid-template-rows: none;
+    }
+  }
+  @media (min-width: 1024px) and (min-height: 951px) and (prefers-reduced-motion: no-preference) {
+    .ba.ba--hero .ba__ph {
+      flex: none;
+      height: 100%;
+    }
+  }
+</style>
+
+<script>
+  function initBuyersAgentScroll() {
+    const sec = document.querySelector<HTMLElement>('[data-ba]');
+    if (!sec) return;
+    const state = sec as HTMLElement & { _baCleanup?: () => void };
+    if (state._baCleanup) state._baCleanup();
+
+    const track = sec.querySelector<HTMLElement>('[data-ba-track]')!;
+    const sticky = sec.querySelector<HTMLElement>('[data-ba-sticky]')!;
+    const ph = sec.querySelector<HTMLElement>('[data-ba-ph]')!;
+    const box = sec.querySelector<HTMLElement>('[data-ba-video]')!;
+    const media = sec.querySelector<HTMLVideoElement>('[data-ba-media]')!;
+    const play = sec.querySelector<HTMLAnchorElement>('[data-ba-play]')!;
+    const rows = [...sec.querySelectorAll<HTMLElement>('[data-ba-row]')];
+    const mq = window.matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hero = sec.classList.contains('ba--hero');
+
+    const poster = sec.querySelector<HTMLElement>('[data-ba-poster]')!;
+    const left = sec.querySelector<HTMLElement>('[data-ba-left]')!;
+    const head = sec.querySelector<HTMLElement>('[data-ba-head]')!;
+
+    media.muted = true;
+    media.controls = false;
+
+    let wantPlay = false;
+    let inView = false;
+
+    const setPlaying = (on: boolean) => {
+      if (on === wantPlay) return;
+      wantPlay = on;
+      if (!on) {
+        media.pause();
+        box.classList.remove('is-playing');
+        return;
+      }
+      const src = media.dataset.src;
+      if (src && media.getAttribute('src') !== src) media.setAttribute('src', src);
+      media.play().catch(() => {});
+    };
+
+    const onPlaying = () => {
+      if (!wantPlay) {
+        media.pause();
+        return;
+      }
+      box.classList.add('is-playing', 'has-played');
+    };
+    media.addEventListener('playing', onPlaying);
+
+    const near = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const src = media.dataset.src;
+          if (src && media.getAttribute('src') !== src) {
+            media.setAttribute('src', src);
+            media.preload = 'auto';
+          }
+        });
+      },
+      { rootMargin: '300px 0px' }
+    );
+    near.observe(sec);
+
+    const view = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          inView = entry.isIntersecting;
+          if (!mq.matches) setPlaying(inView && !reduced);
+        });
+      },
+      { threshold: 0.6 }
+    );
+    view.observe(ph);
+
+    const icons = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        rows.forEach((row) => row.classList.add('is-in'));
+        icons.disconnect();
+      },
+      { threshold: 0.12 }
+    );
+    icons.observe(sec);
+
+    const openEpisode = () => {
+      window.open(play.href, '_blank', 'noopener,noreferrer');
+    };
+
+    const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+    const smoothstep = (t: number) => t * t * (3 - 2 * t);
+    const DWELL = 0.35;
+    const STEP = 0.35;
+    const STEPS_END = DWELL + STEP * rows.length;
+    const EXPAND = 0.75;
+    let raf = 0;
+    let k = 0;
+    let pinSplit = false;
+    let catchArmed = true;
+    let eatingUntil = 0;
+    let lastWheelAt = 0;
+    let gestureFromHero = false;
+    let activeIdx = -2;
+
+    const dockY = () => Math.round(track.getBoundingClientRect().top + window.scrollY);
+
+    const setInstantScroll = (on: boolean) => {
+      document.documentElement.style.scrollBehavior = on ? 'auto' : '';
+    };
+
+    const pinDock = () => {
+      setInstantScroll(true);
+      const y = dockY();
+      const root = document.scrollingElement || document.documentElement;
+      root.scrollTop = y;
+      window.scrollTo({ top: y, behavior: 'auto' });
+      snapSplit();
+    };
+
+    const catchDock = (now: number) => {
+      catchArmed = false;
+      eatingUntil = now + 320;
+      pinDock();
+    };
+
+    const snapSplit = () => {
+      pinSplit = true;
+      sec.classList.add('is-split', 'is-split-snap');
+    };
+
+    const setActive = (i: number) => {
+      if (i === activeIdx) return;
+      activeIdx = i;
+      sec.classList.toggle('is-stepping', i >= 0);
+      rows.forEach((row, n) => row.classList.toggle('is-active', n === i));
+    };
+
+    const openExpanded = () => {
+      catchArmed = false;
+      eatingUntil = 0;
+      snapSplit();
+      setInstantScroll(true);
+      const y = dockY() + Math.round((window.innerHeight || 1) * (STEPS_END + EXPAND + 0.12));
+      const root = document.scrollingElement || document.documentElement;
+      root.scrollTop = y;
+      window.scrollTo({ top: y, behavior: 'auto' });
+      req();
+      requestAnimationFrame(() => setInstantScroll(false));
+    };
+
+    const onBox = (event: Event) => {
+      event.preventDefault();
+      if (mq.matches && k < 0.8) {
+        openExpanded();
+        return;
+      }
+      openEpisode();
+    };
+    const onBoxKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      onBox(event);
+    };
+    if (!hero) {
+      box.addEventListener('click', onBox);
+      box.addEventListener('keydown', onBoxKey);
+    }
+
+    const onWheel = (event: WheelEvent) => {
+      if (!mq.matches || hero) return;
+      const now = performance.now();
+      const vh = window.innerHeight || 1;
+      const p = -track.getBoundingClientRect().top / vh;
+      let dy = event.deltaY;
+      if (event.deltaMode === 1) dy *= 16;
+      else if (event.deltaMode === 2) dy *= vh;
+
+      if (now < eatingUntil) {
+        if (dy > 0) {
+          event.preventDefault();
+          pinDock();
+          eatingUntil = now + 200;
+        } else {
+          eatingUntil = 0;
+        }
+        req();
+        return;
+      }
+
+      const isNew = now - lastWheelAt > 140;
+      lastWheelAt = now;
+      if (isNew) gestureFromHero = p < 0;
+
+      if (catchArmed && gestureFromHero && dy > 0 && p > -0.55 && p < 0.12) {
+        const projected = p + dy / vh;
+        if (projected > 0.28) {
+          event.preventDefault();
+          catchDock(now);
+          req();
+        }
+      }
+    };
+
+    const onKonceptClick = (event: Event) => {
+      const target = event.target;
+      if (!(target instanceof Element) || !target.closest('a[href="#koncept"]')) return;
+      if (!mq.matches || hero) return;
+      event.preventDefault();
+      catchArmed = false;
+      eatingUntil = performance.now() + 240;
+      snapSplit();
+      pinDock();
+      if (location.hash !== '#koncept') history.pushState(null, '', '#koncept');
+    };
+
+    const onHash = () => {
+      if (location.hash === '#koncept' && mq.matches && !hero) {
+        catchArmed = false;
+        snapSplit();
+      }
+    };
+
+    document.addEventListener('click', onKonceptClick, true);
+    window.addEventListener('hashchange', onHash);
+    window.addEventListener('wheel', onWheel, { passive: false });
+    if (location.hash === '#koncept') onHash();
+
+    const reset = () => {
+      [box, media, poster, left, head].forEach((el) => el.removeAttribute('style'));
+      sec.classList.remove('is-expanded', 'is-split', 'is-split-snap', 'is-stepping');
+      rows.forEach((row) => row.classList.remove('is-active'));
+      k = 0;
+      pinSplit = false;
+      catchArmed = true;
+      eatingUntil = 0;
+      activeIdx = -2;
+      setInstantScroll(false);
+    };
+
+    const frame = (now: number) => {
+      raf = 0;
+      if (!mq.matches || hero) {
+        reset();
+        setPlaying(inView && !reduced);
+        return;
+      }
+      const vh = window.innerHeight;
+      const t = track.getBoundingClientRect();
+      const p = -t.top / vh;
+      if (p < -0.35) catchArmed = true;
+      if (catchArmed && p > 0.28) catchDock(now);
+      else if (p >= 0) catchArmed = false;
+      if (now < eatingUntil) pinDock();
+      else setInstantScroll(false);
+      if (p >= 0 || p < -0.5) pinSplit = false;
+      const wantSplit = pinSplit || p >= -0.2;
+      sec.classList.toggle('is-split', wantSplit);
+      sec.classList.toggle('is-split-snap', pinSplit || p >= 0);
+
+      if (now < eatingUntil || p < DWELL) {
+        setActive(-1);
+        k = 0;
+      } else if (p < STEPS_END) {
+        setActive(Math.min(rows.length - 1, Math.floor((p - DWELL) / STEP)));
+        k = 0;
+      } else {
+        setActive(-1);
+        k = smoothstep(clamp01((p - STEPS_END) / EXPAND));
+      }
+
+      const lerp = (a: number, b: number) => a + (b - a) * k;
+      const s = sticky.getBoundingClientRect();
+      const q = ph.getBoundingClientRect();
+      box.style.left = lerp(0, s.left - q.left) + 'px';
+      box.style.top = lerp(0, s.top - q.top) + 'px';
+      box.style.width = lerp(q.width, s.width) + 'px';
+      box.style.height = lerp(q.height, s.height) + 'px';
+      media.style.transform = `scale(${1.08 - 0.08 * k})`;
+
+      const fade = Math.max(0, 1 - k * 1.6);
+      left.style.opacity = String(fade);
+      left.style.transform = `translateX(${-48 * k}px)`;
+      head.style.opacity = String(fade);
+      head.style.transform = `translateY(${-36 * k}px)`;
+
+      const covering = s.top <= 1 && s.bottom >= vh - 1;
+      setPlaying(covering && p >= 0 && now >= eatingUntil);
+      const expanded = k > 0.8 && covering;
+      sec.classList.toggle('is-expanded', expanded);
+      box.setAttribute(
+        'aria-label',
+        expanded ? 'Přehrát díl na YouTube' : 'Zobrazit video na celou obrazovku'
+      );
+
+      if (now < eatingUntil) req();
+    };
+
+    const resize = new ResizeObserver(() => req());
+    resize.observe(ph);
+
+    function req() {
+      if (!raf) raf = requestAnimationFrame(frame);
+    }
+    window.addEventListener('scroll', req, { passive: true });
+    window.addEventListener('resize', req);
+    mq.addEventListener('change', req);
+    req();
+
+    state._baCleanup = () => {
+      near.disconnect();
+      view.disconnect();
+      icons.disconnect();
+      resize.disconnect();
+      media.removeEventListener('playing', onPlaying);
+      box.removeEventListener('click', onBox);
+      box.removeEventListener('keydown', onBoxKey);
+      document.removeEventListener('click', onKonceptClick, true);
+      window.removeEventListener('hashchange', onHash);
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('scroll', req);
+      window.removeEventListener('resize', req);
+      mq.removeEventListener('change', req);
+      if (raf) cancelAnimationFrame(raf);
+      state._baCleanup = undefined;
+    };
+  }
+
+  initBuyersAgentScroll();
+  document.addEventListener('astro:page-load', initBuyersAgentScroll);
+</script>

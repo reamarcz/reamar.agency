@@ -1,0 +1,612 @@
+---
+interface Slide {
+  tab: string;
+  kicker: string;
+  title: string;
+  cta: string;
+  note: string;
+  aside: string | string[];
+  stat: string;
+  statLabel: string;
+  statPhrase?: boolean;
+  playLabel?: string;
+  image: string;
+}
+
+interface Props {
+  variant?: 'investice' | 'bydleni';
+}
+
+const investiceSlides: Slide[] = [
+  {
+    tab: 'Neveřejné nabídky a předprodeje',
+    kicker: 'Neveřejné nabídky a předprodeje',
+    title: 'Dostaňte se k příležitostem dřív, než se objeví ve veřejné nabídce.',
+    cta: 'Registrovat k předprodeji',
+    note: 'U vybraných projektů řešíme předprodeje, přednostní výběr jednotek a nabídky, které se na běžných portálech vůbec nemusí objevit.',
+    aside:
+      'Nejzajímavější jednotky často mizí ještě před tím, než si jich všimne širší trh. Díky kontaktům na developerském trhu umíme klientům otevřít přístup k nabídkám ve chvíli, kdy se o nich teprve začíná jednat.',
+    stat: 'až 15 %',
+    statLabel: 'výhodnější cenová pozice\nu vybraných předprodejů',
+    image: '/images/reamar-presale.webp',
+  },
+  {
+    tab: 'Postoupení smlouvy',
+    kicker: 'Postoupení smlouvy',
+    title: 'Investiční byt nemusíte vždy držet až do převzetí.',
+    cta: 'Najít byt na flip',
+    note: 'U vhodně vybraných jednotek může investor pracovat s růstem hodnoty už během výstavby a smlouvu postoupit ještě před doplacením celé kupní ceny.',
+    aside:
+      'Při nákupu v předprodeji investor často hradí jen část kupní ceny na začátku. Pokud se projekt, lokalita nebo cenová hladina posune, může vzniknout prostor pro postoupení smlouvy dalšímu kupujícímu ještě před dokončením.',
+    stat: 'před doplacením',
+    statPhrase: true,
+    statLabel: 'možnost vystoupit z projektu\npostoupením smlouvy',
+    image: '/images/Prodej/postoupeni.png',
+  },
+  {
+    tab: 'Platební podmínky',
+    kicker: 'Platební podmínky',
+    title: 'Vstupte do projektu s menším kapitálem na začátku.',
+    cta: 'Chci nižší financování',
+    note: 'U vybraných předprodejů stačí uhradit část kupní ceny při podpisu a zbytek řešit až při dokončení projektu.',
+    aside:
+      'Platební kalendář může zásadně změnit ekonomiku investice. Pokud investor platí jen menší část ceny na začátku, kapitál mu zůstává déle k dispozici a financování řeší až ve chvíli, kdy je projekt blíž dokončení.',
+    stat: '10 / 90',
+    statLabel: '10 % při podpisu,\n90 % až při dokončení',
+    image: '/images/Prodej/investicni.png',
+  },
+  {
+    tab: 'Investorské balíčky',
+    kicker: 'Investorské balíčky',
+    title: 'Méně náhodných nabídek. Více jednotek, které dávají investiční smysl.',
+    cta: 'Připravit výběr',
+    note: 'Připravujeme užší výběry jednotek podle rozpočtu, strategie a cíle investora. Nejde o seznam celého trhu, ale o výběr k rozhodnutí.',
+    aside:
+      'Investorský balíček skládáme z jednotek, které prošly základním filtrem ceny, lokality, dispozice, nájemního potenciálu a budoucí likvidity. Investor tak nemusí začínat od nuly a procházet stovky nabídek bez kontextu.',
+    stat: '3 až 10',
+    statLabel: 'jednotek v jednom\ninvestorském výběru',
+    image: '/images/agency/projekty-seznam.webp',
+  },
+];
+
+const bydleniSlides: Slide[] = [
+  {
+    tab: 'Vlastní software',
+    kicker: 'Vlastní software',
+    title: 'Přístup k celému trhu novostaveb.',
+    cta: 'Spustit výběr',
+    note: 'Naším cílem není ukázat klientovi co nejvíce možností. Naším cílem je vybrat ty správné.',
+    aside: [
+      'Propojujeme vlastní monitoring novostaveb, tržní data a zkušenosti z reálného prodeje developerských projektů. Pomocí AI je vyhodnocujeme v souvislostech a převádíme do praktického pohledu na konkrétní jednotky.',
+      'Díky tomu vidíme trh v hloubce, kterou běžné portály ani samostatné veřejné ceníky nenabízejí.',
+    ],
+    stat: '9 567',
+    statLabel: 'jednotek aktuálně na primárním trhu\nv Praze a okolí',
+    image: '/images/agency/statistiky.webp',
+    playLabel: 'Přehrát ukázku',
+  },
+  {
+    tab: 'Neveřejné nabídky a předprodeje',
+    kicker: 'Neveřejné nabídky a předprodeje',
+    title: 'Nejlepší nabídky bývají často skryté.',
+    cta: 'Registrovat k předprodeji',
+    note: 'U vybraných projektů se dostáváme k jednotkám ještě před tím, než se objeví na webu projektu nebo realitních portálech.',
+    aside:
+      'Dobrý byt často zmizí dřív, než se dostane do běžné nabídky. Díky kontaktům na trhu umíme klientům otevřít předprodeje, přednostní výběry a neveřejné příležitosti, které nejsou dostupné každému.',
+    stat: '72',
+    statLabel: 'neveřejných nebo přednostních příležitostí\nv aktivním výběru',
+    image: '/images/reamar-presale.webp',
+  },
+  {
+    tab: 'Zvýhodněné podmínky',
+    kicker: 'Zvýhodněné podmínky',
+    title: 'Dohodneme podmínky, na které kupující sám často nedosáhne.',
+    cta: 'Zadat preference',
+    note: 'Řešíme cenu, splátkový kalendář, rezervaci i další výhody, které mohou nákup posunout o stovky tisíc korun.',
+    aside:
+      'Developer s běžným kupujícím často drží standardní nabídku. My víme, kdy má smysl jednat o ceně, kdy o platebním režimu a kdy je větší hodnota v rezervaci, vybavení, parkování nebo přednostní pozici u jednotky.',
+    stat: 'stovky tisíc\u00A0Kč',
+    statPhrase: true,
+    statLabel: 'rozdíl, který může vzniknout při správně\nvedeném jednání s developerem',
+    image: '/images/agency/vyjednavani.webp',
+  },
+  {
+    tab: 'Právní servis',
+    kicker: 'Právní servis',
+    title: 'Prověříme developera i smlouvy k podpisu.',
+    cta: 'Domluvit konzultaci',
+    note: 'Zkontrolujeme developera, smlouvy, termíny, platební režim i závazky, které z nákupu vyplývají.',
+    aside:
+      'Některá rizika nejsou vidět v ceníku. Mohou být v harmonogramu, smlouvách, platebních podmínkách nebo historii developera. Proto se díváme nejen na byt, ale i na celý nákup kolem něj.',
+    stat: 'bezpečný nákup',
+    statPhrase: true,
+    statLabel: 'společně s výběrem bytu dostanete i naše\nposouzení developera a smluv',
+    image: '/images/agency/story.webp',
+  },
+];
+
+const { variant = 'investice' } = Astro.props;
+const slides = variant === 'bydleni' ? bydleniSlides : investiceSlides;
+const total = slides.length;
+---
+
+<section id="co-delame" class="bg-white" aria-labelledby="inv-nabidky-tabs" data-inv-nabidky>
+  <div class="mx-auto max-w-[1440px] px-5 pb-16 pt-8 md:px-10 md:pb-24 md:pt-10 xl:px-14 xl:pb-28 xl:pt-12">
+    <div class="flex items-end justify-between gap-6">
+      <div
+        id="inv-nabidky-tabs"
+        class="inv-tabs flex min-w-0 flex-1 items-center gap-1 overflow-x-auto"
+        role="tablist"
+        aria-label="Typy nabídek"
+      >
+        {slides.map((slide, i) => (
+          <button
+            type="button"
+            class:list={['inv-tab', i === 0 && 'is-on']}
+            role="tab"
+            id={`inv-tab-${i}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-controls={`inv-panel-${i}`}
+            tabindex={i === 0 ? 0 : -1}
+            data-inv-tab={i}
+          >
+            {slide.tab}
+          </button>
+        ))}
+      </div>
+
+      <p class="inv-meter shrink-0" aria-live="polite">
+        <span class="inv-meter-track" aria-hidden="true">
+          <span class="inv-meter-fill" data-inv-fill></span>
+        </span>
+        <span class="inv-meter-num" data-inv-num>1 / {total}</span>
+      </p>
+    </div>
+
+    <div class="inv-stage mt-5 md:mt-6">
+      {slides.map((slide, i) => (
+        <article
+          class:list={['inv-slide', i === 0 && 'is-on']}
+          id={`inv-panel-${i}`}
+          role="tabpanel"
+          aria-labelledby={`inv-tab-${i}`}
+          data-inv-slide
+        >
+          <div class="inv-main">
+            <div class="inv-copy">
+              <p class="inv-kicker">{slide.kicker}</p>
+              <h3 class="inv-title">{slide.title}</h3>
+              <a
+                href="#"
+                class="inv-cta mt-6 inline-flex w-fit items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-white no-underline transition-opacity hover:opacity-85"
+              >
+                <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0 invert" width="12" height="12" />
+                {slide.cta}
+              </a>
+              <p class="inv-note">{slide.note}</p>
+            </div>
+            <div class="inv-photo">
+              <div class="inv-photo-frame">
+                <img src={slide.image} alt="" class={slide.playLabel ? 'is-top' : undefined} width="720" height="960" loading={i === 0 ? 'eager' : 'lazy'} />
+                {slide.playLabel && (
+                  <button
+                    type="button"
+                    class="inv-play"
+                  >
+                    <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+                      <path d="M3.2 1.6v8.8L10.4 6 3.2 1.6Z"/>
+                    </svg>
+                    {slide.playLabel}
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+          <aside class="inv-aside">
+            <div class="inv-aside-copy-wrap">
+              {(Array.isArray(slide.aside) ? slide.aside : [slide.aside]).map((para) => (
+                <p class="inv-aside-copy">{para}</p>
+              ))}
+            </div>
+            <div class="inv-stat">
+              <p class:list={['inv-stat-num', slide.statPhrase && 'is-phrase']}>{slide.stat}</p>
+              <p class="inv-stat-label">
+                {slide.statLabel.split('\n').map((line, lineIndex) => (
+                  <>
+                    {lineIndex > 0 && <br />}
+                    {line}
+                  </>
+                ))}
+              </p>
+            </div>
+          </aside>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .inv-tab {
+    flex-shrink: 0;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    padding: 0.55rem 0.8rem;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: rgba(0, 0, 0, 0.38);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.25s ease, background-color 0.25s ease, opacity 0.2s ease;
+  }
+  .inv-tab:hover {
+    color: rgba(0, 0, 0, 0.72);
+  }
+  .inv-tab.is-on {
+    background: #000;
+    color: #fff;
+  }
+  .inv-tab.is-on:hover {
+    color: #fff;
+    opacity: 0.85;
+  }
+  .inv-meter {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: #000;
+  }
+  .inv-meter-track {
+    display: block;
+    width: 2.75rem;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.16);
+  }
+  .inv-meter-fill {
+    display: block;
+    height: 1px;
+    width: 25%;
+    background: #000;
+    transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .inv-meter-num {
+    font-variant-numeric: proportional-nums;
+  }
+  .inv-stage {
+    display: grid;
+  }
+  .inv-slide {
+    grid-area: 1 / 1;
+    display: grid;
+    gap: 0.5rem;
+    min-height: 28rem;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.45s ease, visibility 0.45s ease;
+  }
+  .inv-slide.is-on {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .inv-main {
+    display: grid;
+    background: var(--color-muted);
+  }
+  .inv-copy {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.35rem 1.6rem;
+  }
+  .inv-kicker {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.35;
+    color: #000;
+  }
+  .inv-title {
+    margin: 1.15rem 0 0;
+    max-width: 20ch;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: #000;
+  }
+  .inv-note {
+    margin: 2rem 0 0;
+    max-width: 42ch;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.55;
+    color: rgba(0, 0, 0, 0.72);
+  }
+  .inv-photo {
+    min-height: 16rem;
+    padding: 1.15rem 1.15rem 1.15rem 0;
+  }
+  .inv-photo-frame {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+  .inv-photo img.is-top {
+    object-position: top;
+  }
+  .inv-play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transform: translate(-50%, -50%);
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.5rem 1rem;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .inv-play:hover {
+    opacity: 0.85;
+  }
+  .inv-aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2.5rem;
+    padding: 2.15rem 1.85rem 2.2rem;
+    background: #000;
+    color: #fff;
+  }
+  .inv-aside-copy {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.88);
+  }
+  .inv-aside-copy + .inv-aside-copy {
+    margin-top: 1rem;
+  }
+  .inv-stat {
+    text-align: left;
+  }
+  .inv-stat-num {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 52px;
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    font-variant-numeric: proportional-nums;
+  }
+  .inv-stat-num.is-phrase {
+    font-size: 28px;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    max-width: none;
+    white-space: nowrap;
+  }
+  .inv-stat-label {
+    margin: 0.7rem 0 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.78);
+  }
+  @media (min-width: 768px) {
+    .inv-tab {
+      font-size: 14px;
+      padding: 0.58rem 0.9rem;
+    }
+    .inv-slide {
+      min-height: 32rem;
+    }
+    .inv-main {
+      grid-template-columns: minmax(0, 1.1fr) minmax(13rem, 0.95fr);
+    }
+    .inv-copy {
+      padding: 2rem 1.75rem 1.9rem 2rem;
+    }
+    .inv-title {
+      font-size: 28px;
+      max-width: 18ch;
+    }
+    .inv-note {
+      margin-top: auto;
+      padding-top: 3rem;
+      font-size: 15px;
+    }
+    .inv-photo {
+      min-height: 0;
+      padding: 1.35rem 1.35rem 1.35rem 0.5rem;
+    }
+    .inv-aside {
+      padding: 2.5rem 2.15rem 2.4rem;
+    }
+    .inv-aside-copy {
+      font-size: 15px;
+    }
+    .inv-stat-num {
+      font-size: 64px;
+    }
+    .inv-stat-num.is-phrase {
+      font-size: 34px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .inv-slide {
+      grid-template-columns: minmax(0, 1.72fr) minmax(17rem, 0.78fr);
+      min-height: 34rem;
+    }
+    .inv-main {
+      grid-template-columns: minmax(0, 1.08fr) minmax(12rem, 0.92fr);
+    }
+    .inv-copy {
+      padding: 2.15rem 1.5rem 2rem 2.15rem;
+    }
+    .inv-title {
+      font-size: 32px;
+      max-width: 18ch;
+    }
+    .inv-photo {
+      padding: 1.5rem 1.5rem 1.5rem 0.25rem;
+    }
+    .inv-aside {
+      padding: 2.75rem 2.5rem 2.6rem;
+    }
+    .inv-stat-num {
+      font-size: 72px;
+    }
+    .inv-stat-num.is-phrase {
+      font-size: 38px;
+    }
+  }
+  @media (max-width: 767px) {
+    .inv-photo {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .inv-slide,
+    .inv-meter-fill,
+    .inv-tab {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    function initInvNabidky() {
+      document.querySelectorAll('[data-inv-nabidky]').forEach(function (root) {
+        if (root._invCleanup) root._invCleanup();
+
+        var tabs = root.querySelectorAll('[data-inv-tab]');
+        var slides = root.querySelectorAll('[data-inv-slide]');
+        var fill = root.querySelector('[data-inv-fill]');
+        var num = root.querySelector('[data-inv-num]');
+        var total = tabs.length;
+        if (!total) return;
+        var active = 0;
+        var timer = null;
+        var paused = false;
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function stop() {
+          if (timer) {
+            window.clearInterval(timer);
+            timer = null;
+          }
+        }
+
+        function play() {
+          stop();
+          if (reduce || paused || document.hidden) return;
+          timer = window.setInterval(function () {
+            go((active + 1) % total);
+          }, 3000);
+        }
+
+        function go(index) {
+          active = index;
+          tabs.forEach(function (tab, i) {
+            var on = i === index;
+            tab.classList.toggle('is-on', on);
+            tab.setAttribute('aria-selected', on ? 'true' : 'false');
+            tab.tabIndex = on ? 0 : -1;
+          });
+          slides.forEach(function (slide, i) {
+            slide.classList.toggle('is-on', i === index);
+          });
+          if (fill) fill.style.width = ((index + 1) / total) * 100 + '%';
+          if (num) num.textContent = index + 1 + ' / ' + total;
+        }
+
+        function onTabClick(e) {
+          var index = Number(e.currentTarget.getAttribute('data-inv-tab'));
+          go(index);
+          play();
+        }
+
+        function onKey(e) {
+          var next = active;
+          if (e.key === 'ArrowRight') next = (active + 1) % total;
+          else if (e.key === 'ArrowLeft') next = (active - 1 + total) % total;
+          else return;
+          e.preventDefault();
+          go(next);
+          tabs[next].focus();
+          play();
+        }
+
+        function onEnter() {
+          paused = true;
+          stop();
+        }
+
+        function onLeave() {
+          paused = false;
+          play();
+        }
+
+        function onVisibility() {
+          if (document.hidden) stop();
+          else play();
+        }
+
+        tabs.forEach(function (tab) {
+          tab.addEventListener('click', onTabClick);
+        });
+
+        var list = root.querySelector('[role="tablist"]');
+        if (list) list.addEventListener('keydown', onKey);
+        root.addEventListener('mouseenter', onEnter);
+        root.addEventListener('mouseleave', onLeave);
+        document.addEventListener('visibilitychange', onVisibility);
+
+        root._invCleanup = function () {
+          stop();
+          paused = true;
+          tabs.forEach(function (tab) {
+            tab.removeEventListener('click', onTabClick);
+          });
+          if (list) list.removeEventListener('keydown', onKey);
+          root.removeEventListener('mouseenter', onEnter);
+          root.removeEventListener('mouseleave', onLeave);
+          document.removeEventListener('visibilitychange', onVisibility);
+          root._invCleanup = null;
+        };
+
+        play();
+      });
+    }
+
+    initInvNabidky();
+    document.addEventListener('astro:page-load', initInvNabidky);
+  })();
+</script>

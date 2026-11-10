@@ -1,0 +1,149 @@
+/* ============================================================
+   Hero layout: empty left column + flowing tile stream on the right
+   --paper is the background AND the color of the top/bottom fades.
+   ============================================================ */
+
+.hl-hero {
+  --paper: #ffffff;
+  --tile-bg: #f1f1f1;
+  --gap: 18px;
+  --fade-top: 170px;
+  --fade-bottom: 180px;
+
+  position: relative;
+  height: 72vh;
+  min-height: 36rem;
+  max-height: 46rem;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  overflow: hidden;
+  background: var(--paper);
+  box-sizing: border-box;
+}
+.hl-hero *, .hl-hero *::before, .hl-hero *::after { box-sizing: border-box; }
+
+.hl-grid {
+  display: grid;
+  grid-template-columns: 1.02fr 1fr;
+  gap: 56px;
+  align-items: center;
+  height: 100%;
+}
+
+.hl-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  min-width: 0;
+}
+
+.hl-right {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+  align-items: start;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hl-fade { position: absolute; left: 0; right: 0; z-index: 5; pointer-events: none; }
+.hl-fade--top {
+  top: 0; height: var(--fade-top);
+  background: linear-gradient(180deg,
+    #ffffff 0%,
+    rgba(255,255,255,0.85) 32%,
+    rgba(255,255,255,0.35) 68%,
+    rgba(255,255,255,0) 100%);
+}
+.hl-fade--bottom {
+  bottom: 0; height: var(--fade-bottom);
+  background: linear-gradient(0deg,
+    #ffffff 0%,
+    rgba(255,255,255,0.85) 30%,
+    rgba(255,255,255,0.35) 65%,
+    rgba(255,255,255,0) 100%);
+}
+
+.hl-col { height: 100%; overflow: hidden; }
+
+.hl-stream {
+  display: flex;
+  flex-direction: column;
+  animation-name: hl-stream;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.hl-stream:hover { animation-play-state: paused; }
+
+.hl-tile {
+  position: relative;
+  overflow: hidden;
+  background: var(--tile-bg);
+  margin-bottom: var(--gap);
+}
+.hl-tile-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hl-tile:hover .hl-tile-img { transform: scale(1.055); }
+
+@keyframes hl-stream {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+
+@media (min-width: 768px) {
+  .hl-hero { padding: 0 40px; }
+}
+@media (min-width: 1280px) {
+  .hl-hero { padding: 0 56px; }
+}
+@media (min-width: 1025px) {
+  .hl-hero.is-tiles-left .hl-grid {
+    grid-template-columns: 1fr 1.02fr;
+    gap: 88px;
+  }
+  .hl-hero.is-tiles-left .hl-left {
+    padding-left: 24px;
+  }
+  .hl-hero.is-tiles-left .hl-right {
+    order: -1;
+  }
+}
+@media (max-width: 1024px) {
+  .hl-hero { height: auto; min-height: 0; max-height: none; padding: 32px 20px 48px; }
+  .hl-grid { grid-template-columns: 1fr; gap: 32px; }
+  .hl-left { height: auto; }
+  .hl-right { height: 70vh; }
+}
+.hl-in {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.hl-right.hl-in {
+  transform: none;
+}
+.hl-in.is-in {
+  animation: hl-in 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--i) * 110ms);
+}
+@keyframes hl-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hl-stream { animation: none; }
+  .hl-in,
+  .hl-in.is-in {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}

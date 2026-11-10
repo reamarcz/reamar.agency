@@ -35,7 +35,7 @@
               <circle cx="16.15" cy="14.15" r="1.05"/>
             </svg>
           </span>
-          120 000 Kč
+          <span data-provize-price-label>Fixní u všech projektů</span>
         </h2>
         <p class="provize-note">
           Nárok na provizi vzniká pouze v případě, že si pořídíte nemovitost z našeho výběru.
@@ -115,10 +115,11 @@
     gap: 0.55rem;
     margin: 0.85rem 0 0;
     font-family: 'Yellix', system-ui, sans-serif;
-    font-size: 32px;
+    font-size: 18px;
     font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 0.95;
+    letter-spacing: 0.03em;
+    line-height: 1.15;
+    text-transform: uppercase;
     color: #000;
   }
   .provize-price-icon {
@@ -303,7 +304,7 @@
       padding-left: 2.5rem;
     }
     .provize-price {
-      font-size: 36px;
+      font-size: 20px;
     }
     .provize-save {
       padding: 1.4rem 3.25rem 1.7rem 2.5rem;
@@ -325,7 +326,18 @@
     if (!overlay || !modal || overlay.dataset.init === '1') return;
     overlay.dataset.init = '1';
 
-    function openModal() {
+    const priceLabel = overlay.querySelector('[data-provize-price-label]');
+
+    function applyVariant(variant) {
+      if (!priceLabel) return;
+      const isStandard = String(variant || '').toLowerCase() === 'standard';
+      priceLabel.textContent = isStandard
+        ? 'Dle projektu'
+        : 'Fixní u všech projektů';
+    }
+
+    function openModal(event) {
+      applyVariant(event && event.detail ? event.detail.variant : 'priority');
       overlay.classList.remove('opacity-0', 'pointer-events-none');
       overlay.classList.add('is-open');
       overlay.setAttribute('aria-hidden', 'false');

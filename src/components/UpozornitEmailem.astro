@@ -1,0 +1,177 @@
+---
+interface Props {
+  tone?: 'dark' | 'light';
+  source?: string;
+  label?: string | false;
+}
+
+const {
+  tone = 'dark',
+  source = 'pribehy-alert',
+  label = 'Upozornit e-mailem',
+} = Astro.props;
+---
+
+<form class:list={['ue', tone === 'light' && 'is-light']} data-ue data-source={source} novalidate>
+  {label && <p class="ue-kicker">{label}</p>}
+  <div class="ue-row" data-ue-row>
+    <label class="ue-field">
+      <span class="ue-sr">E-mail</span>
+      <input type="email" name="email" placeholder="váš e-mail" autocomplete="email" required />
+    </label>
+    <button type="submit" class="ue-go" data-ue-submit>
+      <span data-ue-label>→</span>
+    </button>
+  </div>
+  <p class="ue-msg is-err" data-ue-err hidden>Zadejte platný e-mail.</p>
+  <p class="ue-msg is-ok" data-ue-ok hidden>Dáme vědět, až díl vyjde.</p>
+  <p class="ue-legal">
+    Odesláním souhlasíte se
+    <a href="/ochrana-osobnich-udaju">zásadami zpracování osobních údajů</a>.
+  </p>
+</form>
+
+<style>
+  .ue {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .ue.is-light { color: rgba(0, 0, 0, 0.55); }
+  .ue-kicker {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: inherit;
+  }
+  .ue-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    padding-bottom: 6px;
+  }
+  .ue.is-light .ue-row { border-bottom-color: rgba(0, 0, 0, 0.2); }
+  .ue-field { flex: 1; min-width: 0; }
+  .ue-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+  .ue input {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #fff;
+    outline: none;
+  }
+  .ue.is-light input { color: #000; }
+  .ue input::placeholder { color: rgba(255, 255, 255, 0.4); }
+  .ue.is-light input::placeholder { color: rgba(0, 0, 0, 0.35); }
+  .ue-go {
+    flex-shrink: 0;
+    border: 0;
+    background: none;
+    padding: 0;
+    font: inherit;
+    font-size: 16px;
+    line-height: 1;
+    color: inherit;
+    cursor: pointer;
+  }
+  .ue-go:hover { color: #fff; }
+  .ue.is-light .ue-go:hover { color: #000; }
+  .ue-go:disabled { opacity: 0.55; cursor: default; }
+  .ue-msg {
+    margin: 8px 0 0;
+    font-size: 12px;
+  }
+  .ue-msg.is-err { color: #f87171; }
+  .ue.is-light .ue-msg.is-err { color: #dc2626; }
+  .ue-msg.is-ok { color: #fff; }
+  .ue.is-light .ue-msg.is-ok { color: #000; }
+  .ue-legal {
+    margin: 8px 0 0;
+    font-size: 11px;
+    line-height: 1.35;
+    color: rgba(255, 255, 255, 0.38);
+  }
+  .ue.is-light .ue-legal { color: rgba(0, 0, 0, 0.4); }
+  .ue-legal a { color: inherit; text-decoration: underline; }
+  .ue-legal a:hover { color: #fff; }
+  .ue.is-light .ue-legal a:hover { color: #000; }
+  .ue.is-done .ue-kicker,
+  .ue.is-done .ue-row,
+  .ue.is-done .ue-legal { display: none; }
+</style>
+
+<script>
+  import { actions } from 'astro:actions';
+
+  const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function bind(form: HTMLFormElement) {
+    if (form.dataset.ueReady) return;
+    form.dataset.ueReady = '1';
+
+    const input = form.querySelector<HTMLInputElement>('input[name="email"]');
+    const err = form.querySelector<HTMLElement>('[data-ue-err]');
+    const ok = form.querySelector<HTMLElement>('[data-ue-ok]');
+    const btn = form.querySelector<HTMLButtonElement>('[data-ue-submit]');
+    const label = form.querySelector<HTMLElement>('[data-ue-label]');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (err) err.hidden = true;
+      const email = input?.value.trim() ?? '';
+      if (!EMAIL.test(email)) {
+        if (err) err.hidden = false;
+        input?.focus();
+        return;
+      }
+      if (btn) btn.disabled = true;
+      if (label) label.textContent = '…';
+      try {
+        const result = await actions.sendContactForm({
+          formSource: form.dataset.source || 'pribehy-alert',
+          email,
+          vzkaz: 'Upozornit na další díl Příběhy z trhu',
+        });
+        if (result.data) {
+          form.classList.add('is-done');
+          if (ok) ok.hidden = false;
+          if (input) input.value = '';
+          return;
+        }
+        if (err) {
+          err.textContent = result.error?.message || 'Zadejte platný e-mail.';
+          err.hidden = false;
+        }
+      } catch {
+        if (err) {
+          err.textContent = 'Odeslání se nepovedlo. Zkuste to znovu.';
+          err.hidden = false;
+        }
+      }
+      if (btn) btn.disabled = false;
+      if (label) label.textContent = '→';
+    });
+  }
+
+  function init() {
+    document.querySelectorAll<HTMLFormElement>('[data-ue]').forEach(bind);
+  }
+
+  init();
+  document.addEventListener('astro:page-load', init);
+</script>

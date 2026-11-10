@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import SectionBuyersAgency from '../components/SectionBuyersAgency.astro';
+import SectionPrilecitosti from '../components/SectionPrilecitosti.astro';
+import SectionSpecializace from '../components/SectionSpecializace.astro';
+import SectionNasPribeh from '../components/SectionNasPribeh.astro';
+import SectionPorovnani from '../components/SectionPorovnani.astro';
+import SectionZastoupeni from '../components/SectionZastoupeni.astro';
+import SectionVyberSluzeb from '../components/SectionVyberSluzeb.astro';
+import SectionFaq from '../components/SectionFaq.astro';
+import SectionFooter from '../components/SectionFooter.astro';
+---
+<Layout
+  title="Agentura pro kupující - onepager"
+  description="REAMAR Agency"
+  robots="noindex, nofollow"
+>
+  <Hero
+    image="/images/agency/onepager.webp"
+    storyHref="#vyber-sluzeb"
+    storyKicker="Ceník služeb"
+    storyTitle="Jak to funguje"
+    storyYt={false}
+    showPlay={false}
+    actionKicker="Aktuální předprodej"
+    actionMeta="Vinohrady | září 2026"
+    actionHref="https://vip.cenik.online/vinohrady?t=3"
+    actionImage="/images/agency/vinohrady.webp"
+    actionPlacement="clients"
+    actionCardGreen={true}
+    ctas={[{ href: '#vyber-sluzeb', label: 'Vybrat službu', primary: true }]}
+    eyebrow="Nákupní agentura pro novostavby"
+    cueAfterCtas={true}
+    cueHref="#koncept"
+    copyLift={true}
+  />
+  <SectionBuyersAgency ctaHref="#vyber-sluzeb" />
+  <SectionPrilecitosti ctaHref="#vyber-sluzeb" />
+  <SectionSpecializace />
+  <SectionNasPribeh
+    ctaHref="https://www.reamar.cz/"
+    ctaLabel="O Reamar Invest Group"
+  />
+  <SectionPorovnani ctaHref="#vyber-sluzeb" />
+  <SectionZastoupeni />
+  <SectionVyberSluzeb headingAs="h2" compactTop={false} />
+  <SectionFaq />
+  <SectionFooter faqHref="#nejcastejsi-otazky" />
+</Layout>

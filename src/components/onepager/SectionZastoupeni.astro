@@ -1,73 +1,136 @@
 ---
-const logo = '/images/logo-rig-w.svg';
 ---
 
 <section class="bg-black" aria-label="Zastoupení kupujícího" data-zastoupeni>
   <div class="mx-auto max-w-[1440px] px-5 py-20 md:px-10 md:py-28 xl:px-14 xl:py-32">
-    <p class="font-yellix text-[22px] font-medium leading-[1.4] tracking-[-0.02em] text-white md:text-[26px] xl:text-[28px]">
-      <span class="zast-line block lg:whitespace-nowrap" style="--i: 0">
-        Prodej developerských projektů je profesionálně řízený proces.
-      </span>
-      <span class="zast-line block lg:whitespace-nowrap" style="--i: 1">
-        Na straně prodávajícího stojí zkušený tým, přesná data a jasná obchodní strategie.
-      </span>
+    <h2 class="zast-piece m-0 font-yellix text-[28px] font-medium leading-[1.15] tracking-[-0.02em] text-white md:text-[36px] xl:text-[40px]" style="--i: 0">
+      Rozhodnutí za miliony<br class="md:hidden" /> si zaslouží<br />
+      víc než jen dobrý pocit.
+    </h2>
+
+    <div class="zast-split">
+      <div class="zast-piece" style="--i: 1">
+        <p class="zast-who">Vy</p>
+        <p class="zast-claim">
+          Kupujete byt<br />
+          párkrát za život.
+        </p>
+      </div>
+      <div class="zast-piece zast-side" style="--i: 2">
+        <p class="zast-who">My</p>
+        <p class="zast-claim">
+          Developerský trh<br />
+          řešíme každý den.
+        </p>
+      </div>
+    </div>
+
+    <p class="zast-piece zast-note" style="--i: 3">
+      Známe ceny, projekty, podmínky i rozdíly, které při jedné návštěvě showroomu nemusí být vidět.
     </p>
-    <p class="zast-punch mt-8 flex flex-col items-end gap-3 text-right md:mt-10 md:ml-[22%] md:flex-row md:items-center md:gap-4 md:text-left lg:ml-[28%] xl:ml-[32%]">
-      <img
-        src={logo}
-        alt="REAMAR"
-        width="280"
-        height="72"
-        class="zast-logo h-10 w-auto shrink-0 md:h-14 md:-mr-7 xl:h-[4.25rem] xl:-mr-9"
-      />
-      <span class="zast-sentence font-yellix text-[22px] font-medium leading-[1.3] tracking-[-0.02em] text-white md:text-[26px] xl:text-[28px] xl:whitespace-nowrap">
-        přináší odborné zastoupení i na stranu kupujícího.
-      </span>
-    </p>
+
+    <div class="zast-stats">
+      <div class="zast-piece" style="--i: 4">
+        <p class="zast-num">456 000 Kč</p>
+        <p class="zast-cap">průměrná úspora na ceně a podmínkách jedné transakce</p>
+      </div>
+      <div class="zast-piece zast-side" style="--i: 5">
+        <p class="zast-num">80+ hodin</p>
+        <p class="zast-cap">hledání, porovnání a jednání, které nemusíte dělat sami</p>
+      </div>
+    </div>
   </div>
 </section>
 
 <style>
-  .zast-line {
+  .zast-piece {
     opacity: 0;
     transform: translateY(14px);
   }
-  .zast-line.is-in {
-    animation: zast-line-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    animation-delay: calc(var(--i) * 240ms);
+  .zast-piece.is-in {
+    animation: zast-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(var(--i) * 90ms);
   }
-  @keyframes zast-line-in {
+  @keyframes zast-in {
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .zast-logo {
-    display: block;
+  .zast-who,
+  .zast-claim,
+  .zast-note,
+  .zast-num,
+  .zast-cap {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+  }
+  .zast-who {
+    margin-bottom: 0.7rem;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .zast-claim {
+    font-size: 22px;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .zast-note {
+    max-width: 40rem;
+    margin-top: 2.5rem;
+    font-size: 16px;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.78);
+  }
+  .zast-split,
+  .zast-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .zast-split { margin-top: 2.75rem; }
+  .zast-stats {
+    margin-top: 2.75rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .zast-num {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #afc8b4;
+  }
+  .zast-cap {
+    max-width: 28ch;
+    margin-top: 0.55rem;
+    font-size: 14px;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.62);
   }
 
-  .zast-punch {
-    opacity: 0;
-    transform: translate3d(56px, 10px, 0);
-  }
-  .zast-punch.is-in {
-    animation: zast-fly 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.72s forwards;
-  }
-  @keyframes zast-fly {
-    to {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
+  @media (min-width: 768px) {
+    .zast-claim { font-size: 26px; }
+    .zast-num { font-size: 40px; }
+    .zast-split,
+    .zast-stats {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+    .zast-side {
+      padding-left: 4rem;
+      border-left: 1px solid rgba(255, 255, 255, 0.16);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .zast-line,
-    .zast-punch {
+    .zast-piece {
       opacity: 1;
       transform: none;
     }
-    .zast-line.is-in,
-    .zast-punch.is-in {
-      animation: none;
-    }
+    .zast-piece.is-in { animation: none; }
   }
 </style>
 
@@ -77,25 +140,22 @@ const logo = '/images/logo-rig-w.svg';
     if (!wrap) return;
     if (wrap._zastCleanup) wrap._zastCleanup();
 
-    const lines = [...wrap.querySelectorAll('.zast-line')];
-    const punch = wrap.querySelector('.zast-punch');
-    if (!lines.length || !punch) return;
+    const pieces = [...wrap.querySelectorAll('.zast-piece')];
+    if (!pieces.length) return;
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced) {
-      lines.forEach((el) => el.classList.add('is-in'));
-      punch.classList.add('is-in');
+      pieces.forEach((el) => el.classList.add('is-in'));
       return;
     }
 
     const io = new IntersectionObserver(
       (entries) => {
         if (!entries.some((entry) => entry.isIntersecting)) return;
-        lines.forEach((el) => el.classList.add('is-in'));
-        punch.classList.add('is-in');
+        pieces.forEach((el) => el.classList.add('is-in'));
         io.disconnect();
       },
-      { threshold: 0.32 }
+      { threshold: 0.28 }
     );
 
     io.observe(wrap);

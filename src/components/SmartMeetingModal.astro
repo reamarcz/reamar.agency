@@ -1,5 +1,16 @@
 ---
-const meetingTypes = ['Osobní schůzka v Praze', 'Online'];
+const meetingTypes = [
+  {
+    icon: 'coffee',
+    title: 'Osobní schůzka v Praze',
+    text: 'Záběhlický zámek, Za potokem 46/4, 106 00 Praha 10',
+  },
+  {
+    icon: 'screen',
+    title: 'Online',
+    text: 'Schůzka na dálku',
+  },
+];
 ---
 <div
   id="smart-meeting-overlay"
@@ -33,43 +44,38 @@ const meetingTypes = ['Osobní schůzka v Praze', 'Online'];
         Domluvit schůzku
       </h2>
 
-      <!-- Jsem + Mám zájem o -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-10 gap-y-10 mb-10">
-        <!-- Jsem (vlevo) -->
-        <div>
-          <p class="font-yellix text-[14px] font-normal text-[#000000] mb-2">Jsem</p>
-          <div class="flex flex-wrap gap-4">
+      <div class="mb-10">
+        <p class="font-yellix text-[14px] font-normal text-[#000000] mb-3">Mám zájem o</p>
+        <div class="meeting-interests" role="radiogroup" aria-label="Mám zájem o">
+          {meetingTypes.map((item, i) => (
             <button
               type="button"
-              class="smart-meeting-option font-yellix text-[14px] font-medium text-[#000000] border-0 bg-transparent p-0 cursor-pointer underline underline-offset-2 decoration-[#000000]"
-              data-user-type="developer"
+              class:list={['meeting-interest smart-meeting-service', i === 0 && 'is-active']}
+              data-service={item.title}
+              role="radio"
+              aria-checked={i === 0 ? 'true' : 'false'}
             >
-              Developer
+              <span class="meeting-interest-icon" aria-hidden="true">
+                {item.icon === 'coffee' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6.5h12.5v6.2A3.8 3.8 0 0 1 12.7 16.5H7.8A3.8 3.8 0 0 1 4 12.7V6.5Z"/>
+                    <path d="M16.5 8.2h1.6A2.4 2.4 0 0 1 20.5 10.6v0A2.4 2.4 0 0 1 18.1 13h-1.6"/>
+                    <path d="M4 18.5h12.5"/>
+                  </svg>
+                )}
+                {item.icon === 'screen' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="13" rx="0"/>
+                    <path d="M8 21h8M12 17v4"/>
+                  </svg>
+                )}
+              </span>
+              <span class="meeting-interest-copy">
+                <span class="meeting-interest-title">{item.title}</span>
+                <span class="meeting-interest-text">{item.text}</span>
+              </span>
             </button>
-            <button
-              type="button"
-              class="smart-meeting-option font-yellix text-[14px] font-normal text-gray-500 border-0 bg-transparent p-0 cursor-pointer no-underline hover:text-gray-700"
-              data-user-type="client"
-            >
-              Koncový klient
-            </button>
-          </div>
-        </div>
-
-        <!-- Mám zájem o (vpravo): Osobní schůzka v Praze / Online -->
-        <div>
-          <p class="font-yellix text-[14px] font-normal text-[#000000] mb-2">Mám zájem o</p>
-          <div class="flex flex-wrap gap-x-4 gap-y-1">
-            {meetingTypes.map((s) => (
-              <button
-                type="button"
-                class="smart-meeting-service font-yellix text-[14px] font-normal text-gray-500 border-0 bg-transparent p-0 cursor-pointer no-underline hover:text-gray-700"
-                data-service={s}
-              >
-                {s}
-              </button>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
 
@@ -164,72 +170,116 @@ const meetingTypes = ['Osobní schůzka v Praze', 'Online'];
   </div>
 </div>
 
+<style>
+  .meeting-interests {
+    display: grid;
+    gap: 0.75rem;
+  }
+  @media (min-width: 768px) {
+    .meeting-interests {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+  }
+  .meeting-interest {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 1rem 1.05rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--color-muted);
+    text-align: left;
+    cursor: pointer;
+  }
+  .meeting-interest:hover {
+    border-color: rgba(0, 0, 0, 0.22);
+  }
+  .meeting-interest.is-active {
+    background: #fff;
+    border-color: #000;
+  }
+  .meeting-interest-icon {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    color: rgba(0, 0, 0, 0.35);
+  }
+  .meeting-interest-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  .meeting-interest-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .meeting-interest-title {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .meeting-interest-text {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.42);
+  }
+  .meeting-interest.is-active .meeting-interest-title {
+    color: #000;
+  }
+  .meeting-interest.is-active .meeting-interest-text {
+    color: rgba(0, 0, 0, 0.62);
+  }
+  .meeting-interest.is-active .meeting-interest-icon {
+    color: #000;
+  }
+</style>
+
 <script>
   import { actions } from 'astro:actions';
 
   function initSmartMeetingModal() {
     const overlay = document.getElementById('smart-meeting-overlay');
     const modal = document.querySelector('[data-smart-meeting-modal]');
-    const closeBtn = document.querySelector('[data-smart-meeting-close]');
+    if (!overlay || !modal || overlay.dataset.init === '1') return;
+    overlay.dataset.init = '1';
+
     const form = document.getElementById('smart-meeting-form');
-    const formView = modal?.querySelector('[data-smart-meeting-form-view]');
-    const successView = modal?.querySelector('[data-smart-meeting-success-view]');
+    const formView = modal.querySelector('[data-smart-meeting-form-view]');
+    const successView = modal.querySelector('[data-smart-meeting-success-view]');
     const submitBtn = form?.querySelector('[data-smart-meeting-submit]');
-    const userTypeButtons = document.querySelectorAll('.smart-meeting-option[data-user-type]');
-    const servicesContainer = document.querySelector('.smart-meeting-service')?.closest('div');
+    const serviceButtons = modal.querySelectorAll('.smart-meeting-service');
 
-    let userType = 'developer';
     let selectedService = 'Osobní schůzka v Praze';
-
-    function setUserType(type) {
-      userType = type;
-      userTypeButtons.forEach(function (btn) {
-        const isActive = btn.getAttribute('data-user-type') === type;
-        btn.classList.toggle('font-medium', isActive);
-        btn.classList.toggle('text-[#000000]', isActive);
-        btn.classList.toggle('underline', isActive);
-        btn.classList.toggle('underline-offset-2', isActive);
-        btn.classList.toggle('decoration-[#000000]', isActive);
-        btn.classList.toggle('font-normal', !isActive);
-        btn.classList.toggle('text-gray-500', !isActive);
-        btn.classList.toggle('no-underline', !isActive);
-      });
-    }
-
-    function setServiceActive(container, value) {
-      if (!container) return;
-      const buttons = container.querySelectorAll('.smart-meeting-service');
-      buttons.forEach(function (btn) {
-        const isActive = btn.getAttribute('data-service') === value;
-        btn.classList.toggle('font-medium', isActive);
-        btn.classList.toggle('text-[#000000]', isActive);
-        btn.classList.toggle('underline', isActive);
-        btn.classList.toggle('underline-offset-2', isActive);
-        btn.classList.toggle('decoration-[#000000]', isActive);
-        btn.classList.toggle('font-normal', !isActive);
-        btn.classList.toggle('text-gray-500', !isActive);
-      });
-    }
 
     function setSelectedService(value) {
       selectedService = value;
-      setServiceActive(servicesContainer, value);
+      serviceButtons?.forEach(function (btn) {
+        const isActive = btn.getAttribute('data-service') === value;
+        btn.classList.toggle('is-active', isActive);
+        btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
+      });
     }
 
     function openModal(options) {
       options = options || {};
-      const initialType = options.initialType || 'developer';
       const initialService = options.initialService || null;
-      userType = initialType === 'client' ? 'client' : 'developer';
       selectedService = initialService || 'Osobní schůzka v Praze';
-      setUserType(userType);
       setSelectedService(selectedService);
       if (form) form.reset();
       document.querySelectorAll('.smart-meeting-error').forEach(function (el) { el.classList.add('hidden'); });
       if (formView) formView.classList.remove('hidden');
       if (successView) successView.classList.add('hidden');
       if (submitBtn) { submitBtn.textContent = 'Odeslat'; submitBtn.disabled = false; }
-      overlay.classList.remove('opacity-0', 'pointer-events-none');
+    if (!overlay) return;
+    overlay.classList.remove('opacity-0', 'pointer-events-none');
       overlay.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       if (modal) {
@@ -291,7 +341,6 @@ const meetingTypes = ['Osobní schůzka v Praze', 'Online'];
           telefon,
           email,
           vzkaz: vzkaz || '',
-          userType,
           selectedService: selectedService ?? '',
         });
         if (error) {
@@ -313,19 +362,11 @@ const meetingTypes = ['Osobní schůzka v Praze', 'Online'];
       if (e.key === 'Escape') closeModal();
     });
 
-    userTypeButtons?.forEach(function (btn) {
+    serviceButtons?.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        setUserType(btn.getAttribute('data-user-type'));
+        setSelectedService(btn.getAttribute('data-service'));
       });
     });
-
-    if (servicesContainer) {
-      servicesContainer.querySelectorAll('.smart-meeting-service').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          setSelectedService(btn.getAttribute('data-service'));
-        });
-      });
-    }
 
     form?.addEventListener('submit', function (e) {
       e.preventDefault();

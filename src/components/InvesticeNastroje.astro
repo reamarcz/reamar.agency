@@ -1,0 +1,333 @@
+---
+import InvesticeTicker from './InvesticeTicker.astro';
+
+const tools = [
+  {
+    name: 'Neveřejné nabídky a předprodeje',
+    lead: 'Dostaňte se k příležitostem dřív, než se objeví ve veřejné nabídce.',
+    stat: 'až 15 %',
+    statWord: false,
+    cap: 'výhodnější cenová pozice u vybraných předprodejů',
+    cta: 'Registrovat k předprodeji',
+    service: 'Priority',
+  },
+  {
+    name: 'Postoupení smlouvy',
+    lead: 'Investiční byt nemusíte vždy držet až do převzetí.',
+    stat: 'před doplacením',
+    statWord: true,
+    cap: 'možnost vystoupit z projektu postoupením smlouvy',
+    cta: 'Najít byt na flip',
+    service: 'Nezávazná konzultace',
+  },
+  {
+    name: 'Platební podmínky',
+    lead: 'Vstupte do projektu s menším kapitálem na začátku.',
+    stat: '10 / 90',
+    statWord: false,
+    cap: '10 % při podpisu, 90 % až při dokončení',
+    cta: 'Chci nižší financování',
+    service: 'Nezávazná konzultace',
+  },
+  {
+    name: 'Investorské balíčky',
+    lead: 'Méně náhodných nabídek. Více jednotek, které dávají investiční smysl.',
+    stat: '3–10',
+    statWord: false,
+    cap: 'jednotek v jednom investorském výběru',
+    cta: 'Připravit výběr',
+    service: 'Priority',
+  },
+];
+
+const n = (i: number) => String(i + 1).padStart(2, '0');
+---
+
+<section id="co-delame" class="invn" aria-labelledby="invn-heading" data-nav-hide-zone>
+  <div class="invn__inner">
+    <header class="invn__head">
+      <div class="invn__title">
+        <h2 id="invn-heading" class="invn__h2 font-yellix">Výnos vzniká už při nákupu</h2>
+        <p class="invn__note font-yellix">Čtyři nástroje, které můžete kombinovat podle své strategie.</p>
+      </div>
+      <div class="invn__ticker">
+        <InvesticeTicker />
+      </div>
+    </header>
+
+    <div class="invn__grid">
+      {tools.map((t, i) => (
+        <article class="invn__tile">
+          <span class="invn__idx font-yellix">{n(i)}</span>
+          <h3 class="font-yellix">{t.name}</h3>
+          <p class="invn__lead font-yellix">{t.lead}</p>
+          <div class="invn__stat">
+            <span class:list={['invn__num', 'font-yellix', t.statWord && 'invn__num--word']}>{t.stat}</span>
+            <span class="invn__cap font-yellix">{t.cap}</span>
+          </div>
+          <button
+            type="button"
+            class="invn__cta font-yellix"
+            data-smart-contact-open
+            data-smart-contact-type="client"
+            data-smart-contact-service={t.service}
+          >
+            <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+            {t.cta}
+          </button>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .invn {
+    --pad: 1.25rem;
+    background: #ededed;
+    color: #000;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+    padding: 4rem var(--pad);
+    scroll-margin-top: calc(-1 * var(--nav-h));
+  }
+  @media (min-width: 768px) {
+    .invn {
+      --pad: 2.5rem;
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .invn {
+      --pad: 3.5rem;
+      padding-top: 7rem;
+      padding-bottom: 7rem;
+    }
+  }
+  .invn :is(h2, h3, p, button, span) {
+    font-weight: 500;
+  }
+  .invn__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .invn__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 2.25rem;
+  }
+  @media (min-width: 768px) {
+    .invn__head {
+      margin-bottom: 3.5rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .invn__head {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 3rem;
+    }
+  }
+  .invn__title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    min-width: 0;
+    text-align: center;
+  }
+  .invn__h2 {
+    margin: 0;
+    font-size: 28px;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    scroll-margin-top: calc(var(--nav-h) + 1.25rem);
+  }
+  .invn__note {
+    margin: 0;
+    max-width: 28ch;
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .invn__ticker {
+    display: none;
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+  @media (min-width: 768px) {
+    .invn__title {
+      align-items: flex-start;
+      width: auto;
+      text-align: left;
+    }
+    .invn__h2 {
+      font-size: 36px;
+      line-height: 1.12;
+    }
+    .invn__note {
+      max-width: none;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+  }
+  @media (min-width: 1280px) {
+    .invn__h2 {
+      font-size: 40px;
+    }
+    .invn__ticker {
+      display: block;
+      /* 3-řádkové okno: prostřední (aktivní) číslo na úrovni h2 */
+      margin-top: calc(-1 * 4.25rem - 12px);
+    }
+  }
+
+  .invn__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  @media (min-width: 640px) {
+    .invn__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+  }
+  @media (min-width: 1200px) {
+    .invn__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .invn__tile {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 1.6rem 1.35rem 1.6rem;
+  }
+  @media (min-width: 768px) {
+    .invn__tile {
+      min-height: 23.75rem;
+      padding: 2rem 1.75rem 1.85rem;
+    }
+  }
+  @media (min-width: 1200px) {
+    .invn__tile {
+      min-height: 27.5rem;
+    }
+  }
+
+  .invn__idx {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: rgba(0, 0, 0, 0.45);
+    margin-bottom: 1.15rem;
+  }
+  @media (min-width: 768px) {
+    .invn__idx {
+      margin-bottom: 1.75rem;
+    }
+  }
+  .invn__tile h3 {
+    margin: 0 0 0.85rem;
+    font-size: 22px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  @media (min-width: 768px) {
+    .invn__tile h3 {
+      font-size: 26px;
+    }
+  }
+  .invn__lead {
+    margin: 0 0 1.5rem;
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(0, 0, 0, 0.65);
+    max-width: 32ch;
+  }
+  @media (min-width: 768px) {
+    .invn__lead {
+      font-size: 15px;
+      margin-bottom: 2rem;
+    }
+  }
+
+  .invn__stat {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  @media (min-width: 1200px) {
+    .invn__stat {
+      height: 5.15rem;
+    }
+  }
+  .invn span.invn__num {
+    font-size: 28px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+    font-variant-numeric: proportional-nums;
+    color: #022d20;
+    font-weight: 600;
+  }
+  .invn__num--word {
+    font-size: 22px;
+    letter-spacing: -0.02em;
+  }
+  @media (min-width: 768px) {
+    .invn__num {
+      font-size: 32px;
+    }
+    .invn__num--word {
+      font-size: 26px;
+    }
+  }
+  .invn__cap {
+    font-size: 13px;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.55);
+    max-width: 28ch;
+  }
+
+  .invn__cta {
+    margin-top: 1.5rem;
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0 0 4px;
+    border: 0;
+    border-bottom: 1px solid #000;
+    background: transparent;
+    font-size: 13px;
+    line-height: 1.2;
+    color: #000;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .invn__cta img {
+    width: 12px;
+    height: 12px;
+    filter: brightness(0);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .invn__cta:hover {
+    opacity: 0.65;
+  }
+  .invn__cta:hover img {
+    transform: translate(2px, 2px);
+  }
+</style>

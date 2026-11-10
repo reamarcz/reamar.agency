@@ -1,0 +1,454 @@
+---
+interface Props {
+  tone?: 'light' | 'video';
+  id?: string;
+}
+
+const { tone = 'light', id } = Astro.props;
+
+const stats = [
+  { num: '9 869', label: 'jednotek na trhu' },
+  { num: '1 145', label: 'vhodných na investici', gleam: true },
+  { num: '72', label: 'v neveřejné nabídce' },
+];
+const loop = [...stats, ...stats];
+
+const quoteLines = [
+  '„Pražský trh je rychlý a nejlepší jednotky se často',
+  'ani neobjeví ve veřejné nabídce.“',
+];
+
+function splitWords(lines: string[], start = 0) {
+  let i = start;
+  return lines.map((line) => {
+    const words = line.split(' ').map((word) => {
+      const item = { word, i };
+      i += 1;
+      return item;
+    });
+    return words;
+  });
+}
+
+const quoteWords = splitWords(quoteLines);
+const manualCite = tone === 'video';
+---
+
+<div
+  class:list={['trh', tone === 'video' && 'trh--video']}
+  id={id}
+  data-investice-trh
+  data-trh-tone={tone}
+  aria-labelledby={id ? `${id}-quote` : 'trh-quote'}
+>
+  <div class="trh__row">
+    <div class="trh__copy" data-trh-copy data-trh-cite-manual={manualCite ? '' : undefined}>
+      <blockquote class="trh-cite m-0">
+        <p
+          id={id ? `${id}-quote` : 'trh-quote'}
+          class="trh-quote font-yellix"
+        >
+          {quoteWords.map((line, lineIndex) => (
+            <>
+              {lineIndex > 0 && <br class="hidden md:block" />}
+              {line.map(({ word, i }) => (
+                <span class="trh-cite-word" style={`--i: ${i}`}>{word}</span>
+              ))}
+            </>
+          ))}
+        </p>
+      </blockquote>
+      <p class="trh-cite-late font-yellix">
+        Na straně investora proto rozhoduje přístup k informacím, rychlost vyhodnocení
+        <br class="hidden md:block" />
+        a schopnost poznat příležitost dřív než ostatní.
+      </p>
+    </div>
+
+    <div class="trh__aside">
+      <div class="trh-ticker" data-trh-ticker>
+        <div class="trh-ticker-window" aria-hidden="true">
+          <div class="trh-ticker-track" data-trh-track>
+            {loop.map((item, i) => (
+              <p
+                class:list={['trh-ticker-item', i === 1 && 'is-on']}
+                data-trh-item
+                data-trh-gleam={item.gleam ? '' : undefined}
+              >
+                <span class="trh-ticker-num">{item.num}</span>
+                <span class="trh-ticker-label">{item.label}</span>
+              </p>
+            ))}
+          </div>
+        </div>
+        <p class="sr-only" data-trh-live aria-live="polite">
+          {stats[1].num} {stats[1].label}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .trh {
+    background: #fff;
+    color: #000;
+    padding: 4rem 1.25rem 2rem;
+  }
+  @media (min-width: 768px) {
+    .trh {
+      padding: 6rem 2.5rem 2.5rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .trh {
+      padding: 7rem 3.5rem 3rem;
+    }
+  }
+  .trh__row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 3rem;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  @media (min-width: 1280px) {
+    .trh__row {
+      flex-direction: row;
+      align-items: center;
+      gap: 4rem;
+    }
+  }
+  .trh__copy {
+    width: 100%;
+    min-width: 0;
+    max-width: 46rem;
+  }
+  .trh-quote {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+  }
+  .trh-cite-late {
+    margin: 1.5rem 0 0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  @media (min-width: 768px) {
+    .trh-quote { font-size: 26px; }
+    .trh-cite-late { margin-top: 1.75rem; font-size: 15px; }
+  }
+  @media (min-width: 1280px) {
+    .trh-quote { font-size: 32px; }
+  }
+
+  .trh-cite-word {
+    display: inline-block;
+    margin-right: 0.28em;
+    opacity: 0;
+    transform: translateY(0.4em);
+  }
+  .trh__copy.is-in .trh-cite-word {
+    animation: trh-cite-word 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(var(--i) * 56ms);
+  }
+  .trh-cite-late {
+    opacity: 0;
+    transform: translateY(0.6em);
+  }
+  .trh__copy.is-in .trh-cite-late {
+    animation: trh-cite-late 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.95s forwards;
+  }
+  @keyframes trh-cite-word {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes trh-cite-late {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .trh-ticker {
+    --trh-row: 3.6rem;
+    --trh-ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --trh-move: 0.9s;
+  }
+  .trh-ticker-window {
+    position: relative;
+    height: calc(var(--trh-row) * 3);
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  }
+  .trh-ticker-track {
+    will-change: transform;
+  }
+  .trh-ticker-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0;
+    height: var(--trh-row);
+    overflow: hidden;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.28);
+    white-space: nowrap;
+    transform: scale(0.78);
+    transform-origin: left center;
+    transition: color var(--trh-move) var(--trh-ease), transform var(--trh-move) var(--trh-ease);
+  }
+  .trh-ticker-item.is-shine .trh-ticker-num,
+  .trh-ticker-item.is-shine .trh-ticker-label {
+    background-image: linear-gradient(
+      105deg,
+      #022d20 0%,
+      #022d20 40%,
+      #c8f5dc 48%,
+      #ffffff 50%,
+      #c8f5dc 52%,
+      #022d20 60%,
+      #022d20 100%
+    );
+    background-size: 200% 100%;
+    background-repeat: no-repeat;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: trh-shine-text 1s ease-in-out;
+  }
+  @keyframes trh-shine-text {
+    from { background-position: 100% 0; }
+    to { background-position: 0 0; }
+  }
+  .trh-ticker-num {
+    font-size: 32px;
+    letter-spacing: -0.03em;
+    font-variant-numeric: proportional-nums;
+  }
+  .trh-ticker-label {
+    font-size: 24px;
+    letter-spacing: -0.02em;
+  }
+  .trh-ticker-item.is-on {
+    color: #022d20;
+    transform: scale(1);
+  }
+  @media (min-width: 768px) {
+    .trh-ticker { --trh-row: 4.25rem; }
+    .trh-ticker-num { font-size: 40px; }
+    .trh-ticker-label { font-size: 30px; }
+  }
+
+  .trh--video {
+    background: transparent;
+    color: #fff;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .trh--video .trh__row {
+    height: 100%;
+    max-width: none;
+    margin: 0;
+  }
+  .trh--video .trh-cite-late {
+    color: rgba(255, 255, 255, 0.72);
+  }
+  .trh--video .trh-ticker-item {
+    color: rgba(255, 255, 255, 0.28);
+  }
+  .trh--video .trh-ticker-item.is-on {
+    color: #afc8b4;
+  }
+  .trh--video .trh-ticker-item.is-shine .trh-ticker-num,
+  .trh--video .trh-ticker-item.is-shine .trh-ticker-label {
+    background-image: linear-gradient(
+      105deg,
+      #afc8b4 0%,
+      #afc8b4 40%,
+      #ffffff 50%,
+      #afc8b4 60%,
+      #afc8b4 100%
+    );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .trh-ticker-window {
+      mask-image: none;
+      -webkit-mask-image: none;
+      height: auto;
+    }
+    .trh-ticker-track { transform: none !important; }
+    .trh-ticker-item {
+      height: auto;
+      padding: 0.45rem 0;
+      transform: none;
+      transition: none;
+    }
+    .trh-ticker-item.is-shine .trh-ticker-num,
+    .trh-ticker-item.is-shine .trh-ticker-label {
+      background: none;
+      color: inherit;
+      -webkit-text-fill-color: inherit;
+      animation: none;
+    }
+    .trh-cite-word,
+    .trh-cite-late {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    function initTrhTicker(root) {
+      if (!root || root.dataset.trhInit === '1') return;
+      if (root.offsetParent === null) return;
+      root.dataset.trhInit = '1';
+
+      var track = root.querySelector('[data-trh-track]');
+      var live = root.querySelector('[data-trh-live]');
+      var ticker = root.querySelector('[data-trh-ticker]');
+      var items = root.querySelectorAll('[data-trh-item]');
+      if (!track || !ticker || items.length < 6) return;
+
+      var count = 3;
+      var offset = 0;
+      var timer = null;
+      var moving = false;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function rowHeight() {
+        return items[0].offsetHeight;
+      }
+
+      function setActive() {
+        var mid = offset + 1;
+        items.forEach(function (el, i) {
+          el.classList.toggle('is-on', i === mid);
+          if (i !== mid) el.classList.remove('is-shine');
+        });
+        if (live) {
+          var on = items[mid] || items[1];
+          var num = on.querySelector('.trh-ticker-num');
+          var label = on.querySelector('.trh-ticker-label');
+          live.textContent = ((num && num.textContent) || '') + ' ' + ((label && label.textContent) || '');
+        }
+      }
+
+      function shineCurrent() {
+        var mid = items[offset + 1];
+        if (!mid || !mid.hasAttribute('data-trh-gleam')) return;
+        mid.classList.remove('is-shine');
+        void mid.offsetWidth;
+        mid.classList.add('is-shine');
+      }
+
+      function paint(animate) {
+        var y = -(offset * rowHeight());
+        track.style.transition = animate ? 'transform var(--trh-move) var(--trh-ease)' : 'none';
+        track.style.transform = 'translate3d(0,' + y + 'px,0)';
+        setActive();
+      }
+
+      function wrapIfNeeded() {
+        if (offset >= count) {
+          items.forEach(function (el) {
+            el.style.transition = 'none';
+          });
+          track.style.transition = 'none';
+          offset = 0;
+          paint(false);
+          void track.offsetHeight;
+          items.forEach(function (el) {
+            el.style.transition = '';
+          });
+        }
+        moving = false;
+        shineCurrent();
+      }
+
+      function step() {
+        if (moving || reduce) return;
+        moving = true;
+        offset += 1;
+        paint(true);
+      }
+
+      if (reduce) {
+        items.forEach(function (el, i) {
+          el.classList.toggle('is-on', i === 1);
+        });
+        return;
+      }
+
+      paint(false);
+      window.requestAnimationFrame(function () {
+        shineCurrent();
+      });
+      timer = window.setInterval(step, 2800);
+
+      track.addEventListener('transitionend', function (e) {
+        if (e.target !== track || e.propertyName !== 'transform') return;
+        wrapIfNeeded();
+      });
+      track.addEventListener('animationend', function (e) {
+        if (e.animationName !== 'trh-shine-text') return;
+        var row = e.target.closest('[data-trh-item]');
+        if (row) row.classList.remove('is-shine');
+      });
+
+      window.addEventListener('resize', function () {
+        paint(false);
+      });
+
+      ticker.addEventListener('mouseenter', function () {
+        if (timer) window.clearInterval(timer);
+        timer = null;
+      });
+      ticker.addEventListener('mouseleave', function () {
+        if (!timer) timer = window.setInterval(step, 2800);
+      });
+    }
+
+    function initTrhCite(wrap) {
+      if (!wrap || wrap.dataset.trhCiteInit === '1') return;
+      if (wrap.hasAttribute('data-trh-cite-manual')) return;
+      wrap.dataset.trhCiteInit = '1';
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        wrap.classList.add('is-in');
+        return;
+      }
+
+      var io = new IntersectionObserver(
+        function (entries) {
+          if (!entries.some(function (entry) { return entry.isIntersecting; })) return;
+          wrap.classList.add('is-in');
+          io.disconnect();
+        },
+        { threshold: 0.28 }
+      );
+      io.observe(wrap);
+    }
+
+    function initAll() {
+      document.querySelectorAll('[data-investice-trh]').forEach(initTrhTicker);
+      document.querySelectorAll('[data-trh-copy]').forEach(initTrhCite);
+    }
+
+    initAll();
+    document.addEventListener('astro:page-load', initAll);
+  })();
+</script>

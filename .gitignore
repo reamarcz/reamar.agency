@@ -17,3 +17,6 @@ dist/
 
 # Vercel (lokální deploy cache)
 .vercel
+
+# Design source dumps
+docs/claude-design-source.zip

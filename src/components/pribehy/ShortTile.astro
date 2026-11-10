@@ -1,0 +1,81 @@
+---
+import { playLg } from './icons';
+import ShortsIcon from './ShortsIcon.astro';
+import type { Short } from '../../lib/pribehy';
+
+interface Props {
+  short: Short;
+  compact?: boolean;
+}
+const { short, compact = false } = Astro.props;
+---
+
+<button
+  type="button"
+  class:list={['pz-sh', compact && 'is-compact']}
+  data-pz-short
+  data-yt={short.youtubeId}
+  data-title={short.titulek}
+  aria-label={`Přehrát: ${short.titulek}`}
+>
+  <span class="pz-sh-im">
+    <img src={short.nahled} alt="" width="720" height="1280" />
+    {short.preview && (
+      <video
+        muted
+        loop
+        playsinline
+        preload="none"
+        data-pz-sh-prev
+        data-src={short.preview}
+        aria-hidden="true"
+      ></video>
+    )}
+    <span class="pz-sh-mark" aria-hidden="true">
+      <ShortsIcon size={16} />
+    </span>
+    <em>{short.delka}</em>
+    <i class="pz-sh-play" aria-hidden="true" set:html={playLg} />
+    <b class="pz-sh-title">{short.titulek}</b>
+    <span class="pz-sh-bar" aria-hidden="true"></span>
+  </span>
+</button>
+
+<script>
+  function initShortPreviews() {
+    document.querySelectorAll<HTMLElement>('[data-pz-short]').forEach((tile) => {
+      if (tile.dataset.prevInit === '1') return;
+      const video = tile.querySelector('[data-pz-sh-prev]') as HTMLVideoElement | null;
+      const src = video?.dataset.src;
+      if (!video || !src) return;
+      tile.dataset.prevInit = '1';
+
+      const canHover = () => window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const start = () => {
+        if (!canHover() || reduce()) return;
+        video.muted = true;
+        video.defaultMuted = true;
+        video.playsInline = true;
+        if (video.getAttribute('src') !== src) video.src = src;
+        const run = video.play();
+        if (run) {
+          run.then(() => tile.classList.add('is-preview')).catch(() => {});
+        }
+      };
+
+      const stop = () => {
+        video.pause();
+        if (video.readyState > 0) video.currentTime = 0;
+        tile.classList.remove('is-preview');
+      };
+
+      tile.addEventListener('pointerenter', start);
+      tile.addEventListener('pointerleave', stop);
+    });
+  }
+
+  initShortPreviews();
+  document.addEventListener('astro:page-load', initShortPreviews);
+</script>

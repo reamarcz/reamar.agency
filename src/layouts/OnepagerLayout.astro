@@ -56,7 +56,8 @@ const {
         event.preventDefault();
         event.stopPropagation();
         if (target.hasAttribute('data-provize-open')) {
-          window.dispatchEvent(new CustomEvent('provize-open'));
+          var variant = target.getAttribute('data-provize-variant') || 'priority';
+          window.dispatchEvent(new CustomEvent('provize-open', { detail: { variant: variant } }));
         } else if (target.hasAttribute('data-smart-contact-open')) {
           var type = target.getAttribute('data-smart-contact-type') || 'developer';
           var service = target.getAttribute('data-smart-contact-service') || null;

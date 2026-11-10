@@ -1,0 +1,463 @@
+---
+interface Props {
+  loginHref: string;
+  demoHref: string;
+  coverUrl: string;
+}
+const { loginHref, demoHref, coverUrl } = Astro.props;
+
+const brief = ['3+kk', 'do 12 mil. Kč', 'Praha 9', 'dokončení do 2028', 'balkon / terasa', 'MHD do 10 min.'];
+const User = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>`;
+const Arrow = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6 L18 18"/><path d="M18 9 L18 18 L9 18"/></svg>`;
+---
+
+<section class="kph" data-kph aria-labelledby="kph-h">
+  <div class="kph__win" data-kph-win aria-hidden="true" inert transition:name="kp-phone">
+    <div class="kph__canvas" data-kph-canvas>
+      <div class="kph-scr">
+        <div class="kph-ap">
+          <span class="kph-av font-yellix">TK</span>
+          <div class="kph-hi">
+            <b class="font-yellix">Tereza K.</b>
+            <small class="font-yellix">Aktualizováno 6. 11.</small>
+          </div>
+          <span class="kph-mkp font-yellix"><span class="kph-mkav">JP</span>Konzultant</span>
+        </div>
+        <div class="kph-body">
+          <div class="kph-ttl">
+            <h2 class="font-yellix">Váš výběr</h2>
+            <span class="font-yellix">4 projekty</span>
+          </div>
+          <div class="kph-zd">
+            <div class="kph-zdh">
+              <span class="font-yellix">Vaše zadání</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            </div>
+            <div class="kph-chips">
+              {brief.map((tag) => (
+                <span class="font-yellix">{tag}</span>
+              ))}
+            </div>
+          </div>
+          <article class="kph-card">
+            <div class="kph-ph">
+              <img
+                src={coverUrl}
+                srcset={`${coverUrl} 1x, ${coverUrl} 2x`}
+                width="343"
+                height="176"
+                alt=""
+                fetchpriority="high"
+              />
+              <span class="kph-bdg is-dn font-yellix">Cena vs. trh −0,3 %</span>
+              <span class="kph-bdg is-units font-yellix">7 bytů 3+kk</span>
+            </div>
+            <div class="kph-cb">
+              <span class="kph-rk font-yellix">01 · Doporučujeme</span>
+              <h3 class="font-yellix">Mallard</h3>
+              <p class="kph-loc font-yellix">Praha · Hrdlořezy</p>
+              <p class="kph-nt font-yellix">Nejlepší poměr v Hrdlořezích. 3+kk od 10,5 mil., část s terasou.</p>
+              <div class="kph-cf">
+                <span class="kph-st font-yellix">K prohlídce 12. 11.</span>
+                <p class="kph-pr font-yellix"><small>od</small> 10,5 mil. Kč</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="kph__ov"></div>
+  <div class="kph__text">
+    <span class="kph__kicker font-yellix">Klientský portál</span>
+    <h1 id="kph-h" class="kph__h1 font-yellix">Trh novostaveb<br />tak, jak ho vidíme my.</h1>
+    <p class="kph__sub font-yellix">Výběr projektů, který pro vás připraví makléř. Na jednom místě, v telefonu.</p>
+    <div class="kph__btns">
+      <a class="kph__b1 font-yellix" href={demoHref}>
+        Projít ukázku
+        <Fragment set:html={Arrow} />
+      </a>
+      <a class="kph__b2 font-yellix" href={loginHref}>
+        <Fragment set:html={User} />
+        Přihlásit se
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .kph {
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    display: none;
+    position: relative;
+    height: 100svh;
+    overflow: hidden;
+    background: #0b0b0b;
+    color: #fff;
+    font-weight: 500;
+  }
+  @media (max-width: 767px) {
+    .kph { display: block; }
+  }
+  .kph__win {
+    position: absolute;
+    left: 22px;
+    right: 22px;
+    top: calc(var(--nav-h) + 12px);
+    bottom: 24%;
+    overflow: hidden;
+    border-radius: 22px;
+    background: #f4f4f2;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+  }
+  .kph__canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 375px;
+    height: 812px;
+    transform-origin: 0 0;
+    transform: scale(var(--s, 1));
+    color: #0c0c0c;
+  }
+  .kph-scr {
+    position: relative;
+    height: 812px;
+    overflow: hidden;
+    background: #f4f4f2;
+    font-size: 14px;
+  }
+  .kph-ap {
+    position: absolute;
+    top: 18px;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 20px;
+  }
+  .kph-av {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #123128;
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+  }
+  .kph-hi {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+  .kph-hi b { font-size: 16px; font-weight: 500; }
+  .kph-hi small { font-size: 12px; color: rgba(0, 0, 0, 0.5); }
+  .kph-mkp {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px 4px 4px;
+    border-radius: 22px;
+    background: #fff;
+    font-size: 12.5px;
+  }
+  .kph-mkav {
+    display: flex;
+    width: 28px;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #000;
+    color: #fff;
+    font-size: 11px;
+  }
+  .kph-body {
+    position: absolute;
+    top: 76px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    padding: 22px 0 0;
+  }
+  .kph-tag {
+    display: inline-block;
+    margin: 0 20px 10px;
+    padding: 4px 8px;
+    border: 1px solid rgba(0, 0, 0, 0.18);
+    border-radius: 20px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .kph-ttl {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 0 20px 14px;
+  }
+  .kph-ttl h2 {
+    margin: 0;
+    font-size: 36px;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+  }
+  .kph-ttl span { font-size: 13px; color: rgba(0, 0, 0, 0.5); }
+  .kph-zd { margin: 0 0 12px; }
+  .kph-zdh {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 20px 8px;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .kph-zdh svg { color: #000; }
+  .kph-chips {
+    display: flex;
+    gap: 6px;
+    padding: 0 20px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .kph-chips span {
+    flex: 0 0 auto;
+    padding: 7px 11px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    background: #fff;
+    font-size: 12.5px;
+  }
+  .kph-card {
+    margin: 0 16px 14px;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #fff;
+  }
+  .kph-ph {
+    position: relative;
+    height: 176px;
+    background: #d7e2d9;
+  }
+  .kph-ph img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .kph-bdg {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 5px 9px;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 11.5px;
+  }
+  .kph-bdg.is-dn { color: #c0392b; }
+  .kph-bdg.is-units {
+    left: auto;
+    right: 10px;
+    background: #000;
+    color: #fff;
+  }
+  .kph-cb { padding: 14px 16px 16px; }
+  .kph-rk {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #1f3a8a;
+  }
+  .kph-cb h3 {
+    margin: 0;
+    font-size: 21px;
+    letter-spacing: -0.025em;
+    font-weight: 500;
+  }
+  .kph-loc {
+    margin: 3px 0 8px;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .kph-nt {
+    margin: 0 0 12px;
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: rgba(0, 0, 0, 0.72);
+  }
+  .kph-cf {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+  }
+  .kph-st {
+    display: inline-flex;
+    padding: 5px 9px;
+    border-radius: 8px;
+    background: #eaeefb;
+    color: #1f3a8a;
+    font-size: 12px;
+  }
+  .kph-pr {
+    margin: 0 0 0 auto;
+    font-size: 22px;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+  }
+  .kph-pr small {
+    margin-right: 0.22rem;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .kph__ov {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(rgba(11, 11, 11, 0.3) 0, rgba(11, 11, 11, 0) 16%);
+  }
+  .kph__text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 170px 24px calc(40px + env(safe-area-inset-bottom, 0px));
+    background: linear-gradient(rgba(11, 11, 11, 0) 0, rgba(11, 11, 11, 0.88) 110px, #0b0b0b 170px);
+    text-align: center;
+  }
+  .kph__kicker {
+    margin-bottom: 16px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.65);
+  }
+  .kph__h1 {
+    margin: 0 0 14px;
+    font-size: 32px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+  .kph__sub {
+    margin: 0 0 26px;
+    max-width: 30ch;
+    font-size: 15px;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.66);
+  }
+  .kph__btns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  .kph__b1,
+  .kph__b2 {
+    display: flex;
+    height: 52px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .kph__b1 {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    border: 0;
+    background: #fff;
+    color: #000;
+  }
+  .kph__b1::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 42%;
+    pointer-events: none;
+    background: linear-gradient(
+      105deg,
+      transparent 20%,
+      rgba(0, 0, 0, 0.05) 42%,
+      rgba(255, 255, 255, 0.9) 50%,
+      rgba(0, 0, 0, 0.04) 58%,
+      transparent 80%
+    );
+    transform: translateX(-160%) skewX(-18deg);
+  }
+  .kph__b2 {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: transparent;
+    color: #fff;
+  }
+  @media (max-height: 700px) {
+    .kph__sub { display: none; }
+    .kph__h1 { margin-bottom: 22px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .kph__win { animation: kph-in 0.6s var(--ease) both; }
+    .kph__text { animation: kph-in 0.6s 0.12s var(--ease) both; }
+    .kph__b1::after { animation: kph-shine 4.2s var(--ease) 1.2s infinite; }
+  }
+  @keyframes kph-in {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes kph-shine {
+    0% { transform: translateX(-160%) skewX(-18deg); }
+    22%, 100% { transform: translateX(280%) skewX(-18deg); }
+  }
+</style>
+
+<script>
+  let onFit: (() => void) | null = null;
+
+  function fitHero() {
+    const win = document.querySelector('[data-kph-win]') as HTMLElement | null;
+    const canvas = document.querySelector('[data-kph-canvas]') as HTMLElement | null;
+    if (!win || !canvas) return;
+    const w = win.clientWidth;
+    if (!w) return;
+    canvas.style.setProperty('--s', String(w / 375));
+  }
+
+  function initKph() {
+    if (onFit) window.removeEventListener('resize', onFit);
+    onFit = fitHero;
+    requestAnimationFrame(fitHero);
+    window.addEventListener('resize', onFit);
+  }
+
+  initKph();
+  document.addEventListener('astro:page-load', initKph);
+  document.addEventListener('astro:before-swap', () => {
+    if (onFit) window.removeEventListener('resize', onFit);
+    onFit = null;
+  });
+</script>

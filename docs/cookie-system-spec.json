@@ -1,0 +1,272 @@
+{
+  "component": {
+    "name": "CookieSystem",
+    "framework": "Astro",
+    "file": "src/components/CookieSystem.astro",
+    "mountedIn": "src/layouts/Layout.astro (globálně na všech stránkách, před </body>, po SmartContactModal a SmartMeetingModal)",
+    "description": "Dvouvrstvý cookie consent: spodní banner (lišta) + centrální modal nastavení. Souhlas v localStorage, volitelná synchronizace Google Consent Mode přes window.gtag."
+  },
+  "ui": {
+    "parts": [
+      {
+        "id": "cookie-banner",
+        "role": "cookie_banner",
+        "selector": "[data-cookie-banner]",
+        "position": "fixed bottom-0 left-0 right-0",
+        "zIndex": 90,
+        "initialState": {
+          "visible": false,
+          "classes": ["opacity-0", "pointer-events-none"],
+          "ariaHidden": true
+        },
+        "visibleState": {
+          "classesRemoved": ["opacity-0", "pointer-events-none"],
+          "ariaHidden": false
+        },
+        "appearance": {
+          "background": "white",
+          "border": "top border gray-200",
+          "transition": "opacity 300ms ease",
+          "layout": "flex column on mobile, row on sm+; text left, buttons right on desktop"
+        },
+        "copy": {
+          "message": "Tento web používá cookies pro zajištění nejlepšího zážitku.",
+          "buttons": [
+            { "label": "Nastavení", "action": "open_modal", "dataAttr": "data-cookie-open-settings", "style": "underlined gray text" },
+            { "label": "Souhlasím", "action": "accept_all", "dataAttr": "data-cookie-accept", "style": "black fill button" }
+          ]
+        }
+      },
+      {
+        "id": "cookie-modal-overlay",
+        "role": "settings_modal",
+        "selector": "[data-cookie-overlay]",
+        "position": "fixed inset-0, flex center",
+        "zIndex": 100,
+        "initialState": {
+          "visible": false,
+          "classes": ["opacity-0", "pointer-events-none"],
+          "ariaHidden": true,
+          "bodyOverflow": "unchanged"
+        },
+        "openState": {
+          "overlay": ["opacity-100", "pointer-events-auto", "aria-hidden=false"],
+          "bodyOverflow": "hidden",
+          "modalPanel": ["scale-100"],
+          "modalPanelClosed": ["scale-95"]
+        },
+        "appearance": {
+          "backdrop": "bg-black/80",
+          "transition": "opacity 200ms",
+          "panel": {
+            "width": "94vw max 1000px",
+            "maxHeight": "90vh",
+            "overflow": "auto",
+            "background": "white",
+            "border": "gray-200",
+            "padding": "p-10 md:p-14 lg:p-16",
+            "scaleTransition": "scale 95→100, duration 200ms",
+            "styleReference": "Podobný tón jako poptávkový formulář (SmartContactModal): Yellix, černobílá, uppercase nadpis s letter-spacing"
+          }
+        },
+        "copy": {
+          "title": "Využití cookies",
+          "intro": "Dlouhý odstavec o nezbytných vs. analytických/marketing cookies + odkaz na /ochrana-osobnich-udaju",
+          "categoriesLabel": "Kategorie",
+          "saveButton": "Uložit preference",
+          "closeButton": "Zavřít (text + ×)"
+        },
+        "closeTriggers": [
+          "click na overlay (mimo panel)",
+          "[data-cookie-modal-close]",
+          "Escape v modalu"
+        ],
+        "panelClick": "onclick stopPropagation na [data-cookie-modal] — klik do bílého panelu nezavře"
+      }
+    ],
+    "zIndexStack": {
+      "navigation": 70,
+      "menuDrawer": 60,
+      "cookieBanner": 90,
+      "cookieModal": 100,
+      "note": "Cookie modal je nad bannerem i navigací"
+    }
+  },
+  "categories": [
+    {
+      "id": "necessary",
+      "label": "Nezbytné",
+      "alwaysOn": true,
+      "ui": "statický podtržený text (ne tlačítko)"
+    },
+    {
+      "id": "analytical",
+      "label": "Analytické",
+      "alwaysOn": false,
+      "ui": "toggle tlačítko .cookie-category[data-category=analytical]"
+    },
+    {
+      "id": "marketing",
+      "label": "Marketingové",
+      "alwaysOn": false,
+      "ui": "toggle tlačítko .cookie-category[data-category=marketing]"
+    }
+  ],
+  "categoryToggleVisual": {
+    "inactive": ["text-gray-400", "no-underline", "data-active=false"],
+    "active": ["underline", "underline-offset-2", "decoration-black", "text-black", "data-active=true"],
+    "interaction": "click přepíná boolean, bez okamžitého uložení — až po Uložit preference"
+  },
+  "storage": {
+    "key": "reamar-cookie-consent",
+    "location": "localStorage",
+    "schema": {
+      "necessary": "boolean (vždy true po uložení)",
+      "analytical": "boolean",
+      "marketing": "boolean",
+      "consented": "boolean — true znamená uživatel dokončil volbu (banner se už neukáže)"
+    },
+    "defaultWhenMissing": {
+      "necessary": true,
+      "analytical": false,
+      "marketing": false,
+      "consented": false
+    }
+  },
+  "behavior": {
+    "init": {
+      "function": "initCookieSystem()",
+      "runsOn": ["immediate script execution", "document astro:page-load (View Transitions)"],
+      "idempotency": "Před re-init odstraní window.__cookieOpenSettingsHandler z body click listeneru"
+    },
+    "bannerShowDelay": {
+      "ms": 2000,
+      "condition": "!getConsent() || !consent.consented",
+      "effect": "Po 2 s fade-in banneru (opacity 0→1)"
+    },
+    "bannerHide": {
+      "triggers": ["Souhlasím", "Uložit preference v modalu"],
+      "effect": "opacity + pointer-events-none, aria-hidden=true"
+    },
+    "flows": [
+      {
+        "name": "first_visit",
+        "steps": [
+          "Stránka načtena, banner skrytý",
+          "Po 2000 ms: pokud není consented → showBanner()",
+          "Uživatel: Souhlasím → vše true, consented true, hideBanner, updateGtagConsent",
+          "Nebo: Nastavení → openModal (banner může zůstat viditelný pod modalem)"
+        ]
+      },
+      {
+        "name": "accept_all",
+        "trigger": "[data-cookie-accept]",
+        "saved": { "necessary": true, "analytical": true, "marketing": true, "consented": true },
+        "sideEffects": ["hideBanner", "updateGtagConsent", "closeModal se nevolá"]
+      },
+      {
+        "name": "custom_preferences",
+        "trigger": "[data-cookie-save]",
+        "reads": "data-active na analytical a marketing tlačítkách",
+        "saved": { "necessary": true, "analytical": "from toggle", "marketing": "from toggle", "consented": true },
+        "sideEffects": ["hideBanner", "closeModal", "updateGtagConsent"]
+      },
+      {
+        "name": "open_settings_from_banner",
+        "trigger": "[data-cookie-open-settings]",
+        "effect": "openModal() — sync toggle UI z localStorage nebo defaultConsent"
+      },
+      {
+        "name": "open_settings_from_footer",
+        "triggers": ["#open-cookie-settings", "[data-cookie-settings]"],
+        "mechanism": "delegovaný click na document.body → handleOpenSettings → preventDefault → openModal()",
+        "note": "Funguje i když už je souhlas uložen (banner skrytý) — jen otevře modal pro změnu"
+      },
+      {
+        "name": "returning_user_with_consent",
+        "condition": "getConsent().consented === true",
+        "effect": "Banner se po 2 s nezobrazí; nastavení stále otevíratelné z patičky"
+      }
+    ],
+    "modalOpen": {
+      "steps": [
+        "Načíst prefs z localStorage nebo defaultConsent",
+        "Nastavit vizuál .cookie-category podle analytical/marketing",
+        "Overlay: remove opacity-0, pointer-events-none; body overflow hidden",
+        "Modal panel: scale-95 → scale-100, modal.focus()"
+      ]
+    },
+    "modalClose": {
+      "steps": [
+        "Overlay: opacity-0, pointer-events-none, aria-hidden",
+        "body overflow cleared",
+        "Modal: scale-100 → scale-95",
+        "note": "Zavření bez Uložit neukládá změny toggleů"
+      ]
+    }
+  },
+  "gtag": {
+    "function": "updateGtagConsent(prefs)",
+    "guard": "typeof window.gtag === 'function'",
+    "command": "gtag('consent', 'update', { ... })",
+    "mapping": {
+      "analytical": "analytics_storage granted|denied",
+      "marketing": ["ad_storage", "ad_user_data", "ad_personalization"] granted|denied
+    },
+    "whenCalled": ["Po Souhlasím", "Po Uložit preference"],
+    "note": "V Layout.astro není vidět výchozí gtag snippet — update běží jen pokud je gtag na stránce definovaný jinde"
+  },
+  "integration": {
+    "layout": "<CookieSystem /> v Layout.astro řádek ~90",
+    "footer": {
+      "file": "src/components/Footer.astro",
+      "triggers": [
+        { "mobile": "#open-cookie-settings + data-cookie-settings" },
+        { "desktop": "button[data-cookie-settings] v právním řádku" }
+      ]
+    }
+  },
+  "dataAttributes": {
+    "[data-cookie-banner]": "spodní lišta",
+    "[data-cookie-overlay]": "tmavý overlay modalu",
+    "[data-cookie-modal]": "bílý panel dialogu",
+    "[data-cookie-accept]": "Souhlasím — accept all",
+    "[data-cookie-open-settings]": "Nastavení v banneru",
+    "[data-cookie-modal-close]": "Zavřít modal",
+    "[data-cookie-save]": "Uložit preference",
+    "[data-cookie-settings]": "Otevřít modal z patičky (delegace)",
+    ".cookie-category[data-category]": "toggle analytické/marketingové"
+  },
+  "accessibility": {
+    "banner": "aria-hidden toggled with visibility",
+    "modal": "role=dialog, aria-modal=true, aria-labelledby=cookie-modal-title, tabindex=-1, focus on open",
+    "escape": "zavře modal",
+    "categoryButtons": "aria-label na footer tlačítkách Nastavení cookies"
+  },
+  "astroViewTransitions": {
+    "reinit": "astro:page-load volá initCookieSystem znovu",
+    "risk": "Duplicitní listenery na tlačítkách pokud by se neodstraňovaly — částečně řešeno u body delegace přes __cookieOpenSettingsHandler",
+    "bannerTimer": "Každý page-load spustí nový setTimeout(2000) — při SPA navigaci může být víc timerů (edge case)"
+  },
+  "comparisonToSmartContactModal": {
+    "similar": [
+      "Centrovaný overlay bg-black/80",
+      "Bílý panel, fade opacity overlay",
+      "body overflow hidden při otevření",
+      "Zavřít overlay / Escape"
+    ],
+    "different": [
+      "Cookie má navíc spodní banner s odloženým zobrazením 2s",
+      "Cookie panel scale animace (95→100)",
+      "Cookie persistuje localStorage, SmartContact ne",
+      "SmartContact používá CustomEvent z Layout.astro; Cookie má vlastní init v komponentě"
+    ]
+  },
+  "implementationNotesForPorting": [
+    "Zachovat z-index 90 banner / 100 modal",
+    "Banner default skrytý — zobrazit jen pokud !consented",
+    "Modal otevření: sync toggle state před zobrazením",
+    "Nepřecházet background-color transition na elementech s backdrop-filter (u cookies neřeší)",
+    "Footer musí používat #open-cookie-settings nebo [data-cookie-settings] pro reopen"
+  ]
+}

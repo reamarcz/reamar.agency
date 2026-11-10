@@ -3,9 +3,12 @@ import { ViewTransitions } from 'astro:transitions';
 import Navigation from '../components/Navigation.astro';
 import SmartContactModal from '../components/SmartContactModal.astro';
 import SmartMeetingModal from '../components/SmartMeetingModal.astro';
+import ProvizeModal from '../components/ProvizeModal.astro';
 import CookieSystem from '../components/CookieSystem.astro';
 import FormThankYouModal from '../components/FormThankYouModal.astro';
 import SEO from '../components/SEO.astro';
+import IntroLoader from '../components/IntroLoader.astro';
+import IntroLoaderMobile from '../components/IntroLoaderMobile.astro';
 import '../styles/global.css';
 import 'aos/dist/aos.css';
 
@@ -18,6 +21,9 @@ interface Props {
   canonical?: string;
   ogType?: string;
   robots?: string;
+  heroIntro?: boolean;
+  theme?: 'light' | 'dark';
+  hideNav?: boolean;
 }
 const {
   title = 'REAMAR | Reality. Marketing.',
@@ -28,13 +34,36 @@ const {
   canonical,
   ogType,
   robots,
+  heroIntro = false,
+  theme = 'light',
+  hideNav = false,
 } = Astro.props;
 ---
 <!DOCTYPE html>
-<html lang="cs" class="overflow-x-hidden w-full">
+<html lang="cs" class="overflow-x-clip w-full">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="preload" href="/fonts/Yellix-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    {heroIntro && (
+      <link rel="preload" as="image" href="/video/hero-poster.jpg" fetchpriority="high" />
+    )}
+    {heroIntro && (
+      <script is:inline>
+        (function () {
+          try {
+            var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var phone = window.matchMedia('(max-width: 767px)').matches;
+            var desktop = window.matchMedia('(min-width: 1024px)').matches;
+            var seen = sessionStorage.getItem('rmIntroSeen') === '1';
+            var root = document.documentElement;
+            root.classList.remove('rmi-on', 'rmi-skip', 'rmi-landing', 'rmm-on', 'rmm-skip', 'rmm-landing');
+            root.classList.add(!reduce && !seen && desktop ? 'rmi-on' : 'rmi-skip');
+            root.classList.add(!reduce && !seen && phone ? 'rmm-on' : 'rmm-skip');
+          } catch (e) {}
+        })();
+      </script>
+    )}
     <SEO
       title={title}
       description={description}
@@ -50,13 +79,16 @@ const {
     <script is:inline>
       function handleModalClick(event) {
         console.log('[Modal] click fired, target:', event.target);
-        var target = event.target.closest('[data-smart-contact-open], [data-smart-meeting-open]');
+        var target = event.target.closest('[data-smart-contact-open], [data-smart-meeting-open], [data-provize-open]');
         console.log('[Modal] closest result:', target);
         if (!target) return;
         event.preventDefault();
         event.stopPropagation();
         console.log('[Modal] dispatching event for:', target);
-        if (target.hasAttribute('data-smart-contact-open')) {
+        if (target.hasAttribute('data-provize-open')) {
+          var variant = target.getAttribute('data-provize-variant') || 'priority';
+          window.dispatchEvent(new CustomEvent('provize-open', { detail: { variant: variant } }));
+        } else if (target.hasAttribute('data-smart-contact-open')) {
           var type = target.getAttribute('data-smart-contact-type') || 'developer';
           var service = target.getAttribute('data-smart-contact-service') || null;
           window.dispatchEvent(new CustomEvent('smart-contact-open', { detail: { initialType: type, initialService: service } }));
@@ -78,15 +110,80 @@ const {
       document.addEventListener('astro:page-load', function () {
         console.log('[Modal] astro:page-load fired');
       });
+
+      function rmResetIntroMedia() {
+        document.querySelectorAll('[data-intro-media]').forEach(function (el) {
+          ['top', 'left', 'right', 'bottom', 'width', 'height'].forEach(function (prop) {
+            el.style.removeProperty(prop);
+          });
+          el.classList.remove('rmi-still', 'rmm-still');
+        });
+      }
+
+      function rmSkipIntro() {
+        try { sessionStorage.setItem('rmIntroSeen', '1'); } catch (e) {}
+        var root = document.documentElement;
+        root.classList.remove('rmi-on', 'rmi-landing', 'rmm-on', 'rmm-landing');
+        root.classList.add('rmi-skip', 'rmm-skip');
+        var rmi = document.getElementById('rmi');
+        var rmm = document.getElementById('rmm');
+        if (rmi) rmi.remove();
+        if (rmm) rmm.remove();
+        rmResetIntroMedia();
+      }
+
+      function rmCloseStuckOverlays() {
+        if (document.body) document.body.style.overflow = '';
+        var drawer = document.querySelector('[data-menu-drawer]');
+        if (drawer) {
+          drawer.removeAttribute('data-open');
+          drawer.classList.add('pointer-events-none');
+          drawer.setAttribute('aria-hidden', 'true');
+          var backdrop = drawer.querySelector('[data-drawer-backdrop]');
+          var panel = drawer.querySelector('[data-drawer-panel]');
+          if (backdrop) backdrop.removeAttribute('data-open');
+          if (panel) panel.removeAttribute('data-open');
+          var toggle = document.querySelector('[data-nav-toggle]');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        }
+        ['smart-contact-overlay', 'smart-meeting-overlay', 'provize-overlay', 'form-thankyou-overlay', 'cookie-modal-overlay'].forEach(function (id) {
+          var overlay = document.getElementById(id);
+          if (!overlay) return;
+          overlay.classList.add('opacity-0', 'pointer-events-none');
+          overlay.classList.remove('is-open');
+          overlay.setAttribute('aria-hidden', 'true');
+        });
+      }
+
+      function rmOnClientNav() {
+        rmSkipIntro();
+        rmCloseStuckOverlays();
+      }
+
+      if (!window.__rmOverlayCleanupBound) {
+        window.__rmOverlayCleanupBound = true;
+        document.addEventListener('astro:before-preparation', rmOnClientNav);
+        document.addEventListener('astro:before-swap', rmOnClientNav);
+        document.addEventListener('astro:after-swap', rmOnClientNav);
+        document.addEventListener('astro:page-load', function () {
+          rmCloseStuckOverlays();
+          try {
+            if (sessionStorage.getItem('rmIntroSeen') === '1') rmSkipIntro();
+          } catch (e) {}
+        });
+      }
     </script>
   </head>
-  <body class="font-yellix overflow-x-hidden w-full min-w-0">
-    <Navigation currentPath={Astro.url.pathname} />
-    <main id="main" role="main" class="min-w-0 overflow-x-hidden">
+  <body class="font-yellix overflow-x-clip w-full min-w-0">
+    {heroIntro && <IntroLoader />}
+    {heroIntro && <IntroLoaderMobile />}
+    {!hideNav && <Navigation currentPath={Astro.url.pathname} />}
+    <main id="main" role="main" class="min-w-0 overflow-x-clip">
       <slot />
     </main>
     <SmartContactModal />
     <SmartMeetingModal />
+    <ProvizeModal />
     <CookieSystem />
     <FormThankYouModal />
     <script>

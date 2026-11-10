@@ -1,0 +1,237 @@
+---
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+
+const themLines = [
+  'Developer vám nabídne svůj projekt.',
+  'Realitní kancelář svoje nemovitosti.',
+];
+const usLines = [
+  'My jsme postavili službu, která začíná u kupujícího.',
+  'Ne u nabídky, kterou je potřeba prodat.',
+];
+
+function withWordIndex(lines: string[]) {
+  let i = 0;
+  return lines.map((line) =>
+    line.split(/(\s+)/).map((part) => {
+      if (!part.trim()) return { text: part, i: null as number | null };
+      const item = { text: part, i };
+      i += 1;
+      return item;
+    })
+  );
+}
+
+const themParts = withWordIndex(themLines);
+const usParts = withWordIndex(usLines);
+---
+<section class:list={['mf', compact && 'mf--compact']} data-mf aria-label="Nákupní agentura – v čem jsme jiní">
+  <div class="mf__inner">
+    <p class="mf__block mf__them">
+      {themParts.map((parts) => (
+        <span class="mf__line">
+          {parts.map((part) =>
+            part.i === null ? part.text : (
+              <span class="mf__w" style={`--wi: ${part.i}`}>{part.text}</span>
+            )
+          )}
+        </span>
+      ))}
+    </p>
+    <div class="mf__rule" aria-hidden="true"></div>
+    <p class="mf__block mf__us">
+      {usParts.map((parts) => (
+        <span class="mf__line">
+          {parts.map((part) =>
+            part.i === null ? part.text : (
+              <span class="mf__w" style={`--wi: ${part.i}`}>{part.text}</span>
+            )
+          )}
+        </span>
+      ))}
+    </p>
+  </div>
+</section>
+
+<style>
+  .mf {
+    --ease: cubic-bezier(.22, 1, .36, 1);
+    --mf-grey: rgba(0, 0, 0, .42);
+    --page-pad: 1.25rem;
+    --page-max: 1440px;
+    background: #fff;
+    color: #000;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: clamp(140px, 22vh, 260px) var(--page-pad);
+  }
+  @media (min-width: 768px) {
+    .mf { --page-pad: 2.5rem; }
+  }
+  @media (min-width: 1280px) {
+    .mf { --page-pad: 3.5rem; }
+  }
+  .mf__inner {
+    max-width: min(1000px, 100%);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: clamp(20px, 3.2vh, 32px);
+  }
+  .mf__block {
+    margin: 0;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.22;
+    letter-spacing: -0.02em;
+  }
+  @media (min-width: 768px) {
+    .mf__block { font-size: 30px; }
+  }
+  @media (min-width: 1280px) {
+    .mf__block { font-size: 34px; }
+  }
+  .mf__line { display: block; }
+  .mf__them { align-self: center; color: var(--mf-grey); }
+  .mf__us { align-self: center; color: #000; }
+  .mf__rule {
+    width: 2.5rem;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.18);
+    flex-shrink: 0;
+  }
+
+  .mf--compact {
+    padding-top: clamp(88px, 14vh, 160px);
+    padding-bottom: clamp(88px, 14vh, 160px);
+  }
+  .mf--compact .mf__inner {
+    gap: clamp(12px, 1.8vh, 18px);
+  }
+  .mf--compact .mf__w {
+    display: inline-block;
+  }
+  @media (min-width: 1024px) {
+    .mf__line { white-space: nowrap; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mf--js .mf__them { color: #000; opacity: 0; transform: translateX(-48px); }
+    .mf--js .mf__us { opacity: 0; transform: translateX(48px); }
+    .mf--js .mf__rule { transform: scaleX(0); transform-origin: center; }
+
+    .mf--js .mf__them.is-in {
+      opacity: 1;
+      transform: none;
+      transition: opacity 1.1s var(--ease), transform 1.1s var(--ease);
+    }
+    .mf--js .mf__them.is-in.is-dim {
+      color: var(--mf-grey);
+      transition:
+        opacity 1.1s var(--ease),
+        transform 1.1s var(--ease),
+        color .9s var(--ease);
+    }
+    .mf--js .mf__us.is-in {
+      opacity: 1;
+      transform: none;
+      transition: opacity 1.1s var(--ease), transform 1.1s var(--ease);
+    }
+    .mf--js .mf__rule.is-in {
+      transform: scaleX(1);
+      transition: transform 0.5s var(--ease);
+    }
+
+    @media (max-width: 1023px) {
+      .mf--js .mf__them { transform: translateX(-24px); }
+      .mf--js .mf__us { transform: translateX(24px); }
+    }
+
+    .mf--compact.mf--js .mf__them,
+    .mf--compact.mf--js .mf__us {
+      opacity: 1;
+      transform: none;
+    }
+    .mf--compact.mf--js .mf__them {
+      color: var(--mf-grey);
+    }
+    .mf--compact.mf--js .mf__w {
+      opacity: 0;
+      transform: translateY(0.28em);
+    }
+    .mf--compact.mf--js .is-in .mf__w {
+      animation: mf-word-in 0.58s var(--ease) forwards;
+      animation-delay: calc(var(--wi) * 90ms);
+    }
+    @keyframes mf-word-in {
+      from { opacity: 0; transform: translateY(0.28em); }
+      to { opacity: 1; transform: none; }
+    }
+  }
+</style>
+
+<script>
+  function initMf() {
+    const sec = document.querySelector('[data-mf]') as HTMLElement | null;
+    if (!sec) return;
+    if (sec._mfCleanup) sec._mfCleanup();
+
+    const them = sec.querySelector('.mf__them') as HTMLElement | null;
+    const us = sec.querySelector('.mf__us') as HTMLElement | null;
+    const rule = sec.querySelector('.mf__rule') as HTMLElement | null;
+    if (!them || !us) return;
+    if (them.classList.contains('is-in') && us.classList.contains('is-in')) return;
+
+    sec.classList.add('mf--js');
+
+    let themAt = 0;
+    let usTimer = 0;
+    const playThem = () => {
+      if (them.classList.contains('is-in')) return;
+      them.classList.add('is-in');
+      themAt = performance.now();
+      themIo.disconnect();
+    };
+    const playUs = () => {
+      playThem();
+      rule?.classList.add('is-in');
+      const wordMs = sec.classList.contains('mf--compact') ? 90 : 0;
+      const themWords = wordMs ? them.querySelectorAll('.mf__w').length : 0;
+      const staggerWait = wordMs ? themWords * wordMs + 160 : 480;
+      const wait = Math.max(0, staggerWait - (performance.now() - themAt));
+      usTimer = window.setTimeout(() => {
+        us.classList.add('is-in');
+        them.classList.add('is-dim');
+      }, wait);
+      usIo.disconnect();
+    };
+
+    const themIo = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) playThem();
+    }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+    const usIo = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) playUs();
+    }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+
+    themIo.observe(them);
+    usIo.observe(us);
+
+    sec._mfCleanup = () => {
+      themIo.disconnect();
+      usIo.disconnect();
+      if (usTimer) window.clearTimeout(usTimer);
+      sec._mfCleanup = null;
+    };
+  }
+
+  initMf();
+  document.addEventListener('astro:page-load', initMf);
+</script>

@@ -1,0 +1,106 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import KlientskyPortalNahled2 from '../../components/KlientskyPortalNahled2.astro';
+import '../../styles/portal-demo-app.css';
+
+const loginHref = 'https://www.reamar-konzultace.cz';
+---
+
+<Layout
+  title="Ukázka portálu | REAMAR Agency"
+  description="Ukázka klientského portálu nákupní agentury REAMAR. Klient i data jsou smyšlené."
+  theme="light"
+  robots="noindex, nofollow"
+  hideNav
+>
+  <div class="pdm" data-pdm>
+    <button type="button" class="pdm-x" data-pdm-close aria-label="Zavřít ukázku">×</button>
+    <div class="pdm-app" transition:name="kp-phone">
+      <KlientskyPortalNahled2 />
+    </div>
+    <div class="pdm-sheet" data-pdm-sheet hidden>
+      <div class="pdm-sheet-card" data-pdm-sheet-card role="dialog" aria-modal="true" aria-labelledby="pdm-sheet-title">
+        <button type="button" class="pdm-sheet-close" data-pdm-sheet-close aria-label="Zavřít">×</button>
+        <p class="pdm-sheet-text font-yellix" id="pdm-sheet-title">Ukázka výběru</p>
+        <p class="pdm-sheet-note font-yellix">Takhle vypadá výběr, který pro vás připraví makléř. Klient i data jsou smyšlené.</p>
+        <div class="pdm-sheet-btns">
+          <button type="button" class="font-yellix" data-smart-meeting-open data-smart-meeting-type="client">
+            <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+            Domluvit schůzku
+          </button>
+          <a class="font-yellix" href={loginHref}>Přihlásit se</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style is:global>
+  html:has([data-pdm]),
+  body:has([data-pdm]) {
+    background: #f4f4f2;
+    overflow: hidden;
+    height: 100%;
+  }
+  html:has([data-pdm]) [data-cookie-banner] {
+    display: none !important;
+  }
+  html:has([data-pdm]) main {
+    height: 100dvh;
+    overflow: hidden;
+  }
+  .pdm-sheet-btns button img {
+    width: 12px;
+    height: 12px;
+    filter: brightness(0) invert(1);
+  }
+</style>
+
+<script>
+  function closeDemo() {
+    try {
+      const ref = document.referrer ? new URL(document.referrer) : null;
+      if (ref && ref.origin === location.origin && window.history.length > 1) {
+        history.back();
+        return;
+      }
+    } catch {}
+    location.assign('/klientsky-portal');
+  }
+
+  function initPdm() {
+    const root = document.querySelector('[data-pdm]') as HTMLElement | null;
+    if (!root || root.dataset.pdmReady === '1') return;
+    root.dataset.pdmReady = '1';
+    const sheet = root.querySelector('[data-pdm-sheet]') as HTMLElement;
+
+    const hideSheet = () => {
+      sheet.hidden = true;
+    };
+    const requestHideSheet = () => {
+      if (sheet.hidden) return;
+      if (history.state?.kp === 'sheet') history.back();
+      else hideSheet();
+    };
+
+    root.querySelector('[data-pdm-close]')?.addEventListener('click', closeDemo);
+    root.querySelector('[data-pdm-sheet-close]')?.addEventListener('click', requestHideSheet);
+    sheet.addEventListener('click', (e) => {
+      if (e.target === sheet) requestHideSheet();
+    });
+    window.addEventListener('kp-demo-nudge', () => {
+      if (!sheet.hidden) return;
+      sheet.hidden = false;
+      history.pushState({ kp: 'sheet' }, '');
+    });
+    window.addEventListener('popstate', () => {
+      if (!sheet.hidden) hideSheet();
+    });
+    window.addEventListener('kp-demo-detail', ((e: CustomEvent<{ open: boolean }>) => {
+      root.classList.toggle('is-detail', !!e.detail?.open);
+    }) as EventListener);
+  }
+
+  initPdm();
+  document.addEventListener('astro:page-load', initPdm);
+</script>

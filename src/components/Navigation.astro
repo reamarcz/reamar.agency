@@ -1,185 +1,513 @@
 ---
-const navLinks = [
-  { href: '/#developery', label: 'Pro developery' },
-  { href: '/#klienty', label: 'Pro klienty' },
-  { href: '/#zahranici', label: 'Zahraničí' },
-  { href: '/#kontakt', label: 'Kontakt' },
+type NavLink = { href: string; label: string; external?: boolean };
+
+const defaultNavLinks: NavLink[] = [
+  { href: '/bydleni', label: 'Bydlení' },
+  { href: '/investice', label: 'Investice' },
+  { href: '/o-nas', label: 'O nás' },
 ];
+
+const onepagerNavLinks: NavLink[] = [
+  { href: '#koncept', label: 'Co děláme' },
+  { href: '#specializace', label: 'Specializace' },
+  { href: 'https://www.reamar.cz/', label: 'O nás', external: true },
+  { href: '#nejcastejsi-otazky', label: 'FAQ' },
+];
+
 const { currentPath = '/' } = Astro.props;
-const isSubpage = currentPath !== '/' && currentPath !== '';
+const path = currentPath.replace(/\/$/, '') || '/';
+const cinematicNav = path === '/bydleni' || path === '/investice' || path === '/investice-2';
+const fullbleedNav = path === '/' || cinematicNav || path === '/o-nas';
+const portalNav = path === '/klientsky-portal';
+const autohideNav = path === '/' || path === '/investice' || path === '/investice-2' || path === '/o-nas';
+const storiesOverview = path === '/pribehy-z-trhu';
+const overlayNav = path === '/agent-pro-kupujici' || path === '/o-nas' || storiesOverview || fullbleedNav;
+const isOnepager = path === '/agentura-pro-kupujici-onepager';
+const navLinks = isOnepager ? onepagerNavLinks : defaultNavLinks;
+const sluzbyHref = isOnepager ? '#vyber-sluzeb' : '/sluzby';
+const isCurrent = (href: string) => {
+  const linkPath = href.split('#')[0];
+  if (!linkPath || linkPath === '/') return false;
+  if (linkPath === '/bydleni' && path.startsWith('/bydleni')) return true;
+  if (linkPath === '/investice' && path.startsWith('/investice')) return true;
+  if (linkPath === '/klientsky-portal' && path.startsWith('/klientsky-portal')) return true;
+  if (linkPath === '/pribehy-z-trhu' && path.startsWith('/pribehy-z-trhu')) return true;
+  if (linkPath === '/o-nas' && path.startsWith('/o-nas')) return true;
+  return path === linkPath;
+};
 ---
 
-<header id="header" class="fixed inset-x-0 top-0 z-[70] w-full transition-all duration-300 ease-out" role="banner" data-nav data-subpage={isSubpage || undefined}>
-  <div class="nav-bar-inner relative h-[65px] md:h-[91px] w-full">
-    <button type="button" class="nav-btn-edge nav-btn-left absolute top-1/2 -translate-y-1/2 flex items-center gap-2 border-0 bg-transparent p-0 text-black cursor-pointer z-10" aria-expanded="false" aria-controls="menu-drawer" aria-label="Menu" data-nav-toggle>
-      <span class="flex items-center justify-center w-5 h-5 md:w-6 md:h-6 transition-opacity duration-200" data-nav-hamburger>
-        <svg class="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </span>
-      <span class="absolute left-0 top-1/2 -translate-y-1/2 flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-200" data-nav-close-wrap aria-hidden="true">
-        <span class="w-5 h-5 md:w-6 md:h-6 relative flex-shrink-0"><span class="absolute left-1/2 top-1/2 w-3 h-px md:w-3.5 bg-current -translate-x-1/2 -translate-y-1/2 rotate-45"></span><span class="absolute left-1/2 top-1/2 w-3 h-px md:w-3.5 bg-current -translate-x-1/2 -translate-y-1/2 -rotate-45"></span></span>
-        <span class="hidden md:inline font-yellix text-[14px] font-medium">Zavřít</span>
-      </span>
-    </button>
+<header
+  id="header"
+  class:list={[
+    'inset-x-0 top-0 z-[70] w-full',
+    fullbleedNav || portalNav ? 'fixed' : 'sticky',
+    !overlayNav && 'bg-white',
+  ]}
+  role="banner"
+  data-nav
+  data-path={currentPath}
+  data-nav-overlay={overlayNav ? '' : undefined}
+  data-nav-fullbleed={fullbleedNav ? '' : undefined}
+  data-nav-autohide={autohideNav ? '' : undefined}
+>
+  <div class="nav-bar-inner mx-auto flex h-[80px] w-full max-w-[1440px] items-center justify-between px-5 md:h-[108px] md:px-10 xl:px-14">
+    <div class="flex min-w-0 items-center gap-5 md:gap-8">
+      <a href={isOnepager ? '/agentura-pro-kupujici-onepager' : '/'} class="relative flex shrink-0 items-center" title="Reamar">
+        <img
+          src="/images/logo-rig-b.svg"
+          alt="Reamar"
+          width="140"
+          height="36"
+          class="nav-logo nav-logo-b h-10 w-auto object-contain md:h-12"
+        />
+        <img
+          src="/images/logo-rig-w.svg"
+          alt=""
+          width="140"
+          height="36"
+          class="nav-logo nav-logo-w h-10 w-auto object-contain md:h-12"
+          aria-hidden="true"
+        />
+      </a>
+      {!overlayNav && (
+        <div class="nav-aside hidden min-w-0 md:block" data-nav-aside>
+          <div class="nav-live" data-nav-live>
+            <p class="nav-muted font-yellix text-[10px] font-medium leading-none text-black/50">Aktuální nabídka v Praze a okolí</p>
+            <p class="nav-fg mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 font-yellix text-[13px] leading-none text-black">
+              <span class="nav-live-dot" aria-hidden="true"></span>
+              <span class="font-medium">562 projektů</span>
+              <span class="nav-muted font-medium text-black/55">9 689 jednotek</span>
+            </p>
+          </div>
+          <p class="nav-title nav-fg font-yellix text-[13px] font-medium leading-[1.2] text-black" data-nav-title aria-hidden="true">
+            Zastupujeme kupující<br />
+            na developerském trhu
+          </p>
+        </div>
+      )}
+    </div>
 
-    <a href="/" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center opacity-0 scale-150 pointer-events-none transition-all duration-300 ease-out origin-top" data-nav-logo title="Reamar">
-      <img src="/images/logo-rig-b.svg" alt="Reamar" width="140" height="36" class="h-[45px] md:h-[51px] w-auto object-contain" />
-    </a>
+    <nav class="hidden items-center gap-5 xl:gap-9 lg:flex" aria-label="Hlavní" data-nav-desktop>
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'nav-fg font-yellix text-[14px] text-black no-underline whitespace-nowrap transition-opacity hover:opacity-70',
+            isCurrent(link.href) ? 'font-semibold' : 'font-medium',
+          ]}
+          aria-current={isCurrent(link.href) ? 'page' : undefined}
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noopener noreferrer' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
 
-    <button type="button" class="nav-btn-edge nav-btn-right absolute right-0 top-1/2 -translate-y-1/2 hidden md:flex items-center gap-2 border-0 bg-transparent p-0 font-yellix text-[14px] font-medium text-black cursor-pointer hover:opacity-80 transition-opacity" aria-controls="contact-drawer" aria-expanded="false" data-contact-toggle>
-      <span data-contact-label>Kontakt</span>
-      <span class="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-200" data-contact-close-wrap aria-hidden="true">
-        <span class="font-yellix text-[14px] font-medium">Zavřít</span>
-        <span class="w-6 h-6 relative flex-shrink-0"><span class="absolute left-1/2 top-1/2 w-3.5 h-px bg-current -translate-x-1/2 -translate-y-1/2 rotate-45"></span><span class="absolute left-1/2 top-1/2 w-3.5 h-px bg-current -translate-x-1/2 -translate-y-1/2 -rotate-45"></span></span>
-      </span>
+      {!isOnepager && (
+        <a
+          href="/pribehy-z-trhu/"
+          class:list={[
+            'nav-fg inline-flex items-center gap-2 font-yellix text-[14px] text-black no-underline whitespace-nowrap transition-opacity hover:opacity-70',
+            isCurrent('/pribehy-z-trhu') ? 'font-semibold' : 'font-medium',
+          ]}
+          aria-current={isCurrent('/pribehy-z-trhu') ? 'page' : undefined}
+        >
+          <svg class="h-[13px] w-[18px] shrink-0" viewBox="0 0 24 17" aria-hidden="true">
+            <path fill="#FF0000" d="M23.5 2.65A3.02 3.02 0 0 0 21.38.5C19.5 0 12 0 12 0S4.5 0 2.62.5A3.02 3.02 0 0 0 .5 2.65 31.9 31.9 0 0 0 0 8.5a31.9 31.9 0 0 0 .5 5.85 3.02 3.02 0 0 0 2.12 2.15C4.5 17 12 17 12 17s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.15A31.9 31.9 0 0 0 24 8.5a31.9 31.9 0 0 0-.5-5.85Z"/>
+            <path fill="#fff" d="M9.75 12.15V4.85L15.7 8.5 9.75 12.15Z"/>
+          </svg>
+          Příběhy z trhu
+        </a>
+      )}
+
+      {!isOnepager && (
+        <a
+          href="/klientsky-portal"
+          class:list={[
+            'nav-fg inline-flex items-center gap-2 font-yellix text-[14px] text-black no-underline whitespace-nowrap transition-opacity hover:opacity-70',
+            isCurrent('/klientsky-portal') ? 'font-semibold' : 'font-medium',
+          ]}
+          aria-current={isCurrent('/klientsky-portal') ? 'page' : undefined}
+        >
+          <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="8" r="3.2"/>
+            <path d="M5.4 19.2c.7-3.3 3.3-5.1 6.6-5.1s5.9 1.8 6.6 5.1"/>
+          </svg>
+          Klientský portál
+        </a>
+      )}
+
+      <a
+        href={sluzbyHref}
+        class:list={[
+          'nav-cta inline-flex items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] text-white no-underline whitespace-nowrap transition-opacity hover:opacity-85',
+          isCurrent('/sluzby') ? 'font-semibold' : 'font-medium',
+        ]}
+        aria-current={isCurrent('/sluzby') ? 'page' : undefined}
+      >
+        <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
+        Vybrat službu
+      </a>
+    </nav>
+
+    <div class="flex items-center gap-2 lg:hidden">
+    <button
+      type="button"
+      class="nav-fg flex h-10 w-10 items-center justify-center border-0 bg-transparent p-0 text-black lg:hidden"
+      aria-expanded="false"
+      aria-controls="menu-drawer"
+      aria-label="Menu"
+      data-nav-toggle
+    >
+      <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
     </button>
+    </div>
   </div>
 </header>
 
-<!-- Menu drawer (hamburger): bílý panel vlevo + zatmavení -->
-<div id="menu-drawer" class="fixed inset-0 z-[60] pointer-events-none transition-opacity duration-300" aria-hidden="true" data-menu-drawer>
-  <button type="button" class="absolute inset-0 bg-black/85 opacity-0 transition-opacity duration-300 data-[open]:opacity-100 pointer-events-none data-[open]:pointer-events-auto" data-drawer-backdrop aria-label="Zavřít menu"></button>
-  <div class="absolute left-0 top-0 bottom-0 w-full md:w-1/4 bg-white flex flex-col min-h-0 opacity-0 -translate-x-full transition-all duration-300 pointer-events-auto data-[open]:opacity-100 data-[open]:translate-x-0 z-10" data-drawer-panel>
-    <button type="button" class="flex-shrink-0 flex items-center gap-2 pt-6 pb-4 pl-6 pr-6 md:pt-8 md:pb-6 md:pl-12 md:pr-8 w-full text-left border-0 bg-transparent shadow-none cursor-pointer hover:opacity-80 transition-opacity" aria-label="Zavřít menu" data-drawer-close>
-      <span class="relative flex items-center justify-center w-10 h-10 flex-shrink-0"><span class="absolute left-1/2 top-1/2 w-5 h-px bg-current -translate-x-1/2 -translate-y-1/2 rotate-45"></span><span class="absolute left-1/2 top-1/2 w-5 h-px bg-current -translate-x-1/2 -translate-y-1/2 -rotate-45"></span></span>
-      <span class="font-yellix text-[14px] font-medium text-black drawer-close-label">Zavřít</span>
-    </button>
-    <div class="drawer-scroll flex-1 min-h-0 overflow-y-auto overscroll-contain">
-      <nav class="flex flex-col pt-2 md:pt-4 pl-6 pr-6 md:pl-12 md:pr-8 gap-3.5 md:gap-5" aria-label="Hlavní">
-        {navLinks.map((link) => (
-          <a href={link.href} class="font-yellix text-[21px] md:text-[24px] font-medium text-black leading-tight hover:opacity-70 transition-opacity" data-drawer-close>{link.label}</a>
-        ))}
-      </nav>
-
-      <div class="drawer-promo px-6 md:px-12 mt-5 md:mt-8 pt-4 md:pt-6 pb-2 border-t border-black/8">
-        <a href="/prodej" class="market-card block border border-black/12 p-3 md:p-3.5 relative" data-drawer-close>
-          <span class="drawer-badge inline-block mb-1 text-[8px] font-medium uppercase tracking-[0.15em] text-white bg-black px-1.5 py-0.5 leading-none">Pro majitele</span>
-          <p class="font-yellix text-[14px] md:text-[15px] font-medium text-black leading-snug">Prodáváte nemovitost?</p>
-          <p class="mt-1.5 space-y-0.5">
-            <span class="market-sub block text-[11px] text-black/35 transition-colors duration-200">Marketing od 29 900 Kč</span>
-            <span class="market-sub block text-[11px] text-black/35 transition-colors duration-200">Kompletní prodej 2,5%</span>
-          </p>
-        </a>
-
-        <a href="/prazsky-rezidencni-trh" class="market-card block border border-black/12 p-3 md:p-3.5 relative mt-2" data-drawer-close>
-          <div class="flex items-end gap-[4px] h-5 mb-2">
-            <span class="mbar" style="height:38%;animation-delay:0s"></span>
-            <span class="mbar" style="height:68%;animation-delay:0.22s"></span>
-            <span class="mbar" style="height:88%;animation-delay:0.44s"></span>
-            <span class="mbar" style="height:52%;animation-delay:0.11s"></span>
-            <span class="mbar" style="height:100%;animation-delay:0.33s"></span>
-            <span class="mbar" style="height:74%;animation-delay:0.55s"></span>
-            <span class="mbar" style="height:60%;animation-delay:0.18s"></span>
-          </div>
-          <p class="text-[9px] font-medium uppercase tracking-[0.18em] text-black/30 mb-0.5">Praha · Q1 2026</p>
-          <p class="font-yellix text-[14px] md:text-[15px] font-medium text-black leading-snug">Pražský rezidenční trh</p>
-          <p class="market-sub text-[11px] text-black/35 mt-0.5 transition-colors duration-200">Data, grafy & analýza →</p>
-        </a>
-      </div>
-    </div>
-
-    <div class="drawer-quick-contact flex-shrink-0 mt-auto pt-6 pb-8 pl-6 pr-6 md:pt-8 md:pb-10 md:pl-12 md:pr-8 md:hidden">
-      <p class="font-yellix text-[14px] font-medium text-black mb-3">Rychlý kontakt</p>
-      <div class="flex flex-col gap-3">
-        <a href="mailto:info@reamar.cz" class="flex items-center gap-3 group hidden md:flex" data-drawer-close><span class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-black group-hover:opacity-70 transition-opacity"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="font-yellix text-[16px] font-medium text-black group-hover:opacity-70 transition-opacity">Napsat zprávu</span></a>
-        <a href="https://wa.me/420607066044" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 group flex md:hidden" data-drawer-close><span class="w-5 h-5 flex-shrink-0 flex items-center justify-center text-black group-hover:opacity-70 transition-opacity"><svg class="w-[15px] h-[15px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="font-yellix text-[14px] font-medium text-black group-hover:opacity-70 transition-opacity">Napsat zprávu</span></a>
-        <a href="javascript:void(0)" class="flex items-center gap-3 group" data-drawer-close data-smart-contact-open><span class="w-5 h-5 flex-shrink-0 flex items-center justify-center text-black group-hover:opacity-70 transition-opacity"><svg class="w-[15px] h-[15px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h10M7 12h10M7 17h6"/></svg></span><span class="font-yellix text-[14px] font-medium text-black group-hover:opacity-70 transition-opacity">Poptávkový formulář</span></a>
-        <a href="javascript:void(0)" class="flex items-center gap-3 group" data-drawer-close data-smart-meeting-open><span class="w-5 h-5 flex-shrink-0 flex items-center justify-center text-black group-hover:opacity-70 transition-opacity"><svg class="w-[15px] h-[15px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span class="font-yellix text-[14px] font-medium text-black group-hover:opacity-70 transition-opacity">Osobní schůzka v Praze nebo online</span></a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Kontaktní sidebar: bílý panel vpravo + zatmavení -->
-<div id="contact-drawer" class="fixed inset-0 z-[60] pointer-events-none transition-opacity duration-300" aria-hidden="true" data-contact-drawer>
-  <button type="button" class="absolute inset-0 bg-black/85 opacity-0 transition-opacity duration-300 data-[open]:opacity-100 pointer-events-none data-[open]:pointer-events-auto" data-contact-backdrop aria-label="Zavřít"></button>
-  <div class="absolute right-0 top-0 bottom-0 w-full md:w-1/4 bg-white flex flex-col opacity-0 translate-x-full transition-all duration-300 pointer-events-auto data-[open]:opacity-100 data-[open]:translate-x-0 z-10" data-contact-panel>
-    <button type="button" class="flex items-center gap-2 pt-10 pb-8 pl-10 pr-12 w-full justify-end border-0 bg-transparent cursor-pointer hover:opacity-80 transition-opacity" aria-label="Zavřít" data-contact-close>
+<div
+  id="menu-drawer"
+  class="fixed inset-0 z-[80] pointer-events-none transition-opacity duration-300 lg:hidden"
+  aria-hidden="true"
+  data-menu-drawer
+>
+  <button
+    type="button"
+    class="absolute inset-0 bg-black/85 opacity-0 transition-opacity duration-300 data-[open]:opacity-100 pointer-events-none data-[open]:pointer-events-auto"
+    data-drawer-backdrop
+    aria-label="Zavřít menu"
+  ></button>
+  <div
+    class="absolute inset-0 z-10 flex min-h-0 w-full flex-col bg-white opacity-0 pointer-events-none transition-opacity duration-300 data-[open]:pointer-events-auto data-[open]:opacity-100"
+    data-drawer-panel
+  >
+    <button
+      type="button"
+      class="flex h-[80px] shrink-0 items-center justify-end gap-2 px-5 w-full border-0 bg-transparent cursor-pointer hover:opacity-80"
+      aria-label="Zavřít menu"
+      data-drawer-close
+    >
       <span class="font-yellix text-[14px] font-medium text-black">Zavřít</span>
-      <span class="relative flex items-center justify-center w-10 h-10 flex-shrink-0"><span class="absolute left-1/2 top-1/2 w-5 h-px bg-current -translate-x-1/2 -translate-y-1/2 rotate-45"></span><span class="absolute left-1/2 top-1/2 w-5 h-px bg-current -translate-x-1/2 -translate-y-1/2 -rotate-45"></span></span>
+      <span class="relative flex h-10 w-10 shrink-0 items-center justify-center">
+        <span class="absolute left-1/2 top-1/2 h-px w-5 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-current"></span>
+        <span class="absolute left-1/2 top-1/2 h-px w-5 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-current"></span>
+      </span>
     </button>
-    <div class="flex-1 overflow-y-auto px-12 pb-14 pt-2">
-      <h2 class="font-yellix text-[24px] font-medium text-black leading-tight mb-10">Kontaktujte nás</h2>
-      <div class="flex flex-col gap-6">
-        <a href="mailto:info@reamar.cz" class="flex items-center gap-4 group py-1 hidden md:flex" data-contact-close><span class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-black group-hover:opacity-70 transition-opacity"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="font-yellix text-[16px] font-medium text-black group-hover:opacity-70 transition-opacity">Napsat zprávu</span></a>
-        <a href="https://wa.me/420607066044" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 group py-1 flex md:hidden" data-contact-close><span class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-black group-hover:opacity-70 transition-opacity"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="font-yellix text-[16px] font-medium text-black group-hover:opacity-70 transition-opacity">Napsat zprávu</span></a>
-        <a href="javascript:void(0)" class="flex items-center gap-4 group py-1" data-contact-close data-smart-contact-open><span class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-black group-hover:opacity-70 transition-opacity"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h10M7 12h10M7 17h6"/></svg></span><span class="font-yellix text-[16px] font-medium text-black group-hover:opacity-70 transition-opacity">Poptávkový formulář</span></a>
-        <a href="javascript:void(0)" class="flex items-center gap-4 group py-1" data-contact-close data-smart-meeting-open><span class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-black group-hover:opacity-70 transition-opacity"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span class="font-yellix text-[16px] font-medium text-black group-hover:opacity-70 transition-opacity">Osobní schůzka v Praze nebo online</span></a>
-      </div>
-      <div class="mt-12 pt-8 font-yellix text-[16px] leading-relaxed space-y-5">
-        <div><p class="font-normal text-black/70">Adresa</p><p class="font-medium text-black">Záběhlický zámek, Praha 10</p></div>
-        <div><p class="font-normal text-black/70">Telefon</p><p class="font-medium text-black"><a href="tel:+420607066044" class="hover:opacity-80 transition-opacity">+420 607 066 044</a></p></div>
-        <div><p class="font-normal text-black/70">E-mail</p><p class="font-medium text-black"><a href="mailto:info@reamar.cz" class="hover:opacity-80 transition-opacity">info@reamar.cz</a></p></div>
+
+    <nav class="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-5 pb-6 pt-2" aria-label="Hlavní">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'font-yellix text-[21px] leading-tight text-black no-underline hover:opacity-70',
+            isCurrent(link.href) ? 'font-semibold' : 'font-medium',
+          ]}
+          aria-current={isCurrent(link.href) ? 'page' : undefined}
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noopener noreferrer' : undefined}
+          data-drawer-close
+        >
+          {link.label}
+        </a>
+      ))}
+
+      {!isOnepager && (
+        <a
+          href="/pribehy-z-trhu/"
+          class:list={[
+            'inline-flex items-center gap-2.5 font-yellix text-[21px] leading-tight text-black no-underline hover:opacity-70',
+            isCurrent('/pribehy-z-trhu') ? 'font-semibold' : 'font-medium',
+          ]}
+          aria-current={isCurrent('/pribehy-z-trhu') ? 'page' : undefined}
+          data-drawer-close
+        >
+          <svg class="h-3.5 w-5 shrink-0" viewBox="0 0 24 17" aria-hidden="true">
+            <path fill="#FF0000" d="M23.5 2.65A3.02 3.02 0 0 0 21.38.5C19.5 0 12 0 12 0S4.5 0 2.62.5A3.02 3.02 0 0 0 .5 2.65 31.9 31.9 0 0 0 0 8.5a31.9 31.9 0 0 0 .5 5.85 3.02 3.02 0 0 0 2.12 2.15C4.5 17 12 17 12 17s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.15A31.9 31.9 0 0 0 24 8.5a31.9 31.9 0 0 0-.5-5.85Z"/>
+            <path fill="#fff" d="M9.75 12.15V4.85L15.7 8.5 9.75 12.15Z"/>
+          </svg>
+          Příběhy z trhu
+        </a>
+      )}
+
+      {!isOnepager && (
+        <a
+          href="/klientsky-portal"
+          class:list={[
+            'inline-flex items-center gap-2.5 font-yellix text-[21px] leading-tight text-black no-underline hover:opacity-70',
+            isCurrent('/klientsky-portal') ? 'font-semibold' : 'font-medium',
+          ]}
+          aria-current={isCurrent('/klientsky-portal') ? 'page' : undefined}
+          data-drawer-close
+        >
+          <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="8" r="3.2"/>
+            <path d="M5.4 19.2c.7-3.3 3.3-5.1 6.6-5.1s5.9 1.8 6.6 5.1"/>
+          </svg>
+          Klientský portál
+        </a>
+      )}
+
+      <a
+        href="#kontakt"
+        class="font-yellix text-[21px] font-medium leading-tight text-black no-underline hover:opacity-70"
+        data-drawer-close
+      >
+        Kontakty
+      </a>
+
+      <a
+        href={sluzbyHref}
+        class:list={[
+          'mt-4 inline-flex w-fit items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] text-white no-underline',
+          isCurrent('/sluzby') ? 'font-semibold' : 'font-medium',
+        ]}
+        aria-current={isCurrent('/sluzby') ? 'page' : undefined}
+        data-drawer-close
+      >
+        <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
+        Vybrat službu
+      </a>
+
+      {fullbleedNav && (
+        <div class="nav-drawer-live">
+          <p class="nav-drawer-live-kicker">Aktuální nabídka v Praze a okolí</p>
+          <p class="nav-drawer-live-stats">
+            <span class="nav-live-dot" aria-hidden="true"></span>
+            <span>562 projektů</span>
+            <span class="nav-drawer-live-muted">9 689 jednotek</span>
+          </p>
+        </div>
+      )}
+    </nav>
+
+    <div class="drawer-quick-contact mt-auto flex-shrink-0 px-5 pb-8 pt-6">
+      <p class="mb-3 font-yellix text-[14px] font-medium text-black">Rychlý kontakt</p>
+      <div class="flex flex-col gap-3">
+        <a
+          href="https://wa.me/420607066044"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group flex items-center gap-3 no-underline"
+          data-drawer-close
+        >
+          <span class="flex h-5 w-5 flex-shrink-0 items-center justify-center text-black transition-opacity group-hover:opacity-70">
+            <svg class="h-[15px] w-[15px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </span>
+          <span class="font-yellix text-[14px] font-medium text-black transition-opacity group-hover:opacity-70">Napsat zprávu</span>
+        </a>
+        <button
+          type="button"
+          class="group flex items-center gap-3 border-0 bg-transparent p-0 text-left cursor-pointer"
+          data-smart-contact-open
+          data-smart-contact-type="client"
+        >
+          <span class="flex h-5 w-5 flex-shrink-0 items-center justify-center text-black transition-opacity group-hover:opacity-70">
+            <svg class="h-[15px] w-[15px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+              <path d="M7 7h10M7 12h10M7 17h6"></path>
+            </svg>
+          </span>
+          <span class="font-yellix text-[14px] font-medium text-black transition-opacity group-hover:opacity-70">Poptávkový formulář</span>
+        </button>
+        <button
+          type="button"
+          class="group flex items-center gap-3 border-0 bg-transparent p-0 text-left cursor-pointer"
+          data-smart-meeting-open
+          data-smart-meeting-type="client"
+        >
+          <span class="flex h-5 w-5 flex-shrink-0 items-center justify-center text-black transition-opacity group-hover:opacity-70">
+            <svg class="h-[15px] w-[15px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </span>
+          <span class="font-yellix text-[14px] font-medium text-black transition-opacity group-hover:opacity-70">Osobní schůzka v Praze nebo online</span>
+        </button>
       </div>
     </div>
   </div>
 </div>
 
 <style>
-  header[data-nav] { width: 100%; max-width: none; }
-  header[data-nav] .nav-bar-inner { width: 100%; box-sizing: border-box; }
-  header[data-nav] .nav-btn-edge.nav-btn-left { left: 1rem; }
-  header[data-nav] .nav-btn-edge.nav-btn-right { left: auto; right: 10vh; }
-  @media (min-width: 768px) {
-    header[data-nav] .nav-btn-edge.nav-btn-left { left: 10vh; }
+  .nav-logo-w {
+    display: none;
   }
-
-  [data-drawer-panel] [data-drawer-close],
-  [data-contact-panel] [data-contact-close],
-  [data-drawer-panel],
-  [data-contact-panel] {
-    box-shadow: none !important;
-    border: none !important;
-    -webkit-appearance: none;
-    appearance: none;
+  [data-nav-dark] {
+    border-bottom: 1px solid #222;
   }
-  @media (max-width: 767px) {
-    [data-drawer-panel] .drawer-close-label { display: none !important; }
+  [data-nav-dark] .nav-logo-b { display: none; }
+  [data-nav-dark] .nav-logo-w { display: block; }
+  [data-nav-dark] .nav-fg,
+  [data-nav-dark] .nav-title { color: #fff; }
+  [data-nav-dark] .nav-muted { color: rgba(255, 255, 255, 0.62); }
+  [data-nav-dark] .nav-aside { border-left-color: rgba(255, 255, 255, 0.22); }
+  [data-nav-dark] .nav-cta {
+    background: #fff;
+    color: #000;
   }
-  @media (max-width: 767px) and (max-height: 780px) {
-    .drawer-quick-contact {
-      display: none !important;
-    }
+  [data-nav-dark] .nav-cta img { filter: brightness(0); }
+  [data-nav-overlay]:not([data-nav-solid]) {
+    background: transparent;
   }
-
-  /* Na subpage (včetně mobilu): logo v menubaru vždy viditelné a prokliknutelné na homepage */
-  header[data-nav][data-subpage] [data-nav-logo] {
+  [data-nav-overlay]:not([data-nav-solid]) .nav-logo-b {
+    display: none;
+  }
+  [data-nav-overlay]:not([data-nav-solid]) .nav-logo-w {
+    display: block;
+  }
+  [data-nav-overlay]:not([data-nav-solid]) .nav-fg,
+  [data-nav-overlay]:not([data-nav-solid]) .nav-title {
+    color: #fff;
+  }
+  [data-nav-overlay]:not([data-nav-solid]) .nav-muted {
+    color: rgba(255, 255, 255, 0.68);
+  }
+  [data-nav-overlay]:not([data-nav-solid]) .nav-aside {
+    border-left-color: rgba(255, 255, 255, 0.28);
+  }
+  [data-nav-overlay]:not([data-nav-solid]) .nav-cta {
+    background: #fff;
+    color: #000;
+  }
+  [data-nav-overlay]:not([data-nav-solid]) .nav-cta img {
+    filter: brightness(0);
+  }
+  [data-nav-overlay][data-nav-solid] {
+    background: #fff;
+  }
+  [data-nav-desktop] a[aria-current="page"]:not(.nav-cta) {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 1px;
+  }
+  [data-nav-autohide] {
+    transition: transform 0.35s ease;
+  }
+  [data-nav-autohide][data-nav-follow] {
+    transition: none;
+  }
+  [data-nav-autohide][data-nav-hidden] {
+    transform: translateY(-100%);
+  }
+  .nav-aside {
+    position: relative;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 2rem;
+    transition: border-color 0.6s ease, padding-left 0.6s ease;
+  }
+  [data-nav-compact] .nav-aside {
+    border-left-color: transparent;
+    padding-left: 0;
+  }
+  .nav-title {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .nav-live {
+    transition: opacity 0.5s ease 0.12s;
+  }
+  [data-nav-compact] .nav-live {
+    opacity: 0;
+    pointer-events: none;
+    transition-delay: 0s;
+  }
+  [data-nav-compact] .nav-title {
     opacity: 1;
     pointer-events: auto;
-    transform: translate(-50%, -50%) scale(1);
+    transition-delay: 0.16s;
   }
-
-  /* Průhledný hero mód (např. stránka Alterna) */
-  header[data-nav].nav-hero-transparent {
-    background: transparent !important;
+  [data-nav] {
+    transition: box-shadow 0.6s ease, background-color 0.35s ease;
   }
-  header[data-nav].nav-hero-transparent [data-nav-toggle],
-  header[data-nav].nav-hero-transparent [data-contact-toggle] {
-    color: white;
+  [data-nav-compact] {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
   }
-  header[data-nav].nav-hero-transparent [data-nav-logo] img {
-    filter: brightness(0) invert(1);
+  @media (prefers-reduced-motion: reduce) {
+    .nav-live,
+    .nav-title {
+      transition: none;
+    }
   }
-
-  /* Drawer promo karty (market report + prodej) */
-  .market-card {
-    transition: transform 0.2s ease;
+  .nav-live-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #16a34a;
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.45);
+    animation: nav-live-pulse 2.2s ease-in-out infinite;
   }
-  .market-card:hover {
-    transform: translateY(-2px);
+  @keyframes nav-live-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.45); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(22, 163, 74, 0); }
   }
-  .market-card:hover .market-sub {
-    color: rgba(0,0,0,0.65);
+  @media (prefers-reduced-motion: reduce) {
+    .nav-live-dot { animation: none; }
   }
-  .mbar {
-    width: 5px;
-    background: rgba(0,0,0,0.18);
-    border-radius: 1px 1px 0 0;
-    transform-origin: bottom;
-    animation: mbar-pulse 2.4s ease-in-out infinite;
+  [data-nav-fullbleed] {
+    position: fixed;
+    left: 0;
+    right: 0;
+    --hero-band-h: 2.75rem;
   }
-  @keyframes mbar-pulse {
-    0%, 100% { opacity: 0.35; transform: scaleY(0.8); }
-    50%       { opacity: 0.9;  transform: scaleY(1); }
+  @media (max-width: 1023px) {
+    [data-nav-fullbleed][data-path="/"]:not([data-nav-solid]) {
+      top: var(--hero-band-h, 2.75rem);
+    }
+    [data-nav-fullbleed][data-nav-solid] {
+      top: 0;
+    }
+  }
+  @media (min-width: 1024px) {
+    [data-nav-fullbleed] {
+      top: 0;
+    }
+  }
+  .nav-drawer-live {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .nav-drawer-live-kicker {
+    margin: 0;
+    font-family: Yellix, system-ui, sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .nav-drawer-live-stats {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.5rem;
+    margin: 0.7rem 0 0;
+    font-family: Yellix, system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1;
+    color: #000;
+  }
+  .nav-drawer-live-muted {
+    color: rgba(0, 0, 0, 0.55);
+  }
+  .drawer-quick-contact {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
 </style>
 
@@ -187,76 +515,11 @@ const isSubpage = currentPath !== '/' && currentPath !== '';
   (function () {
     if (!document.querySelector('[data-nav]')) return;
 
-    /* View Transitions mění body – listenery na document, elementy vždy znovu z DOM. Otevírání modalů řeší event delegation v Layout.astro (jeden listener na document). */
-    const BAR_HEIGHT = 91;
-    const SCROLL_SHOW = 60;
-
-    function updateHeader() {
-      var headerNow = document.querySelector('[data-nav]');
-      var navLogoNow = document.querySelector('[data-nav-logo]');
-      var heroLogoNow = document.querySelector('[data-hero-logo]');
-      var transparentHeroEl = document.querySelector('[data-hero-transparent]');
-      if (!headerNow) return;
-
-      /* ── Průhledný hero mód (stránky s data-hero-transparent na hero sekci) ── */
-      if (transparentHeroEl) {
-        var heroBottom = transparentHeroEl.getBoundingClientRect().bottom;
-        headerNow.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-100%]');
-        if (navLogoNow) {
-          navLogoNow.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
-          navLogoNow.classList.remove('opacity-0', 'pointer-events-none', 'scale-150');
-        }
-        if (heroBottom > BAR_HEIGHT) {
-          headerNow.classList.add('nav-hero-transparent');
-          headerNow.classList.remove('bg-white');
-        } else {
-          headerNow.classList.remove('nav-hero-transparent');
-          headerNow.classList.add('bg-white');
-        }
-        return;
-      }
-
-      var isSubpageNow = !heroLogoNow;
-      if (headerNow.dataset) headerNow.dataset.subpage = isSubpageNow ? 'true' : undefined;
-      if (isSubpageNow) {
-        headerNow.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-100%]');
-        headerNow.classList.add('bg-white');
-        if (navLogoNow) {
-          navLogoNow.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
-          navLogoNow.classList.remove('opacity-0', 'pointer-events-none', 'scale-150');
-        }
-        return;
-      }
-      const y = window.scrollY ?? document.documentElement.scrollTop;
-      if (y <= SCROLL_SHOW) {
-        headerNow.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-100%]');
-        if (navLogoNow) { navLogoNow.classList.add('opacity-0', 'pointer-events-none', 'scale-150'); navLogoNow.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100'); }
-        requestAnimationFrame(function () { headerNow.classList.remove('bg-white'); });
-        return;
-      }
-      headerNow.classList.add('bg-white');
-      headerNow.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-100%]');
-      if (navLogoNow && heroLogoNow) {
-        const heroRect = heroLogoNow.getBoundingClientRect();
-        const showLogo = heroRect.bottom <= BAR_HEIGHT;
-        navLogoNow.classList.toggle('opacity-100', showLogo);
-        navLogoNow.classList.toggle('pointer-events-auto', showLogo);
-        navLogoNow.classList.toggle('scale-100', showLogo);
-        navLogoNow.classList.toggle('opacity-0', !showLogo);
-        navLogoNow.classList.toggle('pointer-events-none', !showLogo);
-        navLogoNow.classList.toggle('scale-150', !showLogo);
-      }
-    }
-    window.addEventListener('scroll', updateHeader, { passive: true });
-    updateHeader();
-
     function openDrawer() {
       var drawer = document.querySelector('[data-menu-drawer]');
       var backdrop = document.querySelector('[data-drawer-backdrop]');
       var panel = document.querySelector('[data-drawer-panel]');
       var toggle = document.querySelector('[data-nav-toggle]');
-      var hamburger = document.querySelector('[data-nav-hamburger]');
-      var closeWrap = document.querySelector('[data-nav-close-wrap]');
       if (!drawer || !backdrop) return;
       drawer.setAttribute('data-open', '');
       drawer.classList.remove('pointer-events-none');
@@ -264,104 +527,196 @@ const isSubpage = currentPath !== '/' && currentPath !== '';
       backdrop.setAttribute('data-open', '');
       if (panel) panel.setAttribute('data-open', '');
       document.body.style.overflow = 'hidden';
-      if (toggle) { toggle.setAttribute('aria-expanded', 'true'); if (hamburger) hamburger.classList.add('opacity-0', 'pointer-events-none'); if (closeWrap) { closeWrap.classList.remove('opacity-0', 'pointer-events-none'); closeWrap.setAttribute('aria-hidden', 'false'); } }
+      if (toggle) toggle.setAttribute('aria-expanded', 'true');
     }
+
     function closeDrawer() {
       var drawer = document.querySelector('[data-menu-drawer]');
       var backdrop = document.querySelector('[data-drawer-backdrop]');
       var panel = document.querySelector('[data-drawer-panel]');
       var toggle = document.querySelector('[data-nav-toggle]');
-      var hamburger = document.querySelector('[data-nav-hamburger]');
-      var closeWrap = document.querySelector('[data-nav-close-wrap]');
       if (!drawer || !backdrop) return;
       drawer.removeAttribute('data-open');
       drawer.classList.add('pointer-events-none');
       drawer.setAttribute('aria-hidden', 'true');
       backdrop.removeAttribute('data-open');
       if (panel) panel.removeAttribute('data-open');
-      document.body.style.overflow = '';
-      if (toggle) { toggle.setAttribute('aria-expanded', 'false'); if (hamburger) hamburger.classList.remove('opacity-0', 'pointer-events-none'); if (closeWrap) { closeWrap.classList.add('opacity-0', 'pointer-events-none'); closeWrap.setAttribute('aria-hidden', 'true'); } }
-    }
-    function openContactDrawer() {
-      var contactDrawer = document.querySelector('[data-contact-drawer]');
-      var contactBackdrop = document.querySelector('[data-contact-backdrop]');
-      var contactPanel = document.querySelector('[data-contact-panel]');
-      var contactToggle = document.querySelector('[data-contact-toggle]');
-      var contactLabel = document.querySelector('[data-contact-label]');
-      var contactCloseWrap = document.querySelector('[data-contact-close-wrap]');
-      if (!contactDrawer || !contactBackdrop) return;
-      contactDrawer.setAttribute('data-open', '');
-      contactDrawer.classList.remove('pointer-events-none');
-      contactDrawer.setAttribute('aria-hidden', 'false');
-      contactBackdrop.setAttribute('data-open', '');
-      if (contactPanel) contactPanel.setAttribute('data-open', '');
-      document.body.style.overflow = 'hidden';
-      if (contactToggle) contactToggle.setAttribute('aria-expanded', 'true');
-      if (contactLabel) contactLabel.classList.add('opacity-0', 'pointer-events-none');
-      if (contactCloseWrap) { contactCloseWrap.classList.remove('opacity-0', 'pointer-events-none'); contactCloseWrap.setAttribute('aria-hidden', 'false'); }
-    }
-    function closeContactDrawer() {
-      var contactDrawer = document.querySelector('[data-contact-drawer]');
-      var contactBackdrop = document.querySelector('[data-contact-backdrop]');
-      var contactPanel = document.querySelector('[data-contact-panel]');
-      var contactToggle = document.querySelector('[data-contact-toggle]');
-      var contactLabel = document.querySelector('[data-contact-label]');
-      var contactCloseWrap = document.querySelector('[data-contact-close-wrap]');
-      if (!contactDrawer || !contactBackdrop) return;
-      contactDrawer.removeAttribute('data-open');
-      contactDrawer.classList.add('pointer-events-none');
-      contactDrawer.setAttribute('aria-hidden', 'true');
-      contactBackdrop.removeAttribute('data-open');
-      if (contactPanel) contactPanel.removeAttribute('data-open');
-      document.body.style.overflow = '';
-      if (contactToggle) contactToggle.setAttribute('aria-expanded', 'false');
-      if (contactLabel) contactLabel.classList.remove('opacity-0', 'pointer-events-none');
-      if (contactCloseWrap) { contactCloseWrap.classList.add('opacity-0', 'pointer-events-none'); contactCloseWrap.setAttribute('aria-hidden', 'true'); }
+      var contact = document.querySelector('[data-smart-contact]');
+      var meeting = document.querySelector('[data-smart-meeting]');
+      var modalOpen = (contact && !contact.classList.contains('pointer-events-none'))
+        || (meeting && !meeting.classList.contains('pointer-events-none'));
+      if (!modalOpen) document.body.style.overflow = '';
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
     }
 
     document.addEventListener('click', function (e) {
       if (e.target.closest('[data-nav-toggle]')) {
         e.preventDefault();
-        var drawer = document.querySelector('[data-menu-drawer]');
         var toggle = document.querySelector('[data-nav-toggle]');
-        if (toggle?.getAttribute('aria-expanded') === 'true') closeDrawer(); else openDrawer();
+        if (toggle?.getAttribute('aria-expanded') === 'true') closeDrawer();
+        else openDrawer();
         return;
       }
       if (e.target.closest('[data-drawer-backdrop]')) { closeDrawer(); return; }
       if (e.target.closest('[data-drawer-close]')) { closeDrawer(); return; }
-      if (e.target.closest('[data-contact-toggle]')) {
-        e.preventDefault();
-        var contactDrawer = document.querySelector('[data-contact-drawer]');
-        if (contactDrawer?.hasAttribute('data-open')) closeContactDrawer(); else openContactDrawer();
-        return;
-      }
-      if (e.target.closest('[data-contact-backdrop]')) { closeContactDrawer(); return; }
-      if (e.target.closest('[data-contact-close]')) { closeContactDrawer(); return; }
-      if (e.target.closest('[data-contact-open]')) { closeDrawer(); openContactDrawer(); return; }
     });
+
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('[data-smart-contact-open], [data-smart-meeting-open]')) closeDrawer();
+    }, true);
 
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') return;
-      var contactDrawer = document.querySelector('[data-contact-drawer]');
       var drawer = document.querySelector('[data-menu-drawer]');
-      if (contactDrawer?.hasAttribute('data-open')) closeContactDrawer();
-      else if (drawer?.hasAttribute('data-open')) closeDrawer();
+      if (drawer?.hasAttribute('data-open')) closeDrawer();
     });
 
-    document.addEventListener('astro:after-swap', function () {
-      var drawer = document.querySelector('[data-menu-drawer]');
-      var contactDrawer = document.querySelector('[data-contact-drawer]');
-      if (drawer?.hasAttribute('data-open')) closeDrawer();
-      if (contactDrawer?.hasAttribute('data-open')) closeContactDrawer();
-      requestAnimationFrame(function () { requestAnimationFrame(updateHeader); });
-    });
+    document.addEventListener('astro:before-swap', closeDrawer);
+    document.addEventListener('astro:after-swap', closeDrawer);
 
-    window.addEventListener('smart-modal-closed', function () {
+    var compactOnScroll = null;
+    var compactOnResize = null;
+    function fullbleedVisual(header) {
+      var selectors = ['.hero-strip-mobile-visual', '.hero-mobile-visual', '[data-hero-alt]', '.hero-strip-film', '[data-onas-hero]'];
+      for (var i = 0; i < selectors.length; i++) {
+        var el = document.querySelector(selectors[i]);
+        if (el && el.getBoundingClientRect().height > 1) return el;
+      }
+      return null;
+    }
+    function dockFullbleed(header, mobile) {
+      if (!mobile || !header.hasAttribute('data-nav-fullbleed') || header.getAttribute('data-path') !== '/' || document.documentElement.classList.contains('intro-on')) {
+        header.style.top = '';
+        header.removeAttribute('data-nav-dock');
+        return;
+      }
+      if (header.hasAttribute('data-nav-solid')) {
+        if (header.style.top !== '0px') header.style.top = '0px';
+        header.setAttribute('data-nav-dock', 'top');
+        return;
+      }
+      var y = window.scrollY || 0;
+      var band = parseFloat(getComputedStyle(header).getPropertyValue('--hero-band-h')) || 44;
+      var dock = header.getAttribute('data-nav-dock') || 'band';
+      if (dock !== 'top' && y >= band + 10) dock = 'top';
+      else if (dock !== 'band' && y <= 6) dock = 'band';
+      header.setAttribute('data-nav-dock', dock);
+      var top = dock === 'top' ? '0px' : '';
+      if (header.style.top !== top) header.style.top = top;
+    }
+    function setNavCompact(on) {
+      var header = document.querySelector('[data-nav]');
+      var live = document.querySelector('[data-nav-live]');
+      var title = document.querySelector('[data-nav-title]');
+      if (!header) return;
+      if (on) header.setAttribute('data-nav-compact', '');
+      else header.removeAttribute('data-nav-compact');
+      if (live) live.setAttribute('aria-hidden', on ? 'true' : 'false');
+      if (title) title.setAttribute('aria-hidden', on ? 'false' : 'true');
+    }
+    function setNavSolid(on) {
+      var header = document.querySelector('[data-nav]');
+      if (!header) return;
+      if (on) header.setAttribute('data-nav-solid', '');
+      else header.removeAttribute('data-nav-solid');
+    }
+    function setNavFollow(header, offset) {
+      if (offset === null) {
+        header.removeAttribute('data-nav-follow');
+        header.style.transform = '';
+        return;
+      }
+      header.setAttribute('data-nav-follow', '');
+      header.style.transform = 'translateY(' + -offset + 'px)';
+    }
+    function autohide(header, y) {
+      if (!header.hasAttribute('data-nav-autohide')) return;
+      var zones = document.querySelectorAll('[data-nav-hide-zone]');
       var drawer = document.querySelector('[data-menu-drawer]');
-      var contactDrawer = document.querySelector('[data-contact-drawer]');
-      if (drawer?.hasAttribute('data-open')) closeDrawer();
-      if (contactDrawer?.hasAttribute('data-open')) closeContactDrawer();
-      updateHeader();
-    });
+      var active = zones.length
+        && window.matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)').matches
+        && !(drawer && drawer.hasAttribute('data-open'));
+      if (!active) {
+        setNavFollow(header, null);
+        header.removeAttribute('data-nav-hidden');
+        return;
+      }
+      var h = header.offsetHeight;
+      var pin = document.querySelector('.hero-cover-pin');
+      var pinBottom = pin ? pin.getBoundingClientRect().bottom : 0;
+      var start = pinBottom > 0 ? pinBottom - 1 : h;
+      var covering = false;
+      for (var i = 0; i < zones.length; i++) {
+        var r = zones[i].getBoundingClientRect();
+        if (r.bottom > h && r.top < start) {
+          covering = true;
+          break;
+        }
+      }
+      setNavFollow(header, null);
+      if (covering) header.setAttribute('data-nav-hidden', '');
+      else header.removeAttribute('data-nav-hidden');
+    }
+    function initNavCompact() {
+      if (compactOnScroll) {
+        window.removeEventListener('scroll', compactOnScroll);
+        compactOnScroll = null;
+      }
+      if (compactOnResize) {
+        window.removeEventListener('resize', compactOnResize);
+        compactOnResize = null;
+      }
+      var header = document.querySelector('[data-nav]');
+      var aside = document.querySelector('[data-nav-aside]');
+      if (!header) {
+        setNavCompact(false);
+        setNavSolid(false);
+        return;
+      }
+      compactOnScroll = function () {
+        var y = window.scrollY;
+        var overlay = header.hasAttribute('data-nav-overlay');
+        var fullbleed = header.hasAttribute('data-nav-fullbleed');
+        var mobile = window.matchMedia('(max-width: 1023px)').matches;
+
+        if (overlay || !aside) {
+          setNavCompact(false);
+        } else {
+          var on = header.hasAttribute('data-nav-compact');
+          if (!on && y > 48) setNavCompact(true);
+          else if (on && y < 16) setNavCompact(false);
+        }
+
+        if (fullbleed) {
+          var visual = fullbleedVisual(header);
+          if (visual) {
+            var bottom = visual.getBoundingClientRect().bottom;
+            var solid = header.hasAttribute('data-nav-solid');
+            if (!solid && bottom <= 84) setNavSolid(true);
+            else if (solid && bottom > 120) setNavSolid(false);
+          } else {
+            setNavSolid(false);
+          }
+          dockFullbleed(header, mobile);
+          autohide(header, y);
+        } else if (overlay) {
+          var banner = document.querySelector('[data-agent-banner], [data-pz-hero], [data-onas-hero]');
+          if (banner) {
+            setNavSolid(banner.getBoundingClientRect().bottom <= header.offsetHeight + 4);
+          }
+        } else {
+          setNavSolid(false);
+          header.style.top = '';
+          header.removeAttribute('data-nav-dock');
+        }
+      };
+      compactOnResize = compactOnScroll;
+      compactOnScroll();
+      window.addEventListener('scroll', compactOnScroll, { passive: true });
+      window.addEventListener('resize', compactOnResize);
+      window.addEventListener('hero-intro-done', compactOnScroll, { once: true });
+    }
+    initNavCompact();
+    document.addEventListener('astro:page-load', initNavCompact);
   })();
 </script>

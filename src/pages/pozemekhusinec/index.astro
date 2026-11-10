@@ -186,7 +186,7 @@ const arrow = '<svg class="o-arrow" viewBox="0 0 16 16" fill="none" stroke="curr
             </p>
             <p class="o-hero-in flex items-baseline gap-4" style="--d:660ms">
               <span class="text-[11px] font-medium uppercase tracking-[0.2em] text-white/60">Cena</span>
-              <span class="text-[30px] font-medium leading-none tracking-[-0.03em] tabular-nums md:text-[38px]">{price}</span>
+              <span class="text-[30px] font-medium leading-none tracking-[-0.03em] md:text-[38px]">{price}</span>
             </p>
             <div class="o-hero-in flex flex-wrap items-center gap-2" style="--d:720ms">
               <a href="#kontakt" class="o-btn inline-flex items-center gap-1.5 bg-white px-3 py-1.5 text-[13px] font-medium leading-none text-black no-underline">
@@ -204,7 +204,7 @@ const arrow = '<svg class="o-arrow" viewBox="0 0 16 16" fill="none" stroke="curr
           {stats.map((item, i) => (
             <div class="o-hero-in relative pt-5" style={`--d:${850 + i * 90}ms`}>
               <span class="o-hero-rule" style={`--d:${850 + i * 90}ms`} aria-hidden="true"></span>
-              <dt class="text-[30px] font-medium leading-none tracking-[-0.035em] tabular-nums md:text-[40px]">
+              <dt class="text-[30px] font-medium leading-none tracking-[-0.035em] md:text-[40px]">
                 <span data-count={item.count} data-count-hero>{item.display}</span>&nbsp;{item.unit}
               </dt>
               <dd class="mt-2.5 text-[11px] font-medium uppercase tracking-[0.14em] text-white/60">{item.label}</dd>
@@ -380,7 +380,7 @@ const arrow = '<svg class="o-arrow" viewBox="0 0 16 16" fill="none" stroke="curr
       <div class="o-wrap mt-16 grid grid-cols-12 items-end gap-x-6 gap-y-14 md:mt-28">
         <div class="col-span-12 lg:col-span-6">
           <p class="flex items-end gap-3 font-medium leading-[0.78] tracking-[-0.07em]" data-reveal>
-            <span class="text-[150px] tabular-nums md:text-[220px] lg:text-[260px]" data-count="24">24</span>
+            <span class="text-[150px] md:text-[220px] lg:text-[260px]" data-count="24">24</span>
             <span class="pb-3 text-[32px] tracking-[-0.03em] md:pb-5 md:text-[44px]">min</span>
           </p>
           <p class="mt-8 max-w-[34ch] text-[15px] font-medium leading-[1.6] text-black/60" data-reveal style="--d:150ms">
@@ -391,12 +391,12 @@ const arrow = '<svg class="o-arrow" viewBox="0 0 16 16" fill="none" stroke="curr
         <dl class="col-span-12 grid grid-cols-2 gap-x-6 lg:col-span-5 lg:col-start-8">
           <div class="relative pt-5" data-reveal>
             <span class="o-rule" data-reveal="line" aria-hidden="true"></span>
-            <dt class="text-[44px] font-medium leading-none tracking-[-0.04em] tabular-nums md:text-[60px]"><span data-count="23">23</span> min</dt>
+            <dt class="text-[44px] font-medium leading-none tracking-[-0.04em] md:text-[60px]"><span data-count="23">23</span> min</dt>
             <dd class="mt-3 text-[12px] font-medium uppercase tracking-[0.14em] text-black/45">Autem do centra Prahy</dd>
           </div>
           <div class="relative pt-5" data-reveal style="--d:120ms">
             <span class="o-rule" data-reveal="line" style="--d:120ms" aria-hidden="true"></span>
-            <dt class="text-[44px] font-medium leading-none tracking-[-0.04em] tabular-nums md:text-[60px]"><span data-count="13">13</span> km</dt>
+            <dt class="text-[44px] font-medium leading-none tracking-[-0.04em] md:text-[60px]"><span data-count="13">13</span> km</dt>
             <dd class="mt-3 text-[12px] font-medium uppercase tracking-[0.14em] text-black/45">Na kole do Holešovic</dd>
           </div>
         </dl>
@@ -491,7 +491,7 @@ const arrow = '<svg class="o-arrow" viewBox="0 0 16 16" fill="none" stroke="curr
           {extras.map((item, i) => (
             <li class="relative pt-6" data-reveal style={`--d:${i * 90}ms`}>
               <span class="o-rule" data-reveal="line" style={`--d:${i * 90}ms`} aria-hidden="true"></span>
-              <span class="text-[12px] font-medium tabular-nums tracking-[0.14em] text-black/35">0{i + 1}</span>
+              <span class="text-[12px] font-medium tracking-[0.14em] text-black/35">0{i + 1}</span>
               <p class="mt-3 text-[19px] font-medium leading-[1.4] tracking-[-0.01em] md:text-[21px]">{item}</p>
             </li>
           ))}
@@ -530,7 +530,7 @@ const arrow = '<svg class="o-arrow" viewBox="0 0 16 16" fill="none" stroke="curr
           {place.map(([title, text], i) => (
             <li class="relative pt-6" data-reveal style={`--d:${(i % 3) * 110}ms`}>
               <span class="o-rule" data-reveal="line" style={`--d:${(i % 3) * 110}ms`} aria-hidden="true"></span>
-              <span class="text-[12px] font-medium tabular-nums tracking-[0.14em] text-black/35">0{i + 1}</span>
+              <span class="text-[12px] font-medium tracking-[0.14em] text-black/35">0{i + 1}</span>
               <h3 class="mt-3 text-[21px] font-medium tracking-[-0.015em]">{title}</h3>
               <p class="mt-2 max-w-[34ch] text-[15px] font-medium leading-[1.6] text-black/60">{text}</p>
             </li>
@@ -561,7 +561,7 @@ const arrow = '<svg class="o-arrow" viewBox="0 0 16 16" fill="none" stroke="curr
     <section id="kontakt" class="o-section scroll-mt-20 bg-black text-white">
       <div class="o-wrap grid grid-cols-12 gap-x-6 gap-y-8">
         <p class="o-eyebrow col-span-12 !text-white/45 lg:col-span-3" data-reveal>05 — Cena a kontakt</p>
-        <h2 class="col-span-12 text-[44px] font-medium leading-[0.95] tracking-[-0.04em] tabular-nums md:text-[96px] lg:col-span-9 lg:text-[128px]" data-split>
+        <h2 class="col-span-12 text-[44px] font-medium leading-[0.95] tracking-[-0.04em] md:text-[96px] lg:col-span-9 lg:text-[128px]" data-split>
           {price}
         </h2>
       </div>

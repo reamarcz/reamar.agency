@@ -1,0 +1,316 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionFooter from '../../components/SectionFooter.astro';
+import ShortTile from '../../components/pribehy/ShortTile.astro';
+import ShortsIcon from '../../components/pribehy/ShortsIcon.astro';
+import ShortsModal from '../../components/pribehy/ShortsModal.astro';
+import AgentSocialIcon from '../../components/AgentSocialIcon.astro';
+import UpozornitEmailem from '../../components/UpozornitEmailem.astro';
+import { chevL, chevR, info, play, yt } from '../../components/pribehy/icons';
+import {
+  dalsiDil,
+  heroPoradu,
+  instagramPoradu,
+  youtubeOdber,
+  youtubeShorts,
+  zanrPoradu,
+} from '../../data/porad';
+import {
+  dilHref,
+  dilySklon,
+  getDily,
+  padDil,
+  shorts,
+  titulekRadky,
+} from '../../lib/pribehy';
+import { SITE_URL } from '../../lib/site';
+import '../../styles/pribehy.css';
+
+const dily = await getDily();
+const latest = dily[0];
+if (!latest) throw new Error('Chybí díly v src/content/dily');
+
+const rok = latest.data.datum.getFullYear();
+
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Příběhy z trhu',
+  itemListElement: dily.map((dil, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    url: `${SITE_URL}${dilHref(dil.data.slug)}`,
+    name: dil.data.titulek,
+  })),
+};
+---
+
+<Layout
+  title="Příběhy z trhu | REAMAR"
+  description="Pořad nákupní agentury REAMAR o nákupu novostaveb. Dlouhé díly i shorts — ke každému videu i článek."
+  canonical="/pribehy-z-trhu/"
+  image={heroPoradu}
+>
+  <div class="pz">
+    <section class="pz-board" aria-labelledby="pz-hero-title" data-pz-hero>
+      <div class="pz-board-photo">
+        <img
+          src={heroPoradu}
+          alt=""
+          width="1920"
+          height="1280"
+          fetchpriority="high"
+        />
+        {latest.data.nahled && (
+          <video
+            class="pz-board-loop"
+            data-pz-loop
+            data-src={latest.data.nahled}
+            muted
+            loop
+            playsinline
+            preload="none"
+            disablepictureinpicture
+            aria-hidden="true"
+          ></video>
+        )}
+      </div>
+      <div class="pz-board-ov"></div>
+
+      <div class="pz-wrap pz-board-in">
+        <div class="pz-board-t">
+          <span class="pz-kick">Příběhy z trhu</span>
+          <h1 id="pz-hero-title">
+            {titulekRadky(latest.data.titulek).map((radek, i) => (
+              <>
+                {i > 0 && <br />}
+                {radek}
+              </>
+            ))}
+          </h1>
+          <p class="pz-board-ep">
+            <span class="pz-badge">Nový díl</span>
+            <span>Díl {padDil(latest.data.cislo)} · {latest.data.tema}</span>
+          </p>
+          <div class="pz-board-meta">
+            <span class="is-y">{rok}</span>
+            <span>{dilySklon(dily.length)}</span>
+            <span>{latest.data.delka}</span>
+            <span class="pz-hd">HD</span>
+            <span>{zanrPoradu}</span>
+          </div>
+          <p class="pz-board-p">{latest.data.perex}</p>
+          <div class="pz-hero-b">
+            <a class="pz-btn pz-btn-w" href={dilHref(latest.data.slug, '#video')}>
+              <span aria-hidden="true" set:html={play} />
+              Přehrát
+            </a>
+            <a class="pz-btn pz-btn-o" href={dilHref(latest.data.slug, '#clanek')}>
+              <span aria-hidden="true" set:html={info} />
+              Přečíst článek
+            </a>
+          </div>
+        </div>
+
+        <div class="pz-row" id="dily">
+          <div class="pz-row-head">
+            <h2 id="pz-dily-h">Díly</h2>
+            <a
+              class="pz-board-yt"
+              href={youtubeOdber}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Odebírat na YouTube"
+            >
+              <span aria-hidden="true" set:html={yt} />
+              Odebírat <span class="pz-board-yt-full">na YouTube</span>
+            </a>
+          </div>
+          <div class="pz-row-g">
+            {dily.map((dil, i) => (
+              <a class:list={['pz-tile', i === 0 && 'is-new']} href={dilHref(dil.data.slug)}>
+                <span class="pz-tile-im">
+                  <img src={dil.data.poster} alt="" width="640" height="360" />
+                  {i === 0 && <em class="pz-badge">Nový díl</em>}
+                  <span class="pz-tile-play" aria-hidden="true" set:html={play} />
+                  <i>{dil.data.delka}</i>
+                </span>
+                <small>{padDil(dil.data.cislo)} · {dil.data.tema}</small>
+                <b>{dil.data.titulek}</b>
+              </a>
+            ))}
+            {dalsiDil && (
+              <div class="pz-tile is-soon">
+                <span class="pz-tile-im">
+                  <strong>{dalsiDil.nadpis}</strong>
+                  <span>Upozornit e-mailem</span>
+                </span>
+                <UpozornitEmailem label={false} />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pz-shorts" aria-labelledby="pz-shorts-h">
+      <div class="pz-wrap">
+        <h2 id="pz-shorts-h" class="pz-h2">
+          <ShortsIcon class="pz-h2-ico" />
+          Shorts
+        </h2>
+        <div class="pz-sh-links">
+          <span class="pz-sh-follow">Sledujte Agenta pro kupující</span>
+          <a
+            class="pz-lnk"
+            href={youtubeShorts}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Všechny shorts na YouTube"
+          >
+            <span class="pz-lnk-ico" aria-hidden="true">
+              <AgentSocialIcon icon="youtube" />
+            </span>
+            <span class="pz-lnk-mono pz-lnk-mono-yt" aria-hidden="true">
+              <svg viewBox="0 0 24 17">
+                <path fill="currentColor" d="M23.5 2.65A3.02 3.02 0 0 0 21.38.5C19.5 0 12 0 12 0S4.5 0 2.62.5A3.02 3.02 0 0 0 .5 2.65 31.9 31.9 0 0 0 0 8.5a31.9 31.9 0 0 0 .5 5.85 3.02 3.02 0 0 0 2.12 2.15C4.5 17 12 17 12 17s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.15A31.9 31.9 0 0 0 24 8.5a31.9 31.9 0 0 0-.5-5.85Z"/>
+                <path fill="#fff" d="M9.75 12.15V4.85L15.7 8.5 9.75 12.15Z"/>
+              </svg>
+            </span>
+            <span class="pz-lnk-txt">Všechny shorts</span>
+            <span class="pz-lnk-m">YouTube</span>
+          </a>
+          <span class="pz-sh-sep" aria-hidden="true">·</span>
+          <a
+            class="pz-lnk"
+            href={instagramPoradu}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <span class="pz-lnk-ico" aria-hidden="true">
+              <AgentSocialIcon icon="instagram" />
+            </span>
+            <span class="pz-lnk-mono" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                <rect x="3" y="3" width="18" height="18" rx="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.4" cy="6.6" r="1.05" fill="currentColor" stroke="none"/>
+              </svg>
+            </span>
+            <span class="pz-lnk-txt">Instagram</span>
+          </a>
+        </div>
+        <div class="pz-sx-wrap">
+          <div class="pz-sx" data-pz-sx>
+            {shorts.map((short) => <ShortTile short={short} />)}
+          </div>
+          <div class="pz-sx-nav">
+            <button type="button" class="pz-sx-btn is-prev" data-pz-sx-prev aria-label="Předchozí shorts" set:html={chevL} />
+            <button type="button" class="pz-sx-btn is-next" data-pz-sx-next aria-label="Další shorts" set:html={chevR} />
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <ShortsModal />
+  <SectionFooter />
+
+  <script type="application/ld+json" set:html={JSON.stringify(itemList)} />
+</Layout>
+
+<script>
+  function initPzLoop() {
+    const video = document.querySelector('[data-pz-loop]') as HTMLVideoElement | null;
+    const photo = video?.closest('.pz-board-photo');
+    if (!video || !photo || video.dataset.init === '1') return;
+    video.dataset.init = '1';
+
+    const src = video.dataset.src;
+    if (!src) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    if (connection?.saveData) return;
+
+    const mute = () => {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.volume = 0;
+      video.playsInline = true;
+      video.setAttribute('muted', '');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', 'true');
+    };
+
+    const play = () => {
+      mute();
+      if (video.getAttribute('src') !== src) video.src = src;
+      const run = video.play();
+      if (run) run.catch(() => {});
+    };
+
+    video.addEventListener('playing', () => photo.classList.add('is-playing'));
+
+    let armed = false;
+    const arm = () => {
+      if (armed) return;
+      armed = true;
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) play();
+            else video.pause();
+          });
+        },
+        { threshold: 0.2 }
+      );
+      io.observe(photo);
+    };
+
+    const poster = photo.querySelector('img');
+    if (poster && !poster.complete) {
+      poster.addEventListener('load', arm, { once: true });
+    } else {
+      requestAnimationFrame(arm);
+    }
+    window.setTimeout(arm, 900);
+  }
+
+  initPzLoop();
+  document.addEventListener('astro:page-load', initPzLoop);
+
+  function initPzSx() {
+    const track = document.querySelector('[data-pz-sx]') as HTMLElement | null;
+    const prev = document.querySelector('[data-pz-sx-prev]') as HTMLButtonElement | null;
+    const next = document.querySelector('[data-pz-sx-next]') as HTMLButtonElement | null;
+    if (!track || !prev || !next || track.dataset.init === '1') return;
+    track.dataset.init = '1';
+
+    const step = () => {
+      const tile = track.querySelector('.pz-sh') as HTMLElement | null;
+      if (!tile) return 0;
+      const styles = getComputedStyle(track);
+      return tile.offsetWidth + (parseFloat(styles.columnGap || styles.gap) || 14);
+    };
+
+    const sync = () => {
+      const max = track.scrollWidth - track.clientWidth - 2;
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= max;
+    };
+
+    prev.addEventListener('click', () => {
+      track.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+    next.addEventListener('click', () => {
+      track.scrollBy({ left: step(), behavior: 'smooth' });
+    });
+    track.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    sync();
+  }
+
+  initPzSx();
+  document.addEventListener('astro:page-load', initPzSx);
+</script>

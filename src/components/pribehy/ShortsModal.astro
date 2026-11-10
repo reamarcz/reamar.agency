@@ -1,0 +1,71 @@
+<div
+  class="pz-modal"
+  id="pz-short-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
+  aria-label="Přehrát short"
+  data-pz-short-modal
+>
+  <div class="pz-modal-box" data-pz-short-box>
+    <button type="button" class="pz-modal-x" data-pz-short-close aria-label="Zavřít">×</button>
+  </div>
+</div>
+
+<script>
+  function shortsModalEls() {
+    const modal = document.querySelector('[data-pz-short-modal]') as HTMLElement | null;
+    const box = modal?.querySelector('[data-pz-short-box]') as HTMLElement | null;
+    return { modal, box };
+  }
+
+  function closeShortsModal() {
+    const { modal, box } = shortsModalEls();
+    if (!modal || !box) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    box.querySelector('iframe')?.remove();
+  }
+
+  function openShortsModal(id: string, title: string) {
+    const { modal, box } = shortsModalEls();
+    if (!modal || !box) return;
+    box.querySelector('iframe')?.remove();
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    iframe.title = title;
+    box.appendChild(iframe);
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    (modal.querySelector('[data-pz-short-close]') as HTMLElement | null)?.focus();
+  }
+
+  function initShortsModal() {
+    const w = window as Window & { __pzShortsInit?: boolean };
+    if (w.__pzShortsInit) return;
+    w.__pzShortsInit = true;
+    document.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('[data-pz-short]') as HTMLElement | null;
+      if (btn) {
+        e.preventDefault();
+        openShortsModal(btn.dataset.yt || '', btn.dataset.title || 'Short');
+        return;
+      }
+      const modal = (e.target as HTMLElement).closest('[data-pz-short-modal]');
+      if (e.target === modal) closeShortsModal();
+      if ((e.target as HTMLElement).closest('[data-pz-short-close]')) closeShortsModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      const modal = document.querySelector('[data-pz-short-modal]');
+      if (modal?.classList.contains('is-open')) closeShortsModal();
+    });
+  }
+
+  initShortsModal();
+  document.addEventListener('astro:page-load', initShortsModal);
+</script>

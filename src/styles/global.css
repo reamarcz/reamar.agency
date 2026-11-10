@@ -45,19 +45,29 @@
   }
 
   html {
-    @apply scroll-smooth overflow-x-hidden;
+    @apply scroll-smooth overflow-x-clip;
     width: 100%;
     max-width: 100%;
+    --color-muted: #f1f1f1;
+    --nav-h: 80px;
+    scroll-padding-top: var(--nav-h);
+  }
+  @media (min-width: 768px) {
+    html {
+      --nav-h: 108px;
+    }
   }
   body {
-    @apply font-yellix font-medium text-black antialiased bg-white overflow-x-hidden;
+    @apply font-yellix font-medium text-black antialiased bg-white overflow-x-clip;
     width: 100%;
     max-width: 100%;
     min-width: 0;
+    /* Yellix má v tabulkové sadě „1“ s patkou — na webu jen proporcionální číslice */
+    font-variant-numeric: proportional-nums;
   }
   #developery,
   #klienty {
-    scroll-margin-top: 100px;
+    scroll-margin-top: calc(var(--nav-h) + 20px);
   }
   /* Zahraničí: kotva na začátku bílé sekce; velký margin = v záběru hero obrázek i „Nemovitosti v zahraničí“ */
   #zahranici {

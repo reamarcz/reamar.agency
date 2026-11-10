@@ -1,0 +1,323 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionFooter from '../../components/SectionFooter.astro';
+import ShortTile from '../../components/pribehy/ShortTile.astro';
+import ShortsModal from '../../components/pribehy/ShortsModal.astro';
+import { arrow, yt } from '../../components/pribehy/icons';
+import { dalsiDil, youtubeKanal } from '../../data/porad';
+import {
+  dilHref,
+  getDily,
+  janFoto,
+  janJmeno,
+  padDil,
+  shortsByIds,
+  timeToSeconds,
+  type Dil,
+} from '../../lib/pribehy';
+import { SITE_URL } from '../../lib/site';
+import { render } from 'astro:content';
+import '../../styles/pribehy.css';
+
+export async function getStaticPaths() {
+  const dily = await getDily();
+  return dily.map((dil) => ({
+    params: { slug: dil.data.slug },
+    props: { dil, dily },
+  }));
+}
+
+interface Props {
+  dil: Dil;
+  dily: Dil[];
+}
+const { dil, dily } = Astro.props;
+const { Content } = await render(dil);
+const data = dil.data;
+const others = dily.filter((d) => d.data.slug !== data.slug).slice(0, 3);
+const episodeShorts = shortsByIds(data.shorts);
+const watchUrl = `${youtubeKanal}`;
+const pageUrl = `${SITE_URL}${dilHref(data.slug)}`;
+const embedUrl = `https://www.youtube-nocookie.com/embed/${data.youtubeId}`;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: data.titulek,
+    description: data.perex,
+    thumbnailUrl: `${SITE_URL}${data.poster}`,
+    uploadDate: data.datum.toISOString(),
+    duration: data.delkaIso,
+    embedUrl,
+    hasPart: data.kapitoly.map((k) => ({
+      '@type': 'Clip',
+      name: k.nazev,
+      startOffset: timeToSeconds(k.cas),
+      url: `${pageUrl}#video`,
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: data.titulek,
+    description: data.perex,
+    datePublished: data.datum.toISOString(),
+    image: `${SITE_URL}${data.poster}`,
+    author: { '@type': 'Person', name: janJmeno },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Příběhy z trhu', item: `${SITE_URL}/pribehy-z-trhu/` },
+      { '@type': 'ListItem', position: 2, name: data.titulek, item: pageUrl },
+    ],
+  },
+];
+---
+
+<Layout
+  title={`${data.titulek} | Příběhy z trhu | REAMAR`}
+  description={data.perex}
+  canonical={pageUrl}
+  image={data.poster}
+  ogType="video.episode"
+>
+  <div class="pz">
+    <div class="pz-wrap pz-dd">
+      <a class="pz-bc" href="/pribehy-z-trhu/">← Příběhy z trhu</a>
+      <div class="pz-dd-g">
+        <div class="pz-dd-col">
+          <div
+            class="pz-pl"
+            id="video"
+            data-pz-player
+            data-yt={data.youtubeId}
+            role="button"
+            tabindex="0"
+            aria-label={`Přehrát: ${data.titulek}`}
+          >
+            <img src={data.poster} alt="" width="1920" height="1080" />
+          </div>
+
+          <div class="pz-dd-head">
+            <span class="pz-kick pz-dd-k">Díl {padDil(data.cislo)} · {data.tema}</span>
+            <h1>{data.titulek}</h1>
+            <div class="pz-dd-meta">
+              <span>{data.delka}</span>
+              <span>{janJmeno}</span>
+              <span class="pz-dd-act">
+                <a class="pz-lnk" href={watchUrl} target="_blank" rel="noopener noreferrer">
+                  <span aria-hidden="true" set:html={yt} />
+                  Sledovat na YouTube
+                </a>
+                <button type="button" class="pz-lnk" data-pz-share data-url={pageUrl} data-title={data.titulek}>
+                  Sdílet
+                </button>
+              </span>
+            </div>
+          </div>
+
+          <div class="pz-dd-sum">
+            <p>{data.perex}</p>
+            <div class="pz-ch">
+              <small>Kapitoly</small>
+              <ol>
+                {data.kapitoly.map((k) => (
+                  <li>
+                    <button type="button" data-pz-chapter data-start={String(timeToSeconds(k.cas))}>
+                      <span>{k.cas}</span>
+                      {k.nazev}
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+
+          <article class="pz-ar" id="clanek">
+            <span class="pz-kick pz-dd-k" style="margin-top:0">Článek k dílu</span>
+            <Content />
+          </article>
+        </div>
+
+        <aside class="pz-sd">
+          <div class="pz-sd-cta">
+            <small>Řešíte totéž?</small>
+            <b>{data.cta.nadpis}</b>
+            <button
+              type="button"
+              class="pz-btn pz-btn-w"
+              data-smart-meeting-open
+              data-smart-meeting-type="client"
+            >
+              <span aria-hidden="true" set:html={arrow} />
+              {data.cta.tlacitko}
+            </button>
+          </div>
+
+          <div class="pz-sd-b pz-sd-more">
+            <h4>Další díly</h4>
+            {others.map((item) => (
+              <a class="pz-nx" href={dilHref(item.data.slug)}>
+                <span class="pz-nx-im">
+                  <img src={item.data.poster} alt="" width="300" height="169" />
+                  <em>{item.data.delka}</em>
+                </span>
+                <span>
+                  <small>Díl {padDil(item.data.cislo)}</small>
+                  <b>{item.data.titulek}</b>
+                </span>
+              </a>
+            ))}
+            {dalsiDil && (
+              <div class="pz-nx pz-nx-soon">
+                <span class="pz-nx-im pz-nx-ph">{padDil(dalsiDil.cislo)}</span>
+                <span>
+                  <b>{dalsiDil.nadpis}</b>
+                </span>
+              </div>
+            )}
+          </div>
+
+          {episodeShorts.length > 0 && (
+            <div class="pz-sd-b pz-sd-shorts">
+              <h4>Shorts z tohoto dílu</h4>
+              <div class="pz-sd-sh">
+                {episodeShorts.map((short) => <ShortTile short={short} compact />)}
+              </div>
+            </div>
+          )}
+
+          <div class="pz-sd-b pz-host">
+            <h4>Účinkuje</h4>
+            <a class="pz-host-card" href="/o-nas">
+              <span class="pz-host-photo">
+                <img src={janFoto} alt="" width="56" height="56" />
+              </span>
+              <span class="pz-host-meta">
+                <b>{janJmeno}</b>
+                <i>
+                  Více o nás
+                  <span aria-hidden="true" set:html={arrow} />
+                </i>
+              </span>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <ShortsModal />
+  <SectionFooter />
+
+  {jsonLd.map((block) => <script type="application/ld+json" set:html={JSON.stringify(block)} />)}
+</Layout>
+
+<script>
+  function mountPlayer(player: HTMLElement, start = 0, autoplay = true) {
+    const id = player.dataset.yt;
+    if (!id) return;
+    player.querySelector('iframe')?.remove();
+    player.querySelector('img')?.setAttribute('hidden', '');
+    player.classList.add('is-on');
+    player.removeAttribute('role');
+    player.removeAttribute('tabindex');
+    player.removeAttribute('aria-label');
+    const iframe = document.createElement('iframe');
+    const params = new URLSearchParams({
+      autoplay: autoplay ? '1' : '0',
+      rel: '0',
+      modestbranding: '1',
+      enablejsapi: '1',
+    });
+    if (start > 0) params.set('start', String(start));
+    iframe.src = `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`;
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    iframe.title = 'Přehrávač dílu';
+    iframe.dataset.pzFrame = '1';
+    player.appendChild(iframe);
+  }
+
+  function seekOrLoad(player: HTMLElement, start: number) {
+    const iframe = player.querySelector('iframe') as HTMLIFrameElement | null;
+    if (iframe) {
+      iframe.contentWindow?.postMessage(
+        JSON.stringify({ event: 'command', func: 'seekTo', args: [start, true] }),
+        '*'
+      );
+      iframe.contentWindow?.postMessage(
+        JSON.stringify({ event: 'command', func: 'playVideo', args: [] }),
+        '*'
+      );
+      return;
+    }
+    mountPlayer(player, start, true);
+  }
+
+  function autoplayIfNeeded(player: HTMLElement) {
+    if (location.hash === '#video' && !player.querySelector('iframe')) {
+      mountPlayer(player, 0, true);
+    }
+  }
+
+  function initDil() {
+    const player = document.querySelector('[data-pz-player]') as HTMLElement | null;
+    if (!player) return;
+    if (player.dataset.init !== '1') {
+      player.dataset.init = '1';
+      const startFromPoster = () => {
+        if (player.querySelector('iframe')) return;
+        mountPlayer(player, 0, true);
+      };
+      player.addEventListener('click', startFromPoster);
+      player.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        startFromPoster();
+      });
+
+      document.querySelectorAll('[data-pz-chapter]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const start = Number((btn as HTMLElement).dataset.start || '0');
+          seekOrLoad(player, start);
+          player.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      });
+
+      const share = document.querySelector('[data-pz-share]') as HTMLElement | null;
+      share?.addEventListener('click', async () => {
+        const url = share.dataset.url || location.href;
+        const title = share.dataset.title || document.title;
+        try {
+          if (navigator.share) {
+            await navigator.share({ title, url });
+            return;
+          }
+        } catch {}
+        try {
+          await navigator.clipboard.writeText(url);
+          share.textContent = 'Odkaz zkopírován';
+          setTimeout(() => {
+            share.textContent = 'Sdílet';
+          }, 1800);
+        } catch {}
+      });
+    }
+    autoplayIfNeeded(player);
+  }
+
+  initDil();
+  document.addEventListener('astro:page-load', initDil);
+  const w = window as Window & { __pzDilHash?: boolean };
+  if (!w.__pzDilHash) {
+    w.__pzDilHash = true;
+    window.addEventListener('hashchange', () => {
+      const player = document.querySelector('[data-pz-player]') as HTMLElement | null;
+      if (player) autoplayIfNeeded(player);
+    });
+  }
+</script>

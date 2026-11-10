@@ -1,0 +1,870 @@
+---
+const tools = [
+  {
+    name: 'Neveřejné nabídky a předprodeje',
+    lead: 'Dostaňte se k příležitostem dřív, než se objeví ve veřejné nabídce.',
+    stat: 'až 15\u00a0%',
+    word: false,
+    cap: 'výhodnější cenová pozice u vybraných předprodejů',
+    cta: 'Registrovat k předprodeji',
+    service: 'Priority',
+  },
+  {
+    name: 'Postoupení smlouvy',
+    lead: 'Investiční byt nemusíte vždy držet až do převzetí.',
+    stat: 'před doplacením',
+    word: true,
+    cap: 'možnost vystoupit z projektu postoupením smlouvy',
+    cta: 'Najít byt na flip',
+    service: 'Nezávazná konzultace',
+  },
+  {
+    name: 'Platební podmínky',
+    lead: 'Vstupte do projektu s menším kapitálem na začátku.',
+    stat: '10\u00a0/\u00a090',
+    word: false,
+    cap: '10\u00a0% při podpisu, 90\u00a0% až při dokončení',
+    cta: 'Chci nižší financování',
+    service: 'Nezávazná konzultace',
+  },
+  {
+    name: 'Investorské balíčky',
+    lead: 'Méně náhodných nabídek. Více jednotek, které dávají investiční smysl.',
+    stat: '3–10',
+    word: false,
+    cap: 'jednotek v jednom investorském výběru',
+    cta: 'Připravit výběr',
+    service: 'Priority',
+  },
+];
+
+const featured = {
+  plan: '/img/pudorysy/pudorys-holesovice.svg',
+  location: 'Holešovice',
+  layout: '2+kk',
+  tags: ['Předprodej', 'Platby 10\u00a0/\u00a090', 'Postoupení smlouvy'],
+  rows: [
+    { label: 'Ceníková cena', value: '7 636 000 Kč' },
+    { label: 'Sleva v předprodeji 8\u00a0%', value: '− 610 880 Kč' },
+    { label: 'Kupní cena', value: '7 025 120 Kč', strong: true },
+    { label: 'Vložený kapitál (10\u00a0% při podpisu)', value: '702 512 Kč' },
+    { label: 'Postoupení za tržní cenu', value: '8 199 000 Kč' },
+  ],
+  profit: 1173880,
+  roe: 167,
+};
+
+const dealsNote = [
+  'Modelový výpočet před zdaněním a náklady (provize, daně, právní služby).',
+  'Vychází z vloženého kapitálu 10\u00a0% kupní ceny a ceny postoupení.',
+  'Minulé výsledky nejsou zárukou budoucích výnosů.',
+];
+
+const deals = [
+  {
+    plan: '/img/pudorysy/pudorys-smichov.svg',
+    location: 'Smíchov',
+    layout: '1+kk',
+    points: ['Předprodej', 'Platby 10\u00a0/\u00a090'],
+  },
+  {
+    plan: '/img/pudorysy/pudorys-malesice.svg',
+    location: 'Malešice',
+    layout: '1,5+kk',
+    points: ['Předprodej se slevou 5\u00a0%', 'Platby 10\u00a0/\u00a090', 'Postoupení smlouvy před dokončením'],
+  },
+  {
+    plan: '/img/pudorysy/pudorys-kyje.svg',
+    location: 'Kyje',
+    layout: '3+kk',
+    points: ['Předprodej se slevou 5\u00a0%', 'Platby 10\u00a0/\u00a090', 'Postoupení smlouvy před dokončením'],
+  },
+];
+
+const fmt = (n: number) => n.toLocaleString('cs-CZ').replace(/\s/g, '\u00a0');
+const n = (i: number) => String(i + 1).padStart(2, '0');
+---
+
+<section id="co-delame" class="ivh" aria-labelledby="ivh-h" data-ivh data-nav-hide-zone>
+  <div class="ivh__track" data-ivh-track>
+    <div class="ivh__sticky" data-ivh-sticky>
+      <div class="ivh__top">
+        <div class="ivh__intro">
+          <h2 id="ivh-h" class="font-yellix">
+            <img src="/images/arrow-1.svg" alt="" width="20" height="20" />
+            Výnos vzniká už při nákupu
+          </h2>
+        </div>
+        <div class="ivh__bar" data-ivh-fill aria-hidden="true"></div>
+        <a class="ivh__cta font-yellix" href="#vyber-sluzeb">Vybrat služby</a>
+      </div>
+
+      <div class="ivh__row" data-ivh-row>
+        {tools.map((t, i) => (
+          <article class="ivh__tool" data-ivh-tool>
+            <span class="ivh__idx font-yellix">{n(i)}</span>
+            <h3 class="font-yellix">{t.name}</h3>
+            <p class="ivh__lead font-yellix">{t.lead}</p>
+            <div class="ivh__stat">
+              <span class:list={['ivh__num', 'font-yellix', t.word && 'ivh__num--word']}>{t.stat}</span>
+              <span class="ivh__cap font-yellix">{t.cap}</span>
+            </div>
+            <button
+              type="button"
+              class="ivh__link font-yellix"
+              data-smart-contact-open
+              data-smart-contact-type="client"
+              data-smart-contact-service={t.service}
+            >
+              <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+              {t.cta}
+            </button>
+          </article>
+        ))}
+
+        <div class="ivh__div" data-ivh-div>
+          <div class="ivh__div-head">
+            <p class="font-yellix">Nedávno realizované obchody</p>
+            <img src="/images/arrow-1.svg" alt="" width="32" height="32" />
+          </div>
+          <p class="ivh__div-note font-yellix">
+            {dealsNote.map((line, i) => (
+              <>
+                {i > 0 && <br />}
+                {line}
+              </>
+            ))}
+          </p>
+        </div>
+
+        <article class="ivh__feat" data-ivh-feat>
+          <div class="ivh__plan">
+            <img src={featured.plan} alt={`Půdorys bytu ${featured.layout}, ${featured.location}`} loading="lazy" />
+          </div>
+          <div>
+            <ul class="ivh__tags" data-ivh-tags>
+              {featured.tags.map((t) => (
+                <li class="font-yellix">{t}</li>
+              ))}
+            </ul>
+            <h3 class="font-yellix">
+              {featured.location} <span>{featured.layout}</span>
+            </h3>
+            <dl class="ivh__rows">
+              {featured.rows.map((r) => (
+                <div class:list={[r.strong && 'is-strong']}>
+                  <dt class="font-yellix">{r.label}</dt>
+                  <dd class="font-yellix">{r.value}</dd>
+                </div>
+              ))}
+              <div class="is-strong">
+                <dt class="font-yellix">Hrubý zisk</dt>
+                <dd class="font-yellix"><span data-ivh-count={featured.profit}>{fmt(featured.profit)}</span>&nbsp;Kč</dd>
+              </div>
+            </dl>
+            <div class="ivh__result">
+              <strong class="font-yellix">+<span data-ivh-count={featured.roe}>{featured.roe}</span>&nbsp;%</strong>
+              <span class="font-yellix">zhodnocení vloženého kapitálu</span>
+            </div>
+          </div>
+        </article>
+
+        <div class="ivh__stack" data-ivh-stack>
+          {deals.map((d) => (
+            <article class="ivh__deal">
+              <div class="ivh__thumb">
+                <img src={d.plan} alt={`Půdorys bytu ${d.layout}, ${d.location}`} loading="lazy" />
+              </div>
+              <h4 class="font-yellix">
+                {d.location} <span>{d.layout}</span>
+              </h4>
+              <ul class="ivh__points">
+                {d.points.map((p) => (
+                  <li>
+                    <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+                    <span class="font-yellix">{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+
+        <div class="ivh__end">
+          <p class="font-yellix">Hledáte podobnou příležitost?</p>
+          <button
+            type="button"
+            class="ivh__btn font-yellix"
+            data-smart-contact-open
+            data-smart-contact-type="client"
+            data-smart-contact-service="Priority"
+          >
+            <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+            Chci podobnou příležitost
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ivh {
+    --pad: 1.25rem;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    background: #ededed;
+    color: #000;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+    scroll-margin-top: calc(-1 * var(--nav-h));
+  }
+  @media (min-width: 768px) {
+    .ivh { --pad: 2.5rem; }
+  }
+  @media (min-width: 1280px) {
+    .ivh { --pad: 3.5rem; }
+  }
+  .ivh :is(h2, h3, h4, p, a, span, dt, dd, li, strong, b, button) {
+    font-weight: 500;
+  }
+
+  .ivh__sticky {
+    padding: 4rem var(--pad) 4.5rem;
+  }
+  @media (min-width: 768px) {
+    .ivh__sticky {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+  }
+
+  .ivh__top {
+    margin-bottom: 1.25rem;
+  }
+  .ivh__bar,
+  .ivh__cta {
+    display: none;
+  }
+  .ivh__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .ivh__div,
+  .ivh__feat,
+  .ivh__stack,
+  .ivh__end {
+    grid-column: 1 / -1;
+  }
+
+  .ivh__intro h2 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 28px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+  .ivh__intro h2 img {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: 0 0 auto;
+    filter: brightness(0);
+  }
+  @media (min-width: 768px) {
+    .ivh__top { margin-bottom: 2rem; }
+    .ivh__intro h2 {
+      gap: 0.875rem;
+      font-size: 36px;
+    }
+    .ivh__intro h2 img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .ivh__intro h2 { font-size: 40px; }
+  }
+
+  .ivh__tool {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 1.6rem 1.35rem;
+  }
+  .ivh__idx {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: rgba(0, 0, 0, 0.45);
+    margin-bottom: 1.15rem;
+  }
+  .ivh__tool h3 {
+    margin: 0 0 0.85rem;
+    font-size: 22px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .ivh__lead {
+    margin: 0 0 1.5rem;
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(0, 0, 0, 0.65);
+  }
+  .ivh__stat {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  .ivh .ivh__num {
+    font-size: 28px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+    font-variant-numeric: proportional-nums;
+    color: #022d20;
+    font-weight: 600;
+    transition: color 0.5s var(--ease);
+  }
+  .ivh__num--word {
+    font-size: 22px;
+    letter-spacing: -0.02em;
+  }
+  .ivh__cap {
+    font-size: 13px;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.55);
+  }
+  .ivh__link {
+    margin-top: 1.5rem;
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0 0 4px;
+    border: 0;
+    border-bottom: 1px solid #000;
+    background: transparent;
+    font-size: 13px;
+    line-height: 1.2;
+    color: #000;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .ivh__link img {
+    width: 12px;
+    height: 12px;
+    filter: brightness(0);
+    transition: transform 0.3s var(--ease);
+  }
+  .ivh__link:hover { opacity: 0.65; }
+  .ivh__link:hover img { transform: translate(2px, 2px); }
+
+  @media (min-width: 768px) {
+    .ivh__tool { padding: 2rem 1.75rem 1.85rem; }
+    .ivh__idx { margin-bottom: 1.75rem; }
+    .ivh__tool h3 { font-size: 26px; }
+    .ivh__lead { font-size: 15px; margin-bottom: 2rem; }
+    .ivh__num { font-size: 32px; }
+    .ivh__num--word { font-size: 26px; }
+  }
+
+  .ivh__div {
+    margin: 2.5rem 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+  .ivh__div-head {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .ivh__div-head p {
+    margin: 0;
+    font-size: 28px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+  .ivh__div-head img {
+    width: 1.25rem;
+    height: 1.25rem;
+    filter: brightness(0);
+  }
+  .ivh__div-note {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  @media (min-width: 768px) {
+    .ivh__div { margin-top: 3.5rem; }
+    .ivh__div-head p { font-size: 36px; }
+    .ivh__div-head img { width: 1.5rem; height: 1.5rem; }
+  }
+  @media (min-width: 1280px) {
+    .ivh__div-head p { font-size: 40px; }
+  }
+
+  .ivh__feat {
+    background: #f5f5f5;
+    padding: 1.6rem 1.35rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 1.5rem;
+  }
+  .ivh__plan img {
+    display: block;
+    width: 100%;
+    max-width: 330px;
+    height: auto;
+    margin: 0 auto;
+  }
+  .ivh__tags {
+    list-style: none;
+    margin: 0 0 1.15rem;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .ivh__tags li {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding: 6px 10px;
+    border: 1px solid #000;
+    background: #000;
+    color: #fff;
+    transition: all 0.5s ease;
+  }
+  .ivh__feat h3 {
+    margin: 0 0 1.25rem;
+    font-size: 22px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+  .ivh__feat h3 span,
+  .ivh__deal h4 span {
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .ivh__rows { margin: 0; }
+  .ivh__rows div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 0.65rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.7);
+    font-variant-numeric: proportional-nums;
+  }
+  .ivh__rows dt,
+  .ivh__rows dd { margin: 0; }
+  .ivh__rows dd { color: #000; white-space: nowrap; }
+  .ivh__rows .is-strong { color: #000; }
+  .ivh__result {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .ivh__result strong {
+    font-size: 40px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+    font-variant-numeric: proportional-nums;
+  }
+  .ivh__result > span {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .ivh__stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .ivh__deal {
+    background: #f5f5f5;
+    padding: 1.5rem 1.35rem;
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    column-gap: 1.15rem;
+    align-items: center;
+  }
+  .ivh__thumb {
+    grid-row: span 2;
+    height: 7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ivh__thumb img {
+    display: block;
+    max-width: 88px;
+    max-height: 7rem;
+    width: auto;
+    height: auto;
+  }
+  .ivh__deal h4 {
+    margin: 0 0 0.7rem;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    align-self: end;
+  }
+  .ivh__points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-self: start;
+  }
+  .ivh__points li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+  .ivh__points img {
+    flex: 0 0 auto;
+    width: 12px;
+    height: 12px;
+    margin-top: 2px;
+    filter: brightness(0);
+  }
+
+  .ivh__end {
+    margin-top: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .ivh__end p {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .ivh__btn {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: #000;
+    color: #fff;
+    padding: 0.85rem 1.15rem 0.85rem 1rem;
+    border: 0;
+    font-size: 13px;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .ivh__btn img {
+    width: 12px;
+    height: 12px;
+    filter: brightness(0) invert(1);
+  }
+  .ivh__btn:hover { opacity: 0.88; }
+
+  @media (min-width: 640px) {
+    .ivh__row { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .ivh__stack { gap: 1rem; }
+    .ivh__feat {
+      grid-template-columns: minmax(200px, 280px) 1fr;
+      column-gap: 2.25rem;
+      padding: 2rem 1.75rem;
+      align-items: center;
+    }
+    .ivh__feat h3 { font-size: 26px; }
+    .ivh__rows div { font-size: 15px; }
+    .ivh__result strong { font-size: 48px; }
+    .ivh__deal h4 { font-size: 22px; }
+    .ivh__end p { font-size: 26px; }
+  }
+
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .ivh__track {
+      position: relative;
+      height: calc(100vh + 405vh);
+    }
+    .ivh__sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.2s linear;
+    }
+
+    .ivh__top {
+      display: flex;
+      position: absolute;
+      left: var(--pad);
+      right: var(--pad);
+      top: 3.25rem;
+      align-items: center;
+      gap: 1.75rem;
+      margin-bottom: 0;
+    }
+    .ivh__intro {
+      flex: 0 1 auto;
+      min-width: 0;
+    }
+    .ivh__intro h2 { white-space: nowrap; }
+    .ivh__bar {
+      display: block;
+      position: relative;
+      flex: 1;
+      height: 2px;
+      margin-bottom: 0;
+      background: rgba(0, 0, 0, 0.12);
+    }
+    .ivh__bar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #000;
+      transform-origin: left;
+      transform: scaleX(var(--p, 0));
+    }
+    .ivh__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #000;
+      color: #fff;
+      padding: 0.4rem 0.75rem;
+      font-size: 13px;
+      line-height: 1.2;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.2s ease;
+    }
+    .ivh__cta:hover { opacity: 0.85; }
+
+    .ivh__row {
+      --row-h: min(38.75rem, 70vh);
+      position: absolute;
+      left: 0;
+      top: max(9rem, calc((100vh - var(--row-h)) / 2));
+      height: var(--row-h);
+      max-width: none;
+      margin: 0;
+      display: flex;
+      align-items: stretch;
+      gap: 1.5rem;
+      padding: 0 var(--pad);
+      width: max-content;
+      will-change: transform;
+    }
+    .ivh__row > * { flex: 0 0 auto; margin: 0; }
+    .ivh__row > .ivh__end { margin-left: 8rem; }
+
+    .ivh__tool {
+      width: 21.25rem;
+      padding: 2rem 1.85rem 1.9rem;
+      transition: opacity 0.5s var(--ease);
+    }
+    .ivh__tool.is-dim { opacity: 0.5; }
+    .ivh__tool .ivh__num { color: #000; font-weight: 500; }
+    .ivh__tool.is-on .ivh__num { color: #022d20; font-weight: 600; }
+    .ivh__idx { margin-bottom: 2rem; }
+    .ivh__lead { margin-bottom: 0; }
+    .ivh__stat { height: 5.15rem; box-sizing: content-box; }
+    .ivh__link { margin-top: 1.75rem; }
+
+    .ivh__div {
+      position: relative;
+      width: 42rem;
+      box-sizing: border-box;
+      padding: 0;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      text-align: center;
+    }
+    .ivh__div-head {
+      gap: 0.9rem;
+    }
+    .ivh__div-head p {
+      font-size: 32px;
+      white-space: nowrap;
+    }
+    .ivh__div-head img {
+      width: 2rem;
+      height: 2rem;
+    }
+    .ivh__div-note {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    .ivh__feat {
+      width: 56.25rem;
+      box-sizing: border-box;
+      padding: 2.25rem;
+      grid-template-columns: 18.75rem 1fr;
+      column-gap: 2.5rem;
+      align-items: center;
+    }
+    .ivh__tags li {
+      border-color: rgba(0, 0, 0, 0.2);
+      background: transparent;
+      color: rgba(0, 0, 0, 0.4);
+    }
+    .ivh__tags.is-on li {
+      border-color: #000;
+      background: #000;
+      color: #fff;
+    }
+    .ivh__tags.is-on li:nth-child(2) { transition-delay: 0.15s; }
+    .ivh__tags.is-on li:nth-child(3) { transition-delay: 0.3s; }
+
+    .ivh__stack {
+      width: 28rem;
+      height: 100%;
+      gap: 1rem;
+      transition: opacity 0.5s ease;
+    }
+    .ivh__stack.is-dim { opacity: 0.55; }
+    .ivh__deal {
+      flex: 1;
+      width: auto;
+      min-height: 0;
+      padding: 1.35rem 1.5rem;
+    }
+
+    .ivh__end {
+      width: 22rem;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .ivh__end p { font-size: 28px; }
+  }
+</style>
+
+<script>
+  function initInvesticeVyhody() {
+    const root = document.querySelector('[data-ivh]') as HTMLElement | null;
+    if (!root) return;
+    const state = root as HTMLElement & { _ivhCleanup?: () => void };
+    if (state._ivhCleanup) state._ivhCleanup();
+
+    const track = root.querySelector('[data-ivh-track]') as HTMLElement | null;
+    const sticky = root.querySelector('[data-ivh-sticky]') as HTMLElement | null;
+    const row = root.querySelector('[data-ivh-row]') as HTMLElement | null;
+    const div = root.querySelector('[data-ivh-div]') as HTMLElement | null;
+    const feat = root.querySelector('[data-ivh-feat]') as HTMLElement | null;
+    const tags = root.querySelector('[data-ivh-tags]') as HTMLElement | null;
+    const fill = root.querySelector('[data-ivh-fill]') as HTMLElement | null;
+    if (!track || !sticky || !row || !div || !feat || !tags || !fill) return;
+
+    const tools = Array.from(root.querySelectorAll('[data-ivh-tool]')) as HTMLElement[];
+    const stack = root.querySelector('[data-ivh-stack]') as HTMLElement | null;
+    const deals = [feat, ...(stack ? [stack] : [])] as HTMLElement[];
+    const counts = Array.from(root.querySelectorAll('[data-ivh-count]')) as HTMLElement[];
+    const desk = window.matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)');
+
+    const DWELL = 0.2;
+    const SLIDE = 3.6;
+    const GREY = 237;
+    const WHITE = 255;
+
+    const clamp = (v: number) => Math.max(0, Math.min(1, v));
+    const fmt = (n: number) => Math.round(n).toLocaleString('cs-CZ').replace(/\s/g, '\u00a0');
+    const cards = [...tools, ...deals];
+
+    const reset = () => {
+      [row, sticky, fill].forEach((el) => el.removeAttribute('style'));
+      cards.forEach((el) => el.classList.remove('is-dim', 'is-on'));
+      tags.classList.remove('is-on');
+      counts.forEach((c) => {
+        c.textContent = fmt(Number(c.dataset.ivhCount));
+      });
+    };
+
+    let raf = 0;
+    const tick = () => {
+      raf = 0;
+      if (!desk.matches) {
+        reset();
+        return;
+      }
+      const vh = window.innerHeight;
+      const vw = sticky.clientWidth;
+      const sc = -track.getBoundingClientRect().top / vh;
+      const h = clamp((sc - DWELL) / SLIDE);
+      const maxTx = Math.max(0, row.scrollWidth - vw);
+      const tx = maxTx * h;
+      row.style.transform = `translateX(${-tx}px)`;
+      fill.style.setProperty('--p', String(h));
+
+      const pad = parseFloat(getComputedStyle(row).paddingLeft) || 0;
+      const left = tx + pad;
+      const cx = tx + vw / 2;
+      const divX = div.offsetLeft + div.offsetWidth / 2;
+
+      const g = clamp((cx - (divX - 300)) / 600);
+      const c = Math.round(GREY + (WHITE - GREY) * g);
+      sticky.style.backgroundColor = `rgb(${c},${c},${c})`;
+
+      const active = cards.reduce((a, b) => (
+        Math.abs(b.offsetLeft - left) < Math.abs(a.offsetLeft - left) ? b : a
+      ));
+      const dealsOn = active === feat || active === stack;
+      tools.forEach((el) => {
+        el.classList.toggle('is-dim', el !== active);
+        el.classList.toggle('is-on', el === active);
+      });
+      feat.classList.toggle('is-dim', !dealsOn);
+      feat.classList.toggle('is-on', dealsOn);
+      if (stack) {
+        stack.classList.toggle('is-dim', !dealsOn);
+        stack.classList.toggle('is-on', dealsOn);
+      }
+
+      const f = clamp((cx - (feat.offsetLeft + 150)) / 450);
+      tags.classList.toggle('is-on', f > 0.05);
+      const ease = 1 - Math.pow(1 - f, 3);
+      counts.forEach((el) => {
+        el.textContent = fmt(Number(el.dataset.ivhCount) * ease);
+      });
+    };
+    const req = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener('scroll', req, { passive: true });
+    window.addEventListener('resize', req);
+    desk.addEventListener('change', req);
+    req();
+
+    state._ivhCleanup = () => {
+      window.removeEventListener('scroll', req);
+      window.removeEventListener('resize', req);
+      desk.removeEventListener('change', req);
+      if (raf) cancelAnimationFrame(raf);
+      state._ivhCleanup = undefined;
+    };
+  }
+
+  initInvesticeVyhody();
+  document.addEventListener('astro:page-load', initInvesticeVyhody);
+</script>

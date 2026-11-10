@@ -1,0 +1,284 @@
+---
+// Desktop intro: titulky přes hero video, které se pak usadí do hlavičky.
+// Pracuje přímo s [data-intro-media] / [data-intro-video].
+---
+<script is:inline>
+  (function () {
+    var root = document.documentElement;
+    try {
+      var skip =
+        sessionStorage.getItem('rmIntroSeen') === '1' ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+        window.matchMedia('(max-width: 1023px)').matches;
+      root.classList.remove('rmi-on', 'rmi-skip', 'rmi-landing');
+      root.classList.add(skip ? 'rmi-skip' : 'rmi-on');
+    } catch (e) {
+      root.classList.remove('rmi-on', 'rmi-landing');
+      root.classList.add('rmi-skip');
+    }
+  })();
+</script>
+
+<div class="rmi" id="rmi" aria-hidden="true">
+  <div class="rmi__scrim"></div>
+  <div class="rmi__cap">
+    <p class="rmi__line rmi__a">
+      <span class="rmi__m"><span class="rmi__w" style="--d:0s">Kupujete</span></span>
+      <span class="rmi__m"><span class="rmi__w" style="--d:.08s">nový</span></span>
+      <span class="rmi__m"><span class="rmi__w" style="--d:.16s">byt?</span></span>
+    </p>
+    <p class="rmi__line rmi__b">
+      <span class="rmi__m"><span class="rmi__w" style="--d:0s">A</span></span>
+      <span class="rmi__m"><span class="rmi__w" style="--d:.07s">kdo</span></span>
+      <span class="rmi__m"><span class="rmi__w" style="--d:.14s">stojí</span></span>
+      <span class="rmi__m"><span class="rmi__w" style="--d:.21s">při</span></span>
+      <span class="rmi__m"><span class="rmi__w" style="--d:.28s">vás?</span></span>
+    </p>
+  </div>
+</div>
+
+<style is:global>
+  html.rmi-skip .rmi,
+  html.rmi-done .rmi { display: none; }
+  html.rmi-on:not(.rmi-skip):not(.rmi-done) .rmi { display: block; }
+  html.rmi-on:not(.rmi-skip):not(.rmi-done),
+  html.rmi-on:not(.rmi-skip):not(.rmi-done) body,
+  html.rmi-on:not(.rmi-skip):not(.rmi-done) main {
+    overflow: hidden !important;
+    background: #000;
+  }
+
+  html.rmi-on:not(.rmi-skip):not(.rmi-done) [data-intro-media] {
+    position: fixed !important;
+    z-index: 9998 !important;
+    inset: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
+    overflow: hidden !important;
+    background: #000 !important;
+  }
+  html.rmi-on:not(.rmi-skip):not(.rmi-done) .hero-strip-film {
+    overflow: visible !important;
+  }
+  html.rmi-on:not(.rmi-skip):not(.rmi-done) .hero-cover-pin {
+    z-index: 5;
+  }
+  html.rmi-landing [data-intro-media] {
+    transition:
+      top .9s cubic-bezier(.76, 0, .24, 1),
+      left .9s cubic-bezier(.76, 0, .24, 1),
+      width .9s cubic-bezier(.76, 0, .24, 1),
+      height .9s cubic-bezier(.76, 0, .24, 1);
+  }
+  [data-intro-media].rmi-still .hero-intro-poster,
+  [data-intro-media].rmi-still [data-intro-video] { animation: rmi-kb 6s linear both; }
+  @keyframes rmi-kb { from { transform: scale(1); } to { transform: scale(1.06); } }
+
+  .rmi {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+    transition: opacity .3s ease;
+    view-transition-name: none;
+  }
+  .rmi.is-gone { opacity: 0; }
+  .rmi__scrim { position: absolute; inset: 0; background: #000; opacity: .5; transition: opacity .6s ease; }
+  .rmi.is-lift .rmi__scrim { opacity: 0; }
+
+  .rmi__cap {
+    position: absolute;
+    left: var(--rmi-left, 8.3vw);
+    right: var(--rmi-left, 8.3vw);
+    top: 58%;
+    transform: translateY(-50%);
+    display: grid;
+    color: #fff;
+    font-size: min(5.8vw, 11vh);
+    letter-spacing: -.03em;
+    line-height: 1.05;
+  }
+  .rmi__line { grid-area: 1 / 1; margin: 0; white-space: nowrap; }
+  .rmi__m {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding: 0 .02em .16em;
+    margin: 0 -.02em -.16em;
+  }
+  .rmi__w {
+    display: inline-block;
+    transform: translateY(110%);
+    transition: transform .7s cubic-bezier(.22, 1, .36, 1);
+    transition-delay: var(--d, 0s);
+  }
+  .rmi__line.is-in .rmi__w { transform: translateY(0); }
+  .rmi__line.is-out .rmi__w {
+    transform: translateY(-115%);
+    transition-duration: .4s;
+    transition-timing-function: cubic-bezier(.7, 0, .84, 0);
+  }
+
+  html.rmi-on:not(.rmi-skip):not(.rmi-done) #header,
+  html.rmi-on:not(.rmi-skip):not(.rmi-done) .hero-strip-desktop .hero-kicker-row,
+  html.rmi-on:not(.rmi-skip):not(.rmi-done) .hero-strip-desktop h1 .hero-w > span,
+  html.rmi-on:not(.rmi-skip):not(.rmi-done) .hero-strip-desktop .hero-intro-lead,
+  html.rmi-on:not(.rmi-skip):not(.rmi-done) .hero-strip-desktop .hero-intro-actions,
+  html.rmi-on:not(.rmi-skip):not(.rmi-done) .hero-strip-desktop .hero-strip-col-data {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  html.rmi-on:not(.rmi-skip):not(.rmi-done) #header { pointer-events: none; }
+  html.rmi-done #header {
+    animation: rmi-header-in .7s cubic-bezier(.22, 1, .36, 1) both;
+  }
+  html.rmi-done .hero-strip-desktop .hero-kicker-row,
+  html.rmi-done .hero-strip-desktop h1 .hero-w > span,
+  html.rmi-done .hero-strip-desktop .hero-intro-lead,
+  html.rmi-done .hero-strip-desktop .hero-intro-actions,
+  html.rmi-done .hero-strip-desktop .hero-strip-col-data {
+    animation: rmi-rise .7s cubic-bezier(.22, 1, .36, 1) both;
+  }
+  html.rmi-done .hero-strip-desktop h1 .hero-w > span { animation-delay: calc(var(--i, 0) * 80ms); }
+  html.rmi-done .hero-strip-desktop .hero-intro-lead { animation-delay: .24s; }
+  html.rmi-done .hero-strip-desktop .hero-strip-col-data { animation-delay: .28s; }
+  html.rmi-done .hero-strip-desktop .hero-intro-actions { animation-delay: .36s; }
+  html.rmi-done #header { pointer-events: auto; }
+  @keyframes rmi-rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes rmi-header-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.rmi-done #header,
+    html.rmi-done .hero-strip-desktop .hero-kicker-row,
+    html.rmi-done .hero-strip-desktop h1 .hero-w > span,
+    html.rmi-done .hero-strip-desktop .hero-intro-lead,
+    html.rmi-done .hero-strip-desktop .hero-intro-actions,
+    html.rmi-done .hero-strip-desktop .hero-strip-col-data {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  function startRmi() {
+  const root = document.documentElement;
+  const el = document.getElementById('rmi');
+  if (!el || el.dataset.rmiPlay === '1' || !root.classList.contains('rmi-on') || root.classList.contains('rmi-skip')) return;
+  el.dataset.rmiPlay = '1';
+
+  if (el && root.classList.contains('rmi-on')) {
+    const medias = Array.from(document.querySelectorAll('[data-intro-media]'));
+    const media = medias.find((node) => node.getClientRects().length > 0) || medias[0] || null;
+    const video = media ? media.querySelector('[data-intro-video]') : document.querySelector('[data-intro-video]');
+    const a = el.querySelector('.rmi__a');
+    const b = el.querySelector('.rmi__b');
+    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    let done = false;
+
+    window.scrollTo(0, 0);
+
+    const align = () => {
+      const title = document.querySelector('.hero-strip-desktop h1');
+      if (!title) return;
+      root.style.setProperty('--rmi-left', Math.round(title.getBoundingClientRect().left) + 'px');
+    };
+    align();
+    window.addEventListener('resize', align);
+
+    let playing = false;
+    if (video) {
+      const mark = () => {
+        playing = true;
+        if (media) media.classList.remove('rmi-still');
+      };
+      video.muted = true;
+      video.addEventListener('playing', mark, { once: true });
+      if (!video.paused) mark();
+      const play = video.play();
+      if (play && typeof play.then === 'function') play.then(mark).catch(() => {});
+      setTimeout(() => { if (!playing && !done && media) media.classList.add('rmi-still'); }, 2500);
+    }
+
+    const skipEvents = ['click', 'wheel', 'touchstart', 'keydown'];
+    const onSkip = () => finish();
+    skipEvents.forEach((ev) => window.addEventListener(ev, onSkip, { passive: true }));
+
+    const cleanup = () => {
+      if (media) {
+        ['top', 'left', 'right', 'bottom', 'width', 'height'].forEach((prop) => {
+          media.style.removeProperty(prop);
+        });
+      }
+      window.removeEventListener('resize', align);
+      root.classList.remove('rmi-on', 'rmi-landing');
+      root.classList.add('rmi-done', 'rmi-skip');
+      el.classList.add('is-gone');
+      window.dispatchEvent(new CustomEvent('rm:intro-done'));
+      setTimeout(() => el.remove(), 350);
+    };
+
+    function finish() {
+      if (done) return;
+      done = true;
+      skipEvents.forEach((ev) => window.removeEventListener(ev, onSkip));
+      try { sessionStorage.setItem('rmIntroSeen', '1'); } catch (e) {}
+      cleanup();
+    }
+
+    const land = async () => {
+      if (!media || !media.parentElement) return;
+      const r = media.parentElement.getBoundingClientRect();
+      media.style.top = '0px';
+      media.style.left = '0px';
+      media.style.right = 'auto';
+      media.style.bottom = 'auto';
+      media.style.width = window.innerWidth + 'px';
+      media.style.height = window.innerHeight + 'px';
+      await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res)));
+      root.classList.add('rmi-landing');
+      media.style.top = r.top + 'px';
+      media.style.left = r.left + 'px';
+      media.style.width = r.width + 'px';
+      media.style.height = r.height + 'px';
+      await wait(900);
+    };
+
+    (async () => {
+      try { await Promise.race([document.fonts.load('500 84px Yellix'), wait(800)]); } catch (e) {}
+      if (done) return;
+
+      await wait(100); if (done) return;
+      a.classList.add('is-in');
+      await wait(1500); if (done) return;
+      a.classList.add('is-out');
+      await wait(150); if (done) return;
+      b.classList.add('is-in');
+      await wait(1550); if (done) return;
+      b.classList.add('is-out');
+      await wait(100); if (done) return;
+      el.classList.add('is-lift');
+      await wait(250); if (done) return;
+      await land();
+      if (done) return;
+      done = true;
+      skipEvents.forEach((ev) => window.removeEventListener(ev, onSkip));
+      try { sessionStorage.setItem('rmIntroSeen', '1'); } catch (e) {}
+      cleanup();
+    })();
+  }
+  }
+
+  startRmi();
+  document.addEventListener('astro:page-load', startRmi);
+</script>

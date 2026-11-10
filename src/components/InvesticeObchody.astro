@@ -1,0 +1,915 @@
+---
+interface Props {
+  ctaHref?: string;
+  ctaInHead?: boolean;
+}
+const { ctaHref = '#', ctaInHead = false } = Astro.props;
+
+const featured = {
+  plan: '/img/pudorysy/pudorys-holesovice.svg',
+  location: 'Holešovice',
+  layout: '2+kk',
+  tags: ['Předprodej', 'Platby 10\u00a0/\u00a090', 'Postoupení smlouvy'],
+  rows: [
+    { label: 'Ceníková cena', value: '7 636 000 Kč' },
+    { label: 'Sleva v předprodeji 8\u00a0%', value: '− 610 880 Kč' },
+    { label: 'Kupní cena', value: '7 025 120 Kč', strong: true },
+    { label: 'Vložený kapitál (10\u00a0% při podpisu)', value: '702 512 Kč' },
+    { label: 'Postoupení za tržní cenu', value: '8 199 000 Kč' },
+    { label: 'Hrubý zisk', value: '1 173 880 Kč', strong: true },
+  ],
+  result: '+167\u00a0%',
+  resultLabel: 'zhodnocení vloženého kapitálu',
+  note: 'Modelový výpočet před zdaněním a náklady (provize, daně, právní služby). Vychází z vloženého kapitálu 10\u00a0% kupní ceny a ceny postoupení. Minulé výsledky nejsou zárukou budoucích výnosů.',
+};
+
+const deals = [
+  {
+    plan: '/img/pudorysy/pudorys-smichov.svg',
+    location: 'Smíchov',
+    layout: '1+kk',
+    points: ['Předprodej', 'Platby 10\u00a0/\u00a090'],
+  },
+  {
+    plan: '/img/pudorysy/pudorys-malesice.svg',
+    location: 'Malešice',
+    layout: '1,5+kk',
+    points: ['Předprodej se slevou 5\u00a0%', 'Platby 10\u00a0/\u00a090', 'Postoupení smlouvy před dokončením'],
+  },
+  {
+    plan: '/img/pudorysy/pudorys-kyje.svg',
+    location: 'Kyje',
+    layout: '3+kk',
+    points: ['Předprodej se slevou 5\u00a0%', 'Platby 10\u00a0/\u00a090', 'Postoupení smlouvy před dokončením'],
+  },
+];
+---
+
+<section class="ob" aria-labelledby="ob-h">
+  <div class="ob__inner">
+    <header class="ob__head">
+      {ctaInHead ? (
+        <>
+          <div class="ob__title">
+            <h2 id="ob-h" class="ob__h2 font-yellix">Nedávno realizované obchody</h2>
+            <p class="ob__note font-yellix">
+              Konkrétní byty, u kterých jsme využili předprodej, zvýhodněné financování nebo postoupení smlouvy.
+            </p>
+          </div>
+          {ctaHref && ctaHref !== '#' ? (
+            <a class="ob__btn font-yellix" href={ctaHref}>Chci podobnou příležitost</a>
+          ) : (
+            <button
+              type="button"
+              class="ob__btn font-yellix"
+              data-smart-contact-open
+              data-smart-contact-type="client"
+              data-smart-contact-service="Priority"
+            >
+              Chci podobnou příležitost
+            </button>
+          )}
+        </>
+      ) : (
+        <>
+          <h2 id="ob-h" class="ob__h2 font-yellix">Nedávno realizované obchody</h2>
+          <p class="ob__note font-yellix">
+            Konkrétní byty, u kterých jsme využili předprodej, platby 10&nbsp;/&nbsp;90 nebo postoupení smlouvy.
+          </p>
+        </>
+      )}
+    </header>
+
+    <div class="ob__grid" data-ob-swipe>
+      <article class="ob__feat">
+        <div class="ob__plan-col">
+          {ctaInHead && (
+            <h3 class="font-yellix">
+              {featured.location} <span>{featured.layout}</span>
+            </h3>
+          )}
+          <div class="ob__plan">
+            <img src={featured.plan} alt={`Půdorys bytu ${featured.layout}, ${featured.location}`} loading="lazy" />
+          </div>
+        </div>
+        <div class="ob__data">
+          <ul class="ob__tags">
+            {featured.tags.map((t) => (
+              <li class="font-yellix">{t}</li>
+            ))}
+          </ul>
+          {!ctaInHead && (
+            <h3 class="font-yellix">
+              {featured.location} <span>{featured.layout}</span>
+            </h3>
+          )}
+          <dl class="ob__rows">
+            {featured.rows.map((r) => (
+              <div class:list={[r.strong && 'is-strong']}>
+                <dt class="font-yellix">{r.label}</dt>
+                <dd class="font-yellix">{r.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <div class="ob__result">
+            <p class="ob__pct">
+              <strong class="font-yellix">{featured.result}</strong>
+              <button
+                type="button"
+                class="ob__info"
+                data-ob-calc-open
+                aria-haspopup="dialog"
+                aria-controls="ob-calc-modal"
+                aria-label="Zobrazit modelový výpočet"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9"></circle>
+                  <path d="M12 11v5.5M12 7.6v.1"></path>
+                </svg>
+              </button>
+            </p>
+            <span class="font-yellix">{featured.resultLabel}</span>
+          </div>
+          {!ctaInHead && <p class="ob__disc font-yellix">{featured.note}</p>}
+        </div>
+      </article>
+
+      <div class="ob__list">
+        {deals.map((d) => (
+          <article class="ob__deal">
+            <div class="ob__thumb">
+              <img src={d.plan} alt={`Půdorys bytu ${d.layout}, ${d.location}`} loading="lazy" />
+            </div>
+            <div>
+              <h4 class="font-yellix">
+                {d.location} <span>{d.layout}</span>
+              </h4>
+              <ul class="ob__points">
+                {d.points.map((p) => (
+                  <li>
+                    <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+                    <span class="font-yellix">{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+    <div class="ob__dots" data-ob-dots aria-hidden="true">
+      <span class="is-on"></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    {!ctaInHead &&
+      (ctaHref && ctaHref !== '#' ? (
+        <a class="ob__btn font-yellix" href={ctaHref}>
+          <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+          Chci podobnou příležitost
+        </a>
+      ) : (
+        <button
+          type="button"
+          class="ob__btn font-yellix"
+          data-smart-contact-open
+          data-smart-contact-type="client"
+          data-smart-contact-service="Priority"
+        >
+          <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+          Chci podobnou příležitost
+        </button>
+      ))}
+
+    {ctaInHead && (
+      <p class="ob__foot font-yellix">
+        Modelový výpočet před zdaněním a náklady. Minulé výsledky nejsou zárukou budoucích výnosů.
+      </p>
+    )}
+  </div>
+
+  <div class="ob__calc" data-ob-calc hidden aria-hidden="true">
+    <div
+      id="ob-calc-modal"
+      class="ob__calc-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ob-calc-title"
+      tabindex="-1"
+    >
+      <button type="button" class="ob__calc-x" data-ob-calc-close aria-label="Zavřít">×</button>
+      <p class="ob__calc-kicker font-yellix">Modelový výpočet</p>
+      <h3 id="ob-calc-title" class="font-yellix">{featured.location} {featured.layout}</h3>
+      <dl class="ob__calc-rows">
+        {featured.rows.map((r) => (
+          <div class:list={[r.strong && 'is-strong']}>
+            <dt class="font-yellix">{r.label}</dt>
+            <dd class="font-yellix">{r.value}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="ob__calc-pct font-yellix">{featured.result}</p>
+      <p class="ob__calc-note font-yellix">
+        Modelový výpočet před zdaněním a náklady. Minulé výsledky nejsou zárukou budoucích výnosů.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ob {
+    --pad: 1.25rem;
+    background: #fff;
+    color: #000;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+    padding: 4rem var(--pad);
+  }
+  @media (min-width: 768px) {
+    .ob {
+      --pad: 2.5rem;
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .ob {
+      --pad: 3.5rem;
+      padding-top: 7rem;
+      padding-bottom: 7rem;
+    }
+  }
+  .ob :is(h2, h3, h4, p, a, span, dt, dd, li, strong, button) {
+    font-weight: 500;
+  }
+  .ob__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .ob__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 2.25rem;
+  }
+  @media (min-width: 768px) {
+    .ob__head {
+      margin-bottom: 3.5rem;
+    }
+  }
+  @media (min-width: 1200px) {
+    .ob__head {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 2.5rem;
+    }
+  }
+  .ob__title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    min-width: 0;
+  }
+  .ob__title .ob__note {
+    max-width: none;
+  }
+  .ob__h2 {
+    margin: 0;
+    font-size: 28px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+  .ob__note {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(0, 0, 0, 0.6);
+    max-width: 42ch;
+  }
+  @media (min-width: 768px) {
+    .ob__h2 {
+      font-size: 36px;
+    }
+    .ob__note {
+      font-size: 15px;
+    }
+    .ob__title .ob__note {
+      white-space: nowrap;
+    }
+  }
+  @media (min-width: 1280px) {
+    .ob__h2 {
+      font-size: 40px;
+    }
+  }
+
+  .ob__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .ob__dots {
+    display: none;
+  }
+  @media (max-width: 767px) {
+    .ob__grid {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      gap: 0.75rem;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--pad);
+      scrollbar-width: none;
+      margin-inline: calc(-1 * var(--pad));
+      padding-inline: var(--pad);
+      -webkit-overflow-scrolling: touch;
+    }
+    .ob__grid::-webkit-scrollbar {
+      display: none;
+    }
+    .ob__grid::after {
+      content: '';
+      flex: 0 0 var(--pad);
+    }
+    .ob__feat,
+    .ob__deal {
+      flex: 0 0 min(75vw, 22.5rem);
+      width: min(75vw, 22.5rem);
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+    .ob__dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.35rem;
+      margin-top: 1.1rem;
+    }
+    .ob__dots span {
+      width: 1.15rem;
+      height: 2px;
+      background: rgba(0, 0, 0, 0.18);
+    }
+    .ob__dots span.is-on {
+      background: #000;
+    }
+  }
+  @media (min-width: 1200px) {
+    .ob__grid {
+      grid-template-columns: 1.75fr 1fr;
+      gap: 1rem;
+      align-items: stretch;
+    }
+  }
+
+  .ob__plan-col {
+    display: contents;
+  }
+  .ob__feat {
+    background: #f5f5f5;
+    padding: 1.6rem 1.35rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 1.5rem;
+    box-sizing: border-box;
+  }
+  @media (min-width: 768px) {
+    .ob__feat {
+      grid-template-columns: minmax(200px, 280px) 1fr;
+      column-gap: 2.25rem;
+      padding: 2rem 1.75rem;
+      align-items: center;
+    }
+  }
+  @media (min-width: 1200px) {
+    .ob__feat {
+      grid-template-columns: minmax(220px, 300px) 1fr;
+      column-gap: 2.5rem;
+      padding: 2.25rem;
+    }
+  }
+  .ob__plan img {
+    display: block;
+    width: 100%;
+    max-width: 20rem;
+    height: auto;
+    margin: 0 auto;
+  }
+  @media (min-width: 768px) {
+    .ob__plan img {
+      margin: 0;
+      max-width: none;
+    }
+  }
+
+  .ob__tags {
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .ob__tags li {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+  }
+  .ob__feat h3 {
+    margin: 0 0 1.25rem;
+    font-size: 22px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  @media (min-width: 768px) {
+    .ob__feat h3 {
+      font-size: 26px;
+    }
+  }
+  .ob__feat h3 span,
+  .ob__deal h4 span {
+    color: rgba(0, 0, 0, 0.45);
+  }
+
+  .ob__rows {
+    margin: 0;
+  }
+  .ob__rows div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 0.65rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.7);
+    font-variant-numeric: proportional-nums;
+  }
+  @media (min-width: 768px) {
+    .ob__rows div {
+      font-size: 15px;
+    }
+  }
+  .ob__rows dt {
+    margin: 0;
+  }
+  .ob__rows dd {
+    margin: 0;
+    color: #000;
+    white-space: nowrap;
+  }
+  .ob__rows .is-strong {
+    color: #000;
+  }
+  .ob__result {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .ob__pct {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .ob__info {
+    display: none;
+    width: 1.15rem;
+    height: 1.15rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+    touch-action: manipulation;
+    position: relative;
+    z-index: 2;
+  }
+  .ob__info svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .ob__calc {
+    display: none;
+  }
+  .ob__result strong {
+    font-size: 40px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+  }
+  @media (min-width: 768px) {
+    .ob__result strong {
+      font-size: 48px;
+    }
+  }
+  .ob__result span {
+    font-size: 14px;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .ob__disc {
+    margin: 1rem 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.45);
+  }
+
+  .ob__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  @media (max-width: 767px) {
+    .ob__list {
+      display: contents;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .ob__list {
+      flex-direction: row;
+      gap: 1rem;
+    }
+  }
+  @media (min-width: 1200px) {
+    .ob__list {
+      height: 100%;
+      gap: 1rem;
+    }
+  }
+  .ob__deal {
+    flex: 1;
+    background: #f5f5f5;
+    padding: 1.35rem;
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    column-gap: 1.25rem;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .ob__deal {
+      grid-template-columns: 1fr;
+      row-gap: 1rem;
+      align-items: start;
+      padding: 1.5rem;
+    }
+  }
+  @media (min-width: 1200px) {
+    .ob__deal {
+      grid-template-columns: 7.5rem 1fr;
+      column-gap: 1.5rem;
+      padding: 1.5rem 1.75rem;
+    }
+  }
+  .ob__thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 5.5rem;
+  }
+  .ob__thumb img {
+    display: block;
+    max-width: 5.5rem;
+    max-height: 7rem;
+    width: auto;
+    height: auto;
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .ob__thumb {
+      justify-content: flex-start;
+    }
+  }
+  @media (min-width: 1200px) {
+    .ob__thumb {
+      min-height: 8.5rem;
+    }
+    .ob__thumb img {
+      max-width: 7.5rem;
+      max-height: 8.75rem;
+    }
+  }
+  .ob__deal h4 {
+    margin: 0 0 0.75rem;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+  }
+  @media (min-width: 768px) {
+    .ob__deal h4 {
+      font-size: 22px;
+    }
+  }
+  .ob__points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .ob__points li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  @media (min-width: 768px) {
+    .ob__points li {
+      font-size: 15px;
+    }
+  }
+  .ob__points img {
+    flex: 0 0 auto;
+    width: 12px;
+    height: 12px;
+    margin-top: 0.2rem;
+    filter: brightness(0);
+  }
+
+  .ob__head .ob__btn {
+    margin-top: 0;
+    flex: 0 0 auto;
+    align-self: flex-start;
+  }
+  .ob__foot {
+    margin: 1.5rem 0 0;
+    font-size: 12px;
+    line-height: 1.55;
+    color: rgba(0, 0, 0, 0.4);
+  }
+  .ob__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2.25rem;
+    padding: 0.7rem 1rem;
+    background: #000;
+    color: #fff;
+    border: 0;
+    font-size: 13px;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .ob__btn img {
+    width: 12px;
+    height: 12px;
+    display: block;
+  }
+  .ob__btn:hover {
+    opacity: 0.85;
+  }
+
+  @media (max-width: 767px) {
+    .ob__feat {
+      padding: 1.35rem 1.2rem 1.25rem;
+      row-gap: 1.1rem;
+    }
+    .ob__feat h3 {
+      margin: 0;
+      text-align: center;
+      font-size: 20px;
+    }
+    .ob__plan img {
+      max-width: 12rem;
+    }
+    .ob__tags {
+      margin-bottom: 0;
+      justify-content: center;
+    }
+    .ob__feat .ob__rows {
+      display: none;
+    }
+    .ob__result {
+      margin-top: 0.25rem;
+      padding-top: 0.35rem;
+      border-top: 0;
+      align-items: center;
+      text-align: center;
+    }
+    .ob__pct {
+      justify-content: center;
+    }
+    .ob__info {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ob__result strong {
+      font-size: 32px;
+    }
+    .ob__calc {
+      display: flex;
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      background: rgba(0, 0, 0, 0.8);
+    }
+    .ob__calc[hidden] {
+      display: none;
+    }
+    .ob__calc-panel {
+      position: relative;
+      width: min(100%, 24rem);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #f5f5f5;
+      color: #000;
+      padding: 2.25rem 1.35rem 1.5rem;
+    }
+    .ob__calc-x {
+      position: absolute;
+      top: 0.85rem;
+      right: 1rem;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: rgba(0, 0, 0, 0.45);
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .ob__calc-kicker {
+      margin: 0 0 0.4rem;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.45);
+    }
+    .ob__calc-panel h3 {
+      margin: 0 0 1.15rem;
+      font-size: 22px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .ob__calc-rows {
+      margin: 0;
+    }
+    .ob__calc-rows div {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.55rem 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.7);
+      font-variant-numeric: proportional-nums;
+    }
+    .ob__calc-rows dt {
+      margin: 0;
+    }
+    .ob__calc-rows dd {
+      margin: 0;
+      color: #000;
+      white-space: nowrap;
+    }
+    .ob__calc-rows .is-strong {
+      color: #000;
+    }
+    .ob__calc-pct {
+      margin: 1rem 0 0;
+      padding-top: 0.9rem;
+      border-top: 1px solid #000;
+      font-size: 32px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .ob__calc-note {
+      margin: 0.85rem 0 0;
+      font-size: 12px;
+      line-height: 1.5;
+      color: rgba(0, 0, 0, 0.45);
+    }
+    .ob__deal {
+      flex: 0 0 min(75vw, 22.5rem);
+      width: min(75vw, 22.5rem);
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'title'
+        'plan'
+        'points';
+      justify-items: center;
+      align-content: space-between;
+      text-align: center;
+      row-gap: 1rem;
+      padding: 1.35rem 1.2rem 1.25rem;
+    }
+    .ob__deal > div {
+      display: contents;
+    }
+    .ob__thumb {
+      grid-area: plan;
+      width: 100%;
+      min-height: 12rem;
+    }
+    .ob__thumb img {
+      max-width: 11rem;
+      max-height: 13.5rem;
+    }
+    .ob__deal h4 {
+      grid-area: title;
+      margin: 0;
+      font-size: 20px;
+    }
+    .ob__points {
+      grid-area: points;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .ob__points li {
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      padding: 0.35rem 0.6rem;
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      gap: 0;
+    }
+    .ob__points img {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function initObchodySwipe() {
+    const scroller = document.querySelector('[data-ob-swipe]') as HTMLElement | null;
+    const dots = [...document.querySelectorAll('[data-ob-dots] span')];
+    if (!scroller || !dots.length) return;
+
+    if (scroller.dataset.obSwipeBound === '1') return;
+    scroller.dataset.obSwipeBound = '1';
+
+    const cards = [...scroller.querySelectorAll<HTMLElement>('.ob__feat, .ob__deal')];
+    const update = () => {
+      const step = (cards[0]?.offsetWidth || 0) + 12 || 1;
+      const active = Math.min(dots.length - 1, Math.max(0, Math.round(scroller.scrollLeft / step)));
+      dots.forEach((dot, i) => dot.classList.toggle('is-on', i === active));
+    };
+
+    scroller.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
+  function initObchodyCalc() {
+    const overlay = document.querySelector('[data-ob-calc]') as HTMLElement | null;
+    const openBtn = document.querySelector('[data-ob-calc-open]') as HTMLElement | null;
+    const panel = overlay?.querySelector<HTMLElement>('.ob__calc-panel');
+    if (!overlay || !openBtn || !panel || overlay.dataset.bound === '1') return;
+    overlay.dataset.bound = '1';
+
+    const open = () => {
+      overlay.hidden = false;
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      panel.focus();
+    };
+    const close = () => {
+      if (overlay.hidden) return;
+      overlay.hidden = true;
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      openBtn.focus();
+    };
+
+    openBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      open();
+    });
+    overlay.addEventListener('click', close);
+    panel.addEventListener('click', (event) => event.stopPropagation());
+    overlay.querySelectorAll('[data-ob-calc-close]').forEach((btn) => {
+      btn.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') close();
+    });
+  }
+
+  initObchodySwipe();
+  initObchodyCalc();
+  document.addEventListener('astro:page-load', () => {
+    initObchodySwipe();
+    initObchodyCalc();
+  });
+</script>

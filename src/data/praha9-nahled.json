@@ -1,0 +1,7596 @@
+{
+  "district": "Praha 9",
+  "exportedOn": "2026-11-02",
+  "count": 33,
+  "projects": [
+    {
+      "id": "3216a361-1e57-41e8-a450-5b15689833c2",
+      "name": "Bydlení mezi vrchy",
+      "developer": "Bydlení mezi vrchy",
+      "quarter": "Hrdlořezy",
+      "address": "Praha 9, 190 00 Praha, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.0936038354977,
+      "lng": 14.5183114969033,
+      "completion": "2027-05",
+      "projectUrl": "https://www.bydlenimezivrchy.cz/",
+      "coverUrl": "https://www.bydlenimezivrchy.cz/wp-content/uploads/2025/06/727-EXT-CORR-Scene-2_6-copy.jpg",
+      "priceFrom": 6421360,
+      "pricePerSmFrom": 140212,
+      "layouts": [
+        "1+kk",
+        "4+kk"
+      ],
+      "counts": {
+        "available": 6,
+        "reserved": 2,
+        "sold": 22,
+        "total": 30
+      },
+      "header": {
+        "payments": {
+          "contractPct": 20,
+          "constructionPct": 65,
+          "moveInPct": 15
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 6421360,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 11500170,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Kolbenova",
+          "distanceM": 1870
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Podkovářská",
+          "distanceM": 1082
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Kolonie",
+          "distanceM": 472
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Libeň",
+          "distanceM": 1384
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 414
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Edu Bubo Klub – DS KLUBÍK V PŘÍRODĚ",
+          "distanceM": 1294
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Lidl",
+          "distanceM": 293
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": null,
+          "distanceM": 636
+        }
+      ],
+      "summary": {
+        "available": 6,
+        "reserved": 2,
+        "sold": 22,
+        "total": 30,
+        "soldPct": 73,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 4,
+            "total": 15
+          },
+          {
+            "layout": "2+kk",
+            "available": 0,
+            "total": 3
+          },
+          {
+            "layout": "3+kk",
+            "available": 0,
+            "total": 8
+          },
+          {
+            "layout": "4+kk",
+            "available": 2,
+            "total": 4
+          }
+        ],
+        "pricePerSm": {
+          "min": 140212,
+          "median": 147144,
+          "max": 153210
+        },
+        "price": {
+          "min": 6421360,
+          "median": 6665730,
+          "max": 11565170
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 133784
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 134180
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 147144
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 147144
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 147144
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 147144
+        }
+      ],
+      "standards": {
+        "flooring": "Vinyl",
+        "heating": "Podlahové",
+        "windows": "Plast",
+        "partitionWalls": null,
+        "cooling": null,
+        "exteriorBlinds": null,
+        "airConditioning": null,
+        "coolingCeilings": null,
+        "recuperation": null,
+        "smartHome": null,
+        "amenities": [
+          "tepelné čerpadlo",
+          "příprava na fotovoltaiku"
+        ]
+      }
+    },
+    {
+      "id": "5b6c3127-0ec6-42e1-8e50-f100eb489989",
+      "name": "Byty Nad Krocínkou IV",
+      "developer": "FINEP CZ",
+      "quarter": "Prosek",
+      "address": "Čakovická 23/23, 190 00 Praha 9-Prosek, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1191579678196,
+      "lng": 14.507758719753,
+      "completion": "2027",
+      "projectUrl": "https://www.finep.cz/cs/byty-nad-krocinkou/cenik",
+      "coverUrl": "https://www.finep.cz/files/images/photo/7966_smart.jpg",
+      "priceFrom": 8844170,
+      "pricePerSmFrom": 157314,
+      "layouts": [
+        "2+kk"
+      ],
+      "counts": {
+        "available": 3,
+        "reserved": 0,
+        "sold": 67,
+        "total": 70
+      },
+      "header": {
+        "payments": {
+          "contractPct": 90,
+          "constructionPct": 0,
+          "moveInPct": 10
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 8844170,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Prosek",
+          "distanceM": 661
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Vysočanská",
+          "distanceM": 916
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Klíčovská",
+          "distanceM": 200
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 1053
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": "ZŠ Spektrum",
+          "distanceM": 667
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Mateřská škola Na výsluní",
+          "distanceM": 431
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "PENNY",
+          "distanceM": 352
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "park Srdce",
+          "distanceM": 385
+        }
+      ],
+      "summary": {
+        "available": 3,
+        "reserved": 0,
+        "sold": 67,
+        "total": 70,
+        "soldPct": 96,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 0,
+            "total": 9
+          },
+          {
+            "layout": "2+kk",
+            "available": 3,
+            "total": 51
+          },
+          {
+            "layout": "3+kk",
+            "available": 0,
+            "total": 8
+          },
+          {
+            "layout": "4+kk",
+            "available": 0,
+            "total": 2
+          }
+        ],
+        "pricePerSm": {
+          "min": 157314,
+          "median": 167683,
+          "max": 168155
+        },
+        "price": {
+          "min": 8844170,
+          "median": 9791021,
+          "max": 9853857
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 173957
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 166495
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 166792
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 167559
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 167386
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 167683
+        }
+      ],
+      "standards": {
+        "flooring": null,
+        "heating": "Radiátory",
+        "windows": "Plast",
+        "partitionWalls": "Zděné",
+        "cooling": null,
+        "exteriorBlinds": "příprava",
+        "airConditioning": null,
+        "coolingCeilings": null,
+        "recuperation": null,
+        "smartHome": null,
+        "amenities": []
+      }
+    },
+    {
+      "id": "06bc8b94-ca75-4daa-bc88-02127b3b7eba",
+      "name": "Čtvrť Emila Kolbena - HIJ",
+      "developer": "Skanska Residential",
+      "quarter": "Vysočany",
+      "address": "Kolbenova 473/36, 190 00 Praha 9, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1103872046678,
+      "lng": 14.5136057216778,
+      "completion": "2029-06",
+      "projectUrl": "https://residential.skanska.cz/ctvrt-emila-kolbena-hij-byty",
+      "coverUrl": "https://residential.skanska.cz/files/responsive/1920/0/skanska-cek-ij-ext-cam-11-2000.jpg",
+      "priceFrom": 9660000,
+      "pricePerSmFrom": 136824,
+      "layouts": [
+        "2+kk",
+        "3+kk",
+        "4+kk",
+        "5+kk"
+      ],
+      "counts": {
+        "available": 76,
+        "reserved": 28,
+        "sold": 89,
+        "total": 193
+      },
+      "header": {
+        "payments": {
+          "contractPct": 20,
+          "constructionPct": 60,
+          "moveInPct": 20
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 9660000,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 11410000,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 14230000,
+            "note": null
+          },
+          {
+            "layout": "5+kk",
+            "priceFrom": 22740000,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Kolbenova",
+          "distanceM": 212
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Kolbenova",
+          "distanceM": 149
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Kolbenova",
+          "distanceM": 61
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 1160
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 596
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Edu Bubo Klub – DS KLUBÍK U ROKYTKY",
+          "distanceM": 590
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "ASU Market",
+          "distanceM": 391
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": null,
+          "distanceM": 385
+        }
+      ],
+      "summary": {
+        "available": 76,
+        "reserved": 28,
+        "sold": 89,
+        "total": 193,
+        "soldPct": 46,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 0,
+            "total": 33
+          },
+          {
+            "layout": "2+kk",
+            "available": 20,
+            "total": 38
+          },
+          {
+            "layout": "3+kk",
+            "available": 26,
+            "total": 82
+          },
+          {
+            "layout": "4+kk",
+            "available": 27,
+            "total": 35
+          },
+          {
+            "layout": "5+kk",
+            "available": 3,
+            "total": 5
+          }
+        ],
+        "pricePerSm": {
+          "min": 136824,
+          "median": 154383,
+          "max": 186815
+        },
+        "price": {
+          "min": 9660000,
+          "median": 13875000,
+          "max": 24960000
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 154111
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 154220
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 152852
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 154028
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 154383
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 154383
+        }
+      ],
+      "standards": {
+        "flooring": "Vinyl",
+        "heating": "Podlahové",
+        "windows": null,
+        "partitionWalls": null,
+        "cooling": null,
+        "exteriorBlinds": null,
+        "airConditioning": null,
+        "coolingCeilings": null,
+        "recuperation": true,
+        "smartHome": true,
+        "amenities": [
+          "klidové zóny s lavičkami",
+          "stolky",
+          "pergolami",
+          "workoutové hřiště",
+          "říční kameny sloužící jako městský mobiliář",
+          "odchodové tlačítko",
+          "fotovoltaika",
+          "akumulační nádrže",
+          "solární termické panely"
+        ]
+      }
+    },
+    {
+      "id": "04baac53-a76d-4a09-abed-d76b3655748f",
+      "name": "Dvory Vysočany",
+      "developer": "Corwin",
+      "quarter": "Vysočany",
+      "address": "54, Novovysočanská 640, 190 00 Praha 9, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1003630797587,
+      "lng": 14.499156149569,
+      "completion": "2029-06",
+      "projectUrl": "https://prodej.dvoryvysocany.cz/apartments/dvory/",
+      "coverUrl": "https://dvoryvysocany.cz/wp-content/uploads/2026/02/dvoryvysocany.cz-gallery01-gallery01.jpg",
+      "priceFrom": 5842100,
+      "pricePerSmFrom": 141104,
+      "layouts": [
+        "1+kk",
+        "1,5+kk",
+        "2+kk",
+        "3+kk",
+        "4+kk"
+      ],
+      "counts": {
+        "available": 84,
+        "reserved": 16,
+        "sold": 83,
+        "total": 183
+      },
+      "header": {
+        "payments": {
+          "contractPct": 15,
+          "constructionPct": 0,
+          "moveInPct": 85
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 5842100,
+            "note": null
+          },
+          {
+            "layout": "1,5+kk",
+            "priceFrom": 6583700,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 8350900,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 10916700,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 16275200,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Českomoravská",
+          "distanceM": 832
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Nádraží Libeň",
+          "distanceM": 267
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "K Žižkovu",
+          "distanceM": 202
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Libeň",
+          "distanceM": 229
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 358
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Mateřská škola Dětský úsměv",
+          "distanceM": 637
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Lidl",
+          "distanceM": 149
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": null,
+          "distanceM": 642
+        }
+      ],
+      "summary": {
+        "available": 84,
+        "reserved": 16,
+        "sold": 83,
+        "total": 183,
+        "soldPct": 45,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 7,
+            "total": 19
+          },
+          {
+            "layout": "1,5+kk",
+            "available": 19,
+            "total": 41
+          },
+          {
+            "layout": "2+kk",
+            "available": 34,
+            "total": 74
+          },
+          {
+            "layout": "3+kk",
+            "available": 18,
+            "total": 40
+          },
+          {
+            "layout": "4+kk",
+            "available": 6,
+            "total": 9
+          }
+        ],
+        "pricePerSm": {
+          "min": 141104,
+          "median": 177948,
+          "max": 227093
+        },
+        "price": {
+          "min": 5842100,
+          "median": 9226750,
+          "max": 17896900
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 177927
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 177892
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 177969
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 177927
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 178614
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 177948
+        }
+      ],
+      "standards": {
+        "flooring": "Dřevo",
+        "heating": "Podlahové",
+        "windows": null,
+        "partitionWalls": null,
+        "cooling": "Částečná klimatizace",
+        "exteriorBlinds": "příprava",
+        "airConditioning": null,
+        "coolingCeilings": false,
+        "recuperation": true,
+        "smartHome": null,
+        "amenities": []
+      }
+    },
+    {
+      "id": "c9272f1c-77a8-442a-aad8-ae54be239327",
+      "name": "Harfa Living - A",
+      "developer": "CENTRAL GROUP",
+      "quarter": "Vysočany",
+      "address": "Poděbradská 195/7, 190 00 Praha 9-Vysočany, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1026029140441,
+      "lng": 14.5070448545882,
+      "completion": "2025-12",
+      "projectUrl": "https://www.central-group.cz/prehled-bytu/152?layoutRoomCounts%5B0%5D=1&layoutRoomCounts%5B1%5D=2&layoutRoomCounts%5B2%5D=3&floorLevels%5B0%5D=0&floorLevels%5B1%5D=1&floorLevels%5B2%5D=2&floorLevels%5B3%5D=3&floorLevels%5B4%5D=4&floorLevels%5B5%5D=5&floorLevels%5B6%5D=6&floorLevels%5B7%5D=7&floorLevels%5B8%5D=8&floorLevels%5B9%5D=9&floorLevels%5B10%5D=10&floorLevels%5B11%5D=11&housingBlockIds%5B0%5D=2340&completionDate=2999-12-31T00%3A00%3A00&sort=1&sortDirection=1&search=true",
+      "coverUrl": "https://www.central-group.cz/Uloziste/ab/abcd4480-6d73-48e9-a4bf-b217fc5ab72b.jpg",
+      "priceFrom": 16369676,
+      "pricePerSmFrom": 135466,
+      "layouts": [
+        "3+kk"
+      ],
+      "counts": {
+        "available": 1,
+        "reserved": 0,
+        "sold": 121,
+        "total": 122
+      },
+      "header": {
+        "payments": {
+          "contractPct": 10,
+          "constructionPct": 60,
+          "moveInPct": 30
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 16369676,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Vysočanská",
+          "distanceM": 931
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Kabešova",
+          "distanceM": 84
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Nádraží Libeň",
+          "distanceM": 298
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Libeň",
+          "distanceM": 400
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 129
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Edu Bubo Klub – DS KLUBÍK V PŘÍRODĚ",
+          "distanceM": 490
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Albert",
+          "distanceM": 277
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "Park Podkovářská",
+          "distanceM": 445
+        }
+      ],
+      "summary": {
+        "available": 1,
+        "reserved": 0,
+        "sold": 121,
+        "total": 122,
+        "soldPct": 99,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 0,
+            "total": 89
+          },
+          {
+            "layout": "2+kk",
+            "available": 0,
+            "total": 31
+          },
+          {
+            "layout": "3+kk",
+            "available": 1,
+            "total": 2
+          }
+        ],
+        "pricePerSm": {
+          "min": 135466,
+          "median": 135466,
+          "max": 135466
+        },
+        "price": {
+          "min": 16369676,
+          "median": 16369676,
+          "max": 16369676
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 158624
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 181781
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 135466
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 135466
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 135466
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 135466
+        }
+      ],
+      "standards": {
+        "flooring": "Laminát",
+        "heating": "Radiátory",
+        "windows": "Plast",
+        "partitionWalls": "Zděné, sádrokarton",
+        "cooling": "Částečná klimatizace",
+        "exteriorBlinds": null,
+        "airConditioning": false,
+        "coolingCeilings": false,
+        "recuperation": false,
+        "smartHome": false,
+        "amenities": []
+      }
+    },
+    {
+      "id": "ce1767bd-1620-45a6-bbc7-fcb88ab3aa01",
+      "name": "Harfa Living - C",
+      "developer": "CENTRAL GROUP",
+      "quarter": "Vysočany",
+      "address": "Kabešova 943, 190 00 Praha 9-Vysočany, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1034553811178,
+      "lng": 14.507735350879,
+      "completion": "2026-12",
+      "projectUrl": "https://www.central-group.cz/prehled-bytu/152?housingBlockIds%5B0%5D=2342",
+      "coverUrl": "https://www.central-group.cz/Uloziste/80/80fbb99d-badd-46dd-b586-cfd14d88e0eb.jpg",
+      "priceFrom": 7796578,
+      "pricePerSmFrom": 110783,
+      "layouts": [
+        "1+kk",
+        "2+kk",
+        "3+kk"
+      ],
+      "counts": {
+        "available": 9,
+        "reserved": 6,
+        "sold": 220,
+        "total": 235
+      },
+      "header": {
+        "payments": {
+          "contractPct": 10,
+          "constructionPct": 60,
+          "moveInPct": 30
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 7796578,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 8902493,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 15710825,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Vysočanská",
+          "distanceM": 872
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Kabešova",
+          "distanceM": 125
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Nádraží Libeň",
+          "distanceM": 386
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Libeň",
+          "distanceM": 495
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 192
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Edu Bubo Klub – DS KLUBÍK V PŘÍRODĚ",
+          "distanceM": 406
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Albert",
+          "distanceM": 193
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "Park Podkovářská",
+          "distanceM": 367
+        }
+      ],
+      "summary": {
+        "available": 9,
+        "reserved": 6,
+        "sold": 220,
+        "total": 235,
+        "soldPct": 94,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 1,
+            "total": 108
+          },
+          {
+            "layout": "2+kk",
+            "available": 7,
+            "total": 120
+          },
+          {
+            "layout": "3+kk",
+            "available": 1,
+            "total": 7
+          }
+        ],
+        "pricePerSm": {
+          "min": 110783,
+          "median": 148722,
+          "max": 168246
+        },
+        "price": {
+          "min": 7796578,
+          "median": 10089330,
+          "max": 15710825
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 145866
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 147209
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 147203
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 147272
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 148722
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 148722
+        }
+      ],
+      "standards": {
+        "flooring": "Koberec",
+        "heating": "Radiátory",
+        "windows": "Plast",
+        "partitionWalls": "Zděné, sádrokarton",
+        "cooling": "Částečná klimatizace",
+        "exteriorBlinds": "ano",
+        "airConditioning": false,
+        "coolingCeilings": false,
+        "recuperation": false,
+        "smartHome": false,
+        "amenities": []
+      }
+    },
+    {
+      "id": "760278a8-bee6-4bce-881b-123e1278c49a",
+      "name": "Harfa Living - D",
+      "developer": "CENTRAL GROUP",
+      "quarter": "Vysočany",
+      "address": "Pod Harfou 46, 190 00 Praha 9, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1032276835462,
+      "lng": 14.5062146031215,
+      "completion": "2027-12",
+      "projectUrl": "https://central-group.cz/prehled-bytu/152?layoutRoomCounts%5B0%5D=1&layoutRoomCounts%5B1%5D=2&layoutRoomCounts%5B2%5D=3&floorLevels%5B0%5D=1&floorLevels%5B1%5D=2&floorLevels%5B2%5D=4&housingBlockIds%5B0%5D=2343&completionDate=2999-12-31T00%3A00%3A00&csh=302&predbezne=3305&sort=1&sortDirection=1&search=true",
+      "coverUrl": "https://www.central-group.cz/Uloziste/b4/b467fdf9-982c-4bb1-9e28-e5b22be9dfa4.jpg",
+      "priceFrom": 6571634,
+      "pricePerSmFrom": 114029,
+      "layouts": [
+        "1+kk",
+        "2+kk",
+        "3+kk"
+      ],
+      "counts": {
+        "available": 68,
+        "reserved": 15,
+        "sold": 32,
+        "total": 115
+      },
+      "header": {
+        "payments": {
+          "contractPct": 10,
+          "constructionPct": 60,
+          "moveInPct": 30
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 6571634,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 8499301,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 13559037,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Vysočanská",
+          "distanceM": 843
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Harfa",
+          "distanceM": 163
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Nádraží Libeň",
+          "distanceM": 284
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Libeň",
+          "distanceM": 398
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 81
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Mateřská škola",
+          "distanceM": 434
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Albert",
+          "distanceM": 305
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": null,
+          "distanceM": 397
+        }
+      ],
+      "summary": {
+        "available": 68,
+        "reserved": 15,
+        "sold": 32,
+        "total": 115,
+        "soldPct": 28,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 25,
+            "total": 49
+          },
+          {
+            "layout": "2+kk",
+            "available": 37,
+            "total": 59
+          },
+          {
+            "layout": "3+kk",
+            "available": 6,
+            "total": 7
+          }
+        ],
+        "pricePerSm": {
+          "min": 114029,
+          "median": 150219,
+          "max": 192014
+        },
+        "price": {
+          "min": 6571634,
+          "median": 9161124,
+          "max": 17325280
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 149794
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 151033
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 149670
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 149535
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 150350
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 150219
+        }
+      ],
+      "standards": {
+        "flooring": "Laminát",
+        "heating": "Radiátory",
+        "windows": "Plast",
+        "partitionWalls": "Zděné, sádrokarton",
+        "cooling": "Částečná klimatizace",
+        "exteriorBlinds": null,
+        "airConditioning": null,
+        "coolingCeilings": false,
+        "recuperation": false,
+        "smartHome": false,
+        "amenities": []
+      }
+    },
+    {
+      "id": "bad0a375-0e2b-49e0-984f-75a8b7da3400",
+      "name": "Harfa Park XI",
+      "developer": "FINEP CZ",
+      "quarter": "Vysočany",
+      "address": "Pod Harfou 118/11, 190 00 Praha 9, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1042515324577,
+      "lng": 14.506859654377,
+      "completion": null,
+      "projectUrl": "https://www.finep.cz/cs/byty-harfa-park/cenik",
+      "coverUrl": "https://www.finep.cz/files/images/photo/9025_detail.jpg",
+      "priceFrom": 8091332,
+      "pricePerSmFrom": 175899,
+      "layouts": [
+        "2+kk"
+      ],
+      "counts": {
+        "available": 3,
+        "reserved": 4,
+        "sold": 82,
+        "total": 89
+      },
+      "header": {
+        "payments": {
+          "contractPct": 90,
+          "constructionPct": 0,
+          "moveInPct": 10
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 8091332,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Vysočanská",
+          "distanceM": 764
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Kabešova",
+          "distanceM": 230
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Nádraží Libeň",
+          "distanceM": 397
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Libeň",
+          "distanceM": 514
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 174
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Mateřská škola",
+          "distanceM": 328
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Albert",
+          "distanceM": 252
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "park Krále Alexandra",
+          "distanceM": 293
+        }
+      ],
+      "summary": {
+        "available": 3,
+        "reserved": 4,
+        "sold": 82,
+        "total": 89,
+        "soldPct": 92,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 0,
+            "total": 7
+          },
+          {
+            "layout": "2+kk",
+            "available": 3,
+            "total": 62
+          },
+          {
+            "layout": "3+kk",
+            "available": 0,
+            "total": 12
+          },
+          {
+            "layout": "4+kk",
+            "available": 0,
+            "total": 8
+          }
+        ],
+        "pricePerSm": {
+          "min": 175899,
+          "median": 185875,
+          "max": 187493
+        },
+        "price": {
+          "min": 8091332,
+          "median": 8290045,
+          "max": 8418424
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 181040
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 182587
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 184092
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 182010
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 185546
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 185875
+        }
+      ],
+      "standards": {
+        "flooring": null,
+        "heating": "Radiátory",
+        "windows": "Plast",
+        "partitionWalls": "Zděné, sádrokarton",
+        "cooling": null,
+        "exteriorBlinds": null,
+        "airConditioning": null,
+        "coolingCeilings": null,
+        "recuperation": null,
+        "smartHome": null,
+        "amenities": [
+          "fotovoltaická elektrická stanice na střeše"
+        ]
+      }
+    },
+    {
+      "id": "f4fbb7d9-f28b-45b6-9ad5-e935187d34b8",
+      "name": "Harmonia",
+      "developer": "Gaudí Development",
+      "quarter": "Hrdlořezy",
+      "address": "Mezitraťová 343, 190 00 Praha 9-Hrdlořezy, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.0989969367662,
+      "lng": 14.5153481302882,
+      "completion": "2025-12",
+      "projectUrl": "https://www.gaudi.cz/nase-projekty/harmonia?limit=12",
+      "coverUrl": "https://res.cloudinary.com/honzavrkota/image/upload/v1698312732/2023_08_12_Jirankova_vila_0040_ft6wrd.jpg",
+      "priceFrom": 4517440,
+      "pricePerSmFrom": 135396,
+      "layouts": [
+        "1+kk",
+        "3+kk",
+        "4+kk"
+      ],
+      "counts": {
+        "available": 4,
+        "reserved": 0,
+        "sold": 64,
+        "total": 68
+      },
+      "header": {
+        "payments": null,
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 4517440,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 14967440,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 21367440,
+            "note": null
+          },
+          {
+            "layout": "5+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Kolbenova",
+          "distanceM": 1269
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Podkovářská",
+          "distanceM": 449
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Vinice Hrdlořezy",
+          "distanceM": 203
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Libeň",
+          "distanceM": 947
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 616
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Edu Bubo Klub – DS KLUBÍK V PŘÍRODĚ",
+          "distanceM": 660
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Billa",
+          "distanceM": 433
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "Park Podkovářská",
+          "distanceM": 600
+        }
+      ],
+      "summary": {
+        "available": 4,
+        "reserved": 0,
+        "sold": 64,
+        "total": 68,
+        "soldPct": 94,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 1,
+            "total": 11
+          },
+          {
+            "layout": "2+kk",
+            "available": 0,
+            "total": 21
+          },
+          {
+            "layout": "3+kk",
+            "available": 2,
+            "total": 27
+          },
+          {
+            "layout": "4+kk",
+            "available": 1,
+            "total": 7
+          },
+          {
+            "layout": "5+kk",
+            "available": 0,
+            "total": 2
+          }
+        ],
+        "pricePerSm": {
+          "min": 135396,
+          "median": 166589,
+          "max": 183301
+        },
+        "price": {
+          "min": 4517440,
+          "median": 15167440,
+          "max": 21367440
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 158606
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 166072
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 178555
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 178555
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 166589
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 166589
+        }
+      ],
+      "standards": {
+        "flooring": "Dřevo",
+        "heating": "Podlahové",
+        "windows": "Plast",
+        "partitionWalls": "Zděné",
+        "cooling": "Částečná klimatizace",
+        "exteriorBlinds": null,
+        "airConditioning": null,
+        "coolingCeilings": false,
+        "recuperation": true,
+        "smartHome": true,
+        "amenities": [
+          "Sauna s odpočívárnou",
+          "venkovní i vnitřní posilovna",
+          "umývárna kol a psů",
+          "fotovoltaické panely"
+        ]
+      }
+    },
+    {
+      "id": "ed352e70-3c96-4687-82d7-8a3629b33e1f",
+      "name": "Kolben Gate - Volt",
+      "developer": "CRONESTA DEVELOPMENT",
+      "quarter": "Vysočany",
+      "address": "Kolbenova 985/11a, 190 00 Praha 9, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1112311546211,
+      "lng": 14.5210094517448,
+      "completion": "2028-11",
+      "projectUrl": "https://www.kolbengate.cz/cenik",
+      "coverUrl": "https://www.kolbengate.cz/files/bl8z-KOLBEN%20GATE_BC_1_small.jpg",
+      "priceFrom": 5428184,
+      "pricePerSmFrom": 91525,
+      "layouts": [
+        "1+kk",
+        "2+kk",
+        "3+kk"
+      ],
+      "counts": {
+        "available": 15,
+        "reserved": 3,
+        "sold": 40,
+        "total": 58
+      },
+      "header": {
+        "payments": {
+          "contractPct": 15,
+          "constructionPct": 0,
+          "moveInPct": 85
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 5428184,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 8468184,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 11468184,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Kolbenova",
+          "distanceM": 330
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Kolbenova",
+          "distanceM": 358
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Kolbenova",
+          "distanceM": 462
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 1673
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 697
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Mateřská škola Na výsluní",
+          "distanceM": 826
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "ASU Market",
+          "distanceM": 249
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": null,
+          "distanceM": 382
+        }
+      ],
+      "summary": {
+        "available": 15,
+        "reserved": 3,
+        "sold": 40,
+        "total": 58,
+        "soldPct": 69,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 3,
+            "total": 36
+          },
+          {
+            "layout": "2+kk",
+            "available": 8,
+            "total": 15
+          },
+          {
+            "layout": "3+kk",
+            "available": 4,
+            "total": 7
+          }
+        ],
+        "pricePerSm": {
+          "min": 91525,
+          "median": 152490,
+          "max": 210329
+        },
+        "price": {
+          "min": 5428184,
+          "median": 8818184,
+          "max": 12450184
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 163099
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 163968
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 163968
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 154229
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 152490
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 152490
+        }
+      ],
+      "standards": {
+        "flooring": "Vinyl",
+        "heating": null,
+        "windows": null,
+        "partitionWalls": null,
+        "cooling": null,
+        "exteriorBlinds": "příprava",
+        "airConditioning": null,
+        "coolingCeilings": null,
+        "recuperation": null,
+        "smartHome": null,
+        "amenities": [
+          "kočárkarna a kolárna"
+        ]
+      }
+    },
+    {
+      "id": "e58c0de2-a10b-46fb-874f-13f712932aa1",
+      "name": "Kolbenova park - B",
+      "developer": "CPI Property Group",
+      "quarter": "Vysočany",
+      "address": "Střídavá 1055/4, 190 00 Praha 9, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1112661013079,
+      "lng": 14.5071779986353,
+      "completion": "2028-12",
+      "projectUrl": "https://klbnvpark.cz/cenik",
+      "coverUrl": "https://klbnvpark.cz/upload/gallery/epaz4k39so-KLB-B-CAM4-FINAL.png",
+      "priceFrom": 6195793,
+      "pricePerSmFrom": 129447,
+      "layouts": [
+        "1+kk",
+        "2+kk",
+        "3+kk",
+        "4+kk"
+      ],
+      "counts": {
+        "available": 44,
+        "reserved": 4,
+        "sold": 166,
+        "total": 214
+      },
+      "header": {
+        "payments": {
+          "contractPct": 15,
+          "constructionPct": 0,
+          "moveInPct": 85
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 6195793,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 9130438,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 12802755,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 17604957,
+            "note": null
+          },
+          {
+            "layout": "5+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Vysočanská",
+          "distanceM": 440
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Špitálská",
+          "distanceM": 136
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Poštovská",
+          "distanceM": 138
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 692
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 227
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Mateřská škola",
+          "distanceM": 400
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Nin potraviny",
+          "distanceM": 138
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "náměstí Organizace spojených národů",
+          "distanceM": 236
+        }
+      ],
+      "summary": {
+        "available": 44,
+        "reserved": 4,
+        "sold": 166,
+        "total": 214,
+        "soldPct": 78,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 2,
+            "total": 100
+          },
+          {
+            "layout": "2+kk",
+            "available": 13,
+            "total": 68
+          },
+          {
+            "layout": "3+kk",
+            "available": 23,
+            "total": 37
+          },
+          {
+            "layout": "4+kk",
+            "available": 6,
+            "total": 8
+          },
+          {
+            "layout": "5+kk",
+            "available": 0,
+            "total": 1
+          }
+        ],
+        "pricePerSm": {
+          "min": 129447,
+          "median": 151713,
+          "max": 186060
+        },
+        "price": {
+          "min": 6195793,
+          "median": 13899707,
+          "max": 22675109
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 151312
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 150776
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 151650
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 152170
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 151758
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 151713
+        }
+      ],
+      "standards": {
+        "flooring": "Laminát",
+        "heating": "Podlahové",
+        "windows": "Plast",
+        "partitionWalls": "Zděné, sádrokarton, beton",
+        "cooling": "Částečná klimatizace",
+        "exteriorBlinds": "příprava",
+        "airConditioning": null,
+        "coolingCeilings": false,
+        "recuperation": true,
+        "smartHome": null,
+        "amenities": []
+      }
+    },
+    {
+      "id": "fbca0c0c-0e42-4b58-8d85-ee313e240115",
+      "name": "Kolbenova park - F, D",
+      "developer": "CPI Property Group",
+      "quarter": "Vysočany",
+      "address": "Stejnosměrná 1, 190 00 Praha 9-Vysočany, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1115586500228,
+      "lng": 14.5086120615189,
+      "completion": "2027-06",
+      "projectUrl": "https://klbnvpark.cz/cenik",
+      "coverUrl": "https://klbnvpark.cz/upload/gallery/ktop0r6ygb-KLB-04-CAM-7-FINAL-web.png",
+      "priceFrom": 8560860,
+      "pricePerSmFrom": 121544,
+      "layouts": [
+        "2+kk",
+        "3+kk",
+        "4+kk"
+      ],
+      "counts": {
+        "available": 18,
+        "reserved": 2,
+        "sold": 252,
+        "total": 272
+      },
+      "header": {
+        "payments": {
+          "contractPct": 15,
+          "constructionPct": 0,
+          "moveInPct": 85
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 8560860,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 13803400,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 18297920,
+            "note": null
+          },
+          {
+            "layout": "5+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Vysočanská",
+          "distanceM": 547
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Poštovská",
+          "distanceM": 111
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Poštovská",
+          "distanceM": 98
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 789
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 323
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Mateřská škola",
+          "distanceM": 465
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Nin potraviny",
+          "distanceM": 208
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "náměstí Organizace spojených národů",
+          "distanceM": 343
+        }
+      ],
+      "summary": {
+        "available": 18,
+        "reserved": 2,
+        "sold": 252,
+        "total": 272,
+        "soldPct": 93,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 0,
+            "total": 101
+          },
+          {
+            "layout": "2+kk",
+            "available": 12,
+            "total": 101
+          },
+          {
+            "layout": "3+kk",
+            "available": 4,
+            "total": 44
+          },
+          {
+            "layout": "4+kk",
+            "available": 2,
+            "total": 25
+          },
+          {
+            "layout": "5+kk",
+            "available": 0,
+            "total": 1
+          }
+        ],
+        "pricePerSm": {
+          "min": 121544,
+          "median": 158009,
+          "max": 171752
+        },
+        "price": {
+          "min": 8560860,
+          "median": 9196080,
+          "max": 18777400
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 156416
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 157247
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 159219
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 158595
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 158009
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 158009
+        }
+      ],
+      "standards": {
+        "flooring": "Laminát",
+        "heating": "Radiátory",
+        "windows": "Plast",
+        "partitionWalls": "Zděné",
+        "cooling": "Příprava klimatizace",
+        "exteriorBlinds": "příprava",
+        "airConditioning": false,
+        "coolingCeilings": false,
+        "recuperation": true,
+        "smartHome": false,
+        "amenities": []
+      }
+    },
+    {
+      "id": "79a75235-6b4a-47a3-884c-57725e9f9b0a",
+      "name": "Kolčavka",
+      "developer": "VI Group CZ",
+      "quarter": "Libeň",
+      "address": "Nad Kolčavkou 537/2, 190 00 Praha 9-Libeň, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1078060247038,
+      "lng": 14.4821421068397,
+      "completion": "2024-12",
+      "projectUrl": "https://www.nadkolcavkou.cz/",
+      "coverUrl": "https://www.nadkolcavkou.cz/wp-content/themes/kolcavka/resources/images/galeria/Cam-01.jpg",
+      "priceFrom": 10090000,
+      "pricePerSmFrom": 149970,
+      "layouts": [
+        "2+kk"
+      ],
+      "counts": {
+        "available": 2,
+        "reserved": 0,
+        "sold": 52,
+        "total": 54
+      },
+      "header": {
+        "payments": {
+          "contractPct": 15,
+          "constructionPct": 70,
+          "moveInPct": 15
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 10090000,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Českomoravská",
+          "distanceM": 703
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Balabenka",
+          "distanceM": 344
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Balabenka",
+          "distanceM": 484
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 1210
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": "ZŠ Na Balabence",
+          "distanceM": 174
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Mateřská škola Kotlaska",
+          "distanceM": 355
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Albert",
+          "distanceM": 428
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": null,
+          "distanceM": 515
+        }
+      ],
+      "summary": {
+        "available": 2,
+        "reserved": 0,
+        "sold": 52,
+        "total": 54,
+        "soldPct": 96,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 0,
+            "total": 18
+          },
+          {
+            "layout": "2+kk",
+            "available": 2,
+            "total": 17
+          },
+          {
+            "layout": "3+kk",
+            "available": 0,
+            "total": 12
+          },
+          {
+            "layout": "4+kk",
+            "available": 0,
+            "total": 7
+          }
+        ],
+        "pricePerSm": {
+          "min": 149970,
+          "median": 150154,
+          "max": 150338
+        },
+        "price": {
+          "min": 10090000,
+          "median": 10264000,
+          "max": 10438000
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 150338
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 150338
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 150154
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 150338
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 150154
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 150154
+        }
+      ],
+      "standards": {
+        "flooring": "Laminát",
+        "heating": "Radiátory",
+        "windows": "Plast",
+        "partitionWalls": "Zděné",
+        "cooling": "Bez chlazení",
+        "exteriorBlinds": "ne",
+        "airConditioning": false,
+        "coolingCeilings": false,
+        "recuperation": null,
+        "smartHome": false,
+        "amenities": []
+      }
+    },
+    {
+      "id": "95ae7ee9-2993-4599-9fc1-13cf4114c068",
+      "name": "Kolmá 5",
+      "developer": "Real Luxembourg",
+      "quarter": "Vysočany",
+      "address": "Kolmá 597/5, 190 00 Praha 9-Vysočany, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1035396900343,
+      "lng": 14.5158121115715,
+      "completion": "2025-12",
+      "projectUrl": "https://www.kolma5.cz/volne-byty-a-cenik",
+      "coverUrl": "https://www.kolma5.cz/www/upload/fe8114d9/20250131060141854/20250131060141854.1920x1080.jpg",
+      "priceFrom": 3599000,
+      "pricePerSmFrom": 159960,
+      "layouts": [
+        "1+kk"
+      ],
+      "counts": {
+        "available": 5,
+        "reserved": 0,
+        "sold": 15,
+        "total": 20
+      },
+      "header": {
+        "payments": {
+          "contractPct": 96,
+          "constructionPct": 0,
+          "moveInPct": 80
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 3599000,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Kolbenova",
+          "distanceM": 763
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Podkovářská",
+          "distanceM": 127
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Vinice Hrdlořezy",
+          "distanceM": 402
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Libeň",
+          "distanceM": 1014
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 195
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Edu Bubo Klub – DS KLUBÍK V PŘÍRODĚ",
+          "distanceM": 238
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Billa",
+          "distanceM": 179
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "Park Podkovářská",
+          "distanceM": 190
+        }
+      ],
+      "summary": {
+        "available": 5,
+        "reserved": 0,
+        "sold": 15,
+        "total": 20,
+        "soldPct": 75,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 5,
+            "total": 14
+          },
+          {
+            "layout": "2+kk",
+            "available": 0,
+            "total": 6
+          }
+        ],
+        "pricePerSm": {
+          "min": 159960,
+          "median": 246296,
+          "max": 249938
+        },
+        "price": {
+          "min": 3599000,
+          "median": 3990000,
+          "max": 3999000
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 207477
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 207477
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 207477
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 246296
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 246296
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 246296
+        }
+      ],
+      "standards": {
+        "flooring": "Vinyl",
+        "heating": "Radiátory",
+        "windows": null,
+        "partitionWalls": null,
+        "cooling": null,
+        "exteriorBlinds": null,
+        "airConditioning": null,
+        "coolingCeilings": null,
+        "recuperation": null,
+        "smartHome": null,
+        "amenities": []
+      }
+    },
+    {
+      "id": "70acbeac-52fe-4024-97c6-f862e094c896",
+      "name": "L1FE House",
+      "developer": "Daramis",
+      "quarter": "Střížkov",
+      "address": "Teplická 492, 190 00 Praha 9-Střížkov, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1271213289433,
+      "lng": 14.487074952262,
+      "completion": "2027",
+      "projectUrl": "https://l1fe.cz/cenik",
+      "coverUrl": "https://l1fe.cz/wp-content/uploads/08_mnlt_24-038-DAR_AERIAL_004_SOUTH_FINAL-2048x1536.jpg",
+      "priceFrom": 6235470,
+      "pricePerSmFrom": 138753,
+      "layouts": [
+        "1+kk",
+        "2+kk",
+        "3+kk"
+      ],
+      "counts": {
+        "available": 101,
+        "reserved": 7,
+        "sold": 221,
+        "total": 329
+      },
+      "header": {
+        "payments": {
+          "contractPct": 15,
+          "constructionPct": 0,
+          "moveInPct": 85
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 6235470,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 6944013,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 13662811,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Střížkov",
+          "distanceM": 208
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Třebenická",
+          "distanceM": 529
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Hotel Duo",
+          "distanceM": 80
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 1813
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": "Gymnázium Thomase Manna",
+          "distanceM": 426
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Čertíci",
+          "distanceM": 212
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Kaufland",
+          "distanceM": 345
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "park Přátelství",
+          "distanceM": 149
+        }
+      ],
+      "summary": {
+        "available": 101,
+        "reserved": 7,
+        "sold": 221,
+        "total": 329,
+        "soldPct": 67,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 8,
+            "total": 97
+          },
+          {
+            "layout": "2+kk",
+            "available": 89,
+            "total": 206
+          },
+          {
+            "layout": "3+kk",
+            "available": 4,
+            "total": 26
+          }
+        ],
+        "pricePerSm": {
+          "min": 138753,
+          "median": 168407,
+          "max": 196731
+        },
+        "price": {
+          "min": 6235470,
+          "median": 9753961,
+          "max": 14281706
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 166497
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 168407
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 168505
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 168603
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 168407
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 168407
+        }
+      ],
+      "standards": {
+        "flooring": "Laminát",
+        "heating": null,
+        "windows": "Plast",
+        "partitionWalls": "Zděné",
+        "cooling": null,
+        "exteriorBlinds": "příprava",
+        "airConditioning": false,
+        "coolingCeilings": null,
+        "recuperation": true,
+        "smartHome": false,
+        "amenities": []
+      }
+    },
+    {
+      "id": "b8cd48cc-e054-488b-8f06-e492764aa60f",
+      "name": "Lofty Kolbenova",
+      "developer": "MP Kolbenka",
+      "quarter": "Vysočany",
+      "address": "Kolbenova 1032/5h, 190 00 Praha 9-Vysočany, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1109112115158,
+      "lng": 14.5106682678723,
+      "completion": "2025-06",
+      "projectUrl": "https://www.loftykolbenova.cz/cz/nabidka-bytu",
+      "coverUrl": "https://www.loftykolbenova.cz/archiv/ad2_cz/2.jpg",
+      "priceFrom": 9914900,
+      "pricePerSmFrom": 126555,
+      "layouts": [
+        "2+kk",
+        "3+kk",
+        "4+kk"
+      ],
+      "counts": {
+        "available": 23,
+        "reserved": 11,
+        "sold": 181,
+        "total": 215
+      },
+      "header": {
+        "payments": {
+          "contractPct": 15,
+          "constructionPct": 0,
+          "moveInPct": 85
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 9914900,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 10972000,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 18481000,
+            "note": null
+          },
+          {
+            "layout": "6+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Kolbenova",
+          "distanceM": 426
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Poštovská",
+          "distanceM": 91
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Poštovská",
+          "distanceM": 53
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 944
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 408
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Mateřská škola",
+          "distanceM": 490
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Nin potraviny",
+          "distanceM": 285
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "park Krále Alexandra",
+          "distanceM": 442
+        }
+      ],
+      "summary": {
+        "available": 23,
+        "reserved": 11,
+        "sold": 181,
+        "total": 215,
+        "soldPct": 84,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 0,
+            "total": 23
+          },
+          {
+            "layout": "2+kk",
+            "available": 10,
+            "total": 71
+          },
+          {
+            "layout": "3+kk",
+            "available": 10,
+            "total": 99
+          },
+          {
+            "layout": "4+kk",
+            "available": 3,
+            "total": 21
+          },
+          {
+            "layout": "6+kk",
+            "available": 0,
+            "total": 1
+          }
+        ],
+        "pricePerSm": {
+          "min": 126555,
+          "median": 163439,
+          "max": 179911
+        },
+        "price": {
+          "min": 9914900,
+          "median": 11198700,
+          "max": 19139400
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 161805
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 161829
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 156763
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 162725
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 163439
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 163439
+        }
+      ],
+      "standards": {
+        "flooring": "Dřevo",
+        "heating": "Podlahové",
+        "windows": "Hliník",
+        "partitionWalls": "Beton",
+        "cooling": "Kompletní klimatizace",
+        "exteriorBlinds": "ano",
+        "airConditioning": true,
+        "coolingCeilings": false,
+        "recuperation": null,
+        "smartHome": false,
+        "amenities": []
+      }
+    },
+    {
+      "id": "ee8cbf00-0fb9-4b64-bda4-3692d0feeae6",
+      "name": "Mido Harfa",
+      "developer": "Metrostav Development",
+      "quarter": "Libeň",
+      "address": "Drahobejlova 1501, Libeň, 190 00 Praha-Praha 9, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1056371277775,
+      "lng": 14.4901348162764,
+      "completion": "2026-06",
+      "projectUrl": "https://midoharfa.cz/cs/byty/",
+      "coverUrl": "https://midoharfa.cz/site/assets/files/1184/240131_742_exr_cam03_final_v3-1-1.1600x1200.jpg",
+      "priceFrom": 9045000,
+      "pricePerSmFrom": 150750,
+      "layouts": [
+        "1+kk",
+        "2+kk",
+        "3+kk",
+        "4+kk"
+      ],
+      "counts": {
+        "available": 11,
+        "reserved": 4,
+        "sold": 134,
+        "total": 149
+      },
+      "header": {
+        "payments": {
+          "contractPct": 20,
+          "constructionPct": 70,
+          "moveInPct": 10
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 9150000,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 9045000,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 14660000,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 19200000,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Českomoravská",
+          "distanceM": 117
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Divadlo Gong",
+          "distanceM": 169
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Českomoravská",
+          "distanceM": 148
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 911
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": "SŠ umělecká a řemeslná",
+          "distanceM": 98
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": null,
+          "distanceM": 271
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Albert",
+          "distanceM": 174
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": null,
+          "distanceM": 342
+        }
+      ],
+      "summary": {
+        "available": 11,
+        "reserved": 4,
+        "sold": 134,
+        "total": 149,
+        "soldPct": 90,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 1,
+            "total": 48
+          },
+          {
+            "layout": "2+kk",
+            "available": 5,
+            "total": 82
+          },
+          {
+            "layout": "3+kk",
+            "available": 3,
+            "total": 13
+          },
+          {
+            "layout": "4+kk",
+            "available": 2,
+            "total": 6
+          }
+        ],
+        "pricePerSm": {
+          "min": 150750,
+          "median": 163139,
+          "max": 171174
+        },
+        "price": {
+          "min": 9045000,
+          "median": 12900000,
+          "max": 19960000
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 153769
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 163139
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 163577
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 164015
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 154051
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 163139
+        }
+      ],
+      "standards": {
+        "flooring": "Vinyl",
+        "heating": "Radiátory",
+        "windows": "Plast",
+        "partitionWalls": "Zděné",
+        "cooling": "Částečná klimatizace",
+        "exteriorBlinds": "ano",
+        "airConditioning": false,
+        "coolingCeilings": false,
+        "recuperation": true,
+        "smartHome": false,
+        "amenities": []
+      }
+    },
+    {
+      "id": "4602aac9-f98b-48dd-a6db-0c0c151c5582",
+      "name": "Mocca Rezidence",
+      "developer": "Penta Real Estate",
+      "quarter": "Libeň",
+      "address": "Sokolovská 282, 190 00 Praha 9, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1079972960587,
+      "lng": 14.4924468134928,
+      "completion": "2026-12",
+      "projectUrl": "https://www.mocca-rezidence.cz/cenik",
+      "coverUrl": "https://www.mocca-rezidence.cz/image-cache/1.409349356d916f8dcb45f9b46f4b3a0d68919fb0.jpg",
+      "priceFrom": 8152000,
+      "pricePerSmFrom": 154024,
+      "layouts": [
+        "1,5+kk",
+        "2+kk",
+        "3+kk",
+        "4+kk",
+        "5+kk"
+      ],
+      "counts": {
+        "available": 33,
+        "reserved": 2,
+        "sold": 240,
+        "total": 275
+      },
+      "header": {
+        "payments": {
+          "contractPct": 20,
+          "constructionPct": 0,
+          "moveInPct": 80
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "1,5+kk",
+            "priceFrom": 8152000,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 9397000,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 14661700,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 17430900,
+            "note": null
+          },
+          {
+            "layout": "5+kk",
+            "priceFrom": 33196900,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Českomoravská",
+          "distanceM": 221
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Poliklinika Vysočany",
+          "distanceM": 190
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Poliklinika Vysočany",
+          "distanceM": 95
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 602
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": "SŠ umělecká a řemeslná",
+          "distanceM": 278
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": null,
+          "distanceM": 216
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Lidl",
+          "distanceM": 466
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": null,
+          "distanceM": 59
+        }
+      ],
+      "summary": {
+        "available": 33,
+        "reserved": 2,
+        "sold": 240,
+        "total": 275,
+        "soldPct": 87,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 0,
+            "total": 20
+          },
+          {
+            "layout": "1,5+kk",
+            "available": 3,
+            "total": 34
+          },
+          {
+            "layout": "2+kk",
+            "available": 3,
+            "total": 139
+          },
+          {
+            "layout": "3+kk",
+            "available": 11,
+            "total": 53
+          },
+          {
+            "layout": "4+kk",
+            "available": 14,
+            "total": 25
+          },
+          {
+            "layout": "5+kk",
+            "available": 2,
+            "total": 4
+          }
+        ],
+        "pricePerSm": {
+          "min": 154024,
+          "median": 186562,
+          "max": 260323
+        },
+        "price": {
+          "min": 8152000,
+          "median": 17683200,
+          "max": 33960000
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 187148
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 187130
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 185930
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 185163
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 186562
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 186562
+        }
+      ],
+      "standards": {
+        "flooring": "Dřevo",
+        "heating": "Podlahové",
+        "windows": "Hliník",
+        "partitionWalls": "Zděné, beton",
+        "cooling": "Částečná klimatizace",
+        "exteriorBlinds": "příprava",
+        "airConditioning": true,
+        "coolingCeilings": false,
+        "recuperation": true,
+        "smartHome": null,
+        "amenities": [
+          "byty v 1. NP a od 6. NP (včetně) mají předokenní elektrické žaluzie"
+        ]
+      }
+    },
+    {
+      "id": "512498a5-6f00-462c-af55-206160678aa3",
+      "name": "Pod Pekárnami 11",
+      "developer": "Grygar",
+      "quarter": "Vysočany",
+      "address": "Pod pekárnami 255/11, Vysočany, 190 00 Praha-Praha 9, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.112025704884,
+      "lng": 14.5038217818947,
+      "completion": "2026-10",
+      "projectUrl": "https://www.podpekarnami.cz/#cena",
+      "coverUrl": "https://c.rmcl.cz/grygarreality.cz/web_block/i0/2/pod-pekarnami-11-terezadvorak-podpekarnami-6-ef7dee-b0a50c.jpg",
+      "priceFrom": 6800000,
+      "pricePerSmFrom": 120833,
+      "layouts": [
+        "1+kk",
+        "2+kk",
+        "3+kk"
+      ],
+      "counts": {
+        "available": 9,
+        "reserved": 0,
+        "sold": 0,
+        "total": 9
+      },
+      "header": {
+        "payments": null,
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 7700000,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 6800000,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 8700000,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Vysočanská",
+          "distanceM": 280
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Vysočanská",
+          "distanceM": 87
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Ke Klíčovu",
+          "distanceM": 122
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 444
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 238
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Mateřská škola",
+          "distanceM": 473
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Nin potraviny",
+          "distanceM": 313
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "náměstí Organizace spojených národů",
+          "distanceM": 102
+        }
+      ],
+      "summary": {
+        "available": 9,
+        "reserved": 0,
+        "sold": 0,
+        "total": 9,
+        "soldPct": 0,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 4,
+            "total": 4
+          },
+          {
+            "layout": "2+kk",
+            "available": 2,
+            "total": 2
+          },
+          {
+            "layout": "3+kk",
+            "available": 3,
+            "total": 3
+          }
+        ],
+        "pricePerSm": {
+          "min": 120833,
+          "median": 138776,
+          "max": 157143
+        },
+        "price": {
+          "min": 6800000,
+          "median": 8100000,
+          "max": 8700000
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 138776
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 138776
+        }
+      ],
+      "standards": {
+        "flooring": null,
+        "heating": null,
+        "windows": null,
+        "partitionWalls": null,
+        "cooling": null,
+        "exteriorBlinds": null,
+        "airConditioning": null,
+        "coolingCeilings": null,
+        "recuperation": null,
+        "smartHome": null,
+        "amenities": []
+      }
+    },
+    {
+      "id": "54fb8e9d-9ca9-4147-af74-30e4b03c8e3b",
+      "name": "Prime Lofts Vysočany",
+      "developer": "RE/MAX",
+      "quarter": "Vysočany",
+      "address": "Kolbenova 946/7b, 190 00 Praha 9-Vysočany, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.111338,
+      "lng": 14.516301,
+      "completion": "2025-07",
+      "projectUrl": "https://primelofts.remax-stability.cz/",
+      "coverUrl": "https://lofty-moravcovych.pages.dev/images/terra/22.jpg",
+      "priceFrom": 23352000,
+      "pricePerSmFrom": 182723,
+      "layouts": [
+        "4+kk"
+      ],
+      "counts": {
+        "available": 2,
+        "reserved": 0,
+        "sold": 0,
+        "total": 2
+      },
+      "header": {
+        "payments": null,
+        "priceFromByLayout": [
+          {
+            "layout": "4+kk",
+            "priceFrom": 23352000,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Kolbenova",
+          "distanceM": 108
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Kolbenova",
+          "distanceM": 85
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Kolbenova",
+          "distanceM": 141
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 1337
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 718
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Mateřská škola Na výsluní",
+          "distanceM": 617
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "ASU Market",
+          "distanceM": 175
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": null,
+          "distanceM": 412
+        }
+      ],
+      "summary": {
+        "available": 2,
+        "reserved": 0,
+        "sold": 0,
+        "total": 2,
+        "soldPct": 0,
+        "layoutMix": [
+          {
+            "layout": "4+kk",
+            "available": 2,
+            "total": 2
+          }
+        ],
+        "pricePerSm": {
+          "min": 182723,
+          "median": 186905,
+          "max": 191086
+        },
+        "price": {
+          "min": 23352000,
+          "median": 24002000,
+          "max": 24652000
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 203812
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 203812
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 186905
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 186905
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 186905
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 186905
+        }
+      ],
+      "standards": {
+        "flooring": "Vinyl",
+        "heating": "Podlahové",
+        "windows": "Hliník",
+        "partitionWalls": "Sádrokarton",
+        "cooling": "Kompletní klimatizace",
+        "exteriorBlinds": "ano",
+        "airConditioning": true,
+        "coolingCeilings": false,
+        "recuperation": null,
+        "smartHome": null,
+        "amenities": []
+      }
+    },
+    {
+      "id": "03e587ce-f0c7-4f90-97a8-1eee50d7683f",
+      "name": "Prosekko",
+      "developer": "Guido Resca",
+      "quarter": "Prosek",
+      "address": "U Kundratky, 190 00 Praha-Praha 9, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.117773,
+      "lng": 14.488046,
+      "completion": null,
+      "projectUrl": "https://prosekko.cz/",
+      "coverUrl": "https://www.prosekko.cz/wp-content/gallery/vizualizace-exterier/exterier-1.jpg",
+      "priceFrom": 6393791,
+      "pricePerSmFrom": 120014,
+      "layouts": [
+        "1+kk",
+        "2+kk",
+        "3+kk",
+        "4+kk"
+      ],
+      "counts": {
+        "available": 12,
+        "reserved": 0,
+        "sold": 0,
+        "total": 12
+      },
+      "header": {
+        "payments": null,
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 6393791,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 8599976,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 12284478,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 17024361,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Prosek",
+          "distanceM": 765
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "U Kříže",
+          "distanceM": 1071
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "U Kundratky",
+          "distanceM": 13
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 916
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": "Gymnázium Litoměřická",
+          "distanceM": 85
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Školička Na Vyhlídce",
+          "distanceM": 382
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Norma",
+          "distanceM": 689
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": null,
+          "distanceM": 130
+        }
+      ],
+      "summary": {
+        "available": 12,
+        "reserved": 0,
+        "sold": 0,
+        "total": 12,
+        "soldPct": 0,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 5,
+            "total": 5
+          },
+          {
+            "layout": "2+kk",
+            "available": 4,
+            "total": 4
+          },
+          {
+            "layout": "3+kk",
+            "available": 2,
+            "total": 2
+          },
+          {
+            "layout": "4+kk",
+            "available": 1,
+            "total": 1
+          }
+        ],
+        "pricePerSm": {
+          "min": 120014,
+          "median": 161742,
+          "max": 230717
+        },
+        "price": {
+          "min": 6393791,
+          "median": 8730260,
+          "max": 17024361
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 161742
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 161742
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 161742
+        }
+      ],
+      "standards": {
+        "flooring": "Dřevo",
+        "heating": "Radiátory",
+        "windows": "Dřevo",
+        "partitionWalls": null,
+        "cooling": null,
+        "exteriorBlinds": "ano",
+        "airConditioning": null,
+        "coolingCeilings": null,
+        "recuperation": false,
+        "smartHome": null,
+        "amenities": [
+          "rezidenční projekt s výtahem a předzahrádkami/terasami"
+        ]
+      }
+    },
+    {
+      "id": "1b2975c1-df73-458d-9669-facbf10b63ff",
+      "name": "Rezidence Klíčov",
+      "developer": "SHD Real Estate",
+      "quarter": "Vysočany",
+      "address": "Pod Krocínkou 61, 190 00 Praha 9, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1144685134987,
+      "lng": 14.5097457122415,
+      "completion": "2025-12",
+      "projectUrl": "https://rezidenceklicov.cz/byty/",
+      "coverUrl": "https://rezidenceklicov.cz/wp-content/uploads/exterier-01.jpg",
+      "priceFrom": 19054735,
+      "pricePerSmFrom": 143011,
+      "layouts": [
+        "3+kk"
+      ],
+      "counts": {
+        "available": 2,
+        "reserved": 0,
+        "sold": 53,
+        "total": 55
+      },
+      "header": {
+        "payments": null,
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 19054735,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Kolbenova",
+          "distanceM": 666
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Poštovská",
+          "distanceM": 432
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Pod Krocínkou",
+          "distanceM": 117
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 899
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 616
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Mateřská škola Na výsluní",
+          "distanceM": 256
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Nin potraviny",
+          "distanceM": 533
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "náměstí Organizace spojených národů",
+          "distanceM": 580
+        }
+      ],
+      "summary": {
+        "available": 2,
+        "reserved": 0,
+        "sold": 53,
+        "total": 55,
+        "soldPct": 96,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 0,
+            "total": 1
+          },
+          {
+            "layout": "2+kk",
+            "available": 0,
+            "total": 48
+          },
+          {
+            "layout": "3+kk",
+            "available": 2,
+            "total": 6
+          }
+        ],
+        "pricePerSm": {
+          "min": 143011,
+          "median": 143409,
+          "max": 143807
+        },
+        "price": {
+          "min": 19054735,
+          "median": 19107780,
+          "max": 19160825
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 143407
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 143407
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 143409
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 143409
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 143409
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 143409
+        }
+      ],
+      "standards": {
+        "flooring": "Vinyl",
+        "heating": "Radiátory",
+        "windows": "Plast",
+        "partitionWalls": "Zděné",
+        "cooling": "Bez chlazení",
+        "exteriorBlinds": "ano",
+        "airConditioning": false,
+        "coolingCeilings": false,
+        "recuperation": false,
+        "smartHome": false,
+        "amenities": [
+          "fotovoltaické panely"
+        ]
+      }
+    },
+    {
+      "id": "1f5d94d2-caf8-424e-adf4-556e0fddaedb",
+      "name": "Rezidence Pod Pekárnami 13",
+      "developer": "Real Luxembourg",
+      "quarter": "Vysočany",
+      "address": "Pod pekárnami 258/13, 190 00 Praha 9-Vysočany, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1120621434379,
+      "lng": 14.5040296454993,
+      "completion": "2026-09",
+      "projectUrl": "https://www.rezidence-podpekarnami.cz/volne-jednotky-a-cenik",
+      "coverUrl": "https://www.rezidence-podpekarnami.cz/www/upload/864e8d94/20260108111355534/20260108111355534.1000x667.fill.qa-100.webp",
+      "priceFrom": 5490000,
+      "pricePerSmFrom": 151506,
+      "layouts": [
+        "1+kk",
+        "2+kk"
+      ],
+      "counts": {
+        "available": 12,
+        "reserved": 1,
+        "sold": 2,
+        "total": 15
+      },
+      "header": {
+        "payments": {
+          "contractPct": 96,
+          "constructionPct": 0,
+          "moveInPct": 80
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 5490000,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 7974910,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Vysočanská",
+          "distanceM": 292
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Vysočanská",
+          "distanceM": 101
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Ke Klíčovu",
+          "distanceM": 108
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 458
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 238
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Mateřská škola",
+          "distanceM": 477
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Nin potraviny",
+          "distanceM": 305
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "náměstí Organizace spojených národů",
+          "distanceM": 110
+        }
+      ],
+      "summary": {
+        "available": 12,
+        "reserved": 1,
+        "sold": 2,
+        "total": 15,
+        "soldPct": 13,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 3,
+            "total": 5
+          },
+          {
+            "layout": "2+kk",
+            "available": 9,
+            "total": 10
+          }
+        ],
+        "pricePerSm": {
+          "min": 151506,
+          "median": 155000,
+          "max": 212105
+        },
+        "price": {
+          "min": 5490000,
+          "median": 8919175,
+          "max": 9203410
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 179785
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 179774
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 154317
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 154317
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 155000
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 155000
+        }
+      ],
+      "standards": {
+        "flooring": "Dřevo",
+        "heating": "Radiátory",
+        "windows": null,
+        "partitionWalls": null,
+        "cooling": null,
+        "exteriorBlinds": null,
+        "airConditioning": null,
+        "coolingCeilings": null,
+        "recuperation": null,
+        "smartHome": null,
+        "amenities": []
+      }
+    },
+    {
+      "id": "24833166-cff5-4934-810d-1d767642850d",
+      "name": "Rezidence Prosekko",
+      "developer": "LEXXUS NORTON",
+      "quarter": "Prosek",
+      "address": "Na Vyhlídce 82/72, 190 00 Praha 9-Prosek, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1169275032093,
+      "lng": 14.4936738067453,
+      "completion": null,
+      "projectUrl": "https://www.prosekko.cz/#info-sec",
+      "coverUrl": "https://prosekko.janlasac.cz/wp-content/gallery/vizualizace-exterier/thumbs/thumbs_exterier-4.jpg?t=1689585124",
+      "priceFrom": 6393791,
+      "pricePerSmFrom": 121741,
+      "layouts": [
+        "1+kk",
+        "2+kk",
+        "3+kk",
+        "4+kk"
+      ],
+      "counts": {
+        "available": 12,
+        "reserved": 0,
+        "sold": 0,
+        "total": 12
+      },
+      "header": {
+        "payments": {
+          "contractPct": 10,
+          "constructionPct": 0,
+          "moveInPct": 90
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 6393791,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 8599976,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 12284478,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 17024361,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Prosek",
+          "distanceM": 436
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Nádraží Vysočany",
+          "distanceM": 832
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Starý Prosek (151)",
+          "distanceM": 190
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 588
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": "Základní umělecká škola",
+          "distanceM": 61
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Školička Na Vyhlídce",
+          "distanceM": 31
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Billa",
+          "distanceM": 518
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": null,
+          "distanceM": 423
+        }
+      ],
+      "summary": {
+        "available": 12,
+        "reserved": 0,
+        "sold": 0,
+        "total": 12,
+        "soldPct": 0,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 5,
+            "total": 5
+          },
+          {
+            "layout": "2+kk",
+            "available": 4,
+            "total": 4
+          },
+          {
+            "layout": "3+kk",
+            "available": 2,
+            "total": 2
+          },
+          {
+            "layout": "4+kk",
+            "available": 1,
+            "total": 1
+          }
+        ],
+        "pricePerSm": {
+          "min": 121741,
+          "median": 156998,
+          "max": 221366
+        },
+        "price": {
+          "min": 6393791,
+          "median": 8730260,
+          "max": 17024361
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 167981
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 156998
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 156998
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 156998
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 156998
+        }
+      ],
+      "standards": {
+        "flooring": "Dřevo",
+        "heating": "Radiátory",
+        "windows": "Dřevo, hliník-dřevo",
+        "partitionWalls": "Zděné, beton",
+        "cooling": null,
+        "exteriorBlinds": "ano",
+        "airConditioning": null,
+        "coolingCeilings": null,
+        "recuperation": false,
+        "smartHome": null,
+        "amenities": [
+          "výtah"
+        ]
+      }
+    },
+    {
+      "id": "f2393b65-893d-4846-9a37-83a5b59f4f5d",
+      "name": "Rezidence v údolí",
+      "developer": "Venus Investment Group",
+      "quarter": "Hrdlořezy",
+      "address": "Praha, 19000 Praha - Hrdlořezy, 190 00 Praha-Praha 9, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.0921749595848,
+      "lng": 14.5091707375712,
+      "completion": "2025-08",
+      "projectUrl": "https://www.rezidence-udoli.cz/",
+      "coverUrl": "https://www.rezidence-udoli.cz/lovable-uploads/0c1e5f3f-6c06-478b-96a4-b818da414917.png",
+      "priceFrom": 12875973,
+      "pricePerSmFrom": 148341,
+      "layouts": [
+        "3+kk"
+      ],
+      "counts": {
+        "available": 2,
+        "reserved": 0,
+        "sold": 19,
+        "total": 21
+      },
+      "header": {
+        "payments": {
+          "contractPct": 20,
+          "constructionPct": 0,
+          "moveInPct": 80
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 12875973,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Depo Hostivař",
+          "distanceM": 1952
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Spojovací",
+          "distanceM": 708
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Hrdlořezská",
+          "distanceM": 155
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Libeň",
+          "distanceM": 1063
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 63
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "MŠ Buková",
+          "distanceM": 806
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Lidl",
+          "distanceM": 314
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": null,
+          "distanceM": 120
+        }
+      ],
+      "summary": {
+        "available": 2,
+        "reserved": 0,
+        "sold": 19,
+        "total": 21,
+        "soldPct": 90,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 0,
+            "total": 7
+          },
+          {
+            "layout": "2+kk",
+            "available": 0,
+            "total": 11
+          },
+          {
+            "layout": "3+kk",
+            "available": 2,
+            "total": 3
+          }
+        ],
+        "pricePerSm": {
+          "min": 148341,
+          "median": 153748,
+          "max": 159155
+        },
+        "price": {
+          "min": 12875973,
+          "median": 13345326,
+          "max": 13814679
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 153748
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 153748
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 153748
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 153748
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 153748
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 153748
+        }
+      ],
+      "standards": {
+        "flooring": "Vinyl",
+        "heating": "Radiátory",
+        "windows": "Plast",
+        "partitionWalls": null,
+        "cooling": "Příprava klimatizace",
+        "exteriorBlinds": "příprava",
+        "airConditioning": false,
+        "coolingCeilings": false,
+        "recuperation": true,
+        "smartHome": false,
+        "amenities": []
+      }
+    },
+    {
+      "id": "0bfc0e37-c914-4e1d-9f2a-2427ef4c392c",
+      "name": "Rezidenční čtvrť Tesla Hloubětín EFGH",
+      "developer": "CENTRAL GROUP",
+      "quarter": "Hloubětín",
+      "address": "Poděbradská 186/56, 198 00 Praha 9, Czechia",
+      "postalCode": "198 00",
+      "city": "Praha (město)",
+      "lat": 50.1032789730263,
+      "lng": 14.5220204191416,
+      "completion": "2025-12",
+      "projectUrl": "https://www.central-group.cz/prehled-bytu/192",
+      "coverUrl": "https://www.central-group.cz/Uloziste/76/761d9326-d162-45d7-90c5-15d21b18ee9a.jpg",
+      "priceFrom": 19773725,
+      "pricePerSmFrom": 128822,
+      "layouts": [
+        "4+kk"
+      ],
+      "counts": {
+        "available": 2,
+        "reserved": 0,
+        "sold": 356,
+        "total": 358
+      },
+      "header": {
+        "payments": {
+          "contractPct": 10,
+          "constructionPct": 60,
+          "moveInPct": 30
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 19773725,
+            "note": null
+          },
+          {
+            "layout": "5+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Kolbenova",
+          "distanceM": 880
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "U Elektry",
+          "distanceM": 194
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Vinice Hrdlořezy",
+          "distanceM": 472
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Libeň",
+          "distanceM": 1434
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 219
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Edu Bubo Klub – DS KLUBÍK U ROKYTKY",
+          "distanceM": 642
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Žabka",
+          "distanceM": 137
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "Rokytka",
+          "distanceM": 362
+        }
+      ],
+      "summary": {
+        "available": 2,
+        "reserved": 0,
+        "sold": 356,
+        "total": 358,
+        "soldPct": 99,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 0,
+            "total": 169
+          },
+          {
+            "layout": "2+kk",
+            "available": 0,
+            "total": 122
+          },
+          {
+            "layout": "3+kk",
+            "available": 0,
+            "total": 53
+          },
+          {
+            "layout": "4+kk",
+            "available": 2,
+            "total": 13
+          },
+          {
+            "layout": "5+kk",
+            "available": 0,
+            "total": 1
+          }
+        ],
+        "pricePerSm": {
+          "min": 128822,
+          "median": 138249,
+          "max": 147675
+        },
+        "price": {
+          "min": 19773725,
+          "median": 20628070,
+          "max": 21482415
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 138248
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 138248
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 138249
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 138249
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 138249
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 138249
+        }
+      ],
+      "standards": {
+        "flooring": "Laminát",
+        "heating": null,
+        "windows": "Plast",
+        "partitionWalls": "Sádrokarton",
+        "cooling": "Částečná klimatizace",
+        "exteriorBlinds": null,
+        "airConditioning": null,
+        "coolingCeilings": false,
+        "recuperation": true,
+        "smartHome": false,
+        "amenities": [
+          "předokenní rolety - platí pro vybrané jednotky"
+        ]
+      }
+    },
+    {
+      "id": "ed45c9b4-613d-40bb-be06-0be72cf4a367",
+      "name": "Rezidenční čtvrť Tesla Hloubětín IJKL",
+      "developer": "CENTRAL GROUP",
+      "quarter": "Hloubětín",
+      "address": "Poděbradská 186/56, 198 00 Praha 9-Hloubětín, Czechia",
+      "postalCode": "198 00",
+      "city": "Praha (město)",
+      "lat": 50.1030725521685,
+      "lng": 14.5226951827941,
+      "completion": "2026-12",
+      "projectUrl": "https://www.central-group.cz/prehled-bytu/192",
+      "coverUrl": "https://www.central-group.cz/Uloziste/76/761d9326-d162-45d7-90c5-15d21b18ee9a.jpg",
+      "priceFrom": 8161940,
+      "pricePerSmFrom": 130857,
+      "layouts": [
+        "1+kk",
+        "2+kk",
+        "3+kk",
+        "4+kk"
+      ],
+      "counts": {
+        "available": 23,
+        "reserved": 3,
+        "sold": 331,
+        "total": 357
+      },
+      "header": {
+        "payments": {
+          "contractPct": 10,
+          "constructionPct": 60,
+          "moveInPct": 30
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 8161940,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 8884295,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 11580848,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 18270037,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Kolbenova",
+          "distanceM": 923
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Nademlejnská",
+          "distanceM": 161
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Vinice Hrdlořezy",
+          "distanceM": 490
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Libeň",
+          "distanceM": 1477
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 272
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Edu Bubo Klub – DS KLUBÍK U ROKYTKY",
+          "distanceM": 695
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Žabka",
+          "distanceM": 191
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "Rokytka",
+          "distanceM": 363
+        }
+      ],
+      "summary": {
+        "available": 23,
+        "reserved": 3,
+        "sold": 331,
+        "total": 357,
+        "soldPct": 93,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 1,
+            "total": 175
+          },
+          {
+            "layout": "2+kk",
+            "available": 13,
+            "total": 115
+          },
+          {
+            "layout": "3+kk",
+            "available": 6,
+            "total": 54
+          },
+          {
+            "layout": "4+kk",
+            "available": 3,
+            "total": 13
+          }
+        ],
+        "pricePerSm": {
+          "min": 130857,
+          "median": 145930,
+          "max": 185414
+        },
+        "price": {
+          "min": 8161940,
+          "median": 11164563,
+          "max": 19646562
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 144889
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 145783
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 147001
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 146348
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 145930
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 145930
+        }
+      ],
+      "standards": {
+        "flooring": "Laminát",
+        "heating": null,
+        "windows": "Plast",
+        "partitionWalls": "Sádrokarton",
+        "cooling": "Částečná klimatizace",
+        "exteriorBlinds": "ano",
+        "airConditioning": true,
+        "coolingCeilings": false,
+        "recuperation": true,
+        "smartHome": false,
+        "amenities": [
+          "předokenní rolety - platí pro vybrané jednotky"
+        ]
+      }
+    },
+    {
+      "id": "6fc20a82-79fc-41c6-8614-99587a06a776",
+      "name": "Rezidenční čtvrť Tesla Hloubětín MNOP",
+      "developer": "CENTRAL GROUP",
+      "quarter": "Hloubětín",
+      "address": "Poděbradská 186/56, 198 00 Praha 9, Czechia",
+      "postalCode": "198 00",
+      "city": "Praha (město)",
+      "lat": 50.1029769632054,
+      "lng": 14.5225264822752,
+      "completion": "2027-12",
+      "projectUrl": "https://www.central-group.cz/prehled-bytu/192?layoutRoomCounts%5B0%5D=1&layoutRoomCounts%5B1%5D=2&maxPrice=10000000&floorLevels%5B0%5D=0&floorLevels%5B1%5D=1&floorLevels%5B2%5D=2&floorLevels%5B3%5D=3&floorLevels%5B4%5D=4&housingBlockIds%5B0%5D=2349&housingBlockIds%5B1%5D=2351&completionDate=2999-12-31T00%3A00%3A00&sort=1&sortDirection=1&search=true",
+      "coverUrl": "https://www.central-group.cz/Uloziste/92/923d7b11-fdb6-484f-a553-99100d263f56.jpg",
+      "priceFrom": 6386710,
+      "pricePerSmFrom": 128002,
+      "layouts": [
+        "1+kk",
+        "2+kk",
+        "3+kk",
+        "4+kk"
+      ],
+      "counts": {
+        "available": 207,
+        "reserved": 16,
+        "sold": 121,
+        "total": 344
+      },
+      "header": {
+        "payments": {
+          "contractPct": 10,
+          "constructionPct": 60,
+          "moveInPct": 90
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 6386710,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 8601779,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 12167527,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 18403351,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Kolbenova",
+          "distanceM": 926
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Nademlejnská",
+          "distanceM": 177
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Vinice Hrdlořezy",
+          "distanceM": 474
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Libeň",
+          "distanceM": 1463
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 267
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Edu Bubo Klub – DS KLUBÍK U ROKYTKY",
+          "distanceM": 688
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Žabka",
+          "distanceM": 185
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "Rokytka",
+          "distanceM": 377
+        }
+      ],
+      "summary": {
+        "available": 207,
+        "reserved": 16,
+        "sold": 121,
+        "total": 344,
+        "soldPct": 35,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 90,
+            "total": 165
+          },
+          {
+            "layout": "2+kk",
+            "available": 71,
+            "total": 111
+          },
+          {
+            "layout": "3+kk",
+            "available": 33,
+            "total": 55
+          },
+          {
+            "layout": "4+kk",
+            "available": 13,
+            "total": 13
+          }
+        ],
+        "pricePerSm": {
+          "min": 128002,
+          "median": 154558,
+          "max": 200104
+        },
+        "price": {
+          "min": 6386710,
+          "median": 9411046,
+          "max": 28002090
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 166503
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 171681
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 153489
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 155179
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 154558
+        }
+      ],
+      "standards": {
+        "flooring": "Laminát",
+        "heating": null,
+        "windows": "Plast",
+        "partitionWalls": null,
+        "cooling": "Částečná klimatizace",
+        "exteriorBlinds": null,
+        "airConditioning": null,
+        "coolingCeilings": false,
+        "recuperation": true,
+        "smartHome": null,
+        "amenities": [
+          "vnitroblok s parkem",
+          "dětská hřiště",
+          "venkovní fitness zóny",
+          "hřiště pro pétanque",
+          "mateřské školy",
+          "obchody a služby"
+        ]
+      }
+    },
+    {
+      "id": "71b3e114-62df-4d91-a9d9-34427e1c67e4",
+      "name": "Simply Prosek",
+      "developer": "Neocity",
+      "quarter": "Prosek",
+      "address": "Bohušovická 485/10, 190 00 Praha 9-Prosek, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1238710261365,
+      "lng": 14.490048995142,
+      "completion": "2026-12",
+      "projectUrl": "https://www.simplyprosek.cz/byty",
+      "coverUrl": "https://www.simplyprosek.cz/res/crc-203929870/pages/images/1368x771crop/ym-neocity-prosek-ext-0000.webp",
+      "priceFrom": 6415255,
+      "pricePerSmFrom": 134942,
+      "layouts": [
+        "1+kk",
+        "2+kk",
+        "4+kk"
+      ],
+      "counts": {
+        "available": 11,
+        "reserved": 0,
+        "sold": 77,
+        "total": 88
+      },
+      "header": {
+        "payments": {
+          "contractPct": 15,
+          "constructionPct": 0,
+          "moveInPct": 85
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 6415255,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 8685000,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 16808380,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Střížkov",
+          "distanceM": 258
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Třebenická",
+          "distanceM": 922
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Střížkov",
+          "distanceM": 223
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 1397
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 354
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "MŠ Litvínovská 490",
+          "distanceM": 124
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Norma",
+          "distanceM": 67
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "park Přátelství",
+          "distanceM": 122
+        }
+      ],
+      "summary": {
+        "available": 11,
+        "reserved": 0,
+        "sold": 77,
+        "total": 88,
+        "soldPct": 88,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 6,
+            "total": 40
+          },
+          {
+            "layout": "2+kk",
+            "available": 4,
+            "total": 40
+          },
+          {
+            "layout": "3+kk",
+            "available": 0,
+            "total": 7
+          },
+          {
+            "layout": "4+kk",
+            "available": 1,
+            "total": 1
+          }
+        ],
+        "pricePerSm": {
+          "min": 134942,
+          "median": 200088,
+          "max": 216732
+        },
+        "price": {
+          "min": 6415255,
+          "median": 7678548,
+          "max": 16808380
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 207910
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 207910
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 207910
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 207910
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 200088
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 200088
+        }
+      ],
+      "standards": {
+        "flooring": "Vinyl",
+        "heating": "Radiátory",
+        "windows": "Plast",
+        "partitionWalls": "Zděné",
+        "cooling": "Bez chlazení",
+        "exteriorBlinds": "ano",
+        "airConditioning": false,
+        "coolingCeilings": false,
+        "recuperation": null,
+        "smartHome": false,
+        "amenities": []
+      }
+    },
+    {
+      "id": "547da980-1701-43c6-99b7-af22745ed056",
+      "name": "THE TRIANGLE A",
+      "developer": "LUXURY REALITY",
+      "quarter": "Vysočany",
+      "address": "Kolmá 671/11, 190 00 Praha 9-Vysočany, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1039147538832,
+      "lng": 14.5157177808807,
+      "completion": "2025-06",
+      "projectUrl": "https://www.thetriangle.cz/",
+      "coverUrl": "https://e789041c34.clvaw-cdnwnd.com/ae6558007ecfdb440303dcabbd56bf2c/200000008-49fbe49fc0/StudioBARAK-43.jpeg",
+      "priceFrom": 9670000,
+      "pricePerSmFrom": 121560,
+      "layouts": [
+        "2+kk",
+        "3+kk"
+      ],
+      "counts": {
+        "available": 13,
+        "reserved": 0,
+        "sold": 8,
+        "total": 21
+      },
+      "header": {
+        "payments": {
+          "contractPct": 12,
+          "constructionPct": 10,
+          "moveInPct": 78
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 9670000,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 11800000,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Kolbenova",
+          "distanceM": 722
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Podkovářská",
+          "distanceM": 147
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Vinice Hrdlořezy",
+          "distanceM": 444
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Libeň",
+          "distanceM": 1021
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 191
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Edu Bubo Klub – DS KLUBÍK U ROKYTKY",
+          "distanceM": 207
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Billa",
+          "distanceM": 211
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "Park Podkovářská",
+          "distanceM": 170
+        }
+      ],
+      "summary": {
+        "available": 13,
+        "reserved": 0,
+        "sold": 8,
+        "total": 21,
+        "soldPct": 38,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 0,
+            "total": 4
+          },
+          {
+            "layout": "2+kk",
+            "available": 9,
+            "total": 12
+          },
+          {
+            "layout": "3+kk",
+            "available": 4,
+            "total": 5
+          }
+        ],
+        "pricePerSm": {
+          "min": 121560,
+          "median": 151422,
+          "max": 162193
+        },
+        "price": {
+          "min": 9670000,
+          "median": 10750000,
+          "max": 12600000
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 165303
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 165303
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 165303
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 161765
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 151422
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 151422
+        }
+      ],
+      "standards": {
+        "flooring": "Dřevo",
+        "heating": "Radiátory",
+        "windows": "Dřevo",
+        "partitionWalls": "Zděné",
+        "cooling": null,
+        "exteriorBlinds": null,
+        "airConditioning": null,
+        "coolingCeilings": null,
+        "recuperation": null,
+        "smartHome": false,
+        "amenities": []
+      }
+    },
+    {
+      "id": "083486e9-229e-496c-a73a-2ee48b3d3998",
+      "name": "Viladomy U Mlýna",
+      "developer": "Metrostav Development",
+      "quarter": "Vysočany",
+      "address": "U Vysočanského cukrovaru 36/6, 190 00 Praha 9-Vysočany, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1137018390492,
+      "lng": 14.5075849652636,
+      "completion": "2026-09",
+      "projectUrl": "https://vysocanskymlyn.cz/vyber-bytu/",
+      "coverUrl": "https://viladomyumlyna.cz/site/assets/files/1174/mnlt_25-010-mts_250305_cam_02_autumn_final_tiff.1600x1200.jpeg",
+      "priceFrom": 9880000,
+      "pricePerSmFrom": 167561,
+      "layouts": [
+        "2+kk",
+        "3+kk",
+        "4+kk"
+      ],
+      "counts": {
+        "available": 17,
+        "reserved": 3,
+        "sold": 22,
+        "total": 42
+      },
+      "header": {
+        "payments": {
+          "contractPct": 20,
+          "constructionPct": 70,
+          "moveInPct": 10
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "2+kk",
+            "priceFrom": 9880000,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 11920000,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 20610000,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Vysočanská",
+          "distanceM": 601
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Špitálská",
+          "distanceM": 347
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Ke Klíčovu",
+          "distanceM": 133
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 729
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 463
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Mateřská škola Na výsluní",
+          "distanceM": 426
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Nin potraviny",
+          "distanceM": 410
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": "náměstí Organizace spojených národů",
+          "distanceM": 408
+        }
+      ],
+      "summary": {
+        "available": 17,
+        "reserved": 3,
+        "sold": 22,
+        "total": 42,
+        "soldPct": 52,
+        "layoutMix": [
+          {
+            "layout": "2+kk",
+            "available": 13,
+            "total": 27
+          },
+          {
+            "layout": "3+kk",
+            "available": 1,
+            "total": 9
+          },
+          {
+            "layout": "4+kk",
+            "available": 3,
+            "total": 6
+          }
+        ],
+        "pricePerSm": {
+          "min": 167561,
+          "median": 173030,
+          "max": 177963
+        },
+        "price": {
+          "min": 9880000,
+          "median": 10360000,
+          "max": 21230000
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 173030
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 173269
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 173269
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 173269
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 173269
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 173030
+        }
+      ],
+      "standards": {
+        "flooring": "Dřevo, vinyl",
+        "heating": "Podlahové",
+        "windows": "Plast",
+        "partitionWalls": "Zděné",
+        "cooling": "Příprava klimatizace",
+        "exteriorBlinds": "ano",
+        "airConditioning": false,
+        "coolingCeilings": false,
+        "recuperation": null,
+        "smartHome": false,
+        "amenities": []
+      }
+    },
+    {
+      "id": "a07cc5de-e0ca-4974-b5c4-2a2ab0de7e65",
+      "name": "Vivus Kolbenova III",
+      "developer": "VIVUS",
+      "quarter": "Vysočany",
+      "address": "Kolbenova 591/46, 190 00 Praha 9-Vysočany, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.1103527778162,
+      "lng": 14.5179757598705,
+      "completion": null,
+      "projectUrl": "https://www.vivus.cz/kolbenova3/cz/nabidka-bytu",
+      "coverUrl": "https://www.vivus.cz/images/kolbenova3/cz/foto/ilust_kolbenova_3_pohled_1_4k.jpg",
+      "priceFrom": 6779000,
+      "pricePerSmFrom": 151541,
+      "layouts": [
+        "1+kk",
+        "2+kk",
+        "3+kk"
+      ],
+      "counts": {
+        "available": 5,
+        "reserved": 9,
+        "sold": 118,
+        "total": 132
+      },
+      "header": {
+        "payments": {
+          "contractPct": 10,
+          "constructionPct": 0,
+          "moveInPct": 90
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": 6779000,
+            "note": null
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 9490000,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 13293000,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Kolbenova",
+          "distanceM": 100
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Kolbenova",
+          "distanceM": 137
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Kolbenova",
+          "distanceM": 246
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Vysočany",
+          "distanceM": 1468
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 592
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "Edu Bubo Klub – DS KLUBÍK U ROKYTKY",
+          "distanceM": 669
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "ASU Market",
+          "distanceM": 231
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": null,
+          "distanceM": 270
+        }
+      ],
+      "summary": {
+        "available": 5,
+        "reserved": 9,
+        "sold": 118,
+        "total": 132,
+        "soldPct": 89,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 1,
+            "total": 36
+          },
+          {
+            "layout": "2+kk",
+            "available": 3,
+            "total": 64
+          },
+          {
+            "layout": "3+kk",
+            "available": 1,
+            "total": 27
+          },
+          {
+            "layout": "4+kk",
+            "available": 0,
+            "total": 5
+          }
+        ],
+        "pricePerSm": {
+          "min": 151541,
+          "median": 162535,
+          "max": 222262
+        },
+        "price": {
+          "min": 6779000,
+          "median": 9822000,
+          "max": 13293000
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": 216918
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": 159984
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 162535
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 159984
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 162535
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 162535
+        }
+      ],
+      "standards": {
+        "flooring": "Dřevo",
+        "heating": "Radiátory, podlahové",
+        "windows": null,
+        "partitionWalls": "Zděné",
+        "cooling": "Částečná klimatizace",
+        "exteriorBlinds": "příprava",
+        "airConditioning": false,
+        "coolingCeilings": false,
+        "recuperation": true,
+        "smartHome": false,
+        "amenities": []
+      }
+    },
+    {
+      "id": "d5dd1a8d-f2da-40e3-ae83-28b2db25063c",
+      "name": "Mallard",
+      "developer": "SQUARE",
+      "quarter": "Hrdlořezy",
+      "address": "Českobrodská 138/1, 190 00 Praha 9-Hrdlořezy, Czechia",
+      "postalCode": "190 00",
+      "city": "Praha (město)",
+      "lat": 50.09220394095,
+      "lng": 14.5072811249941,
+      "completion": "2028-10",
+      "projectUrl": "https://yardhrdlorezy.cz/",
+      "coverUrl": "https://yardhrdlorezy.cz/wp-content/uploads/2026/07/ext_05_3-scaled.webp",
+      "priceFrom": 9149000,
+      "pricePerSmFrom": 135376,
+      "layouts": [
+        "2+kk",
+        "3+kk",
+        "4+kk"
+      ],
+      "counts": {
+        "available": 36,
+        "reserved": 3,
+        "sold": 17,
+        "total": 56
+      },
+      "header": {
+        "payments": {
+          "contractPct": 10,
+          "constructionPct": 0,
+          "moveInPct": 90
+        },
+        "priceFromByLayout": [
+          {
+            "layout": "1+kk",
+            "priceFrom": null,
+            "note": "vyprodáno"
+          },
+          {
+            "layout": "2+kk",
+            "priceFrom": 9149000,
+            "note": null
+          },
+          {
+            "layout": "3+kk",
+            "priceFrom": 10490000,
+            "note": null
+          },
+          {
+            "layout": "4+kk",
+            "priceFrom": 17690000,
+            "note": null
+          }
+        ]
+      },
+      "surroundings": [
+        {
+          "category": "metro",
+          "label": "Metro",
+          "name": "Českomoravská",
+          "distanceM": 1905
+        },
+        {
+          "category": "tram",
+          "label": "Tramvaj",
+          "name": "Spojovací",
+          "distanceM": 574
+        },
+        {
+          "category": "bus",
+          "label": "Autobus",
+          "name": "Hrdlořezská",
+          "distanceM": 212
+        },
+        {
+          "category": "vlak",
+          "label": "Vlak",
+          "name": "Praha-Libeň",
+          "distanceM": 1005
+        },
+        {
+          "category": "school",
+          "label": "Škola",
+          "name": null,
+          "distanceM": 112
+        },
+        {
+          "category": "kindergarten",
+          "label": "Školka",
+          "name": "MŠ Buková",
+          "distanceM": 675
+        },
+        {
+          "category": "supermarket",
+          "label": "Supermarket",
+          "name": "Lidl",
+          "distanceM": 443
+        },
+        {
+          "category": "park",
+          "label": "Park",
+          "name": null,
+          "distanceM": 170
+        }
+      ],
+      "summary": {
+        "available": 36,
+        "reserved": 3,
+        "sold": 17,
+        "total": 56,
+        "soldPct": 30,
+        "layoutMix": [
+          {
+            "layout": "1+kk",
+            "available": 0,
+            "total": 6
+          },
+          {
+            "layout": "2+kk",
+            "available": 27,
+            "total": 36
+          },
+          {
+            "layout": "3+kk",
+            "available": 7,
+            "total": 10
+          },
+          {
+            "layout": "4+kk",
+            "available": 2,
+            "total": 4
+          }
+        ],
+        "pricePerSm": {
+          "min": 135376,
+          "median": 159806,
+          "max": 175100
+        },
+        "price": {
+          "min": 9149000,
+          "median": 10490000,
+          "max": 18690000
+        }
+      },
+      "priceTrend": [
+        {
+          "month": "2025-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-08",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-09",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-10",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-11",
+          "medianPerSm": null
+        },
+        {
+          "month": "2025-12",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-01",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-02",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-03",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-04",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-05",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-06",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-07",
+          "medianPerSm": null
+        },
+        {
+          "month": "2026-08",
+          "medianPerSm": 160216
+        },
+        {
+          "month": "2026-09",
+          "medianPerSm": 160216
+        },
+        {
+          "month": "2026-10",
+          "medianPerSm": 159806
+        },
+        {
+          "month": "2026-11",
+          "medianPerSm": 159806
+        }
+      ],
+      "standards": {
+        "flooring": "Vinyl",
+        "heating": "Podlahové",
+        "windows": "Plast",
+        "partitionWalls": "Zděné",
+        "cooling": "Příprava klimatizace",
+        "exteriorBlinds": "příprava",
+        "airConditioning": true,
+        "coolingCeilings": false,
+        "recuperation": false,
+        "smartHome": null,
+        "amenities": [
+          "vnitroblok s předzahrádkami"
+        ]
+      }
+    }
+  ]
+}

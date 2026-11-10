@@ -1,214 +1,80 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { seoHomepage } from '../data/seo';
-import HeroSplit from '../components/HeroSplit.astro';
-import SectionFormujeme from '../components/SectionFormujeme.astro';
-import SectionAlternaTeaser from '../components/SectionAlternaTeaser.astro';
-import DeveloperServices from '../components/DeveloperServices.astro';
-import ServiceList from '../components/ServiceList.astro';
-import SectionProdej from '../components/SectionProdej.astro';
-import SectionKlientyHero from '../components/SectionKlientyHero.astro';
-import SectionKlientyServices from '../components/SectionKlientyServices.astro';
-import SectionZahranici from '../components/SectionZahranici.astro';
-import Footer from '../components/Footer.astro';
+import HeroStrip from '../components/HeroStrip.astro';
+import SectionBuyersAgentHorizont from '../components/SectionBuyersAgentHorizont.astro';
+import SectionPrilecitosti from '../components/SectionPrilecitosti.astro';
+import SectionSpecializace from '../components/SectionSpecializace.astro';
+import SectionNasPribeh from '../components/SectionNasPribeh.astro';
+import ManifestSection from '../components/ManifestSection.astro';
+import SectionPorovnani from '../components/SectionPorovnani.astro';
+import SectionZastoupeni from '../components/onepager/SectionZastoupeni.astro';
+import SectionVyberSluzeb from '../components/SectionVyberSluzeb.astro';
+import SectionReference from '../components/SectionReference.astro';
+import SectionFooter from '../components/SectionFooter.astro';
 ---
-<Layout title={seoHomepage.title} description={seoHomepage.description} ogTitle={seoHomepage.ogTitle} ogDescription={seoHomepage.ogDescription} canonical={seoHomepage.canonical} image={seoHomepage.image}>
-  <HeroSplit />
-  <SectionFormujeme />
-  <SectionAlternaTeaser />
-  <DeveloperServices />
-  <ServiceList />
-  <SectionProdej />
-  <SectionKlientyHero />
-  <SectionKlientyServices />
-  <SectionZahranici />
-  <Footer />
-
-  <!-- Market Intelligence Pill — homepage only -->
-  <div id="mkt-pill">
-    <a href="/prazsky-rezidencni-trh" id="mkt-pill-link" class="font-yellix">
-      <svg class="mkt-spark" width="46" height="30" viewBox="0 0 46 30" fill="none" aria-hidden="true">
-        <polyline class="spark-line" points="2,26 10,19 18,23 28,11 36,16 44,4"
-          stroke="rgba(0,0,0,0.28)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="mkt-txt">
-        <span class="mkt-title">Pražský rezidenční trh</span>
-        <span class="mkt-sub"><span class="mkt-live"></span>Market Data · Q1 2026</span>
-      </div>
-      <span class="mkt-arr">→</span>
-    </a>
-    <button id="mkt-pill-close" aria-label="Zavřít">×</button>
+<Layout
+  title="REAMAR Agency"
+  description="Zastupujeme kupující na developerském trhu. Sledujeme trh, vybíráme vhodné jednotky a jednáme s developerem na vaší straně."
+  canonical="/"
+  heroIntro
+>
+  <div class="hero-cover hero-cover--plain-em">
+    <div class="hero-cover-pin">
+      <HeroStrip />
+    </div>
+    <SectionBuyersAgentHorizont
+      videoSrc="/video/penthouse-nahled.mp4"
+      posterSrc="/video/penthouse-nahled.jpg"
+    />
   </div>
+  <div class="lg:hidden">
+    <SectionPrilecitosti ctaHref="#vyber-sluzeb" />
+    <SectionSpecializace />
+  </div>
+  <div class="flex flex-col">
+    <div class="order-2 lg:order-1">
+      <ManifestSection />
+    </div>
+    <div class="order-3 lg:order-2">
+      <SectionPorovnani ctaHref="#vyber-sluzeb" intro={false} />
+    </div>
+    <div class="order-1 lg:order-3">
+      <SectionNasPribeh
+        ctaHref="/o-nas"
+        ctaLabel="Více o nás"
+      />
+    </div>
+    <div class="order-5 lg:order-4">
+      <SectionVyberSluzeb headingAs="h2" compactTop={false} />
+    </div>
+    <div class="order-4 lg:order-5">
+      <SectionZastoupeni />
+    </div>
+  </div>
+  <SectionReference />
+  <SectionFooter />
 </Layout>
 
 <style>
-  #mkt-pill {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 40;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.45s ease, transform 0.45s ease;
-    pointer-events: none;
-  }
-  #mkt-pill.mkt-visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-  #mkt-pill-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 100px;
-    padding: 8px 18px 8px 8px;
+  .hero-cover--plain-em :global(.hero-em) {
     text-decoration: none;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-    transition: background 0.2s ease, box-shadow 0.2s ease;
   }
-  #mkt-pill-link:hover { background: rgba(255, 255, 255, 0.99); box-shadow: 0 6px 28px rgba(0, 0, 0, 0.12); }
-  #mkt-pill-link:hover .mkt-arr { transform: translateX(2px); }
-  .mkt-spark {
-    flex-shrink: 0;
-    overflow: visible;
-  }
-  .spark-line {
-    stroke-dasharray: 68;
-    stroke-dashoffset: 68;
-    animation: spark-draw 3.2s ease-in-out infinite;
-  }
-  @keyframes spark-draw {
-    0%   { stroke-dashoffset: 68; opacity: 0; }
-    8%   { opacity: 1; }
-    68%  { stroke-dashoffset: 0; opacity: 1; }
-    84%  { stroke-dashoffset: 0; opacity: 0.85; }
-    97%  { stroke-dashoffset: 0; opacity: 0; }
-    100% { stroke-dashoffset: 68; opacity: 0; }
-  }
-  .mkt-live {
-    display: inline-block;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #16a34a;
-    margin-right: 5px;
-    vertical-align: middle;
-    position: relative;
-    top: -1px;
-    animation: live-pulse 2.2s ease-in-out infinite;
-  }
-  @keyframes live-pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.65); }
-  }
-  .mkt-txt {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .mkt-title {
-    font-size: 13px;
-    font-weight: 500;
-    color: #0a0a0a;
-    white-space: nowrap;
-    line-height: 1.2;
-  }
-  .mkt-sub {
-    font-size: 9.5px;
-    font-weight: 500;
-    color: rgba(0, 0, 0, 0.38);
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-  }
-  .mkt-arr {
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.35);
-    margin-left: 2px;
-    transition: transform 0.2s ease;
-    line-height: 1;
-  }
-  #mkt-pill-close {
-    position: absolute;
-    top: -7px;
-    right: -7px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: rgba(240, 240, 240, 0.97);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    color: rgba(0, 0, 0, 0.4);
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-    line-height: 1;
-    padding: 0;
-  }
-  #mkt-pill-close:hover {
-    background: rgba(220, 220, 220, 0.99);
-    color: #000;
+  .hero-cover--plain-em :global(.hero-em::after) {
+    content: none;
+    display: none;
   }
 
-  /* Mobile: pill vpravo dole stejně jako desktop, jen trochu blíž k okraji */
-  @media (max-width: 767px) {
-    #mkt-pill {
-      bottom: calc(var(--vv-gap, 0px) + 1.25rem + env(safe-area-inset-bottom));
-      right: 1rem;
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .hero-cover-pin {
+      position: sticky;
+      top: 0;
     }
-    #mkt-pill-link {
-      padding-left: 16px;
+    .hero-cover-pin:has([data-strip-modal]:not([hidden])) {
+      z-index: 80;
     }
-    .mkt-spark { display: none; }
-    .mkt-title { font-size: 13px; }
-    #mkt-pill-close {
-      right: 5px;
+    .hero-cover :global(.bah) {
+      position: relative;
+      z-index: 1;
     }
   }
 </style>
-
-<script>
-  function initMarketPill() {
-    const pill = document.getElementById('mkt-pill');
-    const closeBtn = document.getElementById('mkt-pill-close');
-    if (!pill || !closeBtn) return;
-
-    if (sessionStorage.getItem('mkt-pill-dismissed')) return;
-
-    const showOnScroll = () => {
-      if (window.scrollY > window.innerHeight * 0.85) {
-        pill.classList.add('mkt-visible');
-        window.removeEventListener('scroll', showOnScroll);
-      }
-    };
-
-    setTimeout(() => {
-      window.addEventListener('scroll', showOnScroll, { passive: true });
-    }, 400);
-
-    closeBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      pill.classList.remove('mkt-visible');
-      sessionStorage.setItem('mkt-pill-dismissed', '1');
-    });
-
-    if (window.visualViewport) {
-      const syncVV = () => {
-        if (window.innerWidth >= 768) return;
-        const gap = Math.max(0, window.innerHeight - window.visualViewport.height);
-        document.documentElement.style.setProperty('--vv-gap', `${gap}px`);
-      };
-      window.visualViewport.addEventListener('resize', syncVV, { passive: true });
-      syncVV();
-    }
-  }
-
-  document.addEventListener('astro:page-load', initMarketPill);
-</script>

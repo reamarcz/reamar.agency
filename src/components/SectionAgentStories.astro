@@ -1,0 +1,455 @@
+---
+const ytPlay = `<svg viewBox="0 0 68 48"><path class="agent-play-bg" fill="#f00" fill-opacity="0.9" d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55C3.97 2.33 2.27 4.81 1.48 7.74.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26Z"/><path fill="#fff" d="M45 24 27 14v20l18-10Z"/></svg>`;
+
+const shorts: {
+  poster: string;
+  src?: string;
+  position: string;
+  title: string;
+}[] = [
+  {
+    src: '/videos/Hero Mobil Reamar.mp4',
+    poster: '/images/agency/jv-holder2.jpg',
+    position: '58% center',
+    title: 'Rezervační záloha: na co se ptát dřív, než ji složíte',
+  },
+  {
+    poster: '/images/agency/Storyholder.jpeg',
+    position: '40% center',
+    title: 'Dispozice vs. ceník. Kde se v novostavbě schovává rozdíl',
+  },
+  {
+    poster: '/images/agency/story.webp',
+    position: 'center',
+    title: 'Standard provedení, který v inzerátu není',
+  },
+  {
+    poster: '/images/agency/vyjednavani.webp',
+    position: 'center',
+    title: 'Jednání s developerem. Co má smysl tlačit',
+  },
+  {
+    poster: '/images/agency/int-14-scaled.webp',
+    position: 'center 46%',
+    title: 'Kdy dává předprodej smysl a kdy už ne',
+  },
+];
+
+const youtubeHref = 'https://www.youtube.com/@agentprokupujici';
+
+const episodes: {
+  src: string;
+  poster: string;
+  position: string;
+  title: string;
+  body: string;
+  youtube: string;
+  article: string;
+}[] = [
+  {
+    src: '/videos/Pro klienty.mp4',
+    poster: '/images/agency/jv-holder3.jpg',
+    position: 'center 30%',
+    title: 'Proč kupující potřebuje vlastního agenta',
+    body: 'Developer prodává svůj projekt, realitní kancelář svoje nemovitosti. V tomhle díle jdu přes to, co z nabídky na první pohled není vidět — a proč má mít kupující u novostavby někoho na své straně.',
+    youtube: youtubeHref,
+    article: '',
+  },
+  {
+    src: '/videos/REAMAR X.mp4',
+    poster: '/images/agency/Storyholder.jpeg',
+    position: '42% center',
+    title: 'Jak číst nabídku developera',
+    body: 'Ceník, dispozice, standard a termín předání. Procházím, na co se ptát dřív, než padne rezervační záloha, a kde se v číslech nejčastěji schovává rozdíl mezi slibem a smlouvou.',
+    youtube: youtubeHref,
+    article: '',
+  },
+];
+---
+
+<section id="pribehy-z-trhu" class="bg-white" aria-labelledby="agent-stories-heading" data-agent-stories>
+  <div class="mx-auto max-w-[1440px] px-5 pb-16 pt-10 md:px-10 md:pb-24 md:pt-12 xl:px-14">
+    <h2
+      id="agent-stories-heading"
+      class="flex items-center gap-3 font-yellix text-[28px] font-medium leading-[1.12] tracking-[-0.02em] text-black md:gap-3.5 md:text-[36px] xl:text-[40px]"
+      data-aos="fade-up"
+    >
+      <img
+        src="/images/arrow-1.svg"
+        alt=""
+        class="h-5 w-5 shrink-0 brightness-0 md:h-6 md:w-6"
+        width="20"
+        height="20"
+      />
+      Příběhy z trhu
+    </h2>
+
+    <div class="story-shorts mt-10 md:mt-14">
+      {shorts.map((item, i) => (
+        <article class="story-short" data-aos="fade-up" data-aos-delay={String(i * 70)}>
+          <div class="story-short-media" data-story-card>
+            {item.src ? (
+              <>
+                <button type="button" class="story-cover" data-story-play aria-label={`Přehrát: ${item.title}`}>
+                  <img src={item.poster} alt="" width="1080" height="1920" style={`object-position: ${item.position}`} />
+                  <span class="story-play" aria-hidden="true" set:html={ytPlay} />
+                </button>
+                <video
+                  class="story-player hidden"
+                  data-story-player
+                  controls
+                  playsinline
+                  preload="none"
+                  poster={item.poster}
+                >
+                  <source src={item.src} type="video/mp4" />
+                </video>
+              </>
+            ) : (
+              <div class="story-cover">
+                <img src={item.poster} alt="" width="1080" height="1920" style={`object-position: ${item.position}`} />
+                <span class="story-play" aria-hidden="true" set:html={ytPlay} />
+              </div>
+            )}
+          </div>
+          <h3 class="story-short-title">{item.title}</h3>
+        </article>
+      ))}
+    </div>
+
+    <div class="story-episodes">
+      {episodes.map((item) => (
+        <article class="story-episode">
+          <div class="story-episode-media" data-story-card data-aos="fade-right">
+            <button type="button" class="story-cover" data-story-play aria-label="Přehrát video">
+              <img src={item.poster} alt="" width="1280" height="720" style={`object-position: ${item.position}`} />
+              <span class="story-play" aria-hidden="true" set:html={ytPlay} />
+            </button>
+            <video
+              class="story-player hidden"
+              data-story-player
+              controls
+              playsinline
+              preload="none"
+              poster={item.poster}
+            >
+              <source src={item.src} type="video/mp4" />
+            </video>
+          </div>
+          <div class="story-episode-copy" data-aos="fade-left" data-aos-delay="80">
+            <div class="story-episode-head">
+              <h3 class="font-yellix text-[22px] font-medium leading-[1.2] tracking-[-0.02em] text-black md:text-[26px] xl:text-[28px]">
+                {item.title}
+              </h3>
+              <a
+                href={item.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="story-channel"
+              >
+                <span class="story-channel-avatar">
+                  <img
+                    src="/images/agency/Jan%20Vitvera.webp"
+                    alt=""
+                    width="24"
+                    height="24"
+                  />
+                </span>
+                <span class="story-channel-name">Agent pro kupující</span>
+              </a>
+            </div>
+            <p class="font-yellix text-[14px] font-medium leading-[1.55] text-black/75 md:text-[15px]">
+              {item.body}
+            </p>
+            {item.article ? (
+              <a href={item.article} class="story-article">
+                Přečíst článek
+                <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+              </a>
+            ) : (
+              <span class="story-article" title="Odkaz na článek doplníme">
+                Přečíst článek
+                <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+              </span>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .story-shorts {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 0.35rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+  @media (min-width: 1024px) {
+    .story-shorts {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      overflow: visible;
+      padding-bottom: 0;
+    }
+  }
+  .story-short {
+    flex: 0 0 42vw;
+    max-width: 240px;
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+  @media (min-width: 1024px) {
+    .story-short {
+      flex: none;
+      max-width: none;
+    }
+  }
+  .story-short-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #111;
+    border-radius: 8px;
+  }
+  .story-short-media .story-play {
+    width: 48px;
+    height: 34px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .story-short-media .story-play :global(svg) {
+    animation: none;
+  }
+  .story-short-media .story-cover:hover .story-play,
+  .story-short-media .story-cover:focus-visible .story-play {
+    opacity: 1;
+  }
+  .story-short-media .story-cover:hover .story-play :global(svg) {
+    transform: scale(1.08);
+  }
+  .story-short-title {
+    margin: 10px 0 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #000;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .story-cover {
+    position: absolute;
+    inset: 0;
+    display: block;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    background: #111;
+  }
+  div.story-cover {
+    cursor: default;
+  }
+  .story-cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.18);
+    pointer-events: none;
+  }
+  .story-cover img,
+  .story-player {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .story-cover img {
+    transition: transform 0.55s ease;
+  }
+  .story-cover:hover img {
+    transform: scale(1.05);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .story-cover img {
+      transition: none;
+    }
+    .story-cover:hover img {
+      transform: none;
+    }
+  }
+  .story-player {
+    position: absolute;
+    inset: 0;
+    background: #000;
+  }
+  .story-play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    display: flex;
+    width: 68px;
+    height: 48px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .story-play :global(svg) {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.35));
+    transform-origin: 50% 50%;
+  }
+  .story-play :global(.agent-play-bg) {
+    transition: fill-opacity 0.15s ease;
+  }
+  button.story-cover:hover :global(.agent-play-bg) {
+    fill-opacity: 1;
+  }
+  button.story-cover:hover .story-play :global(svg) {
+    transform: scale(1.08);
+  }
+  .story-episodes {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    margin-top: 5rem;
+  }
+  @media (min-width: 768px) {
+    .story-episodes {
+      gap: 6rem;
+      margin-top: 5.5rem;
+    }
+  }
+  .story-episode {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  @media (min-width: 1024px) {
+    .story-episode {
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 3.5rem;
+    }
+  }
+  .story-episode-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #111;
+    border-radius: 8px;
+  }
+  .story-episode-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 46ch;
+  }
+  .story-episode-head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .story-channel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #000;
+    transition: opacity 0.2s ease;
+  }
+  .story-channel:hover {
+    opacity: 0.85;
+  }
+  .story-channel-avatar {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #d7d2c8;
+  }
+  .story-channel-avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .story-channel-name {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+  .story-episode-copy p {
+    margin: 16px 0 12px;
+  }
+  .story-article {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .story-article:hover {
+    opacity: 0.85;
+  }
+  .story-article img {
+    display: block;
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    filter: brightness(0);
+  }
+</style>
+
+<script>
+  function pauseAllStoryPlayers(except) {
+    document.querySelectorAll('[data-story-player], [data-agent-player]').forEach(function (player) {
+      if (player !== except && !player.paused) player.pause();
+    });
+  }
+
+  function bindStoryCover(cover, player) {
+    if (!cover || !player) return;
+    cover.addEventListener('click', function () {
+      pauseAllStoryPlayers(player);
+      cover.classList.add('hidden');
+      player.classList.remove('hidden');
+      player.play();
+    });
+    player.addEventListener('play', function () {
+      pauseAllStoryPlayers(player);
+    });
+  }
+
+  function initAgentStories() {
+    const wrap = document.querySelector('[data-agent-stories]');
+    if (!wrap || wrap.dataset.init === '1') return;
+    wrap.dataset.init = '1';
+
+    wrap.querySelectorAll('[data-story-card]').forEach(function (card) {
+      bindStoryCover(
+        card.querySelector('[data-story-play]'),
+        card.querySelector('[data-story-player]')
+      );
+    });
+  }
+
+  initAgentStories();
+  document.addEventListener('astro:page-load', initAgentStories);
+</script>
