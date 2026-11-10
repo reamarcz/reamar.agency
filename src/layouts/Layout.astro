@@ -195,6 +195,71 @@ const {
       });
     </script>
     <script>
+      function loopVideoNodes() {
+        return document.querySelectorAll(
+          'video[data-decorative-autoplay], video[data-hero-loop], video[data-bh-video], video[data-mhero-video], video[data-bah-media], video[data-pz-loop]'
+        );
+      }
+
+      function armLoopVideo(video) {
+        video.muted = true;
+        video.defaultMuted = true;
+        video.volume = 0;
+        video.playsInline = true;
+        video.controls = false;
+        video.setAttribute('muted', '');
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', 'true');
+        video.removeAttribute('controls');
+        var src = video.getAttribute('data-src');
+        if (src && video.getAttribute('src') !== src) video.setAttribute('src', src);
+        video.preload = 'auto';
+      }
+
+      function markLoopPlaying(video) {
+        if (video.paused) return;
+        video.classList.add('is-playing', 'is-live');
+        var host = video.closest('.video-decorative-wrap, .pz-board-photo, .hero-strip-film, .hero-strip-mobile-visual');
+        if (host) host.classList.add('is-playing');
+      }
+
+      function markLoopStill(video) {
+        video.classList.remove('is-playing', 'is-live');
+        var host = video.closest('.video-decorative-wrap, .pz-board-photo');
+        if (host) host.classList.remove('is-playing');
+      }
+
+      function kickLoopVideos() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        loopVideoNodes().forEach(function (video) {
+          if (!video.getClientRects().length) return;
+          armLoopVideo(video);
+          var play = video.play();
+          if (play && typeof play.then === 'function') {
+            play.then(function () { markLoopPlaying(video); }).catch(function () {});
+          } else if (!video.paused) {
+            markLoopPlaying(video);
+          }
+        });
+      }
+
+      function pauseLoopVideos() {
+        loopVideoNodes().forEach(function (video) {
+          try { video.pause(); } catch (e) {}
+          markLoopStill(video);
+        });
+      }
+
+      function scheduleLoopKicks() {
+        kickLoopVideos();
+        [50, 150, 400, 900, 1800].forEach(function (ms) {
+          window.setTimeout(kickLoopVideos, ms);
+        });
+        requestAnimationFrame(function () {
+          requestAnimationFrame(kickLoopVideos);
+        });
+      }
+
       function initVideoDecorativeCovers() {
         document.querySelectorAll('.video-decorative-wrap').forEach(function (wrap) {
           var video = wrap.querySelector('video[data-decorative-autoplay]');
@@ -222,14 +287,7 @@ const {
             markPlaying();
           };
           var armVideo = function () {
-            video.muted = true;
-            video.defaultMuted = true;
-            video.playsInline = true;
-            video.controls = false;
-            video.setAttribute('muted', '');
-            video.setAttribute('playsinline', '');
-            video.setAttribute('webkit-playsinline', 'true');
-            video.removeAttribute('controls');
+            armLoopVideo(video);
           };
 
           if (!video.paused && video.readyState >= 2) revealWhenPainted();
@@ -256,12 +314,6 @@ const {
             if (!video.paused) return;
             kick();
           });
-          ['pointerdown', 'touchstart', 'touchend', 'scroll'].forEach(function (ev) {
-            window.addEventListener(ev, function () {
-              if (!video.paused) return;
-              kick();
-            }, { passive: true });
-          });
 
           kick();
           [80, 250, 700, 1400].forEach(function (ms) {
@@ -271,8 +323,23 @@ const {
           video.addEventListener('loadeddata', kick);
         });
       }
+
+      // View Transitions: pause old page media, then force-play loops on the new page.
+      document.addEventListener('astro:before-swap', pauseLoopVideos);
+      document.addEventListener('astro:after-swap', scheduleLoopKicks);
+      document.addEventListener('astro:page-load', function () {
+        initVideoDecorativeCovers();
+        scheduleLoopKicks();
+      });
       initVideoDecorativeCovers();
-      document.addEventListener('astro:page-load', initVideoDecorativeCovers);
+      scheduleLoopKicks();
+
+      if (!window.__reamarLoopUnlock) {
+        window.__reamarLoopUnlock = true;
+        ['pointerdown', 'touchstart', 'touchend', 'keydown', 'scroll', 'wheel'].forEach(function (ev) {
+          window.addEventListener(ev, kickLoopVideos, { passive: true });
+        });
+      }
     </script>
   </body>
 </html>

@@ -1339,8 +1339,8 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
     const scroller = document.querySelector('[data-bh-swipe]') as HTMLElement | null;
     const dots = [...document.querySelectorAll('[data-bh-dots] span')];
     if (!scroller || !dots.length) return;
-    if (scroller.dataset.bhSwipeBound === '1') return;
-    scroller.dataset.bhSwipeBound = '1';
+    if ((scroller as any)._bhSwipeBound) return;
+    (scroller as any)._bhSwipeBound = true;
 
     const cards = [...scroller.querySelectorAll('li')];
     const update = () => {

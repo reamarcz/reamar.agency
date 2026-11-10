@@ -558,6 +558,16 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
   function initLoops() {
     const videos = document.querySelectorAll('[data-hero-strip] [data-hero-loop]');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Fresh layout pass after View Transitions soft navigations.
+    heroLayoutReady = false;
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        heroLayoutReady = true;
+        videos.forEach(function (video) {
+          if (!reduced && visible(video)) tryPlay(video);
+        });
+      });
+    });
     videos.forEach(function (video) {
       if (reduced) {
         video.removeAttribute('autoplay');
