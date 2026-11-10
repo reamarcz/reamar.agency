@@ -3,6 +3,8 @@
  * Components bind once; Layout must not call play/pause on owned videos.
  */
 
+import { isVideoDebug, snapshotMedia, videoDebugLog } from './video-debug';
+
 export type HeroLoopOptions = {
   /** Element measured + observed for viewport presence (defaults to video). */
   host?: Element;
@@ -123,11 +125,20 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
     opts.onBlocked?.();
   };
 
+  const dbg = (tag: string, data?: Record<string, unknown>) => {
+    if (!isVideoDebug()) return;
+    videoDebugLog(tag, { ...data, ...snapshotMedia(video, host), wantPlay, userPaused, eager });
+  };
+
   const revealWhenPainted = () => {
     if (destroyed || video.paused) return;
     if (typeof video.requestVideoFrameCallback === 'function') {
+      dbg('rvfc:arm');
       video.requestVideoFrameCallback(() => {
-        if (!destroyed && !video.paused) markPlaying();
+        if (!destroyed && !video.paused) {
+          dbg('rvfc:frame');
+          markPlaying();
+        }
       });
       return;
     }
@@ -135,17 +146,29 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
   };
 
   const tryPlay = () => {
-    if (destroyed || !wantPlay || userPaused || reduceMotion()) return;
+    if (destroyed || !wantPlay || userPaused || reduceMotion()) {
+      dbg('tryPlay:skip', {
+        reason: destroyed ? 'destroyed' : !wantPlay ? 'wantPlay=false' : userPaused ? 'userPaused' : 'reduceMotion',
+      });
+      return;
+    }
     // Never start playback from a stale canplay while the host is off-screen.
-    if (!geometricallyVisible(host)) return;
+    if (!geometricallyVisible(host)) {
+      dbg('tryPlay:skip', { reason: 'host-not-visible' });
+      return;
+    }
     armVideo(video);
+    dbg('tryPlay:call');
     const run = video.play();
     if (run && typeof run.then === 'function') {
       run.then(() => {
         if (destroyed) return;
+        dbg('tryPlay:resolved');
         revealWhenPainted();
-      }).catch(() => {
+      }).catch((err: unknown) => {
         if (destroyed) return;
+        const e = err as { name?: string; message?: string };
+        dbg('tryPlay:rejected', { name: e?.name || 'Error', message: e?.message || String(err) });
         markBlocked();
         armUnlock();
       });
@@ -167,8 +190,12 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
       return;
     }
     // Auto-resume paths must not override an explicit user pause.
-    if (on && userPaused) return;
+    if (on && userPaused) {
+      dbg('setWantPlay:blocked-userPaused');
+      return;
+    }
     wantPlay = on;
+    dbg(on ? 'setWantPlay:on' : 'setWantPlay:off');
     if (on) tryPlay();
     else {
       try {
@@ -183,6 +210,7 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
   const unlock = () => {
     if (destroyed || !video.paused) return;
     if (!geometricallyVisible(host)) return;
+    dbg('unlock:gesture');
     userPaused = false;
     setWantPlay(true);
   };
@@ -190,6 +218,7 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
   const armUnlock = () => {
     if (unlockBound || destroyed) return;
     unlockBound = true;
+    dbg('armUnlock', { listeners: ['pointerdown', 'touchstart', 'keydown'] });
     ['pointerdown', 'touchstart', 'keydown'].forEach((ev) => {
       window.addEventListener(ev, unlock, { passive: true });
     });
@@ -235,14 +264,23 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
   const io = new IntersectionObserver(
     (entries) => {
       if (destroyed) return;
-      if (document.visibilityState === 'hidden') return;
+      if (document.visibilityState === 'hidden') {
+        dbg('io:ignored-hidden');
+        return;
+      }
       entries.forEach((entry) => {
         const visible = geometricallyVisible(host);
+        dbg('io', {
+          ratio: Math.round(entry.intersectionRatio * 1000) / 1000,
+          isIntersecting: entry.isIntersecting,
+          geoVisible: visible,
+        });
         if (visible) {
           if (!userPaused) setWantPlay(true);
           return;
         }
         if (entry.intersectionRatio === 0 && !visible) {
+          dbg('io:pause', { reason: 'ratio0+geoHidden' });
           setWantPlay(false);
         }
       });
@@ -260,12 +298,22 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
   markHost?.addEventListener('click', onHostClick);
   io.observe(host);
 
+  dbg('bind', {
+    geoVisible: geometricallyVisible(host),
+    reduce: reduceMotion(),
+  });
+
   // Eager heroes: first play at init when already in the viewport — not gated on IO.
   if (eager && geometricallyVisible(host) && !reduceMotion()) {
     setWantPlay(true);
   } else if (!eager) {
     // Lazy: IO will set wantPlay on first real intersection.
     wantPlay = false;
+    dbg('bind:lazy-wait-io');
+  } else {
+    dbg('bind:no-eager-play', {
+      reason: reduceMotion() ? 'reduceMotion' : 'host-not-visible',
+    });
   }
 
   const handle: HeroLoopHandle = {
@@ -276,6 +324,7 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
     pause: () => setWantPlay(false),
     destroy: () => {
       if (destroyed) return;
+      dbg('destroy');
       destroyed = true;
       wantPlay = false;
       userPaused = false;

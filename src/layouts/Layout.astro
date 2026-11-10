@@ -77,6 +77,70 @@ const {
     <link rel="icon" type="image/svg+xml" href="/images/Reamar%20SVG.svg" />
     <ViewTransitions />
     <script is:inline>
+      // Early videoDebug bootstrap — catches inline play() before module scripts.
+      (function () {
+        try {
+          if (!/(?:^|[?&])videoDebug=1(?:&|$)/.test(location.search)) return;
+        } catch (e) { return; }
+        window.__vdEnabled = true;
+        window.__vdLog = window.__vdLog || [];
+        var t0 = performance.now();
+        function push(line) {
+          window.__vdLog.push(line);
+          if (window.__vdLog.length > 220) window.__vdLog.splice(0, window.__vdLog.length - 220);
+          var pre = document.getElementById('vd-pre');
+          if (pre) {
+            pre.textContent = window.__vdLog.join('\n');
+            var panel = document.getElementById('vd-panel');
+            if (panel) panel.scrollTop = panel.scrollHeight;
+          }
+        }
+        window.__vdPush = function (tag, detail) {
+          var ms = Math.round((performance.now() - t0) * 10) / 10;
+          push(ms + 'ms [' + tag + ']' + (detail ? ' ' + detail : ''));
+        };
+        function ensure() {
+          if (document.getElementById('vd-panel')) return;
+          var panel = document.createElement('div');
+          panel.id = 'vd-panel';
+          panel.setAttribute('aria-live', 'polite');
+          panel.style.cssText = 'position:fixed;left:6px;top:6px;z-index:2147483646;width:min(96vw,420px);max-height:48vh;overflow:auto;margin:0;padding:8px;background:rgba(0,0,0,.82);color:#d8ffd8;font:11px/1.35 ui-monospace,Menlo,monospace;border:1px solid rgba(255,255,255,.25);-webkit-overflow-scrolling:touch';
+          panel.innerHTML = '<div style="color:#fff;font-weight:600;margin-bottom:6px">videoDebug (early)</div><pre id="vd-pre" style="margin:0;white-space:pre-wrap;word-break:break-word"></pre>';
+          (document.body || document.documentElement).appendChild(panel);
+          document.getElementById('vd-pre').textContent = window.__vdLog.join('\n');
+        }
+        if (document.body) ensure();
+        else document.addEventListener('DOMContentLoaded', ensure);
+        window.__vdPush('early-boot', location.href);
+        if (!window.__vdOrigPlay) {
+          window.__vdOrigPlay = HTMLVideoElement.prototype.play;
+          HTMLVideoElement.prototype.play = function () {
+            var label = this.getAttribute('data-mhero-video') || this.getAttribute('data-hero-loop') || this.className.slice(0, 28) || 'video';
+            window.__vdPush('play()', JSON.stringify({
+              video: label,
+              paused: this.paused,
+              readyState: this.readyState,
+              t: Math.round(this.currentTime * 1000) / 1000,
+              muted: this.muted,
+              autoplay: this.hasAttribute('autoplay'),
+              playsinline: this.hasAttribute('playsinline'),
+              w: Math.round(this.getBoundingClientRect().width),
+              h: Math.round(this.getBoundingClientRect().height)
+            }));
+            var result = window.__vdOrigPlay.apply(this, arguments);
+            if (result && result.then) {
+              result.then(function () {
+                window.__vdPush('play:ok', JSON.stringify({ video: label, paused: this.paused, t: Math.round(this.currentTime * 1000) / 1000, readyState: this.readyState }));
+              }.bind(this), function (err) {
+                window.__vdPush('play:fail', JSON.stringify({ video: label, name: err && err.name, message: err && err.message }));
+              });
+            }
+            return result;
+          };
+        }
+      })();
+    </script>
+    <script is:inline>
       function handleModalClick(event) {
         console.log('[Modal] click fired, target:', event.target);
         var target = event.target.closest('[data-smart-contact-open], [data-smart-meeting-open], [data-provize-open]');
@@ -196,9 +260,11 @@ const {
     </script>
     <script>
       import { bindHeroLoop, installHeroLoopLifecycle } from '../scripts/hero-loop';
+      import { installVideoDebug, isVideoDebug } from '../scripts/video-debug';
 
       // VT cleanup for owned loops lives in hero-loop — Layout must not play/pause heroes.
       installHeroLoopLifecycle();
+      if (isVideoDebug()) installVideoDebug();
 
       function initUnmanagedDecorativeLoops() {
         document.querySelectorAll('.video-decorative-wrap').forEach(function (wrap) {
