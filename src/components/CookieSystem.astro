@@ -6,33 +6,21 @@ const CATEGORIES = [
   { id: 'marketing', label: 'Marketingové', alwaysOn: false },
 ] as const;
 ---
-<!-- Cookie Banner: fixní lišta dole -->
 <div
   id="cookie-banner"
-  class="cookie-banner fixed bottom-0 left-0 right-0 z-[90] w-full bg-white border-t border-gray-200 opacity-0 pointer-events-none transition-opacity duration-300"
+  class="cookie-banner"
   aria-hidden="true"
   data-cookie-banner
 >
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-6 py-4 md:px-10 md:py-5">
-    <p class="font-yellix text-[14px] font-normal text-gray-700 order-2 sm:order-1">
-      Tento web používá cookies pro zajištění nejlepšího zážitku.
+  <div class="cookie-banner-card">
+    <p class="cookie-banner-title">Cookies nám pomáhají web zlepšovat</p>
+    <p class="cookie-banner-copy">
+      Používáme je k analýze návštěvnosti a vylepšení webu. Podrobnosti v
+      <button type="button" class="cookie-banner-link" data-cookie-open-settings>nastavení</button>.
     </p>
-    <div class="flex items-center gap-6 order-1 sm:order-2">
-      <button
-        type="button"
-        class="font-yellix text-[14px] font-normal text-gray-500 underline border-0 bg-transparent p-0 cursor-pointer hover:text-gray-700 transition-colors"
-        data-cookie-open-settings
-        aria-label="Nastavení cookies"
-      >
-        Nastavení
-      </button>
-      <button
-        type="button"
-        class="font-yellix text-[14px] font-normal text-white bg-[#000000] border border-[#000000] py-2.5 px-5 cursor-pointer hover:opacity-90 transition-opacity"
-        data-cookie-accept
-      >
-        Souhlasím
-      </button>
+    <div class="cookie-banner-actions">
+      <button type="button" class="cookie-banner-btn" data-cookie-accept>Souhlasím</button>
+      <button type="button" class="cookie-banner-btn" data-cookie-reject>Odmítnout</button>
     </div>
   </div>
 </div>
@@ -106,6 +94,153 @@ const CATEGORIES = [
   </div>
 </div>
 
+<style is:global>
+  .cookie-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 90;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  .cookie-banner.is-on {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+  .cookie-banner-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem 1.15rem;
+    background: #fff;
+    border-top: 1px solid #e5e5e5;
+  }
+  .cookie-banner-title {
+    display: none;
+    margin: 0;
+    font-family: Yellix, system-ui, sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: #000;
+  }
+  .cookie-banner-copy {
+    margin: 0;
+    font-family: Yellix, system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.45;
+    color: rgba(0, 0, 0, 0.62);
+  }
+  .cookie-banner-link {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: #000;
+    text-decoration: underline;
+    text-underline-offset: 0.14em;
+    cursor: pointer;
+  }
+  .cookie-banner-link:hover {
+    opacity: 0.7;
+  }
+  .cookie-banner-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem 0.85rem;
+  }
+  .cookie-banner-btn {
+    margin: 0;
+    padding: 10px 18px;
+    border: 1px solid #000;
+    background: #000;
+    color: #fff;
+    font-family: Yellix, system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .cookie-banner-btn[data-cookie-reject] {
+    background: #fff;
+    color: #000;
+    border-color: rgba(0, 0, 0, 0.18);
+  }
+  .cookie-banner-btn:hover {
+    opacity: 0.88;
+  }
+  @media (min-width: 1024px) {
+    .cookie-banner-card {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding: 1.05rem 2.5rem 1.1rem;
+    }
+    .cookie-banner-copy {
+      flex: 1;
+      max-width: 46rem;
+    }
+    .cookie-banner-actions {
+      flex-shrink: 0;
+    }
+  }
+  @media (max-width: 1023px) {
+    .cookie-banner {
+      left: 12px;
+      right: 12px;
+      bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+      width: auto;
+    }
+    .cookie-banner-card {
+      gap: 0.85rem;
+      padding: 1.2rem 1.15rem 1.1rem;
+      border: 0;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.78);
+      -webkit-backdrop-filter: blur(22px);
+      backdrop-filter: blur(22px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+    }
+    .cookie-banner-title {
+      display: block;
+    }
+    .cookie-banner-copy {
+      font-size: 13px;
+      line-height: 1.4;
+      color: rgba(0, 0, 0, 0.68);
+    }
+    .cookie-banner-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 0.25rem;
+    }
+    .cookie-banner-btn {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border-color: rgba(0, 0, 0, 0.12);
+      background: #fff;
+      color: #000;
+    }
+    .cookie-banner-btn[data-cookie-reject] {
+      background: #fff;
+      color: #000;
+      border-color: rgba(0, 0, 0, 0.12);
+    }
+  }
+</style>
+
 <script define:vars={{ STORAGE_KEY }}>
   function initCookieSystem() {
     const banner = document.querySelector('[data-cookie-banner]');
@@ -151,16 +286,59 @@ const CATEGORIES = [
       });
     }
 
+    function introPlaying() {
+      const root = document.documentElement;
+      return root.classList.contains('rmm-on') || root.classList.contains('rmi-on') || root.classList.contains('intro-on');
+    }
+
+    function isPhone() {
+      return window.matchMedia('(max-width: 1023px)').matches;
+    }
+
     function showBanner() {
       if (!banner) return;
-      banner.classList.remove('opacity-0', 'pointer-events-none');
+      const consent = getConsent();
+      if (consent && consent.consented) return;
+      if (introPlaying()) {
+        window.addEventListener('rm:intro-done', function () {
+          window.setTimeout(showBanner, 1800);
+        }, { once: true });
+        return;
+      }
+      banner.classList.add('is-on');
       banner.setAttribute('aria-hidden', 'false');
     }
 
     function hideBanner() {
       if (!banner) return;
-      banner.classList.add('opacity-0', 'pointer-events-none');
+      banner.classList.remove('is-on');
       banner.setAttribute('aria-hidden', 'true');
+    }
+
+    function scheduleBanner() {
+      if (window.__cookieBannerTimer) clearTimeout(window.__cookieBannerTimer);
+      const start = performance.now();
+      const arm = function () {
+        if (getConsent() && getConsent().consented) return;
+        if (introPlaying()) {
+          window.addEventListener('rm:intro-done', function () {
+            window.__cookieBannerTimer = setTimeout(arm, 1800);
+          }, { once: true });
+          window.addEventListener('hero-intro-done', function () {
+            window.__cookieBannerTimer = setTimeout(arm, 1800);
+          }, { once: true });
+          window.__cookieBannerTimer = setTimeout(arm, 12000);
+          return;
+        }
+        const min = isPhone() ? 6500 : 2000;
+        const left = min - (performance.now() - start);
+        if (left > 40) {
+          window.__cookieBannerTimer = setTimeout(arm, left);
+          return;
+        }
+        showBanner();
+      };
+      window.__cookieBannerTimer = setTimeout(arm, 80);
     }
 
     function openModal() {
@@ -202,30 +380,41 @@ const CATEGORIES = [
       }
     }
 
-    // Banner: zobrazit 2s po načtení, pokud není souhlas
-    setTimeout(function () {
-      const consent = getConsent();
-      if (!consent || !consent.consented) showBanner();
-    }, 2000);
+    if (!window.__cookieBannerScheduled) {
+      window.__cookieBannerScheduled = true;
+      scheduleBanner();
+    }
 
-    // Souhlasím = přijmout vše, skrýt banner, uložit, gtag
-    document.querySelector('[data-cookie-accept]')?.addEventListener('click', function () {
-      const prefs = { necessary: true, analytical: true, marketing: true, consented: true };
-      setConsent(prefs);
-      updateGtagConsent(prefs);
-      hideBanner();
-    });
-
-    // Nastavení = otevřít modal (ze banneru)
-    document.querySelector('[data-cookie-open-settings]')?.addEventListener('click', openModal);
-
-    // Otevřít modal z patičky: #open-cookie-settings nebo [data-cookie-settings]
     function handleOpenSettings(e) {
       if (e.target.closest('#open-cookie-settings') || e.target.closest('[data-cookie-settings]')) {
         e.preventDefault();
         openModal();
       }
     }
+
+    if (banner && banner.dataset.bound === '1') {
+      window.__cookieOpenSettingsHandler = handleOpenSettings;
+      document.body.addEventListener('click', handleOpenSettings);
+      return;
+    }
+    if (banner) banner.dataset.bound = '1';
+
+    function saveAndHide(prefs) {
+      setConsent(prefs);
+      updateGtagConsent(prefs);
+      hideBanner();
+    }
+
+    document.querySelector('[data-cookie-accept]')?.addEventListener('click', function () {
+      saveAndHide({ necessary: true, analytical: true, marketing: true, consented: true });
+    });
+    document.querySelector('[data-cookie-reject]')?.addEventListener('click', function () {
+      saveAndHide({ necessary: true, analytical: false, marketing: false, consented: true });
+    });
+
+    // Nastavení = otevřít modal (ze banneru)
+    document.querySelector('[data-cookie-open-settings]')?.addEventListener('click', openModal);
+
     window.__cookieOpenSettingsHandler = handleOpenSettings;
     document.body.addEventListener('click', handleOpenSettings);
 

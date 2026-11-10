@@ -11,8 +11,9 @@ const User = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke
 const Arrow = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6 L18 18"/><path d="M18 9 L18 18 L9 18"/></svg>`;
 ---
 
-<section class="kph" data-kph aria-labelledby="kph-h">
-  <div class="kph__win" data-kph-win aria-hidden="true" inert transition:name="kp-phone">
+<section class="kph" data-kph aria-labelledby="kph-h" style="background:#0b0b0b">
+  <div class="kph__scene" style="opacity:0">
+  <div class="kph__win" data-kph-win aria-hidden="true" inert>
     <div class="kph__canvas" data-kph-canvas>
       <div class="kph-scr">
         <div class="kph-ap">
@@ -83,6 +84,7 @@ const Arrow = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" strok
       </a>
     </div>
   </div>
+  </div>
 </section>
 
 <style>
@@ -99,6 +101,11 @@ const Arrow = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" strok
   @media (max-width: 767px) {
     .kph { display: block; }
   }
+  .kph__scene {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
   .kph__win {
     position: absolute;
     left: 22px;
@@ -109,6 +116,7 @@ const Arrow = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" strok
     border-radius: 22px;
     background: #f4f4f2;
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+    container-type: inline-size;
   }
   .kph__canvas {
     position: absolute;
@@ -117,7 +125,7 @@ const Arrow = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" strok
     width: 375px;
     height: 812px;
     transform-origin: 0 0;
-    transform: scale(var(--s, 1));
+    transform: scale(var(--s, calc(100cqw / 375)));
     color: #0c0c0c;
   }
   .kph-scr {
@@ -342,8 +350,12 @@ const Arrow = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" strok
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 170px 24px calc(40px + env(safe-area-inset-bottom, 0px));
-    background: linear-gradient(rgba(11, 11, 11, 0) 0, rgba(11, 11, 11, 0.88) 110px, #0b0b0b 170px);
+    padding: 72px 24px calc(32px + env(safe-area-inset-bottom, 0px));
+    background: linear-gradient(
+      rgba(11, 11, 11, 0) 0,
+      rgba(11, 11, 11, 0.28) 36px,
+      #0b0b0b 80px
+    );
     text-align: center;
   }
   .kph__kicker {
@@ -421,13 +433,15 @@ const Arrow = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" strok
     .kph__h1 { margin-bottom: 22px; }
   }
   @media (prefers-reduced-motion: no-preference) {
-    .kph__win { animation: kph-in 0.6s var(--ease) both; }
-    .kph__text { animation: kph-in 0.6s 0.12s var(--ease) both; }
+    .kph__scene { animation: kph-in 0.55s 0.16s var(--ease) both; }
     .kph__b1::after { animation: kph-shine 4.2s var(--ease) 1.2s infinite; }
   }
+  @media (prefers-reduced-motion: reduce) {
+    .kph__scene { opacity: 1 !important; }
+  }
   @keyframes kph-in {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: none; }
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
   @keyframes kph-shine {
     0% { transform: translateX(-160%) skewX(-18deg); }

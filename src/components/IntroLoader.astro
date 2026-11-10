@@ -197,21 +197,34 @@
     window.addEventListener('resize', align);
 
     let playing = false;
-    if (video) {
-      const mark = () => {
-        playing = true;
-        if (media) media.classList.remove('rmi-still');
-      };
+    const kickVideo = () => {
+      if (!video) return;
       video.muted = true;
-      video.addEventListener('playing', mark, { once: true });
-      if (!video.paused) mark();
+      video.defaultMuted = true;
+      video.volume = 0;
+      video.playsInline = true;
+      video.setAttribute('muted', '');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', 'true');
       const play = video.play();
       if (play && typeof play.then === 'function') play.then(mark).catch(() => {});
+    };
+    const mark = () => {
+      playing = true;
+      if (media) media.classList.remove('rmi-still');
+    };
+    if (video) {
+      video.addEventListener('playing', mark, { once: true });
+      if (!video.paused) mark();
+      kickVideo();
       setTimeout(() => { if (!playing && !done && media) media.classList.add('rmi-still'); }, 2500);
     }
 
     const skipEvents = ['click', 'wheel', 'touchstart', 'keydown'];
-    const onSkip = () => finish();
+    const onSkip = () => {
+      kickVideo();
+      finish();
+    };
     skipEvents.forEach((ev) => window.addEventListener(ev, onSkip, { passive: true }));
 
     const cleanup = () => {

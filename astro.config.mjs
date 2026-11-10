@@ -14,6 +14,7 @@ export default defineConfig({
     '/bydleni-2': '/bydleni',
     '/investice-3': '/investice',
     '/klientsky-portal-2': '/klientsky-portal',
+    '/prazsky-rezidencni-trh': 'https://www.reamar.cz/prazsky-rezidencni-trh',
   },
   build: {
     inlineStylesheets: 'auto',

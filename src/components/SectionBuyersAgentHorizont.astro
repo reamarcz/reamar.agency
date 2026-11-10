@@ -16,6 +16,9 @@ const {
 const [episodeKicker, episodeTitle] = episodeLabel.split(/\s·\s/);
 const episodeExternal = /^https?:\/\//.test(episodeHref);
 
+const offerHref = 'https://nabidka.reamar.cz/praha-7';
+const offerLine = '2+kk · Holešovice · 6\u00a0475\u00a0200\u00a0Kč';
+
 const tiles = [
   {
     num: '01',
@@ -34,6 +37,7 @@ const tiles = [
     title: 'Předprodej projektů<br />a neveřejné nabídky',
     text: 'Díky kontaktům na developerském trhu řešíme předprodeje, <strong>neveřejné nabídky</strong> a podmínky, ke kterým se kupující sám často nedostane.',
     icon: 'reserve',
+    offer: true,
   },
   {
     num: '03',
@@ -50,7 +54,7 @@ const tiles = [
 <section id="koncept" class="bah" aria-labelledby="koncept-heading" data-bah data-nav-hide-zone>
   <div class="bah__track" data-bah-track>
     <div class="bah__sticky" data-bah-sticky>
-      <header class="bah__head" data-bah-head>
+      <header class="bah__head" data-bah-head data-sm-rise>
         <div>
           <h2 id="koncept-heading" class="bah__h font-yellix">Buyer’s agent</h2>
           <p class="bah__sub font-yellix">
@@ -98,6 +102,23 @@ const tiles = [
                 </div>
                 <h3 class="font-yellix" set:html={tile.title} />
                 <p class="font-yellix" set:html={tile.text} />
+                {tile.offer && (
+                  <a
+                    class="bah__offer font-yellix"
+                    href={offerHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span class="bah__offer-kicker">
+                      <span class="bah__offer-live" aria-hidden="true"></span>
+                      Aktuální předprodej
+                    </span>
+                    <span class="bah__offer-line">
+                      {offerLine}
+                      <img src="/images/arrow-1.svg" alt="" width="11" height="11" />
+                    </span>
+                  </a>
+                )}
               </div>
             </article>
           ))}
@@ -105,19 +126,25 @@ const tiles = [
         </div>
       </div>
 
-      <div class="bah__video" data-bah-video role="button" tabindex="0" aria-label="Zobrazit video na celou obrazovku">
+      <div class="bah__video video-decorative-wrap" data-bah-video data-cover-managed data-sm-parallax role="button" tabindex="0" aria-label="Zobrazit video na celou obrazovku">
+        <img class="video-decorative-cover" src={posterSrc} alt="" />
         <video
           data-bah-media
+          data-decorative-autoplay
+          src={videoSrc}
           data-src={videoSrc}
           poster={posterSrc}
           muted
           loop
           playsinline
-          preload="none"
+          webkit-playsinline="true"
+          preload="metadata"
           disablepictureinpicture
           disableremoteplayback
           aria-hidden="true"
-        ></video>
+        >
+          <source src={videoSrc} type="video/mp4" />
+        </video>
         <div class="bah__shade" data-bah-fade></div>
       </div>
 
@@ -142,7 +169,7 @@ const tiles = [
             <span class="bah__yt-short">Příběhy z trhu</span>
           </span>
         </a>
-        <p class="bah__quote font-yellix">Klient má při nákupu nemovitosti partnera, který nestojí na straně konkrétní nabídky, ale na straně jeho rozhodnutí.</p>
+        <p class="bah__quote font-yellix" data-sm-rise style="--sm-d: 80ms">Klient má při nákupu nemovitosti partnera, který nestojí na straně konkrétní nabídky, ale na straně jeho rozhodnutí.</p>
       </div>
     </div>
   </div>
@@ -324,6 +351,70 @@ const tiles = [
     font-weight: 600;
     color: rgba(0, 0, 0, 0.85);
   }
+  .bah__offer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 1.35rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    text-decoration: none;
+    color: inherit;
+  }
+  .bah__offer:hover {
+    opacity: 0.72;
+  }
+  .bah__offer-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.45);
+    line-height: 1;
+  }
+  .bah__offer-live {
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #16a34a;
+    box-shadow: 0 0 #16a34a73;
+    animation: bah-offer-live 2.2s ease-in-out infinite;
+  }
+  .bah__offer-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    color: #000;
+  }
+  .bah__offer-line img {
+    display: block;
+    width: 11px;
+    height: 11px;
+    filter: brightness(0);
+  }
+  @keyframes bah-offer-live {
+    0%,
+    to {
+      opacity: 1;
+      box-shadow: 0 0 #16a34a73;
+    }
+    50% {
+      opacity: 0.7;
+      box-shadow: 0 0 0 4px #16a34a00;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bah__offer-live {
+      animation: none;
+    }
+  }
   .bah__vph {
     display: none;
   }
@@ -336,12 +427,24 @@ const tiles = [
     background: #111;
     cursor: pointer;
   }
-  .bah__video video {
+  .bah__video video,
+  .bah__video .video-decorative-cover {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: 61% 40%;
+  }
+  .bah__video .video-decorative-play {
+    display: none !important;
+  }
+  .bah__video video::-webkit-media-controls,
+  .bah__video video::-webkit-media-controls-start-playback-button,
+  .bah__video video::-webkit-media-controls-overlay-play-button,
+  .bah__video video::-webkit-media-controls-enclosure {
+    display: none !important;
+    -webkit-appearance: none;
+    opacity: 0 !important;
   }
   .bah__shade {
     display: none;
@@ -443,6 +546,12 @@ const tiles = [
   @media (min-width: 1280px) {
     .bah {
       --pad: 3.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .bah__offer {
+      display: none;
     }
   }
 
@@ -624,6 +733,7 @@ const tiles = [
       display: block;
       position: absolute;
       inset: 0;
+      z-index: 2;
       pointer-events: none;
       opacity: 0;
       background:
@@ -746,20 +856,56 @@ const tiles = [
     ];
 
     media.muted = true;
+    media.defaultMuted = true;
+    media.volume = 0;
+    media.loop = true;
+    media.playsInline = true;
     media.controls = false;
+    media.setAttribute('muted', '');
+    media.setAttribute('playsinline', '');
+    media.setAttribute('webkit-playsinline', 'true');
+
+    const armSrc = () => {
+      const src = media.dataset.src || media.getAttribute('src');
+      if (!src) return;
+      if (media.getAttribute('src') !== src) media.setAttribute('src', src);
+      const source = media.querySelector('source');
+      if (source && source.getAttribute('src') !== src) source.setAttribute('src', src);
+    };
 
     let wantPlay = false;
+    const markLive = () => {
+      media.classList.add('is-playing');
+      box.classList.add('is-playing');
+    };
+    const markStill = () => {
+      media.classList.remove('is-playing');
+      box.classList.remove('is-playing');
+    };
+    media.addEventListener('playing', markLive);
+    const tryPlay = () => {
+      if (!wantPlay || reduced) return;
+      armSrc();
+      const play = media.play();
+      if (play) play.catch(() => {});
+    };
     const setPlaying = (on: boolean) => {
-      if (on === wantPlay) return;
-      wantPlay = on;
       if (!on) {
+        wantPlay = false;
         media.pause();
+        markStill();
         return;
       }
-      const src = media.dataset.src;
-      if (src && media.getAttribute('src') !== src) media.setAttribute('src', src);
-      media.play().catch(() => {});
+      wantPlay = true;
+      tryPlay();
     };
+    const unlock = () => {
+      if (!wantPlay || !media.paused) return;
+      tryPlay();
+    };
+    window.addEventListener('pointerdown', unlock, { passive: true });
+    window.addEventListener('touchstart', unlock, { passive: true });
+    window.addEventListener('click', unlock, { passive: true });
 
     const near = new IntersectionObserver(
       (entries) => {
@@ -768,8 +914,9 @@ const tiles = [
           const src = media.dataset.src;
           if (src && media.getAttribute('src') !== src) {
             media.setAttribute('src', src);
-            media.preload = 'auto';
           }
+          media.preload = 'auto';
+          tryPlay();
         });
       },
       { rootMargin: '300px 0px' }
@@ -792,7 +939,7 @@ const tiles = [
           if (!mq.matches) setPlaying(entry.isIntersecting && !reduced);
         });
       },
-      { threshold: 0.35 }
+      { threshold: 0.15 }
     );
     view.observe(box);
 
@@ -905,6 +1052,7 @@ const tiles = [
     };
     const onBox = (event: Event) => {
       event.preventDefault();
+      if (media.paused) tryPlay();
       if (mq.matches && k < 0.8) {
         pinTo(DWELL + SLIDE + PAUSE + EXP + HOLD * 0.35);
         return;
@@ -943,12 +1091,16 @@ const tiles = [
       near.disconnect();
       icons.disconnect();
       view.disconnect();
+      media.removeEventListener('playing', markLive);
       box.removeEventListener('click', onBox);
       box.removeEventListener('keydown', onBoxKey);
       document.removeEventListener('click', onKonceptClick, true);
       window.removeEventListener('hashchange', onHash);
       window.removeEventListener('scroll', req);
       window.removeEventListener('resize', req);
+      window.removeEventListener('pointerdown', unlock);
+      window.removeEventListener('touchstart', unlock);
+      window.removeEventListener('click', unlock);
       mq.removeEventListener('change', req);
       if (raf) cancelAnimationFrame(raf);
       state._bahCleanup = undefined;

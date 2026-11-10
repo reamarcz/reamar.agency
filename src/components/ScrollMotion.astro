@@ -1,0 +1,130 @@
+---
+---
+<script is:inline>
+  (function () {
+    try {
+      if (window.matchMedia('(max-width: 1023px) and (prefers-reduced-motion: no-preference)').matches) {
+        document.documentElement.classList.add('has-sm');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<style is:global>
+  @media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+    html.has-sm [data-sm-rise] {
+      opacity: 0;
+      transform: translateY(18px);
+      transition:
+        opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--sm-d, 0ms);
+    }
+    html.has-sm [data-sm-rise].is-in {
+      opacity: 1;
+      transform: none;
+    }
+    html.has-sm .bah__tile {
+      opacity: 0;
+      transform: translateY(18px);
+      transition:
+        opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    html.has-sm .bah__tile:nth-child(2) { transition-delay: 70ms; }
+    html.has-sm .bah__tile:nth-child(3) { transition-delay: 140ms; }
+    html.has-sm .bah__tile.is-in {
+      opacity: 1;
+      transform: none;
+    }
+    html.has-sm [data-sm-parallax] {
+      overflow: hidden;
+    }
+    html.has-sm [data-sm-parallax] :is(img, video) {
+      transform: scale(1.08);
+      transform-origin: center center;
+      will-change: transform;
+    }
+  }
+</style>
+
+<script>
+  function initScrollMotion() {
+    const phone = window.matchMedia('(max-width: 1023px)');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const root = document.documentElement;
+
+    if (window.__smCleanup) window.__smCleanup();
+
+    const onChange = () => initScrollMotion();
+
+    if (!phone.matches || reduced.matches) {
+      root.classList.remove('has-sm');
+      document.querySelectorAll('[data-sm-rise]').forEach((el) => el.classList.add('is-in'));
+      document.querySelectorAll('[data-sm-parallax] :is(img, video)').forEach((el) => {
+        el.style.transform = '';
+      });
+      phone.addEventListener('change', onChange);
+      reduced.addEventListener('change', onChange);
+      window.__smCleanup = () => {
+        phone.removeEventListener('change', onChange);
+        reduced.removeEventListener('change', onChange);
+        window.__smCleanup = null;
+      };
+      return;
+    }
+
+    root.classList.add('has-sm');
+
+    const rises = [...document.querySelectorAll('[data-sm-rise]')];
+    const layers = [...document.querySelectorAll('[data-sm-parallax]')];
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.16, rootMargin: '0px 0px -8% 0px' }
+    );
+    rises.forEach((el) => io.observe(el));
+
+    let raf = 0;
+    const paint = () => {
+      raf = 0;
+      const vh = window.innerHeight || 1;
+      layers.forEach((wrap) => {
+        const media = wrap.querySelector('img, video');
+        if (!media) return;
+        const rect = wrap.getBoundingClientRect();
+        if (rect.bottom < -40 || rect.top > vh + 40) return;
+        const p = 1 - (rect.top + rect.height) / (vh + rect.height);
+        const y = (p - 0.5) * rect.height * 0.07;
+        media.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0) scale(1.08)`;
+      });
+    };
+    const req = () => {
+      if (!raf) raf = requestAnimationFrame(paint);
+    };
+
+    paint();
+    window.addEventListener('scroll', req, { passive: true });
+    window.addEventListener('resize', req, { passive: true });
+    phone.addEventListener('change', onChange);
+    reduced.addEventListener('change', onChange);
+
+    window.__smCleanup = () => {
+      io.disconnect();
+      window.removeEventListener('scroll', req);
+      window.removeEventListener('resize', req);
+      phone.removeEventListener('change', onChange);
+      reduced.removeEventListener('change', onChange);
+      if (raf) cancelAnimationFrame(raf);
+      window.__smCleanup = null;
+    };
+  }
+
+  initScrollMotion();
+  document.addEventListener('astro:page-load', initScrollMotion);
+</script>

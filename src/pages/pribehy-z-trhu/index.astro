@@ -65,14 +65,19 @@ const itemList = {
           <video
             class="pz-board-loop"
             data-pz-loop
+            src={latest.data.nahled}
             data-src={latest.data.nahled}
             muted
             loop
             playsinline
-            preload="none"
+            autoplay
+            webkit-playsinline="true"
+            preload="metadata"
             disablepictureinpicture
             aria-hidden="true"
-          ></video>
+          >
+            <source src={latest.data.nahled} type="video/mp4" />
+          </video>
         )}
       </div>
       <div class="pz-board-ov"></div>
@@ -243,14 +248,24 @@ const itemList = {
       video.setAttribute('webkit-playsinline', 'true');
     };
 
+    const show = () => photo.classList.add('is-playing');
+
     const play = () => {
       mute();
       if (video.getAttribute('src') !== src) video.src = src;
       const run = video.play();
-      if (run) run.catch(() => {});
+      if (run) run.then(show).catch(() => {});
+      else if (!video.paused) show();
     };
 
-    video.addEventListener('playing', () => photo.classList.add('is-playing'));
+    const unlock = () => {
+      if (video.paused) play();
+    };
+    window.addEventListener('pointerdown', unlock, { passive: true });
+    window.addEventListener('touchstart', unlock, { passive: true });
+
+    video.addEventListener('playing', show);
+    if (!video.paused) show();
 
     let armed = false;
     const arm = () => {

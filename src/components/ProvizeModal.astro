@@ -50,16 +50,26 @@
       </div>
 
       <div class="provize-included">
-        <p class="provize-included-label">V ceně provize</p>
-        <ul class="provize-list">
-          <li>doporučení konkrétní jednotky</li>
-          <li>prověření ceny, dispozice, lokality a potenciálu nemovitosti</li>
-          <li>přístup k příležitostem, které se nemusí objevit na běžných portálech</li>
-          <li>komunikace s developerem nebo prodejcem</li>
-          <li>pomoc s rezervací vybrané jednotky</li>
-          <li>vyjednání obchodních podmínek</li>
-          <li>koordinace právní kontroly smluvní dokumentace</li>
-        </ul>
+        <details class="provize-acc" data-provize-acc>
+          <summary class="provize-included-label">
+            <span>V ceně provize</span>
+            <span class="provize-acc-toggle" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10" />
+                <path class="provize-acc-v" d="M8 3v10" />
+              </svg>
+            </span>
+          </summary>
+          <ul class="provize-list">
+            <li>doporučení konkrétní jednotky</li>
+            <li>prověření ceny, dispozice, lokality a potenciálu nemovitosti</li>
+            <li>přístup k příležitostem, které se nemusí objevit na běžných portálech</li>
+            <li>komunikace s developerem nebo prodejcem</li>
+            <li>pomoc s rezervací vybrané jednotky</li>
+            <li>vyjednání obchodních podmínek</li>
+            <li>koordinace právní kontroly smluvní dokumentace</li>
+          </ul>
+        </details>
       </div>
     </div>
 
@@ -184,6 +194,27 @@
     height: 1px;
     background: rgba(0, 0, 0, 0.14);
   }
+  .provize-included-label::-webkit-details-marker,
+  .provize-included-label::marker {
+    display: none;
+    content: none;
+  }
+  .provize-acc-toggle {
+    display: none;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: #000;
+  }
+  .provize-acc-toggle svg {
+    width: 100%;
+    height: 100%;
+  }
+  .provize-acc-toggle path {
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+  }
   .provize-list {
     list-style: none;
     margin: 1rem 0 0;
@@ -284,7 +315,33 @@
     line-height: 1.35;
     color: rgba(44, 90, 66, 0.72);
   }
+  @media (max-width: 767px) {
+    .provize-modal {
+      max-height: min(90dvh, calc(100dvh - 2rem));
+      overflow-y: auto;
+    }
+    .provize-included-label {
+      cursor: pointer;
+      list-style: none;
+    }
+    .provize-included-label::after {
+      display: none;
+    }
+    .provize-acc-toggle {
+      display: flex;
+      margin-left: auto;
+    }
+    .provize-acc[open] .provize-acc-v {
+      opacity: 0;
+    }
+  }
   @media (min-width: 768px) {
+    .provize-included-label {
+      pointer-events: none;
+    }
+    .provize-acc .provize-list {
+      display: block !important;
+    }
     .provize-layout {
       grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
       gap: 0;
@@ -324,6 +381,15 @@
     overlay.dataset.init = '1';
 
     const priceLabel = overlay.querySelector('[data-provize-price-label]');
+    const acc = overlay.querySelector('[data-provize-acc]');
+
+    function isDesk() {
+      return window.matchMedia('(min-width: 768px)').matches;
+    }
+    function syncAcc(openOnMobile) {
+      if (!acc) return;
+      acc.open = isDesk() || !!openOnMobile;
+    }
 
     function applyVariant(variant) {
       if (!priceLabel) return;
@@ -335,6 +401,7 @@
 
     function openModal(event) {
       applyVariant(event && event.detail ? event.detail.variant : 'priority');
+      syncAcc(false);
       overlay.classList.remove('opacity-0', 'pointer-events-none');
       overlay.classList.add('is-open');
       overlay.setAttribute('aria-hidden', 'false');
@@ -351,6 +418,7 @@
       document.body.style.overflow = '';
       modal.classList.remove('scale-100');
       modal.classList.add('scale-95');
+      syncAcc(false);
     }
 
     overlay.addEventListener('click', closeModal);

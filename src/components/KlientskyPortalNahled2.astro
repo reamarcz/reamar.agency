@@ -2255,6 +2255,7 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
   let prevTab = 'vyber';
   let skipPop = false;
   let mapBooted = false;
+  let nudgeTimer = 0;
   let map: any = null;
   let mini: any = null;
   let markers: { id: string; marker: any; el: HTMLElement }[] = [];
@@ -3244,6 +3245,7 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
     root.removeEventListener('mouseout', onOut);
     document.removeEventListener('keydown', onKey);
     window.removeEventListener('resize', onWinResize);
+    window.clearTimeout(nudgeTimer);
     window.removeEventListener('popstate', onPop);
     root.querySelector('[data-kp-side]')?.removeEventListener('scroll', onSideScroll);
     destroyMap();

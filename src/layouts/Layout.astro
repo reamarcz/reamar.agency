@@ -197,21 +197,73 @@ const {
     <script>
       function initVideoDecorativeCovers() {
         document.querySelectorAll('.video-decorative-wrap').forEach(function (wrap) {
-          if (wrap.dataset.videoDecorCoverInit === '1') return;
           var video = wrap.querySelector('video[data-decorative-autoplay]');
           if (!video) return;
-          wrap.dataset.videoDecorCoverInit = '1';
 
           var markPlaying = function () {
             wrap.classList.add('is-playing');
+            wrap.classList.remove('is-blocked');
+            video.classList.add('is-playing');
+          };
+          var markStill = function () {
+            wrap.classList.remove('is-playing');
+            video.classList.remove('is-playing');
+          };
+          var revealWhenPainted = function () {
+            if (typeof video.requestVideoFrameCallback === 'function') {
+              video.requestVideoFrameCallback(function () { markPlaying(); });
+              return;
+            }
+            markPlaying();
+          };
+          var ensurePlayBtn = function () {
+            if (wrap.querySelector('[data-video-decor-play]')) return;
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'video-decorative-play';
+            btn.setAttribute('data-video-decor-play', '');
+            btn.setAttribute('aria-label', 'Přehrát video');
+            btn.innerHTML = '<svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M3.2 1.6v8.8L10.4 6 3.2 1.6Z"/></svg>';
+            wrap.appendChild(btn);
+          };
+          var armVideo = function () {
+            video.muted = true;
+            video.defaultMuted = true;
+            video.playsInline = true;
+            video.controls = false;
+            video.setAttribute('muted', '');
+            video.setAttribute('playsinline', '');
+            video.setAttribute('webkit-playsinline', 'true');
+            video.removeAttribute('controls');
+          };
+          var onBlocked = function () {
+            wrap.classList.add('is-blocked');
+            ensurePlayBtn();
           };
 
-          if (!window.matchMedia('(max-width: 767px)').matches) return;
+          if (!video.paused && video.readyState >= 2) revealWhenPainted();
+          if (wrap.dataset.videoDecorCoverInit === '1') return;
+          wrap.dataset.videoDecorCoverInit = '1';
 
-          if (!video.paused && video.readyState >= 2) markPlaying();
-          video.addEventListener('playing', markPlaying, { once: true });
-          var p = video.play();
-          if (p !== undefined) p.catch(function () {});
+          armVideo();
+          video.addEventListener('playing', revealWhenPainted);
+          video.addEventListener('pause', function () {
+            if (!video.paused) return;
+            markStill();
+          });
+
+          wrap.addEventListener('click', function () {
+            if (!video.paused) return;
+            if (!video.getClientRects().length) return;
+            armVideo();
+            var p = video.play();
+            if (p) p.catch(onBlocked);
+          });
+
+          if (wrap.hasAttribute('data-cover-managed')) return;
+          if (!(video.hasAttribute('autoplay') && video.getClientRects().length)) return;
+          var autoplay = video.play();
+          if (autoplay) autoplay.catch(onBlocked);
         });
       }
       initVideoDecorativeCovers();

@@ -31,14 +31,16 @@ const lines = [
   data-pribeh
 >
   <div class="relative h-[64vh] min-h-[520px] max-h-[760px] w-full">
-    <img
-      src={image}
-      alt=""
-      class="absolute inset-0 h-full w-full object-cover object-[42%_center]"
-      width="1280"
-      height="853"
-      loading={underNav ? 'eager' : 'lazy'}
-    />
+    <div class="absolute inset-0" data-sm-parallax>
+      <img
+        src={image}
+        alt=""
+        class="h-full w-full object-cover object-[42%_center]"
+        width="1280"
+        height="853"
+        loading={underNav ? 'eager' : 'lazy'}
+      />
+    </div>
 
     <div class="pribeh-inner relative mx-auto flex h-full max-w-[1440px] items-center px-5 py-8 md:px-10 md:py-12 xl:px-14 xl:py-14">
       <div class="flex w-full max-w-[32rem] flex-col gap-10">
@@ -172,7 +174,7 @@ const lines = [
         lines.forEach((el) => el.classList.add('is-in'));
         io.disconnect();
       },
-      { threshold: 0.28 }
+      { threshold: 0.16, rootMargin: '0px 0px -8% 0px' }
     );
 
     io.observe(wrap);

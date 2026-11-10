@@ -155,7 +155,7 @@
         pieces.forEach((el) => el.classList.add('is-in'));
         io.disconnect();
       },
-      { threshold: 0.28 }
+      { threshold: 0.16, rootMargin: '0px 0px -8% 0px' }
     );
 
     io.observe(wrap);

@@ -107,29 +107,27 @@
   html.rmm-on:not(.rmm-skip):not(.rmm-done) #header,
   html.rmm-on:not(.rmm-skip):not(.rmm-done) .hero-strip-mobile h1 .hero-w > span,
   html.rmm-on:not(.rmm-skip):not(.rmm-done) .hero-strip-mobile-kicker,
-  html.rmm-on:not(.rmm-skip):not(.rmm-done) .hero-strip-mobile-lead {
+  html.rmm-on:not(.rmm-skip):not(.rmm-done) .hero-strip-mhero-lead,
+  html.rmm-on:not(.rmm-skip):not(.rmm-done) .hero-strip-mhero-btns {
     opacity: 0;
     transform: translateY(12px);
   }
   html.rmm-on:not(.rmm-skip):not(.rmm-done) #header { pointer-events: none; }
-  html.rmm-on:not(.rmm-skip):not(.rmm-done) .hero-listing { transform: translateY(-100%); }
   html.rmm-done #header,
   html.rmm-done .hero-strip-mobile h1 .hero-w > span,
   html.rmm-done .hero-strip-mobile-kicker,
-  html.rmm-done .hero-strip-mobile-lead {
+  html.rmm-done .hero-strip-mhero-lead,
+  html.rmm-done .hero-strip-mhero-btns {
     animation: rmm-rise .7s cubic-bezier(.22, 1, .36, 1) both;
   }
   html.rmm-done .hero-strip-mobile h1 .hero-w > span { animation-delay: calc(var(--i, 0) * 80ms); }
-  html.rmm-done .hero-strip-mobile-lead { animation-delay: .24s; }
+  html.rmm-done .hero-strip-mobile-kicker { animation-delay: .16s; }
+  html.rmm-done .hero-strip-mhero-lead { animation-delay: .24s; }
+  html.rmm-done .hero-strip-mhero-btns { animation-delay: .32s; }
   html.rmm-done #header { pointer-events: auto; }
-  html.rmm-done .hero-listing { animation: rmm-bar .6s cubic-bezier(.22, 1, .36, 1) both; }
   @keyframes rmm-rise {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes rmm-bar {
-    from { transform: translateY(-100%); }
-    to { transform: translateY(0); }
   }
 </style>
 
@@ -151,21 +149,34 @@
     window.scrollTo(0, 0);
 
     let playing = false;
-    if (video) {
-      const mark = () => {
-        playing = true;
-        if (media) media.classList.remove('rmm-still');
-      };
+    const kickVideo = () => {
+      if (!video) return;
       video.muted = true;
-      video.addEventListener('playing', mark, { once: true });
-      if (!video.paused) mark();
+      video.defaultMuted = true;
+      video.volume = 0;
+      video.playsInline = true;
+      video.setAttribute('muted', '');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', 'true');
       const play = video.play();
       if (play && typeof play.then === 'function') play.then(mark).catch(() => {});
+    };
+    const mark = () => {
+      playing = true;
+      if (media) media.classList.remove('rmm-still');
+    };
+    if (video) {
+      video.addEventListener('playing', mark, { once: true });
+      if (!video.paused) mark();
+      kickVideo();
       setTimeout(() => { if (!playing && !done && media) media.classList.add('rmm-still'); }, 2000);
     }
 
     const skipEvents = ['touchstart', 'wheel', 'click', 'keydown'];
-    const onSkip = () => finish();
+    const onSkip = () => {
+      kickVideo();
+      finish();
+    };
     skipEvents.forEach((ev) => window.addEventListener(ev, onSkip, { passive: true }));
 
     const cleanup = () => {

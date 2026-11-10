@@ -216,11 +216,21 @@ const isCurrent = (href: string) => {
         </a>
       ))}
 
+      <a
+        href="/#kontakt"
+        class="font-yellix text-[21px] font-medium leading-tight text-black no-underline hover:opacity-70"
+        data-nav-home-kontakt
+        data-astro-reload
+        data-drawer-close
+      >
+        Kontakty
+      </a>
+
       {!isOnepager && (
         <a
           href="/pribehy-z-trhu/"
           class:list={[
-            'inline-flex items-center gap-2.5 font-yellix text-[21px] leading-tight text-black no-underline hover:opacity-70',
+            'mt-2 inline-flex items-center gap-2.5 font-yellix text-[21px] leading-tight text-black no-underline hover:opacity-70',
             isCurrent('/pribehy-z-trhu') ? 'font-semibold' : 'font-medium',
           ]}
           aria-current={isCurrent('/pribehy-z-trhu') ? 'page' : undefined}
@@ -253,17 +263,9 @@ const isCurrent = (href: string) => {
       )}
 
       <a
-        href="#kontakt"
-        class="font-yellix text-[21px] font-medium leading-tight text-black no-underline hover:opacity-70"
-        data-drawer-close
-      >
-        Kontakty
-      </a>
-
-      <a
         href={sluzbyHref}
         class:list={[
-          'mt-4 inline-flex w-fit items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] text-white no-underline',
+          'inline-flex w-fit items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] text-white no-underline',
           isCurrent('/sluzby') ? 'font-semibold' : 'font-medium',
         ]}
         aria-current={isCurrent('/sluzby') ? 'page' : undefined}
@@ -272,17 +274,6 @@ const isCurrent = (href: string) => {
         <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
         Vybrat službu
       </a>
-
-      {fullbleedNav && (
-        <div class="nav-drawer-live">
-          <p class="nav-drawer-live-kicker">Aktuální nabídka v Praze a okolí</p>
-          <p class="nav-drawer-live-stats">
-            <span class="nav-live-dot" aria-hidden="true"></span>
-            <span>562 projektů</span>
-            <span class="nav-drawer-live-muted">9 689 jednotek</span>
-          </p>
-        </div>
-      )}
     </nav>
 
     <div class="drawer-quick-contact mt-auto flex-shrink-0 px-5 pb-8 pt-6">
@@ -463,48 +454,7 @@ const isCurrent = (href: string) => {
     position: fixed;
     left: 0;
     right: 0;
-    --hero-band-h: 2.75rem;
-  }
-  @media (max-width: 1023px) {
-    [data-nav-fullbleed][data-path="/"]:not([data-nav-solid]) {
-      top: var(--hero-band-h, 2.75rem);
-    }
-    [data-nav-fullbleed][data-nav-solid] {
-      top: 0;
-    }
-  }
-  @media (min-width: 1024px) {
-    [data-nav-fullbleed] {
-      top: 0;
-    }
-  }
-  .nav-drawer-live {
-    margin-top: auto;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  .nav-drawer-live-kicker {
-    margin: 0;
-    font-family: Yellix, system-ui, sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    line-height: 1;
-    color: rgba(0, 0, 0, 0.5);
-  }
-  .nav-drawer-live-stats {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.4rem 0.5rem;
-    margin: 0.7rem 0 0;
-    font-family: Yellix, system-ui, sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 1;
-    color: #000;
-  }
-  .nav-drawer-live-muted {
-    color: rgba(0, 0, 0, 0.55);
+    top: 0;
   }
   .drawer-quick-contact {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -528,6 +478,13 @@ const isCurrent = (href: string) => {
       if (panel) panel.setAttribute('data-open', '');
       document.body.style.overflow = 'hidden';
       if (toggle) toggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function scrollHomeKontakt(smooth) {
+      var el = document.getElementById('kontakt');
+      if (!el) return false;
+      el.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+      return true;
     }
 
     function closeDrawer() {
@@ -558,7 +515,23 @@ const isCurrent = (href: string) => {
         return;
       }
       if (e.target.closest('[data-drawer-backdrop]')) { closeDrawer(); return; }
-      if (e.target.closest('[data-drawer-close]')) { closeDrawer(); return; }
+      if (e.target.closest('[data-nav-home-kontakt]')) {
+        e.preventDefault();
+        closeDrawer();
+        var onHome = location.pathname === '/' || location.pathname === '';
+        if (onHome && scrollHomeKontakt(true)) {
+          if (location.hash !== '#kontakt') history.replaceState(null, '', '/#kontakt');
+        } else {
+          location.assign('/#kontakt');
+        }
+        return;
+      }
+      if (e.target.closest('[data-drawer-close]')) {
+        var link = e.target.closest('a[href]');
+        if (link) window.setTimeout(closeDrawer, 0);
+        else closeDrawer();
+        return;
+      }
     });
 
     document.addEventListener('click', function (e) {
@@ -590,19 +563,8 @@ const isCurrent = (href: string) => {
         header.removeAttribute('data-nav-dock');
         return;
       }
-      if (header.hasAttribute('data-nav-solid')) {
-        if (header.style.top !== '0px') header.style.top = '0px';
-        header.setAttribute('data-nav-dock', 'top');
-        return;
-      }
-      var y = window.scrollY || 0;
-      var band = parseFloat(getComputedStyle(header).getPropertyValue('--hero-band-h')) || 44;
-      var dock = header.getAttribute('data-nav-dock') || 'band';
-      if (dock !== 'top' && y >= band + 10) dock = 'top';
-      else if (dock !== 'band' && y <= 6) dock = 'band';
-      header.setAttribute('data-nav-dock', dock);
-      var top = dock === 'top' ? '0px' : '';
-      if (header.style.top !== top) header.style.top = top;
+      if (header.style.top !== '0px') header.style.top = '0px';
+      header.setAttribute('data-nav-dock', 'top');
     }
     function setNavCompact(on) {
       var header = document.querySelector('[data-nav]');
@@ -690,6 +652,9 @@ const isCurrent = (href: string) => {
         if (fullbleed) {
           var visual = fullbleedVisual(header);
           if (visual) {
+    document.addEventListener('astro:page-load', function () {
+      if (location.hash === '#kontakt') scrollHomeKontakt(false);
+    });
             var bottom = visual.getBoundingClientRect().bottom;
             var solid = header.hasAttribute('data-nav-solid');
             if (!solid && bottom <= 84) setNavSolid(true);

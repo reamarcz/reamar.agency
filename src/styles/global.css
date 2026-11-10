@@ -84,43 +84,69 @@
   opacity: 0;
 }
 
-/* Dekorativní autoplay videa (mobil / iOS): poster nad videem dokud neproběhne přehrávání — zakryje systémovou ikonku play */
+/* Dekorativní loop: video zůstává ve vykreslené vrstvě (WebKit jinak pozastaví autoplay).
+   Nativní iOS overlay překrývá neprůhledný poster, dokud není skutečný obraz. */
 .video-decorative-wrap {
   position: relative;
+  isolation: isolate;
+}
+.video-decorative-wrap > video[data-decorative-autoplay] {
+  z-index: 0;
 }
 .video-decorative-cover {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transform: translateZ(0);
+}
+.video-decorative-wrap.is-playing .video-decorative-cover {
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
   transition: opacity 0.35s ease, visibility 0.35s ease;
 }
-@media (min-width: 768px) {
-  .video-decorative-cover {
-    opacity: 0;
-    visibility: hidden;
-  }
+.video-decorative-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  display: none;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #ffffffe0;
+  color: #000;
+  box-shadow: 0 8px 24px #00000029;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
 }
-@media (max-width: 767px) {
-  .video-decorative-wrap.is-playing .video-decorative-cover {
-    opacity: 0;
-    visibility: hidden;
-  }
-  video[data-decorative-autoplay] {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.35s ease, visibility 0.35s ease;
-    pointer-events: none;
-  }
-  .video-decorative-wrap.is-playing video[data-decorative-autoplay] {
-    opacity: 1;
-    visibility: visible;
-  }
-  video[data-decorative-autoplay]::-webkit-media-controls,
-  video[data-decorative-autoplay]::-webkit-media-controls-enclosure {
-    display: none !important;
-  }
+.video-decorative-wrap.is-blocked:not(.is-playing) .video-decorative-play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.video-decorative-play svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+  margin-left: 2px;
+}
+video[data-decorative-autoplay]::-webkit-media-controls,
+video[data-decorative-autoplay]::-webkit-media-controls-panel,
+video[data-decorative-autoplay]::-webkit-media-controls-play-button,
+video[data-decorative-autoplay]::-webkit-media-controls-start-playback-button,
+video[data-decorative-autoplay]::-webkit-media-controls-overlay-play-button,
+video[data-decorative-autoplay]::-webkit-media-controls-overlay-enclosure,
+video[data-decorative-autoplay]::-webkit-media-controls-enclosure {
+  display: none !important;
+  -webkit-appearance: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
