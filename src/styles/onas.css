@@ -407,7 +407,8 @@
   .onas .onas-c1 {
     position: relative;
     z-index: 1;
-    min-height: 100svh;
+    /* Full viewport on laptops; cap on tall displays so the block doesn't feel sparse. */
+    min-height: min(100svh, 900px);
     scroll-margin-top: calc(-1 * var(--nav-h));
   }
 }

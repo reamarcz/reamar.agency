@@ -59,7 +59,6 @@ const offerLines = ['Byty 2+kk', 'Holešovice', '6 475 200 Kč'];
           data-src="/videos/agentprokupujici.mp4"
           poster="/video/hero-poster.jpg"
           muted
-          autoplay
           loop
           playsinline
           webkit-playsinline="true"
@@ -73,33 +72,6 @@ const offerLines = ['Byty 2+kk', 'Holešovice', '6 475 200 Kč'];
         >
           <source src="/videos/agentprokupujici.mp4" type="video/mp4" />
         </video>
-        <script is:inline>
-          (function () {
-            if (!window.matchMedia('(min-width: 1024px)').matches) return;
-            var video = document.currentScript.parentElement.querySelector('[data-intro-video]');
-            if (!video) return;
-            video.muted = true;
-            video.defaultMuted = true;
-            video.volume = 0;
-            video.playsInline = true;
-            video.setAttribute('muted', '');
-            video.setAttribute('playsinline', '');
-            video.setAttribute('webkit-playsinline', 'true');
-            video.preload = 'auto';
-            var mark = function () {
-              if (video.paused) return;
-              video.classList.add('is-live', 'is-playing');
-            };
-            video.addEventListener('playing', mark, { once: true });
-            if (typeof video.requestVideoFrameCallback === 'function') {
-              video.requestVideoFrameCallback(function () { mark(); });
-            }
-            var play = video.play();
-            if (play && play.catch) play.catch(function () {
-              video.classList.remove('is-live', 'is-playing');
-            });
-          })();
-        </script>
       </div>
       <img class="hero-loop-still" src="/images/agency/hero-loop-open.jpg" alt="" width="2560" height="1440" />
       <div class="hero-strip-rail">
@@ -203,7 +175,6 @@ const offerLines = ['Byty 2+kk', 'Holešovice', '6 475 200 Kč'];
           data-src="/videos/agentprokupujici.mp4"
           poster="/video/hero-poster.jpg"
           muted
-          autoplay
           loop
           playsinline
           webkit-playsinline="true"
@@ -219,37 +190,6 @@ const offerLines = ['Byty 2+kk', 'Holešovice', '6 475 200 Kč'];
         >
           <source src="/videos/agentprokupujici.mp4" type="video/mp4" />
         </video>
-        <script is:inline>
-          (function () {
-            if (!window.matchMedia('(max-width: 1023px)').matches) return;
-            var video = document.currentScript.parentElement.querySelector('[data-intro-video]');
-            if (!video) return;
-            video.muted = true;
-            video.defaultMuted = true;
-            video.volume = 0;
-            video.playsInline = true;
-            video.setAttribute('muted', '');
-            video.setAttribute('playsinline', '');
-            video.setAttribute('webkit-playsinline', 'true');
-            video.controls = false;
-            video.removeAttribute('controls');
-            video.preload = 'auto';
-            var mark = function () {
-              if (video.paused) return;
-              video.classList.add('is-live', 'is-playing');
-              video.closest('.video-decorative-wrap')?.classList.add('is-playing');
-            };
-            video.addEventListener('playing', mark, { once: true });
-            if (typeof video.requestVideoFrameCallback === 'function') {
-              video.requestVideoFrameCallback(function () { mark(); });
-            }
-            var play = video.play();
-            if (play && play.catch) play.catch(function () {
-              video.classList.remove('is-live', 'is-playing');
-              video.closest('.video-decorative-wrap')?.classList.remove('is-playing');
-            });
-          })();
-        </script>
       </div>
       <div class="hero-strip-mhero-text" data-intro-target>
         <span class="hero-strip-mhero-kicker hero-strip-mobile-kicker">Agentura pro kupující</span>

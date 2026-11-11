@@ -71,7 +71,6 @@ const itemList = {
             muted
             loop
             playsinline
-            autoplay
             webkit-playsinline="true"
             preload="auto"
             disablepictureinpicture
@@ -79,24 +78,6 @@ const itemList = {
           >
             <source src={latest.data.nahled} type="video/mp4" />
           </video>
-        )}
-        {latest.data.nahled && (
-          <script is:inline>
-            (function () {
-              var video = document.currentScript.parentElement.querySelector('[data-pz-loop]');
-              if (!video || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-              video.muted = true;
-              video.defaultMuted = true;
-              video.volume = 0;
-              video.playsInline = true;
-              video.setAttribute('muted', '');
-              video.setAttribute('playsinline', '');
-              video.setAttribute('webkit-playsinline', 'true');
-              video.preload = 'auto';
-              var play = video.play();
-              if (play && play.catch) play.catch(function () {});
-            })();
-          </script>
         )}
       </div>
       <div class="pz-board-ov"></div>

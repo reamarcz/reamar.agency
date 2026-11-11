@@ -89,12 +89,18 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
   /** Explicit user pause — must not be cleared by IO / tab focus alone. */
   let userPaused = false;
   let unlockBound = false;
+  /** Prevents overlapping play() calls (WebKit often AbortError + false "blocked"). */
+  let playPending = false;
+
+  const gestureRoot = (): Element => markHost || host;
 
   const markPlaying = () => {
     if (destroyed || video.paused) return;
     video.classList.add('is-playing', 'is-live');
     markHost?.classList.add('is-playing');
     markHost?.classList.remove('is-blocked');
+    markHost?.removeAttribute('data-loop-needs-gesture');
+    clearPlayFallback();
     opts.onPlaying?.();
   };
 
@@ -104,9 +110,35 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
     opts.onStill?.();
   };
 
+  const ensurePlayFallback = () => {
+    const root = gestureRoot();
+    if (!(root instanceof HTMLElement)) return;
+    if (root.querySelector('.loop-play-fallback')) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'loop-play-fallback';
+    btn.setAttribute('aria-label', 'Přehrát video');
+    btn.innerHTML =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 5v14L19.5 12z" fill="currentColor"/></svg>';
+    btn.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      userPaused = false;
+      setWantPlay(true);
+    });
+    if (getComputedStyle(root).position === 'static') root.style.position = 'relative';
+    root.appendChild(btn);
+  };
+
+  const clearPlayFallback = () => {
+    gestureRoot().querySelectorAll('.loop-play-fallback').forEach((el) => el.remove());
+  };
+
   const markBlocked = () => {
     markStill();
     markHost?.classList.add('is-blocked');
+    markHost?.setAttribute('data-loop-needs-gesture', '');
+    ensurePlayFallback();
     opts.onBlocked?.();
   };
 
@@ -150,23 +182,56 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
       dbg('tryPlay:skip', { reason: 'host-not-visible' });
       return;
     }
+    // Already running — just reveal poster. A second play() races and AbortErrors on WebKit.
+    if (!video.paused) {
+      disarmUnlock();
+      revealWhenPainted();
+      return;
+    }
+    if (playPending) {
+      dbg('tryPlay:skip', { reason: 'play-pending' });
+      return;
+    }
     armVideo(video);
+    // Re-assert mute immediately before play() — iOS requires muted property true
+    // at the moment of the call, not only as an HTML attribute.
+    video.muted = true;
+    video.defaultMuted = true;
+    video.volume = 0;
     dbg('tryPlay:call');
+    playPending = true;
     const run = video.play();
     if (run && typeof run.then === 'function') {
       run.then(() => {
+        playPending = false;
         if (destroyed) return;
         dbg('tryPlay:resolved');
+        disarmUnlock();
         revealWhenPainted();
       }).catch((err: unknown) => {
+        playPending = false;
         if (destroyed) return;
         const e = err as { name?: string; message?: string };
-        dbg('tryPlay:rejected', { name: e?.name || 'Error', message: e?.message || String(err) });
+        const name = e?.name || 'Error';
+        dbg('tryPlay:rejected', { name, message: e?.message || String(err) });
+        // AbortError usually means our own overlapping play()/load — not a policy block.
+        if (name === 'AbortError') {
+          if (wantPlay && !userPaused && video.paused && geometricallyVisible(host)) {
+            queueMicrotask(() => {
+              if (!destroyed && wantPlay && !userPaused && video.paused) tryPlay();
+            });
+          }
+          return;
+        }
         markBlocked();
         armUnlock();
       });
-    } else if (!video.paused) {
-      revealWhenPainted();
+    } else {
+      playPending = false;
+      if (!video.paused) {
+        disarmUnlock();
+        revealWhenPainted();
+      }
     }
   };
 
@@ -200,24 +265,49 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
     }
   };
 
-  const unlock = () => {
+  /**
+   * Gesture fallback scoped to the media host only.
+   * Window-wide touchstart made "first tap anywhere" start the video and hid
+   * the fact that autoplay was rejected — replace with host Play gesture.
+   */
+  const unlock = (event: Event) => {
     if (destroyed || !video.paused) return;
     if (!geometricallyVisible(host)) return;
-    dbg('unlock:gesture');
+    const root = gestureRoot();
+    const target = event.target;
+    if (target instanceof Node && !root.contains(target)) return;
+    if (target instanceof Element && target.closest('a, button')) return;
+    dbg('unlock:host-gesture', { type: event.type });
     userPaused = false;
     setWantPlay(true);
+  };
+
+  const disarmUnlock = () => {
+    if (!unlockBound) return;
+    unlockBound = false;
+    const root = gestureRoot();
+    root.removeEventListener('click', unlock);
+    root.removeEventListener('pointerup', unlock);
+    markHost?.removeAttribute('data-loop-needs-gesture');
+    clearPlayFallback();
+    dbg('disarmUnlock');
   };
 
   const armUnlock = () => {
     if (unlockBound || destroyed) return;
     unlockBound = true;
-    dbg('armUnlock', { listeners: ['pointerdown', 'touchstart', 'keydown'] });
-    ['pointerdown', 'touchstart', 'keydown'].forEach((ev) => {
-      window.addEventListener(ev, unlock, { passive: true });
-    });
+    const root = gestureRoot();
+    // click / pointerup satisfy WebKit user-gesture for play(); keep host-local.
+    root.addEventListener('click', unlock);
+    root.addEventListener('pointerup', unlock);
+    markHost?.setAttribute('data-loop-needs-gesture', '');
+    dbg('armUnlock', { scope: 'host', listeners: ['click', 'pointerup'] });
   };
 
-  const onPlaying = () => revealWhenPainted();
+  const onPlaying = () => {
+    disarmUnlock();
+    revealWhenPainted();
+  };
   const onPause = () => {
     window.setTimeout(() => {
       if (destroyed || !video.paused) return;
@@ -225,7 +315,7 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
     }, 180);
   };
   const onCanPlay = () => {
-    if (wantPlay && !userPaused) tryPlay();
+    if (wantPlay && !userPaused && video.paused && !playPending) tryPlay();
   };
   const onVisibility = () => {
     if (destroyed) return;
@@ -247,6 +337,7 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
       setWantPlay(false);
       return;
     }
+    // Manual Play (also the blocked-autoplay fallback) — runs inside user gesture.
     userPaused = false;
     setWantPlay(true);
   };
@@ -334,11 +425,7 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
       video.removeEventListener('loadeddata', onCanPlay);
       document.removeEventListener('visibilitychange', onVisibility);
       markHost?.removeEventListener('click', onHostClick);
-      if (unlockBound) {
-        ['pointerdown', 'touchstart', 'keydown'].forEach((ev) => {
-          window.removeEventListener(ev, unlock);
-        });
-      }
+      disarmUnlock();
       try {
         video.pause();
       } catch {
@@ -346,6 +433,8 @@ export function bindHeroLoop(video: HTMLVideoElement, opts: HeroLoopOptions = {}
       }
       markStill();
       markHost?.classList.remove('is-blocked');
+      markHost?.removeAttribute('data-loop-needs-gesture');
+      clearPlayFallback();
       video.removeAttribute('data-loop-owned');
       if (owned.__heroLoop === handle) delete owned.__heroLoop;
     },

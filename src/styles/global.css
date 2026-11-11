@@ -114,6 +114,44 @@
 [data-hero-loop-play] {
   display: none !important;
 }
+
+/* Autoplay blocked (e.g. iOS Low Power / NotAllowedError): keep poster + host Play. */
+.video-decorative-wrap.is-blocked,
+.hero-strip-film.is-blocked,
+.hero-strip-mobile-visual.is-blocked,
+.ref-video.is-blocked,
+[data-onas-story].is-blocked,
+.bh__media.is-blocked,
+.mhero__win.is-blocked {
+  cursor: pointer;
+}
+.loop-play-fallback {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: #0b0b0b;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.loop-play-fallback svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  margin-left: 2px;
+}
 video[data-decorative-autoplay]::-webkit-media-controls,
 video[data-decorative-autoplay]::-webkit-media-controls-panel,
 video[data-decorative-autoplay]::-webkit-media-controls-play-button,
