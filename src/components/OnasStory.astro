@@ -2,7 +2,12 @@
 import '../styles/onas.css';
 import OnasHero from './OnasHero.astro';
 import OnasZlom from './OnasZlom.astro';
-import { instagramPoradu, youtubeKanal } from '../data/porad';
+import {
+  facebookPoradu,
+  instagramPoradu,
+  linkedinHonza,
+  youtubeKanal,
+} from '../data/porad';
 
 const ext = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 16 16 8M10 8h6v6"/></svg>`;
 const corner = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6 L18 18"/><path d="M18 9 L18 18 L9 18"/></svg>`;
@@ -11,15 +16,16 @@ const play = `<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"
 const socials = [
   { name: 'YouTube', href: youtubeKanal },
   { name: 'Instagram', href: instagramPoradu },
-  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/jan-vitvera-6162b1164' },
-  { name: 'X', href: 'https://x.com/agentprokupujici' },
-  { name: 'Threads', href: 'https://www.threads.com/@agentprokupujici' },
+  { name: 'Facebook', href: facebookPoradu },
+  { name: 'LinkedIn', href: linkedinHonza },
 ];
 
 const loopSrc = '/videos/agentprokupujici.mp4';
 const loopPoster = '/video/hero-poster.jpg';
-const featureSrc = '/videos/medailonek-apk.mp4';
-const featurePoster = '/images/agency/hero-obhlidka.jpg';
+const featureSrcDesktop = '/videos/medailonek-apk.mp4';
+const featureSrcMobile = '/videos/epizoda-0-720.mp4';
+const featurePosterDesktop = '/images/agency/hero-obhlidka.jpg';
+const featurePosterMobile = '/videos/epizoda-0-poster.jpg';
 ---
 
 <div class="onas">
@@ -31,10 +37,9 @@ const featurePoster = '/images/agency/hero-obhlidka.jpg';
     <section class="onas-c1" id="strana-developera" aria-labelledby="onas-c1-heading" data-nav-hide-zone>
     <div class="onas-wrap onas-c1-g" data-onas-in>
       <div>
-        <span class="onas-ch" data-onas-in-item><b>I</b>Strana developera</span>
         <h2 id="onas-c1-heading" class="onas-c1-h">
           <span class="onas-c1-ln"><span>Přes <b data-onas-count="200">200</b> projektů.</span></span>
-          <span class="onas-c1-ln"><span>Z pohledu toho, kdo prodává.</span></span>
+          <span class="onas-c1-ln onas-c1-ln--sub"><span>Z pohledu toho, kdo prodává.</span></span>
         </h2>
         <p data-onas-in-item>
           Jan svou kariéru v novostavbách začínal přímo na straně developerů. Řešil prodej a marketing pro více než 200 projektů a do detailu poznal, jak prodejci přemýšlí, jaké mají cíle a jaké vyjednávací strategie používají.
@@ -102,10 +107,9 @@ const featurePoster = '/images/agency/hero-obhlidka.jpg';
       <span class="onas-play-line" aria-hidden="true"></span>
     </button>
     <div class="onas-c3-in" data-onas-in>
-      <span class="onas-ch onas-ch--w" data-onas-in-item><b>III</b>Spojení</span>
       <h2 id="onas-c3-heading" data-onas-in-item>Myšlenka potkala zázemí.</h2>
       <p data-onas-in-item>
-        Dobrá myšlenka potřebuje lidi, kteří ji umí proměnit ve službu. Honza je našel ve skupině REAMAR, mezi odborníky na marketing, právo, data a technologie, kteří trh novostaveb znají zevnitř. Dnes za každým klientem agentury stojí celý tým.
+        Dobrá myšlenka potřebuje lidi, kteří ji umí proměnit ve službu. Honza je našel ve skupině REAMAR, mezi odborníky na marketing, právo, data a technologie, kteří trh novostaveb znají zevnitř. Tak vznikla Agentura pro kupující — dnes za každým klientem stojí celý tým.
       </p>
       <a
         class="onas-c3-l"
@@ -127,12 +131,16 @@ const featurePoster = '/images/agency/hero-obhlidka.jpg';
       <video
         class="onas-modal-video"
         data-onas-feature
+        data-src-desktop={featureSrcDesktop}
+        data-src-mobile={featureSrcMobile}
+        data-poster-desktop={featurePosterDesktop}
+        data-poster-mobile={featurePosterMobile}
         controls
         playsinline
         preload="none"
-        poster={featurePoster}
+        poster={featurePosterDesktop}
       >
-        <source src={featureSrc} type="video/mp4" />
+        <source src={featureSrcDesktop} type="video/mp4" />
       </video>
     </div>
   </div>
@@ -141,7 +149,7 @@ const featurePoster = '/images/agency/hero-obhlidka.jpg';
     <div class="onas-wrap">
       <div class="onas-c4-h" data-onas-in>
         <span class="onas-kick" data-onas-in-item>Čtyři oddělení agentury pro kupující</span>
-        <h3 id="onas-c4-heading" data-onas-in-item>Za každou úspěšnou strategií stojí lidé,<br />kteří znají trh do nejmenšího detailu.</h3>
+        <h3 id="onas-c4-heading" data-onas-in-item>Za každou úspěšnou strategií stojí lidé,<br class="onas-c4-br" /> kteří znají trh do&nbsp;nejmenšího detailu.</h3>
       </div>
       <div class="onas-dp" data-onas-in>
         <article class="onas-d" data-onas-in-item>
@@ -311,12 +319,33 @@ const featurePoster = '/images/agency/hero-obhlidka.jpg';
       io.observe(section);
     }
 
+    function applyFeatureSource(video) {
+      if (!video) return;
+      const mobile = window.matchMedia('(max-width: 1023px)').matches;
+      const next = mobile
+        ? (video.getAttribute('data-src-mobile') || '/videos/epizoda-0-720.mp4')
+        : (video.getAttribute('data-src-desktop') || '/videos/medailonek-apk.mp4');
+      const nextPoster = mobile
+        ? (video.getAttribute('data-poster-mobile') || video.getAttribute('data-poster-desktop'))
+        : video.getAttribute('data-poster-desktop');
+      const source = video.querySelector('source');
+      const current = source ? source.getAttribute('src') : video.getAttribute('src');
+      if (nextPoster && video.getAttribute('poster') !== nextPoster) {
+        video.setAttribute('poster', nextPoster);
+      }
+      if (current === next) return;
+      if (source) source.setAttribute('src', next);
+      else video.setAttribute('src', next);
+      video.load();
+    }
+
     function openModal() {
       if (!modal) return;
       pauseLoop();
       modal.hidden = false;
       document.body.style.overflow = 'hidden';
       if (feature) {
+        applyFeatureSource(feature);
         try { feature.currentTime = 0; } catch (e) {}
         const play = feature.play();
         if (play && typeof play.catch === 'function') play.catch(() => {});

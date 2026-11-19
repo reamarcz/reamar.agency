@@ -6,16 +6,34 @@ import SectionZastoupeni from '../components/SectionZastoupeni.astro';
 import SectionVyberSluzeb from '../components/SectionVyberSluzeb.astro';
 import SectionPrilecitosti from '../components/SectionPrilecitosti.astro';
 import SectionFooter from '../components/SectionFooter.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { seoPages } from '../data/seo-pages';
+import { organizationGraph, serviceLd } from '../lib/jsonld';
+
+const s = seoPages.bydleni;
 ---
 
 <Layout
-  title="Bydlení | REAMAR Agency"
-  description="Nákupní agentura REAMAR pro kupující bydlení. Sledujeme trh novostaveb, vybíráme jednotky a jednáme s developerem na vaší straně."
-  canonical="/bydleni"
+  title={s.title}
+  description={s.description}
+  canonical={s.canonical}
+  image={s.image}
+  ogTitle={s.ogTitle}
+  ogDescription={s.ogDescription}
+  ogImageAlt={s.ogImageAlt}
 >
+  <JsonLd data={organizationGraph()} />
+  <JsonLd
+    data={serviceLd({
+      name: 'Zastupování kupujících při výběru bydlení v novostavbě',
+      description: s.description,
+      url: s.canonical,
+    })}
+  />
   <BydleniHero
     videoSrc="/videos/agentprokupujici.mp4"
     posterSrc="/images/agency/jv-holder1.png"
+    mobilePosterSrc="/images/agency/poster-epizoda-0-16-720.webp"
   />
   <div class="bydleni-flow">
     <SectionSpecializace />

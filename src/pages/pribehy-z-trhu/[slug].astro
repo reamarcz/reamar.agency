@@ -7,6 +7,7 @@ import { arrow, yt } from '../../components/pribehy/icons';
 import { dalsiDil, youtubeKanal } from '../../data/porad';
 import {
   dilHref,
+  dilJePublikovany,
   getDily,
   janFoto,
   janJmeno,
@@ -21,7 +22,7 @@ import '../../styles/pribehy.css';
 
 export async function getStaticPaths() {
   const dily = await getDily();
-  return dily.map((dil) => ({
+  return dily.filter(dilJePublikovany).map((dil) => ({
     params: { slug: dil.data.slug },
     props: { dil, dily },
   }));
@@ -34,11 +35,17 @@ interface Props {
 const { dil, dily } = Astro.props;
 const { Content } = await render(dil);
 const data = dil.data;
-const others = dily.filter((d) => d.data.slug !== data.slug).slice(0, 3);
+const others = dily
+  .filter((d) => d.data.slug !== data.slug && dilJePublikovany(d))
+  .slice(0, 3);
 const episodeShorts = shortsByIds(data.shorts);
-const watchUrl = `${youtubeKanal}`;
+const watchUrl = data.youtubeId
+  ? `https://www.youtube.com/watch?v=${data.youtubeId}`
+  : youtubeKanal;
 const pageUrl = `${SITE_URL}${dilHref(data.slug)}`;
-const embedUrl = `https://www.youtube-nocookie.com/embed/${data.youtubeId}`;
+const embedUrl = data.youtubeId
+  ? `https://www.youtube-nocookie.com/embed/${data.youtubeId}`
+  : '';
 
 const jsonLd = [
   {

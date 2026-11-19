@@ -397,6 +397,15 @@
 @media (min-width: 768px) {
   .pz-board-p { font-size: 15px; }
 }
+.pz-hub-lead {
+  margin: 0 0 22px;
+  max-width: 54ch;
+  font-family: Yellix, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.62);
+}
 .pz-row {
   flex: 0 0 auto;
   margin-top: 0;
@@ -528,6 +537,21 @@
   font-size: 14px;
   line-height: 1.3;
   letter-spacing: -0.01em;
+}
+.pz-tile-stav {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.34);
+}
+.pz-tile.is-upcoming .pz-tile-im img {
+  filter: brightness(0.78);
+}
+.pz-tile.is-upcoming:hover .pz-tile-im img {
+  transform: none;
 }
 .pz-tile.is-soon .pz-tile-im {
   display: flex;

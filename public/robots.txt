@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+
+# Veřejné vyhledávání (Google, Bing, Seznam, ChatGPT Search)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: SeznamBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# GPTBot (trénování modelů) — zatím bez explicitního zákazu; politiku lze doplnit později.
+
+Disallow: /portal-demo/
+Disallow: /investice-2
+Disallow: /agentura-pro-kupujici
+Disallow: /agentura-pro-kupujici-onepager
+
+Sitemap: https://reamar.agency/sitemap-index.xml

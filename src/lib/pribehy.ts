@@ -35,6 +35,23 @@ export function dilHref(slug: string, hash = '') {
   return `/pribehy-z-trhu/${slug}/${hash}`;
 }
 
+export function dilYoutubeHref(youtubeId: string) {
+  return `https://www.youtube.com/watch?v=${youtubeId}`;
+}
+
+export function dilJePublikovany(dil: Dil) {
+  const stav = dil.data.stav;
+  if (stav === 'pristi-tyden' || stav === 'pripravujeme') return false;
+  return Boolean(dil.data.youtubeId);
+}
+
+export function dilStavLabel(stav: Dil['data']['stav'] | undefined) {
+  if (stav === 'novy') return 'Nový díl';
+  if (stav === 'pristi-tyden') return 'Příští týden';
+  if (stav === 'pripravujeme') return 'Připravujeme';
+  return null;
+}
+
 export function titulekRadky(t: string) {
   const rozpoctem = t.match(/^(.*?)\s+(s rozpočtem\b.*)$/);
   if (rozpoctem) return [rozpoctem[1], rozpoctem[2]];
@@ -49,5 +66,5 @@ export function shortsByIds(ids: string[]) {
 
 export async function getDily() {
   const all = await getCollection('dily');
-  return all.sort((a, b) => b.data.cislo - a.data.cislo);
+  return all.sort((a, b) => a.data.cislo - b.data.cislo);
 }

@@ -4,9 +4,30 @@ import SectionVyberSluzeb from '../components/SectionVyberSluzeb.astro';
 import SectionDotaznik from '../components/SectionDotaznik.astro';
 import SectionFaq from '../components/SectionFaq.astro';
 import SectionFooter from '../components/SectionFooter.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { seoPages } from '../data/seo-pages';
+import { organizationGraph, serviceLd } from '../lib/jsonld';
+
+const s = seoPages.sluzby;
 ---
 
-<Layout title="Služby | REAMAR Agency" description="Vyberte službu nákupní agentury REAMAR. Priority s aktivním vyhledáváním, nebo Standard se sledováním nových příležitostí zdarma." canonical="/sluzby">
+<Layout
+  title={s.title}
+  description={s.description}
+  canonical={s.canonical}
+  image={s.image}
+  ogTitle={s.ogTitle}
+  ogDescription={s.ogDescription}
+  ogImageAlt={s.ogImageAlt}
+>
+  <JsonLd data={organizationGraph()} />
+  <JsonLd
+    data={serviceLd({
+      name: 'Priority a Standard — služby Agentury pro kupující',
+      description: s.description,
+      url: s.canonical,
+    })}
+  />
   <SectionVyberSluzeb />
   <SectionDotaznik />
   <SectionFaq />

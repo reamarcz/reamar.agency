@@ -67,7 +67,7 @@
             <li>komunikace s developerem nebo prodejcem</li>
             <li>pomoc s rezervací vybrané jednotky</li>
             <li>vyjednání obchodních podmínek</li>
-            <li>koordinace právní kontroly smluvní dokumentace</li>
+            <li data-provize-legal>koordinace právní kontroly smluvní dokumentace</li>
           </ul>
         </details>
       </div>
@@ -397,6 +397,9 @@
       priceLabel.textContent = isStandard
         ? 'Dle projektu'
         : 'Fixní u všech projektů';
+      overlay.querySelectorAll('[data-provize-legal]').forEach(function (el) {
+        el.hidden = isStandard;
+      });
     }
 
     function openModal(event) {

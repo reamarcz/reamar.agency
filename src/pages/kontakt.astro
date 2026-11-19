@@ -1,22 +1,36 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { seoPages } from '../data/seo-pages';
+
+const s = seoPages.kontakt;
 ---
-<Layout title="REAMAR | Kontakt" description="Kontaktujte Reamar – marketing a prodej pro realitní developery." canonical="/kontakt">
+<Layout
+  title={s.title}
+  description={s.description}
+  canonical={s.canonical}
+  image={s.image}
+  ogTitle={s.ogTitle}
+  ogDescription={s.ogDescription}
+  ogImageAlt={s.ogImageAlt}
+>
   <section class="min-h-screen pt-24 pb-20 md:pt-32">
     <div class="mx-auto max-w-[1600px] px-6 lg:px-10">
       <h1 class="font-yellix text-3xl font-medium tracking-tight text-black md:text-4xl">Kontakt</h1>
-      <p class="mt-6 max-w-xl leading-relaxed text-black/80">
-        Ozvěte se nám pro konzultaci nebo domluvu schůzky.
+      <p class="mt-6 max-w-xl font-yellix text-[15px] font-medium leading-relaxed text-black/80 md:text-[16px]">
+        Hledáte novostavbu pro bydlení nebo investici? Napište nám, co hledáte.
+        Probereme vaše zadání a možnosti zastupování Agentury pro kupující v Praze a okolí.
       </p>
       <div class="mt-12 space-y-2">
-        <p class="font-yellix text-lg font-medium text-black">+420 607 066 044</p>
-        <a href="mailto:info@reamar.cz" class="text-black/80 underline hover:text-black transition-colors">info@reamar.cz</a>
+        <p class="font-yellix text-lg font-medium text-black">
+          <a href="tel:+420607066044" class="transition-opacity hover:opacity-80">+420 607 066 044</a>
+        </p>
+        <a href="mailto:info@reamar.cz" class="text-black/80 underline transition-colors hover:text-black">info@reamar.cz</a>
       </div>
-      <p class="mt-12 text-sm text-black/60">
+      <p class="mt-12 font-yellix text-sm font-medium leading-relaxed text-black/60">
         Reamar Invest Group, s.r.o.<br />
-        Rybná 716/24, Staré Město, 110 00 Praha
+        Záběhlický zámek · Za potokem 46/4 · 106 00 Praha 10
       </p>
-      <a href="/" class="btn-premium mt-12 inline-block border border-black/20 px-6 py-3 text-sm font-medium text-black transition-colors hover:border-black/40">
+      <a href="/" class="mt-12 inline-block border border-black/20 px-6 py-3 font-yellix text-sm font-medium text-black transition-colors hover:border-black/40">
         ← Zpět na úvod
       </a>
     </div>

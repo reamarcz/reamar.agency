@@ -5,12 +5,37 @@ import InvesticePruchod from '../components/InvesticePruchod.astro';
 import SectionSpecializace from '../components/SectionSpecializace.astro';
 import SectionVyberSluzeb from '../components/SectionVyberSluzeb.astro';
 import SectionFooter from '../components/SectionFooter.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { seoPages } from '../data/seo-pages';
+import { organizationGraph, serviceLd } from '../lib/jsonld';
+
+const s = seoPages.investice;
 ---
 
-<Layout title="Investice | REAMAR Agency" description="Nákupní agentura REAMAR pro investory. Sledujeme trh novostaveb, vybíráme jednotky a jednáme s developerem na vaší straně." canonical="/investice">
+<Layout
+  title={s.title}
+  description={s.description}
+  canonical={s.canonical}
+  image={s.image}
+  ogTitle={s.ogTitle}
+  ogDescription={s.ogDescription}
+  ogImageAlt={s.ogImageAlt}
+>
+  <JsonLd data={organizationGraph()} />
+  <JsonLd
+    data={serviceLd({
+      name: 'Vyhledávání investičních novostaveb',
+      description: s.description,
+      url: s.canonical,
+    })}
+  />
   <div class="hero-cover">
     <div class="hero-cover-pin">
-      <BydleniHero mode="trh" claim={['Zastupujeme investory', 'na developerském trhu']} />
+      <BydleniHero
+        mode="trh"
+        claim={['Zastupujeme investory', 'na developerském trhu']}
+        mobilePosterSrc="/images/agency/poster-epizoda-0-14-720.webp"
+      />
     </div>
     <InvesticePruchod />
   </div>

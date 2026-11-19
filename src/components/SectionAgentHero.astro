@@ -1,34 +1,24 @@
 ---
 import AgentSocialIcon from './AgentSocialIcon.astro';
+import {
+  facebookPoradu,
+  instagramPoradu,
+  linkedinHonza,
+  youtubeKanal,
+} from '../data/porad';
 
 const banner = '/images/agency/JVAGENT.jpeg';
-const youtubeHref = 'https://www.youtube.com/@agentprokupujici';
+const youtubeHref = youtubeKanal;
 const videoSrc = '/videos/Pro klienty.mp4';
 const poster = '/images/agency/jv-holder3.jpg';
 
-type SocialIcon = 'youtube' | 'linkedin' | 'instagram' | 'x';
+type SocialIcon = 'youtube' | 'linkedin' | 'instagram' | 'facebook';
 
 const socials: { name: string; href: string; icon: SocialIcon }[] = [
-  {
-    name: 'YouTube',
-    href: 'https://www.youtube.com/@agentprokupujici',
-    icon: 'youtube',
-  },
-  {
-    name: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/jan-vitvera-6162b1164',
-    icon: 'linkedin',
-  },
-  {
-    name: 'Instagram',
-    href: '',
-    icon: 'instagram',
-  },
-  {
-    name: 'X',
-    href: '',
-    icon: 'x',
-  },
+  { name: 'YouTube', href: youtubeKanal, icon: 'youtube' },
+  { name: 'Instagram', href: instagramPoradu, icon: 'instagram' },
+  { name: 'Facebook', href: facebookPoradu, icon: 'facebook' },
+  { name: 'LinkedIn', href: linkedinHonza, icon: 'linkedin' },
 ];
 ---
 
@@ -136,7 +126,7 @@ const socials: { name: string; href: string; icon: SocialIcon }[] = [
             Jan Vitvera
           </p>
           <p class="mt-2 font-yellix text-[13px] font-medium leading-none text-black/50">
-              zástupce kupujících na trhu novostaveb
+              Agent pro kupující · Agentura pro kupující
           </p>
         </div>
         <div class="mt-4 flex items-center gap-3">

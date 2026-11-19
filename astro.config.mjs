@@ -1,12 +1,27 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel';
+import sitemap from '@astrojs/sitemap';
+
+const SITEMAP_EXCLUDE = [
+  /\/portal-demo(\/|$)/,
+  /\/investice-2\/?$/,
+  /\/agentura-pro-kupujici(\/|$)/,
+  /\/agentura-pro-kupujici-onepager\/?$/,
+  /\/pozemekhusinec(\/|$)/,
+  /\/404\/?$/,
+];
 
 export default defineConfig({
   site: 'https://reamar.agency',
   output: 'static',
   adapter: vercel(),
-  integrations: [tailwind()],
+  integrations: [
+    tailwind(),
+    sitemap({
+      filter: (page) => !SITEMAP_EXCLUDE.some((re) => re.test(page)),
+    }),
+  ],
   redirects: {
     '/varianta-koncept': '/',
     '/varianta-koncept-2': '/',

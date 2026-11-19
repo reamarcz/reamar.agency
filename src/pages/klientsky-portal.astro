@@ -1,12 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import KlientskyPortal2 from '../components/KlientskyPortal2.astro';
+import { seoPages } from '../data/seo-pages';
+
+const s = seoPages.portal;
 ---
 
 <Layout
-  title="Klientský portál | REAMAR Agency"
-  description="Všechny novostavby v Praze a okolí, ceny, předprodeje a srovnání s trhem. Ukázka klientského portálu nákupní agentury REAMAR."
-  canonical="/klientsky-portal"
+  title={s.title}
+  description={s.description}
+  canonical={s.canonical}
+  image={s.image}
+  ogTitle={s.ogTitle}
+  ogDescription={s.ogDescription}
+  ogImageAlt={s.ogImageAlt}
   theme="dark"
 >
   <KlientskyPortal2

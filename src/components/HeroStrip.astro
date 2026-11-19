@@ -118,7 +118,7 @@ const offerLines = ['Byty 2+kk', 'Holešovice', '6 475 200 Kč'];
       </div>
       <div class="hero-strip-col hero-strip-col-copy">
         <div class="hero-kicker-row" aria-hidden="true"></div>
-        <p class="hero-intro-lead">Sledujeme trh, vybíráme vhodné jednotky a jednáme s developerem na vaší straně.</p>
+        <p class="hero-intro-lead">Jako nákupní agentura sledujeme trh, vybíráme vhodné jednotky a s developery jednáme na vaší straně.</p>
         <div class="hero-strip-actions hero-intro-actions">
           <a href="#koncept" class="inline-flex items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-white no-underline transition-opacity hover:opacity-85">
             <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
@@ -222,7 +222,18 @@ const offerLines = ['Byty 2+kk', 'Holešovice', '6 475 200 Kč'];
     <button type="button" class="strip-modal-backdrop" data-strip-close aria-label="Zavřít video"></button>
     <div class="strip-modal-panel" role="dialog" aria-modal="true" aria-label="Agentura pro kupující">
       <button type="button" class="strip-modal-close" data-strip-close>Zavřít</button>
-      <video class="strip-modal-video" data-strip-feature controls playsinline preload="none" poster="/images/agency/hero-obhlidka.jpg">
+      <video
+        class="strip-modal-video"
+        data-strip-feature
+        data-src-desktop="/videos/medailonek-apk.mp4"
+        data-src-mobile="/videos/epizoda-0-720.mp4"
+        data-poster-desktop="/images/agency/hero-obhlidka.jpg"
+        data-poster-mobile="/videos/epizoda-0-poster.jpg"
+        controls
+        playsinline
+        preload="none"
+        poster="/images/agency/hero-obhlidka.jpg"
+      >
         <source src="/videos/medailonek-apk.mp4" type="video/mp4" />
       </video>
     </div>
@@ -544,6 +555,26 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
       return { strip: strip, modal: modal, feature: feature };
     }
 
+    function applyFeatureSource(video) {
+      if (!video) return;
+      var mobile = window.matchMedia('(max-width: 1023px)').matches;
+      var next = mobile
+        ? (video.getAttribute('data-src-mobile') || '/videos/epizoda-0-720.mp4')
+        : (video.getAttribute('data-src-desktop') || '/videos/medailonek-apk.mp4');
+      var nextPoster = mobile
+        ? (video.getAttribute('data-poster-mobile') || video.getAttribute('data-poster-desktop'))
+        : video.getAttribute('data-poster-desktop');
+      var source = video.querySelector('source');
+      var current = source ? source.getAttribute('src') : video.getAttribute('src');
+      if (nextPoster && video.getAttribute('poster') !== nextPoster) {
+        video.setAttribute('poster', nextPoster);
+      }
+      if (current === next) return;
+      if (source) source.setAttribute('src', next);
+      else video.setAttribute('src', next);
+      video.load();
+    }
+
     function openModal() {
       const parts = current();
       if (!parts.modal || document.documentElement.classList.contains('intro-on')) return;
@@ -551,6 +582,7 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
       parts.modal.hidden = false;
       document.body.style.overflow = 'hidden';
       if (parts.feature) {
+        applyFeatureSource(parts.feature);
         try { parts.feature.currentTime = 0; } catch (e) {}
         const play = parts.feature.play();
         if (play && typeof play.catch === 'function') play.catch(function () {});

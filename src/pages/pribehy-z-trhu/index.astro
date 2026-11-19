@@ -17,6 +17,9 @@ import {
 } from '../../data/porad';
 import {
   dilHref,
+  dilJePublikovany,
+  dilStavLabel,
+  dilYoutubeHref,
   dilySklon,
   getDily,
   padDil,
@@ -24,32 +27,49 @@ import {
   titulekRadky,
 } from '../../lib/pribehy';
 import { SITE_URL } from '../../lib/site';
+import { seoPages } from '../../data/seo-pages';
 import '../../styles/pribehy.css';
 
+const s = seoPages.pribehy;
+
 const dily = await getDily();
-const latest = dily[0];
+const latest =
+  dily.find((dil) => dil.data.stav === 'novy') ||
+  dily.find((dil) => dilJePublikovany(dil)) ||
+  dily[0];
 if (!latest) throw new Error('Chybí díly v src/content/dily');
 
+/** Dočasně vypnuto — málo published Shorts. Zapnout zpět na true. */
+const showShorts = false;
+/** Dočasně vypnuto — články k dílům ještě nejsou. Zapnout zpět na true. */
+const showArticles = false;
+
 const rok = latest.data.datum.getFullYear();
+const published = dily.filter((dil) => dilJePublikovany(dil));
 
 const itemList = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: 'Příběhy z trhu',
-  itemListElement: dily.map((dil, i) => ({
+  itemListElement: published.map((dil, i) => ({
     '@type': 'ListItem',
     position: i + 1,
-    url: `${SITE_URL}${dilHref(dil.data.slug)}`,
+    url: dil.data.youtubeId
+      ? dilYoutubeHref(dil.data.youtubeId)
+      : `${SITE_URL}${dilHref(dil.data.slug)}`,
     name: dil.data.titulek,
   })),
 };
 ---
 
 <Layout
-  title="Příběhy z trhu | REAMAR"
-  description="Pořad nákupní agentury REAMAR o nákupu novostaveb. Dlouhé díly i shorts — ke každému videu i článek."
-  canonical="/pribehy-z-trhu/"
-  image={heroPoradu}
+  title={s.title}
+  description={s.description}
+  canonical={s.canonical}
+  image={s.image}
+  ogTitle={s.ogTitle}
+  ogDescription={s.ogDescription}
+  ogImageAlt={s.ogImageAlt}
 >
   <div class="pz">
     <section class="pz-board" aria-labelledby="pz-hero-title" data-pz-hero>
@@ -106,18 +126,30 @@ const itemList = {
           </div>
           <p class="pz-board-p">{latest.data.perex}</p>
           <div class="pz-hero-b">
-            <a class="pz-btn pz-btn-w" href={dilHref(latest.data.slug, '#video')}>
-              <span aria-hidden="true" set:html={play} />
-              Přehrát
-            </a>
-            <a class="pz-btn pz-btn-o" href={dilHref(latest.data.slug, '#clanek')}>
-              <span aria-hidden="true" set:html={info} />
-              Přečíst článek
-            </a>
+            {latest.data.youtubeId && (
+              <a
+                class="pz-btn pz-btn-w"
+                href={showArticles ? dilHref(latest.data.slug, '#video') : dilYoutubeHref(latest.data.youtubeId)}
+                target={showArticles ? undefined : '_blank'}
+                rel={showArticles ? undefined : 'noopener noreferrer'}
+              >
+                <span aria-hidden="true" set:html={play} />
+                Přehrát
+              </a>
+            )}
+            {showArticles && (
+              <a class="pz-btn pz-btn-o" href={dilHref(latest.data.slug, '#clanek')}>
+                <span aria-hidden="true" set:html={info} />
+                Přečíst článek
+              </a>
+            )}
           </div>
         </div>
 
         <div class="pz-row" id="dily">
+          <p class="pz-hub-lead">
+            Pořad Agentury pro kupující — příběhy, rozhovory a zkušenosti z nákupu novostaveb na pražském developerském trhu.
+          </p>
           <div class="pz-row-head">
             <h2 id="pz-dily-h">Díly</h2>
             <a
@@ -132,18 +164,41 @@ const itemList = {
             </a>
           </div>
           <div class="pz-row-g">
-            {dily.map((dil, i) => (
-              <a class:list={['pz-tile', i === 0 && 'is-new']} href={dilHref(dil.data.slug)}>
-                <span class="pz-tile-im">
-                  <img src={dil.data.poster} alt="" width="640" height="360" />
-                  {i === 0 && <em class="pz-badge">Nový díl</em>}
-                  <span class="pz-tile-play" aria-hidden="true" set:html={play} />
-                  <i>{dil.data.delka}</i>
-                </span>
-                <small>{padDil(dil.data.cislo)} · {dil.data.tema}</small>
-                <b>{dil.data.titulek}</b>
-              </a>
-            ))}
+            {dily.map((dil) => {
+              const live = dilJePublikovany(dil);
+              const stav = dilStavLabel(dil.data.stav);
+              const tileClass = [
+                'pz-tile',
+                dil.data.stav === 'novy' && 'is-new',
+                !live && 'is-upcoming',
+              ];
+              const body = (
+                <>
+                  <span class="pz-tile-im">
+                    <img src={dil.data.poster} alt="" width="640" height="360" />
+                    {dil.data.stav === 'novy' && <em class="pz-badge">Nový díl</em>}
+                    {live && <span class="pz-tile-play" aria-hidden="true" set:html={play} />}
+                    {live && dil.data.delka && <i>{dil.data.delka}</i>}
+                  </span>
+                  <small>{padDil(dil.data.cislo)} · {dil.data.tema}</small>
+                  <b>{dil.data.titulek}</b>
+                  {stav && dil.data.stav !== 'novy' && <em class="pz-tile-stav">{stav}</em>}
+                </>
+              );
+              if (live && dil.data.youtubeId) {
+                return (
+                  <a
+                    class:list={tileClass}
+                    href={showArticles ? dilHref(dil.data.slug) : dilYoutubeHref(dil.data.youtubeId)}
+                    target={showArticles ? undefined : '_blank'}
+                    rel={showArticles ? undefined : 'noopener noreferrer'}
+                  >
+                    {body}
+                  </a>
+                );
+              }
+              return <div class:list={tileClass}>{body}</div>;
+            })}
             {dalsiDil && (
               <div class="pz-tile is-soon">
                 <span class="pz-tile-im">
@@ -158,68 +213,70 @@ const itemList = {
       </div>
     </section>
 
-    <section class="pz-shorts" aria-labelledby="pz-shorts-h">
-      <div class="pz-wrap">
-        <h2 id="pz-shorts-h" class="pz-h2">
-          <ShortsIcon class="pz-h2-ico" />
-          Shorts
-        </h2>
-        <div class="pz-sh-links">
-          <span class="pz-sh-follow">Sledujte Agenta pro kupující</span>
-          <a
-            class="pz-lnk"
-            href={youtubeShorts}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Všechny shorts na YouTube"
-          >
-            <span class="pz-lnk-ico" aria-hidden="true">
-              <AgentSocialIcon icon="youtube" />
-            </span>
-            <span class="pz-lnk-mono pz-lnk-mono-yt" aria-hidden="true">
-              <svg viewBox="0 0 24 17">
-                <path fill="currentColor" d="M23.5 2.65A3.02 3.02 0 0 0 21.38.5C19.5 0 12 0 12 0S4.5 0 2.62.5A3.02 3.02 0 0 0 .5 2.65 31.9 31.9 0 0 0 0 8.5a31.9 31.9 0 0 0 .5 5.85 3.02 3.02 0 0 0 2.12 2.15C4.5 17 12 17 12 17s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.15A31.9 31.9 0 0 0 24 8.5a31.9 31.9 0 0 0-.5-5.85Z"/>
-                <path fill="#fff" d="M9.75 12.15V4.85L15.7 8.5 9.75 12.15Z"/>
-              </svg>
-            </span>
-            <span class="pz-lnk-txt">Všechny shorts</span>
-            <span class="pz-lnk-m">YouTube</span>
-          </a>
-          <span class="pz-sh-sep" aria-hidden="true">·</span>
-          <a
-            class="pz-lnk"
-            href={instagramPoradu}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-          >
-            <span class="pz-lnk-ico" aria-hidden="true">
-              <AgentSocialIcon icon="instagram" />
-            </span>
-            <span class="pz-lnk-mono" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-                <rect x="3" y="3" width="18" height="18" rx="5"/>
-                <circle cx="12" cy="12" r="4"/>
-                <circle cx="17.4" cy="6.6" r="1.05" fill="currentColor" stroke="none"/>
-              </svg>
-            </span>
-            <span class="pz-lnk-txt">Instagram</span>
-          </a>
-        </div>
-        <div class="pz-sx-wrap">
-          <div class="pz-sx" data-pz-sx>
-            {shorts.map((short) => <ShortTile short={short} />)}
+    {showShorts && (
+      <section class="pz-shorts" aria-labelledby="pz-shorts-h">
+        <div class="pz-wrap">
+          <h2 id="pz-shorts-h" class="pz-h2">
+            <ShortsIcon class="pz-h2-ico" />
+            Shorts
+          </h2>
+          <div class="pz-sh-links">
+            <span class="pz-sh-follow">Sledujte Agenta pro kupující</span>
+            <a
+              class="pz-lnk"
+              href={youtubeShorts}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Všechny shorts na YouTube"
+            >
+              <span class="pz-lnk-ico" aria-hidden="true">
+                <AgentSocialIcon icon="youtube" />
+              </span>
+              <span class="pz-lnk-mono pz-lnk-mono-yt" aria-hidden="true">
+                <svg viewBox="0 0 24 17">
+                  <path fill="currentColor" d="M23.5 2.65A3.02 3.02 0 0 0 21.38.5C19.5 0 12 0 12 0S4.5 0 2.62.5A3.02 3.02 0 0 0 .5 2.65 31.9 31.9 0 0 0 0 8.5a31.9 31.9 0 0 0 .5 5.85 3.02 3.02 0 0 0 2.12 2.15C4.5 17 12 17 12 17s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.15A31.9 31.9 0 0 0 24 8.5a31.9 31.9 0 0 0-.5-5.85Z"/>
+                  <path fill="#fff" d="M9.75 12.15V4.85L15.7 8.5 9.75 12.15Z"/>
+                </svg>
+              </span>
+              <span class="pz-lnk-txt">Všechny shorts</span>
+              <span class="pz-lnk-m">YouTube</span>
+            </a>
+            <span class="pz-sh-sep" aria-hidden="true">·</span>
+            <a
+              class="pz-lnk"
+              href={instagramPoradu}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <span class="pz-lnk-ico" aria-hidden="true">
+                <AgentSocialIcon icon="instagram" />
+              </span>
+              <span class="pz-lnk-mono" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <rect x="3" y="3" width="18" height="18" rx="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.4" cy="6.6" r="1.05" fill="currentColor" stroke="none"/>
+                </svg>
+              </span>
+              <span class="pz-lnk-txt">Instagram</span>
+            </a>
           </div>
-          <div class="pz-sx-nav">
-            <button type="button" class="pz-sx-btn is-prev" data-pz-sx-prev aria-label="Předchozí shorts" set:html={chevL} />
-            <button type="button" class="pz-sx-btn is-next" data-pz-sx-next aria-label="Další shorts" set:html={chevR} />
+          <div class="pz-sx-wrap">
+            <div class="pz-sx" data-pz-sx>
+              {shorts.map((short) => <ShortTile short={short} />)}
+            </div>
+            <div class="pz-sx-nav">
+              <button type="button" class="pz-sx-btn is-prev" data-pz-sx-prev aria-label="Předchozí shorts" set:html={chevL} />
+              <button type="button" class="pz-sx-btn is-next" data-pz-sx-next aria-label="Další shorts" set:html={chevR} />
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    )}
   </div>
 
-  <ShortsModal />
+  {showShorts && <ShortsModal />}
   <SectionFooter />
 
   <script type="application/ld+json" set:html={JSON.stringify(itemList)} />

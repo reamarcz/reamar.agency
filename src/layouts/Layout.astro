@@ -17,6 +17,7 @@ interface Props {
   image?: string;
   ogTitle?: string;
   ogDescription?: string;
+  ogImageAlt?: string;
   canonical?: string;
   ogType?: string;
   robots?: string;
@@ -25,11 +26,12 @@ interface Props {
   hideNav?: boolean;
 }
 const {
-  title = 'REAMAR | Reality. Marketing.',
-  description = 'Propojujeme marketing a obchod pro realitní developery.',
+  title = 'REAMAR Agency',
+  description = 'Nákupní agentura REAMAR zastupuje kupující novostaveb v Praze a okolí.',
   image,
   ogTitle,
   ogDescription,
+  ogImageAlt,
   canonical,
   ogType,
   robots,
@@ -69,6 +71,7 @@ const {
       image={image}
       ogTitle={ogTitle}
       ogDescription={ogDescription}
+      ogImageAlt={ogImageAlt}
       canonical={canonical}
       ogType={ogType}
       robots={robots}

@@ -3,13 +3,24 @@ import Layout from '../layouts/Layout.astro';
 import SectionAgentHero from '../components/SectionAgentHero.astro';
 import SectionAgentStories from '../components/SectionAgentStories.astro';
 import SectionFooter from '../components/SectionFooter.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { seoPages } from '../data/seo-pages';
+import { organizationGraph, personJanVitvera } from '../lib/jsonld';
+
+const s = seoPages.agent;
 ---
 
 <Layout
-  title="Agent pro kupující | REAMAR Agency"
-  description="Agent pro kupující — příběhy z pražského developerského trhu. YouTube kanál nákupní agentury REAMAR o nákupu novostaveb."
-  canonical="/agent-pro-kupujici"
+  title={s.title}
+  description={s.description}
+  canonical={s.canonical}
+  image={s.image}
+  ogTitle={s.ogTitle}
+  ogDescription={s.ogDescription}
+  ogImageAlt={s.ogImageAlt}
 >
+  <JsonLd data={organizationGraph()} />
+  <JsonLd data={personJanVitvera()} />
   <SectionAgentHero />
   <SectionAgentStories />
   <SectionFooter />

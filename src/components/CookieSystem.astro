@@ -1,7 +1,8 @@
 ---
 const STORAGE_KEY = 'reamar-cookie-consent';
-// temporarily off — desktop + mobile
-const SHOW_COOKIE_BANNER = false;
+const SHOW_COOKIE_BANNER = true;
+/** true = vždy zobrazí lištu (ignoruje localStorage + delay). Po ladění vypnout. */
+const COOKIE_DESIGN_PREVIEW = false;
 const CATEGORIES = [
   { id: 'necessary', label: 'Nezbytné', alwaysOn: true },
   { id: 'analytical', label: 'Analytické', alwaysOn: false },
@@ -16,14 +17,24 @@ const CATEGORIES = [
   data-cookie-banner
 >
   <div class="cookie-banner-card">
-    <p class="cookie-banner-title">Cookies nám pomáhají web zlepšovat</p>
-    <p class="cookie-banner-copy">
-      Používáme je k analýze návštěvnosti a vylepšení webu. Podrobnosti v
-      <button type="button" class="cookie-banner-link" data-cookie-open-settings>nastavení</button>.
-    </p>
+    <svg class="cookie-banner-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="9.25" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="8.2" cy="10.2" r="1.15" fill="currentColor"/>
+      <circle cx="12.6" cy="7.8" r="1" fill="currentColor"/>
+      <circle cx="15.4" cy="11.4" r="1.2" fill="currentColor"/>
+      <circle cx="10.1" cy="14.6" r="1.05" fill="currentColor"/>
+      <circle cx="14.2" cy="15.8" r="0.9" fill="currentColor"/>
+    </svg>
+    <div class="cookie-banner-main">
+      <p class="cookie-banner-label">Cookies</p>
+      <p class="cookie-banner-copy">
+        Používáme je k analýze návštěvnosti a vylepšení webu.
+      </p>
+    </div>
     <div class="cookie-banner-actions">
-      <button type="button" class="cookie-banner-btn" data-cookie-accept>Souhlasím</button>
-      <button type="button" class="cookie-banner-btn" data-cookie-reject>Odmítnout</button>
+      <button type="button" class="cookie-banner-btn" data-cookie-accept>Přijmout vše</button>
+      <button type="button" class="cookie-banner-btn cookie-banner-btn--ghost" data-cookie-reject>Jen nezbytné</button>
+      <button type="button" class="cookie-banner-link" data-cookie-open-settings>Nastavení</button>
     </div>
   </div>
 </div>
@@ -99,153 +110,171 @@ const CATEGORIES = [
 </div>
 
 <style is:global>
+  /* Floating cookie panel — dole uprostřed (zatím jen desktop) */
   .cookie-banner {
     position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    left: 50%;
+    right: auto;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
     z-index: 90;
-    width: 100%;
+    width: min(620px, calc(100vw - 24px));
     opacity: 0;
     pointer-events: none;
-    transform: translateY(12px);
-    transition: opacity 0.45s ease, transform 0.45s ease;
+    transform: translate(-50%, 16px);
+    transition: opacity 0.35s ease, transform 0.4s ease;
+  }
+  @media (max-width: 1023px) {
+    .cookie-banner {
+      display: none !important;
+    }
   }
   .cookie-banner.is-on {
     opacity: 1;
     pointer-events: auto;
-    transform: none;
+    transform: translate(-50%, 0);
   }
   .cookie-banner-card {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1.1rem 1.25rem 1.15rem;
-    background: #fff;
-    border-top: 1px solid #e5e5e5;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: #eef4f0;
+    border: 1px solid rgba(47, 90, 72, 0.16);
+    border-radius: 12px;
+    box-shadow: 0 12px 36px rgba(20, 50, 35, 0.16);
   }
-  .cookie-banner-title {
-    display: none;
+  .cookie-banner-icon {
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    color: #2f5a48;
+  }
+  .cookie-banner-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .cookie-banner-label {
     margin: 0;
     font-family: Yellix, system-ui, sans-serif;
     font-size: 17px;
-    font-weight: 500;
-    line-height: 1.25;
+    font-weight: 600;
+    line-height: 1.1;
     letter-spacing: -0.02em;
-    color: #000;
+    color: #2f5a48;
   }
   .cookie-banner-copy {
     margin: 0;
     font-family: Yellix, system-ui, sans-serif;
-    font-size: 14px;
+    font-size: clamp(11px, 2.8vw, 12.5px);
     font-weight: 500;
-    line-height: 1.45;
-    color: rgba(0, 0, 0, 0.62);
-  }
-  .cookie-banner-link {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background: none;
-    font: inherit;
-    color: #000;
-    text-decoration: underline;
-    text-underline-offset: 0.14em;
-    cursor: pointer;
-  }
-  .cookie-banner-link:hover {
-    opacity: 0.7;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: rgba(20, 45, 35, 0.68);
+    white-space: nowrap;
   }
   .cookie-banner-actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.65rem 0.85rem;
+    align-self: center;
+    gap: 6px 10px;
+    flex: 0 0 auto;
   }
   .cookie-banner-btn {
     margin: 0;
-    padding: 10px 18px;
-    border: 1px solid #000;
-    background: #000;
+    padding: 8px 14px;
+    border: 1px solid #2f5a48;
+    border-radius: 6px;
+    background: #2f5a48;
     color: #fff;
     font-family: Yellix, system-ui, sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     line-height: 1;
+    letter-spacing: 0.01em;
     cursor: pointer;
   }
-  .cookie-banner-btn[data-cookie-reject] {
-    background: #fff;
-    color: #000;
-    border-color: rgba(0, 0, 0, 0.18);
-  }
   .cookie-banner-btn:hover {
-    opacity: 0.88;
+    background: #264a3b;
+    border-color: #264a3b;
   }
-  @media (min-width: 1024px) {
+  .cookie-banner-btn--ghost {
+    background: transparent;
+    color: #2f5a48;
+  }
+  .cookie-banner-btn--ghost:hover {
+    background: rgba(47, 90, 72, 0.08);
+  }
+  .cookie-banner-link {
+    margin: 0;
+    padding: 0 4px;
+    border: 0;
+    background: none;
+    font-family: Yellix, system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    color: rgba(47, 90, 72, 0.72);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .cookie-banner-link:hover {
+    color: #2f5a48;
+  }
+  @media (max-width: 640px) {
     .cookie-banner-card {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-      padding: 1.05rem 2.5rem 1.1rem;
+      flex-wrap: wrap;
+      row-gap: 10px;
     }
-    .cookie-banner-copy {
-      flex: 1;
-      max-width: 46rem;
+    .cookie-banner-main {
+      flex: 1 1 calc(100% - 52px);
     }
     .cookie-banner-actions {
-      flex-shrink: 0;
+      flex: 1 1 100%;
+      padding-left: 48px;
+    }
+    .cookie-banner-copy {
+      white-space: normal;
     }
   }
-  @media (max-width: 1023px) {
+  @media (max-width: 379px) {
+    .cookie-banner-actions {
+      padding-left: 0;
+    }
+  }
+  @media (min-width: 768px) {
     .cookie-banner {
-      left: 12px;
-      right: 12px;
-      bottom: calc(12px + env(safe-area-inset-bottom, 0px));
-      width: auto;
+      bottom: 24px;
+      width: min(740px, calc(100vw - 48px));
     }
     .cookie-banner-card {
-      gap: 0.85rem;
-      padding: 1.2rem 1.15rem 1.1rem;
-      border: 0;
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.78);
-      -webkit-backdrop-filter: blur(22px);
-      backdrop-filter: blur(22px);
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+      gap: 14px;
+      padding: 12px 16px;
     }
-    .cookie-banner-title {
-      display: block;
+    .cookie-banner-icon {
+      width: 40px;
+      height: 40px;
+    }
+    .cookie-banner-label {
+      font-size: 18px;
     }
     .cookie-banner-copy {
-      font-size: 13px;
-      line-height: 1.4;
-      color: rgba(0, 0, 0, 0.68);
+      font-size: 12.5px;
+      white-space: nowrap;
     }
     .cookie-banner-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 0.25rem;
-    }
-    .cookie-banner-btn {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 999px;
-      border-color: rgba(0, 0, 0, 0.12);
-      background: #fff;
-      color: #000;
-    }
-    .cookie-banner-btn[data-cookie-reject] {
-      background: #fff;
-      color: #000;
-      border-color: rgba(0, 0, 0, 0.12);
+      flex-wrap: nowrap;
     }
   }
 </style>
 
-<script define:vars={{ STORAGE_KEY, SHOW_COOKIE_BANNER }}>
+<script define:vars={{ STORAGE_KEY, SHOW_COOKIE_BANNER, COOKIE_DESIGN_PREVIEW }}>
   function initCookieSystem() {
     const banner = SHOW_COOKIE_BANNER ? document.querySelector('[data-cookie-banner]') : null;
     const overlay = document.querySelector('[data-cookie-overlay]');
@@ -259,6 +288,10 @@ const CATEGORIES = [
     if (window.__cookieOpenSettingsHandler) {
       document.body.removeEventListener('click', window.__cookieOpenSettingsHandler);
     }
+
+    const designPreview =
+      COOKIE_DESIGN_PREVIEW ||
+      new URLSearchParams(window.location.search).has('cookies');
 
     const defaultConsent = {
       necessary: true,
@@ -294,22 +327,27 @@ const CATEGORIES = [
       });
     }
 
-    function introPlaying() {
-      const root = document.documentElement;
-      return root.classList.contains('rmm-on') || root.classList.contains('rmi-on') || root.classList.contains('intro-on');
-    }
-
     function isPhone() {
       return window.matchMedia('(max-width: 1023px)').matches;
     }
 
+    function introPlaying() {
+      if (designPreview) return false;
+      const root = document.documentElement;
+      return root.classList.contains('rmm-on') || root.classList.contains('rmi-on') || root.classList.contains('intro-on');
+    }
+
     function showBanner() {
       if (!banner) return;
+      if (isPhone()) return;
       const consent = getConsent();
-      if (consent && consent.consented) return;
+      if (!designPreview && consent && consent.consented) return;
       if (introPlaying()) {
         window.addEventListener('rm:intro-done', function () {
-          window.setTimeout(showBanner, 1800);
+          window.setTimeout(showBanner, 400);
+        }, { once: true });
+        window.addEventListener('hero-intro-done', function () {
+          window.setTimeout(showBanner, 400);
         }, { once: true });
         return;
       }
@@ -319,34 +357,79 @@ const CATEGORIES = [
 
     function hideBanner() {
       if (!banner) return;
+      if (designPreview) return;
       banner.classList.remove('is-on');
       banner.setAttribute('aria-hidden', 'true');
     }
 
+    function findSecondSection() {
+      const root = document.querySelector('main') || document.body;
+      const sections = Array.prototype.slice.call(root.querySelectorAll('section')).filter(function (el) {
+        return el.getClientRects().length > 0;
+      });
+      return sections[1] || null;
+    }
+
     function scheduleBanner() {
       if (window.__cookieBannerTimer) clearTimeout(window.__cookieBannerTimer);
-      const start = performance.now();
+      if (window.__cookieBannerIo) {
+        window.__cookieBannerIo.disconnect();
+        window.__cookieBannerIo = null;
+      }
+      if (window.__cookieBannerScroll) {
+        window.removeEventListener('scroll', window.__cookieBannerScroll);
+        window.__cookieBannerScroll = null;
+      }
+
+      // Mobil: zatím vůbec (desktop až od 2. sekce).
+      if (isPhone()) return;
+
+      // Design preview: hned, ať ladíte vzhled.
+      if (designPreview) {
+        window.__cookieBannerTimer = setTimeout(showBanner, 800);
+        return;
+      }
+      if (getConsent() && getConsent().consented) return;
+
       const arm = function () {
         if (getConsent() && getConsent().consented) return;
         if (introPlaying()) {
           window.addEventListener('rm:intro-done', function () {
-            window.__cookieBannerTimer = setTimeout(arm, 1800);
+            window.__cookieBannerTimer = setTimeout(arm, 400);
           }, { once: true });
           window.addEventListener('hero-intro-done', function () {
-            window.__cookieBannerTimer = setTimeout(arm, 1800);
+            window.__cookieBannerTimer = setTimeout(arm, 400);
           }, { once: true });
-          window.__cookieBannerTimer = setTimeout(arm, 12000);
-          return;
-        }
-        const min = isPhone() ? 6500 : 2000;
-        const left = min - (performance.now() - start);
-        if (left > 40) {
-          window.__cookieBannerTimer = setTimeout(arm, left);
           return;
         }
         showBanner();
       };
-      window.__cookieBannerTimer = setTimeout(arm, 80);
+
+      const trigger = findSecondSection();
+      if (trigger && 'IntersectionObserver' in window) {
+        window.__cookieBannerIo = new IntersectionObserver(
+          function (entries) {
+            if (!entries.some(function (e) { return e.isIntersecting; })) return;
+            if (window.__cookieBannerIo) {
+              window.__cookieBannerIo.disconnect();
+              window.__cookieBannerIo = null;
+            }
+            arm();
+          },
+          { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
+        );
+        window.__cookieBannerIo.observe(trigger);
+        return;
+      }
+
+      // Fallback: po scrollu ~3/4 viewportu.
+      window.__cookieBannerScroll = function () {
+        if (window.scrollY < window.innerHeight * 0.75) return;
+        window.removeEventListener('scroll', window.__cookieBannerScroll);
+        window.__cookieBannerScroll = null;
+        arm();
+      };
+      window.addEventListener('scroll', window.__cookieBannerScroll, { passive: true });
     }
 
     function openModal() {
@@ -388,8 +471,8 @@ const CATEGORIES = [
       }
     }
 
-    if (SHOW_COOKIE_BANNER && !window.__cookieBannerScheduled) {
-      window.__cookieBannerScheduled = true;
+    if (SHOW_COOKIE_BANNER && (designPreview || !window.__cookieBannerScheduled)) {
+      if (!designPreview) window.__cookieBannerScheduled = true;
       scheduleBanner();
     }
 

@@ -16,9 +16,6 @@ const {
 const [episodeKicker, episodeTitle] = episodeLabel.split(/\s·\s/);
 const episodeExternal = /^https?:\/\//.test(episodeHref);
 
-const offerHref = 'https://nabidka.reamar.cz/praha-7';
-const offerLine = '2+kk · Holešovice · 6\u00a0475\u00a0200\u00a0Kč';
-
 const tiles = [
   {
     num: '01',
@@ -28,6 +25,10 @@ const tiles = [
     title: 'Vyhledávání na celém trhu<br />novostaveb',
     text: 'V Praze sledujeme téměř <strong>10&nbsp;000 bytů</strong>. Bez hluboké znalosti trhu a správných technologií je prakticky nemožné tak rozsáhlou nabídku porovnat.',
     icon: 'search',
+    market: {
+      href: 'https://www.reamar.cz/prazsky-rezidencni-trh',
+      label: 'Market Data Q3/26',
+    },
   },
   {
     num: '02',
@@ -37,7 +38,12 @@ const tiles = [
     title: 'Předprodej projektů<br />a neveřejné nabídky',
     text: 'Díky kontaktům na developerském trhu řešíme předprodeje, <strong>neveřejné nabídky</strong> a podmínky, ke kterým se kupující sám často nedostane.',
     icon: 'reserve',
-    offer: true,
+    cta: {
+      href: 'https://nabidka.reamar.cz/praha-7',
+      kicker: 'Aktuální předprodej',
+      line: '2+kk · Holešovice · 6\u00a0475\u00a0200\u00a0Kč',
+      live: true,
+    },
   },
   {
     num: '03',
@@ -102,19 +108,32 @@ const tiles = [
                 </div>
                 <h3 class="font-yellix" set:html={tile.title} />
                 <p class="font-yellix" set:html={tile.text} />
-                {tile.offer && (
+                {tile.market && (
+                  <a
+                    class="bah__mkt font-yellix"
+                    href={tile.market.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+                      <path fill="currentColor" d="M1.5 13.5h13v1.2H1.5zm1.4-1.8V8.2h1.6v3.5zm3.5 0V5.1h1.6v6.6zm3.5 0V6.8H11v4.9zm3.5 0V3.2h1.6v8.5z"/>
+                    </svg>
+                    <strong>{tile.market.label}</strong>
+                  </a>
+                )}
+                {tile.cta && (
                   <a
                     class="bah__offer font-yellix"
-                    href={offerHref}
+                    href={tile.cta.href}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <span class="bah__offer-kicker">
-                      <span class="bah__offer-live" aria-hidden="true"></span>
-                      Aktuální předprodej
+                      {tile.cta.live && <span class="bah__offer-live" aria-hidden="true"></span>}
+                      {tile.cta.kicker}
                     </span>
                     <span class="bah__offer-line">
-                      {offerLine}
+                      {tile.cta.line}
                       <img src="/images/arrow-1.svg" alt="" width="11" height="11" />
                     </span>
                   </a>
@@ -350,6 +369,28 @@ const tiles = [
   .bah__tile p :global(strong) {
     font-weight: 600;
     color: rgba(0, 0, 0, 0.85);
+  }
+  .bah__mkt {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 0.85rem;
+    color: #000;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .bah__mkt svg {
+    flex-shrink: 0;
+    opacity: 0.72;
+  }
+  .bah__mkt strong {
+    font-weight: 600;
+  }
+  .bah__mkt:hover {
+    opacity: 0.65;
   }
   .bah__offer {
     display: flex;

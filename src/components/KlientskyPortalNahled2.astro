@@ -2809,11 +2809,12 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19s-7-4.4-7-9a4.5 4.5 0 0 1 7-3.5A4.5 4.5 0 0 1 19 10c0 4.6-7 9-7 9z"/></svg>
           </button>
         </div>
-        <span class="kp-d-rank font-yellix">${rank} ve výběru</span>
       ` : ''}
+      <div class="kp-d-body">
       <div class="kp-d-hero kp-d-in" style="--d:.04s">
         <div class="kp-d-photo" style="--kp-fallback:${color}">
           <img src="${esc(p.coverUrl || '')}" alt="${esc(p.name)}" onerror="this.remove()">
+          ${demo ? `<span class="kp-d-rank font-yellix">${rank} ve výběru</span>` : ''}
         </div>
         <div class="kp-d-info">
           <h2 class="kp-d-name font-yellix">${esc(p.name)}</h2>
@@ -2968,6 +2969,7 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
         <div class="kp-d-units-veil" data-kp-locked="podklady">
           ${lockCard('Další podklady otevřeme na schůzce', 'Půdorysy, ceník, harmonogram i poznámky k jednotkám řeší makléř s vámi. Tahle ukázka ukazuje jen výběr projektů.')}
         </div>
+      </div>
       </div>
       ${demo ? `
       <div class="kp-d-cta">
