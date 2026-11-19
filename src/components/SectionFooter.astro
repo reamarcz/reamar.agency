@@ -42,10 +42,10 @@ const logo = '/images/logo-rig-w.svg';
     </>
   )}
 
-  <div class="mx-auto max-w-[1440px] px-5 py-12 md:px-10 md:py-16 xl:px-14 xl:pb-12">
-    <div class="flex flex-col gap-14 lg:flex-row lg:items-end lg:justify-between lg:gap-20 md:gap-16">
-      <div class="flex flex-col gap-10 md:flex-row md:flex-wrap md:gap-x-16 md:gap-12 lg:gap-x-20">
-        <div class="grid grid-cols-1 gap-10 sm:grid-cols-3 md:gap-12 md:gap-x-16 lg:gap-x-20">
+  <div class="mx-auto max-w-[1440px] px-5 py-12 pb-16 md:px-10 md:py-16 md:pb-20 xl:px-14 xl:pb-16">
+    <div class="flex flex-col gap-14 md:gap-16 lg:flex-row lg:items-end lg:justify-between lg:gap-20">
+      <div class="flex min-w-0 flex-1 flex-col gap-10 md:flex-row md:flex-wrap md:gap-x-16 md:gap-12 lg:gap-x-20">
+        <div class="grid grid-cols-1 gap-10 sm:grid-cols-3 md:gap-12 md:gap-x-14 lg:gap-x-16">
           <div>
             <p class="mb-2 font-yellix text-[14px] font-medium text-[#BFBFBF] md:text-[15px]">Adresa</p>
             <p class="font-yellix text-[16px] font-medium leading-snug text-white">
@@ -56,7 +56,7 @@ const logo = '/images/logo-rig-w.svg';
           </div>
           <div>
             <p class="mb-2 font-yellix text-[14px] font-medium text-[#BFBFBF] md:text-[15px]">Telefon</p>
-            <p class="font-yellix text-[16px] font-medium text-white">
+            <p class="whitespace-nowrap font-yellix text-[16px] font-medium text-white">
               <a href="tel:+420607066044" class="transition-opacity hover:opacity-80">+420 607 066 044</a>
             </p>
           </div>
@@ -106,41 +106,38 @@ const logo = '/images/logo-rig-w.svg';
         </div>
       </div>
 
-      <div class="footer-logo-wrap flex items-end justify-start lg:justify-end" data-footer-logo-wrap>
+      <div class="footer-logo-wrap flex shrink-0 items-end justify-start lg:justify-end" data-footer-logo-wrap>
         <img
           src={logo}
           alt="REAMAR"
           width="400"
           height="107"
-          class="h-28 w-auto object-contain object-bottom md:h-40 lg:h-48 xl:h-56"
+          class="h-28 w-auto object-contain object-bottom md:h-36 lg:h-40 xl:h-44"
         />
       </div>
     </div>
 
-    <div class="mt-10 flex flex-col gap-6 font-yellix text-[12px] font-medium text-[#BFBFBF] md:mt-20 md:flex-row md:items-center md:justify-between md:pt-12 md:text-[13px]">
-      <div class="flex flex-wrap items-center gap-x-6 gap-y-1">
-        <a
-          href="https://www.reamar.cz"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 transition-colors hover:text-white"
-        >
-          <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 21h18" />
-            <path d="M5 21V9l7-5 7 5v12" />
-            <path d="M10 21v-4h4v4" />
-            <path d="M9 11h1.2M13.8 11H15M9 14.5h1.2M13.8 14.5H15" />
-          </svg>
-          reamar.cz
-        </a>
-        <a href={faqHref} class="transition-colors hover:text-white">Nejčastější otázky</a>
-        <a href="/ochrana-osobnich-udaju" class="transition-colors hover:text-white">Osobní údaje</a>
-        <button type="button" class="cursor-pointer bg-transparent p-0 text-left transition-colors hover:text-white" data-cookie-settings aria-label="Nastavení cookies">Cookies</button>
+    <div class="mt-14 text-center md:mt-20 md:text-left">
+      <div class="md:flex md:items-end md:justify-between md:gap-12">
+        <div class="min-w-0">
+          <p class="font-yellix text-[13px] font-medium leading-snug tracking-[-0.01em] text-white/55 md:text-[14px]">
+            REAMAR Agency<span class="hidden md:inline"> · </span><br class="md:hidden" />Agentura pro kupující novostaveb v Praze a okolí
+          </p>
+          <div class="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 font-yellix text-[12px] font-medium text-white/40 md:mt-6 md:justify-start md:gap-x-6">
+            <a href="https://www.reamar.cz" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-white/70 md:underline md:decoration-white/25 md:underline-offset-[3px] md:hover:decoration-white/50">reamar.cz</a>
+            <a href={faqHref} class="transition-colors hover:text-white/70 md:underline md:decoration-white/25 md:underline-offset-[3px] md:hover:decoration-white/50">
+              <span class="md:hidden">FAQ</span>
+              <span class="hidden md:inline">Nejčastější otázky</span>
+            </a>
+            <a href="https://www.reamar.cz/prazsky-rezidencni-trh" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-white/70 md:underline md:decoration-white/25 md:underline-offset-[3px] md:hover:decoration-white/50">Data z trhu</a>
+            <a href="/ochrana-osobnich-udaju" class="transition-colors hover:text-white/70 md:underline md:decoration-white/25 md:underline-offset-[3px] md:hover:decoration-white/50">Osobní údaje</a>
+            <button type="button" class="cursor-pointer bg-transparent p-0 text-left transition-colors hover:text-white/70 md:underline md:decoration-white/25 md:underline-offset-[3px] md:hover:decoration-white/50" data-cookie-settings aria-label="Nastavení cookies">Cookies</button>
+          </div>
+        </div>
+        <p class="mt-6 font-yellix text-[11px] font-medium leading-snug text-white/40 md:mt-0 md:shrink-0 md:text-right md:text-[12px]">
+          Reamar Invest Group, s.r.o. · IČO 23413646 · DIČ CZ23413646 · DS 2ejj4q
+        </p>
       </div>
-      <p class="leading-snug">
-        REAMAR Agency · Agentura pro kupující novostaveb v Praze a okolí<br />
-        Reamar Invest Group, s.r.o. | IČO: 23413646 | DIČ: CZ23413646 | Datová schránka: 2ejj4q
-      </p>
     </div>
   </div>
 </footer>

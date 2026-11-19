@@ -138,10 +138,7 @@ const featurePosterMobile = '/videos/epizoda-0-poster.jpg';
         controls
         playsinline
         preload="none"
-        poster={featurePosterDesktop}
-      >
-        <source src={featureSrcDesktop} type="video/mp4" />
-      </video>
+      ></video>
     </div>
   </div>
 
@@ -319,37 +316,72 @@ const featurePosterMobile = '/videos/epizoda-0-poster.jpg';
       io.observe(section);
     }
 
+    const panel = modal && modal.querySelector('.onas-modal-panel');
+
+    function isMobileViewport() {
+      return window.matchMedia('(max-width: 1023px)').matches;
+    }
+
+    function syncPanelShape() {
+      if (!panel) return;
+      panel.classList.toggle('is-mobile', isMobileViewport());
+    }
+
     function applyFeatureSource(video) {
-      if (!video) return;
-      const mobile = window.matchMedia('(max-width: 1023px)').matches;
+      if (!video) return false;
+      const mobile = isMobileViewport();
       const next = mobile
         ? (video.getAttribute('data-src-mobile') || '/videos/epizoda-0-720.mp4')
         : (video.getAttribute('data-src-desktop') || '/videos/medailonek-apk.mp4');
       const nextPoster = mobile
         ? (video.getAttribute('data-poster-mobile') || video.getAttribute('data-poster-desktop'))
         : video.getAttribute('data-poster-desktop');
-      const source = video.querySelector('source');
-      const current = source ? source.getAttribute('src') : video.getAttribute('src');
+      let changed = false;
       if (nextPoster && video.getAttribute('poster') !== nextPoster) {
         video.setAttribute('poster', nextPoster);
       }
-      if (current === next) return;
-      if (source) source.setAttribute('src', next);
-      else video.setAttribute('src', next);
-      video.load();
+      if (video.getAttribute('src') !== next) {
+        video.removeAttribute('src');
+        const legacy = video.querySelector('source');
+        if (legacy) legacy.remove();
+        video.setAttribute('src', next);
+        video.load();
+        changed = true;
+      }
+      return changed;
+    }
+
+    function playFeature() {
+      if (!feature) return;
+      try { feature.currentTime = 0; } catch (e) {}
+      const play = feature.play();
+      if (play && typeof play.catch === 'function') play.catch(() => {});
+    }
+
+    function warmFeature() {
+      if (!feature) return;
+      syncPanelShape();
+      applyFeatureSource(feature);
+      feature.preload = 'metadata';
     }
 
     function openModal() {
       if (!modal) return;
       pauseLoop();
+      syncPanelShape();
+      const changed = applyFeatureSource(feature);
       modal.hidden = false;
       document.body.style.overflow = 'hidden';
-      if (feature) {
-        applyFeatureSource(feature);
-        try { feature.currentTime = 0; } catch (e) {}
-        const play = feature.play();
-        if (play && typeof play.catch === 'function') play.catch(() => {});
+      if (!feature) return;
+      if (!changed && feature.readyState >= 2) {
+        playFeature();
+        return;
       }
+      feature.addEventListener('loadeddata', function onReady() {
+        feature.removeEventListener('loadeddata', onReady);
+        if (!modal.hidden) playFeature();
+      });
+      if (feature.readyState >= 2) playFeature();
     }
 
     function closeModal() {
@@ -378,6 +410,12 @@ const featurePosterMobile = '/videos/epizoda-0-poster.jpg';
           closeModal();
         });
       });
+      warmFeature();
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(warmFeature, { timeout: 2500 });
+      } else {
+        setTimeout(warmFeature, 400);
+      }
     }
 
     if (!window.__onasEscBound) {

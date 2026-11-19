@@ -822,10 +822,19 @@
   z-index: 1;
   width: min(100%, 1040px);
 }
+.onas-modal-panel.is-mobile {
+  width: min(100%, 420px);
+}
 .onas-modal-video {
   display: block;
   width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
   background: #000;
+}
+.onas-modal-panel.is-mobile .onas-modal-video {
+  aspect-ratio: 9 / 16;
+  max-height: min(78vh, 720px);
 }
 .onas-modal-close {
   position: absolute;
@@ -1176,12 +1185,15 @@
   .onas-c3-media {
     position: relative;
     aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: #000;
     cursor: pointer;
   }
   .onas-c3-ov {
+    inset: 0 0 -2px;
     background:
       linear-gradient(rgba(0, 0, 0, .35), transparent 28%),
-      linear-gradient(transparent 40%, rgba(0, 0, 0, .75) 70%, #000);
+      linear-gradient(transparent 36%, rgba(0, 0, 0, .78) 62%, #000 86%, #000);
   }
   .onas-c3-in {
     padding: 0 var(--onas-pad) 56px;
