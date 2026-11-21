@@ -52,6 +52,12 @@
     --nav-h: 80px;
     scroll-padding-top: var(--nav-h);
   }
+  /* Mobil: přetah za konec stránky má barvu černé patičky, ne bílé pozadí body. */
+  @media (max-width: 1023px) {
+    html {
+      background: #000;
+    }
+  }
   @media (min-width: 768px) {
     html {
       --nav-h: 108px;
@@ -165,4 +171,22 @@ video[data-decorative-autoplay]::-webkit-media-controls-enclosure {
   pointer-events: none !important;
   width: 0 !important;
   height: 0 !important;
+}
+
+/* Zavřené celoobrazovkové dialogy jsou vyšší než mobil. Bez ořezu jejich přetok
+   na iOS prodlužuje stránku za patičku do bílého pruhu. */
+.smart-contact-overlay,
+.smart-meeting-overlay,
+.provize-overlay,
+.cookie-modal-overlay,
+#form-thankyou-overlay,
+#menu-drawer {
+  overflow: hidden;
+}
+.smart-contact-modal,
+.smart-meeting-modal,
+.cookie-modal,
+#form-thankyou-overlay [data-form-thankyou-modal],
+.provize-modal {
+  min-height: 0;
 }
