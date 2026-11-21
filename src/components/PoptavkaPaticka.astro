@@ -1,0 +1,838 @@
+---
+interface Props {
+  preset?: 'bydleni' | 'investice' | 'konkretni-byt' | 'rozhlizim-se';
+  context?: string;
+  phone?: string;
+  email?: string;
+  whatsapp?: string;
+  photo?: string;
+  photoAlt?: string;
+  photoPosition?: string;
+  photoPositionMobile?: string;
+  photoHeight?: string;
+  photoHeightMobile?: string;
+}
+
+const {
+  preset,
+  context,
+  phone = '+420 608 595 984',
+  email = 'jan.vitvera@reamar.cz',
+  whatsapp,
+  photo = '/images/agency/poptavka-jan-u-stolu.jpg',
+  photoAlt = 'Jan Vitvera u jednacího stolu na Záběhlickém zámku',
+  photoPosition = '50% 24%',
+  photoPositionMobile = '18% 20%',
+  photoHeight = '560px',
+  photoHeightMobile = '330px',
+} = Astro.props;
+
+const phoneDigits = phone.replace(/\D/g, '');
+const waNumber = (whatsapp || phoneDigits).replace(/\D/g, '');
+const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent('Dobrý den, mám zájem o konzultaci.')}`;
+const telHref = `tel:+${phoneDigits}`;
+const zdrojDefault = context || Astro.url.pathname;
+const validPresets = new Set(['bydleni', 'investice', 'konkretni-byt', 'rozhlizim-se']);
+const urlPreset = Astro.url.searchParams.get('hledam');
+const initialPreset =
+  (preset && validPresets.has(preset) && preset) ||
+  (urlPreset && validPresets.has(urlPreset) && urlPreset) ||
+  'bydleni';
+---
+
+<section
+  class="kb"
+  id="poptavka"
+  aria-labelledby="kb-title"
+  data-poptavka-paticka
+  data-kb-reveal
+  data-nav-hide-zone
+  data-preset={initialPreset}
+  data-phone={phone}
+  style={`--kb-photo-pos: ${photoPosition}; --kb-photo-pos-m: ${photoPositionMobile}; --kb-photo-h: ${photoHeight}; --kb-photo-h-m: ${photoHeightMobile};`}
+>
+  <div class="kb__photo">
+    <img
+      src={photo}
+      alt={photoAlt}
+      loading="lazy"
+      decoding="async"
+      width="1280"
+      height="853"
+      sizes="100vw"
+    />
+    <div class="kb__intro kb__head">
+      <span class="kb__eyebrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M12 7v5l3 2"></path>
+        </svg>
+        Ozvu se do 24 hodin
+      </span>
+      <h2 id="kb-title">
+        <span class="kb__h-a">Řekněte nám, co hledáte.</span>
+        <span class="kb__h-b">Zbytek pohlídáme my.</span>
+      </h2>
+      <p class="kb__lead">
+        Probereme, co hledáte, podíváme se na možnosti na trhu a představím vám formy spolupráce.
+      </p>
+    </div>
+  </div>
+
+  <div class="kb__grid">
+    <div class="kb__left">
+      <figure class="kb__quote">
+        <p>
+          „Každý přirozeně hájí zájmy toho, koho zastupuje.
+          <span class="kb__quote-punch">Já zastupuji vás.“</span>
+        </p>
+        <figcaption class="kb__sig">
+          <b>Jan Vitvera</b>
+          <span>vedoucí Agentury pro kupující</span>
+        </figcaption>
+      </figure>
+
+      <div class="kb__contacts">
+        <span class="kb__cl">Nebo mě kontaktujte přímo</span>
+        <div class="kb__clist">
+          <a
+            class="kb__ci"
+            data-track="whatsapp"
+            href={waHref}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i>
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                <path d="M12.04 2C6.58 2 2.15 6.4 2.15 11.83c0 1.98.53 3.9 1.54 5.6L2 22l4.72-1.55a9.9 9.9 0 0 0 5.32 1.55h.01c5.46 0 9.89-4.4 9.89-9.83C21.94 6.4 17.5 2 12.04 2zm5.77 13.98c-.24.68-1.4 1.25-1.94 1.33-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.26-4.79-4.2-4.93-4.4-.14-.2-1.16-1.54-1.16-2.94 0-1.4.73-2.09 1-2.37.26-.28.57-.35.76-.35h.55c.17 0 .41-.07.64.49.24.57.81 1.98.88 2.12.07.14.12.31.02.5-.1.2-.15.32-.3.49-.14.17-.3.38-.43.51-.14.14-.29.29-.12.57.16.28.72 1.19 1.55 1.93 1.07.95 1.97 1.24 2.25 1.38.28.14.44.12.6-.07.17-.2.7-.81.89-1.09.19-.28.38-.23.64-.14.26.1 1.66.78 1.94.93.28.14.47.21.54.33.07.12.07.69-.17 1.37z"></path>
+              </svg>
+            </i>
+            <span><small>WhatsApp</small>Napsat</span>
+          </a>
+          <a class="kb__ci" data-track="email" href={`mailto:${email}`}>
+            <i>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="3" y="5.5" width="18" height="13"></rect>
+                <path d="m3.5 6 8.5 7 8.5-7"></path>
+              </svg>
+            </i>
+            <span><small>E-mail</small>{email}</span>
+          </a>
+          <a class="kb__ci" data-track="phone" href={telHref}>
+            <i>
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"></path>
+              </svg>
+            </i>
+            <span><small>Telefon</small>{phone}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="kb__formwrap">
+      <form class="kb__form" novalidate data-kb-form>
+        <fieldset class="kb__f">
+          <legend>Hledám</legend>
+          <div class="kb__seg">
+            <label class="kb__opt">
+              <input type="radio" name="hledam" value="bydleni" checked={initialPreset === 'bydleni'} />
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <circle cx="8" cy="15.5" r="4"></circle>
+                <path d="M11 12.5 19.5 4M16 7.5l2.5 2.5M13.8 9.7l2 2"></path>
+              </svg>
+              <span>Bydlení</span>
+            </label>
+            <label class="kb__opt">
+              <input type="radio" name="hledam" value="investice" checked={initialPreset === 'investice'} />
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M6 18 18 6M9 6h9v9"></path>
+              </svg>
+              <span>Investici</span>
+            </label>
+            <label class="kb__opt">
+              <input type="radio" name="hledam" value="konkretni-byt" checked={initialPreset === 'konkretni-byt'} />
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M4 4h16v16H4z"></path>
+                <path d="M12 4v6M12 14v6M12 14h3M4 12h4"></path>
+              </svg>
+              <span>Konkrétní byt</span>
+            </label>
+            <label class="kb__opt">
+              <input type="radio" name="hledam" value="rozhlizim-se" checked={initialPreset === 'rozhlizim-se'} />
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8z"></path>
+              </svg>
+              <span>Zatím se rozhlížím</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="kb__r2">
+          <label class="kb__f">
+            <small>Jméno</small>
+            <input name="jmeno" autocomplete="given-name" placeholder="Jak vás oslovit" required />
+            <span class="kb__err">Napište, jak vás oslovit.</span>
+          </label>
+          <label class="kb__f">
+            <small>Telefon</small>
+            <input name="telefon" type="tel" autocomplete="tel" inputmode="tel" placeholder="+420" required />
+            <span class="kb__err">Zkontrolujte telefonní číslo.</span>
+          </label>
+        </div>
+
+        <label class="kb__f">
+          <small data-note-label>Co hledáte <em>nepovinné</em></small>
+          <input
+            name="poznamka"
+            data-note
+            placeholder="např. 3+kk v Praze 9 do 10 mil., nastěhování 2027"
+          />
+        </label>
+
+        <input class="kb__hp" name="web" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="zdroj" value={zdrojDefault} />
+
+        <button class="kb__send" type="submit" data-kb-submit>
+          <span>Odeslat poptávku</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <path d="M6 6 18 18M18 9v9H9"></path>
+          </svg>
+        </button>
+        <p class="kb__note">Nezávazně a zdarma.</p>
+        <p class="kb__gdpr">
+          Odesláním souhlasíte se <a href="/ochrana-osobnich-udaju">zpracováním osobních údajů</a>.
+        </p>
+      </form>
+
+      <div class="kb__ok" role="status" aria-live="polite" data-kb-ok>
+        <small>Poptávka odeslána</small>
+        <h3><span data-ok-name>Děkuju.</span> Ozvu se do 24 hodin.</h3>
+        <p>
+          Volat budu z čísla <b data-ok-phone>{phone}</b>. Uložte si ho, ať víte, že volám já. Posíláme vám ho i SMS.
+        </p>
+        <a class="kb__save" href="/jan-vitvera.vcf" download>
+          Uložit kontakt
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M6 6 18 18M18 9v9H9"></path>
+          </svg>
+        </a>
+        <ol>
+          <li>Ozvu se vám do 24 hodin.</li>
+          <li>Probereme, co hledáte. Zhruba 20 minut, telefonicky, online nebo na zámku.</li>
+          <li>Řeknu vám, jak to na trhu vypadá, a představím vám formy spolupráce.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Ostré hrany, žádné stíny. Prefix kb__ — převzato z reference. */
+  .kb {
+    --bg: #000;
+    --fg: #fff;
+    --mut: rgba(255, 255, 255, 0.6);
+    --ln: rgba(255, 255, 255, 0.22);
+    --green: #46c37b;
+    background: var(--bg);
+    color: var(--fg);
+    padding-bottom: 80px;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+  }
+  .kb a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .kb button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .kb__photo {
+    position: relative;
+    height: var(--kb-photo-h, 560px);
+    overflow: hidden;
+    background: #000;
+  }
+  .kb__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--kb-photo-pos, 50% 24%);
+    display: block;
+  }
+  .kb__photo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0) 38%,
+      rgba(0, 0, 0, 0.55) 60%,
+      rgba(0, 0, 0, 0.72) 100%
+    );
+  }
+  .kb__photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #000 0, rgba(0, 0, 0, 0) 30%);
+  }
+  .kb__intro {
+    position: absolute;
+    z-index: 2;
+    top: 100px;
+    right: max(70px, calc((100% - 1440px) / 2 + 70px));
+    width: 560px;
+    margin: 0;
+  }
+  .kb__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    height: 14px;
+    line-height: 14px;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--green);
+    text-shadow: 0 0 18px rgba(70, 195, 123, 0.35);
+  }
+  .kb__eyebrow svg {
+    border-radius: 50%;
+    animation: kbPulse 2.6s ease-in-out infinite;
+  }
+  @keyframes kbPulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(70, 195, 123, 0);
+    }
+    50% {
+      box-shadow: 0 0 0 5px rgba(70, 195, 123, 0.18);
+    }
+  }
+  .kb__head {
+    text-align: center;
+  }
+  .kb__intro h2 {
+    margin: 14px 0 12px;
+    font-size: 36px;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+  }
+  .kb__h-a,
+  .kb__h-b {
+    display: block;
+  }
+  .kb__lead {
+    margin: 0 auto;
+    font-size: 15px;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.72);
+    max-width: 48ch;
+  }
+
+  .kb__grid {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 44px 70px 0;
+    display: grid;
+    grid-template-columns: 1fr 560px;
+    gap: 140px;
+    align-items: stretch;
+  }
+  .kb__left {
+    display: flex;
+    flex-direction: column;
+  }
+  .kb__quote {
+    margin: 0;
+    max-width: 28rem;
+  }
+  .kb__quote p {
+    margin: 0 0 28px;
+    font-size: 26px;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    text-indent: -0.35em;
+    text-wrap: balance;
+  }
+  .kb__quote-punch {
+    display: block;
+    margin-top: 0.2em;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+    text-indent: 0;
+  }
+  .kb__sig {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .kb__sig b {
+    font-weight: 500;
+    font-size: 14px;
+  }
+  .kb__sig span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .kb__contacts {
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .kb__cl {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0 14px;
+  }
+  .kb__clist {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 20px 28px;
+  }
+  .kb__ci {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  .kb__ci i {
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--ln);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .kb__ci:hover i {
+    background: #fff;
+    color: #000;
+  }
+  .kb__ci i svg {
+    width: 17px;
+    height: 17px;
+  }
+  .kb__ci span {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    font-size: 13px;
+    line-height: 1.25;
+  }
+  .kb__ci small {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .kb__formwrap {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    margin-top: -140px;
+  }
+  /* Čitelnost formuláře přes fotku */
+  .kb__formwrap::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    right: -12px;
+    top: -28px;
+    bottom: 40%;
+    z-index: -1;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0.25) 55%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    pointer-events: none;
+  }
+  .kb__form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 22px;
+    margin: 0;
+  }
+  .kb__f {
+    display: block;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+  }
+  .kb__f > small,
+  .kb__f legend {
+    display: block;
+    padding: 0;
+    font-size: 11px;
+    line-height: 14px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 10px;
+  }
+  .kb__f em {
+    font-style: normal;
+    text-transform: none;
+    letter-spacing: 0;
+    color: rgba(255, 255, 255, 0.3);
+    margin-left: 6px;
+  }
+  .kb__f input {
+    width: 100%;
+    height: 50px;
+    padding: 0 16px;
+    border: 1px solid var(--ln);
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+    font: inherit;
+    font-size: 15px;
+    outline: 0;
+    border-radius: 0;
+    transition: border-color 0.2s;
+  }
+  .kb__f input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+  .kb__f input:focus {
+    border-color: #fff;
+  }
+  .kb__f.is-err input {
+    border-color: #ff6b6b;
+  }
+  .kb__err {
+    display: none;
+    margin-top: 6px;
+    font-size: 12.5px;
+    color: #ff8a8a;
+  }
+  .kb__f.is-err .kb__err {
+    display: block;
+  }
+  .kb__r2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .kb__seg {
+    display: grid;
+    grid-template-columns: 0.85fr 0.95fr 1.1fr 1.3fr;
+    border: 1px solid var(--ln);
+  }
+  .kb__opt {
+    position: relative;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .kb__opt + .kb__opt {
+    border-left: 1px solid var(--ln);
+  }
+  .kb__opt input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .kb__opt svg {
+    flex: none;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .kb__opt:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .kb__opt:hover svg {
+    opacity: 1;
+  }
+  .kb__opt:has(input:checked) {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 0 1.5px #fff;
+  }
+  .kb__opt:has(input:checked) svg {
+    opacity: 1;
+  }
+  .kb__opt:has(input:focus-visible) {
+    outline: 2px solid var(--green);
+    outline-offset: -4px;
+  }
+
+  .kb__send {
+    height: 52px;
+    width: 100%;
+    background: #fff !important;
+    color: #000 !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px !important;
+    font-size: 15px;
+    transition: background 0.2s;
+  }
+  .kb__send:hover {
+    background: #ece5da !important;
+  }
+  .kb__send[disabled] {
+    opacity: 0.6;
+    cursor: default;
+  }
+  .kb__note {
+    margin: -8px 0 0;
+    font-size: 13px;
+    color: var(--mut);
+  }
+  .kb__gdpr {
+    margin: -14px 0 0;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.35);
+  }
+  .kb__gdpr a {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .kb__hp {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .kb__ok {
+    display: none;
+  }
+  .kb.is-sent .kb__form {
+    display: none;
+  }
+  .kb.is-sent .kb__ok {
+    display: block;
+    animation: kbUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .kb__ok small {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  .kb__ok h3 {
+    margin: 12px 0 12px;
+    font-size: 28px;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+  }
+  .kb__ok p {
+    margin: 0 0 20px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .kb__ok p b {
+    color: #fff;
+    font-weight: 500;
+  }
+  .kb__save {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 44px;
+    padding: 0 18px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    font-size: 14px;
+  }
+  .kb__ok ol {
+    margin: 28px 0 0;
+    padding: 20px 0 0 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  @keyframes kbUp {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .kb {
+      padding-bottom: 44px;
+    }
+    .kb__photo {
+      height: var(--kb-photo-h-m, 330px);
+    }
+    .kb__photo img {
+      object-position: var(--kb-photo-pos-m, 18% 20%);
+    }
+    .kb__photo::before {
+      display: none;
+    }
+    .kb__photo::after {
+      background: linear-gradient(
+        0deg,
+        #000 0,
+        rgba(0, 0, 0, 0.75) 22%,
+        rgba(0, 0, 0, 0) 55%
+      );
+    }
+    .kb__intro {
+      left: 20px;
+      right: 20px;
+      top: auto;
+      bottom: 22px;
+      width: auto;
+    }
+    .kb__intro h2 {
+      font-size: 26px;
+      margin: 10px 0 8px;
+    }
+    .kb__lead {
+      display: none;
+    }
+    .kb__grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding: 28px 20px 0;
+    }
+    .kb__left {
+      display: contents;
+    }
+    .kb__quote {
+      order: 1;
+      max-width: none;
+      margin-bottom: 8px;
+    }
+    .kb__quote p {
+      font-size: 20px;
+    }
+    .kb__quote-punch {
+      font-size: 26px;
+    }
+    .kb__formwrap {
+      order: 2;
+      margin-top: 26px;
+    }
+    .kb__formwrap::before {
+      display: none;
+    }
+    .kb__contacts {
+      order: 3;
+      margin-top: 34px;
+    }
+    .kb__clist {
+      gap: 16px 20px;
+    }
+    .kb__ci i {
+      width: 34px;
+      height: 34px;
+    }
+    .kb__ci span {
+      font-size: 12.5px;
+    }
+    .kb__form {
+      gap: 16px;
+    }
+    .kb__r2 {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .kb__seg {
+      grid-template-columns: 1fr 1fr;
+    }
+    .kb__opt {
+      height: 44px;
+      font-size: 12.5px;
+    }
+    .kb__opt:nth-child(3) {
+      border-left: 0;
+    }
+    .kb__opt:nth-child(n + 3) {
+      border-top: 1px solid var(--ln);
+    }
+    .kb__f input {
+      height: 48px;
+      font-size: 15px;
+    }
+    .kb__send {
+      height: 48px;
+      font-size: 14px;
+    }
+    .kb__ok h3 {
+      font-size: 24px;
+    }
+  }
+
+  .kb[data-kb-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .kb[data-kb-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kb[data-kb-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .kb *,
+    .kb *::before,
+    .kb *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  import { initPoptavkaPatickaForms } from '../scripts/poptavka-paticka-form';
+
+  initPoptavkaPatickaForms();
+  document.addEventListener('astro:page-load', initPoptavkaPatickaForms);
+</script>

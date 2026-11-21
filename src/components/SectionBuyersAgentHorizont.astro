@@ -61,11 +61,16 @@ const tiles = [
   <div class="bah__track" data-bah-track>
     <div class="bah__sticky" data-bah-sticky>
       <header class="bah__head" data-bah-head data-sm-rise>
-        <div>
-          <h2 id="koncept-heading" class="bah__h font-yellix">Buyer’s agent</h2>
+        <div class="bah__dict">
+          <div class="bah__lemma">
+            <h2 id="koncept-heading" class="bah__h font-yellix">Buyer’s Agent</h2>
+            <p class="bah__phon font-yellix">
+              <span class="bah__ipa" lang="en">/ˈbaɪərz ˈeɪdʒənt/</span>
+              <span class="bah__say">bajerz ejdžent</span>
+            </p>
+          </div>
           <p class="bah__sub font-yellix">
-            <span class="bah__arrow" aria-hidden="true"></span>
-            <span>Na západních trzích běžný princip odborného zastoupení kupujícího.</span>
+            Na západních trzích běžný princip odborného zastoupení kupujícího.
           </p>
         </div>
         <button type="button" class="bah__play font-yellix" data-strip-open>
@@ -224,33 +229,52 @@ const tiles = [
   .bah__head {
     padding: 0 var(--pad);
   }
+  .bah__dict {
+    max-width: 42rem;
+  }
+  .bah__lemma {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.55rem 1rem;
+  }
   .bah__h {
     margin: 0;
     font-size: clamp(36px, 8vw, 52px);
     font-weight: 500;
-    line-height: 0.92;
+    line-height: 0.95;
     letter-spacing: -0.04em;
     color: #000;
   }
-  .bah__sub {
+  .bah__phon {
     display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    margin: 0.75rem 0 0;
-    font-size: 18px;
-    font-weight: 500;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 0.65rem;
+    margin: 0;
+    font-size: 14px;
     line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: rgba(0, 0, 0, 0.52);
+  }
+  .bah__ipa {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .bah__say {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.68);
+  }
+  .bah__sub {
+    margin: 0.7rem 0 0;
+    padding-top: 0.65rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.14);
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.35;
     letter-spacing: -0.015em;
     color: #000;
-  }
-  .bah__arrow {
-    flex: 0 0 auto;
-    display: block;
-    width: 0.7em;
-    height: 0.7em;
-    background: currentColor;
-    -webkit-mask: url('/images/arrow-1.svg') center / contain no-repeat;
-    mask: url('/images/arrow-1.svg') center / contain no-repeat;
+    white-space: nowrap;
   }
   .bah__play {
     display: none;
@@ -651,10 +675,11 @@ const tiles = [
     .bah__h {
       font-size: 52px;
     }
+    .bah__phon {
+      font-size: 15px;
+    }
     .bah__sub {
-      margin-top: 0.75rem;
-      font-size: 20px;
-      white-space: nowrap;
+      font-size: 19px;
     }
     .bah__play {
       display: inline-flex;

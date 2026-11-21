@@ -8,10 +8,10 @@ import SectionNasPribeh from '../components/SectionNasPribeh.astro';
 import ManifestSection from '../components/ManifestSection.astro';
 import SectionPorovnani from '../components/SectionPorovnani.astro';
 import SectionZastoupeni from '../components/onepager/SectionZastoupeni.astro';
-import SectionVyberSluzeb from '../components/SectionVyberSluzeb.astro';
+import CoOdNasDostanete from '../components/CoOdNasDostanete.astro';
 import SectionReference from '../components/SectionReference.astro';
 import SectionFooter from '../components/SectionFooter.astro';
-import ScrollMotion from '../components/ScrollMotion.astro';
+import PoptavkaPatickaSvetla from '../components/PoptavkaPatickaSvetla.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { seoPages } from '../data/seo-pages';
 import { organizationGraph } from '../lib/jsonld';
@@ -39,31 +39,24 @@ const s = seoPages.home;
     />
   </div>
   <div class="lg:hidden">
-    <SectionPrilecitosti ctaHref="#vyber-sluzeb" />
+    <SectionPrilecitosti ctaHref="#poptavka" />
     <SectionSpecializace />
   </div>
-  <div class="flex flex-col">
-    <div class="order-2 lg:order-1">
-      <ManifestSection />
-    </div>
-    <div class="order-3 lg:order-2">
-      <SectionPorovnani ctaHref="#vyber-sluzeb" intro={false} />
-    </div>
-    <div class="order-1 lg:order-3">
-      <SectionNasPribeh
-        ctaHref="/o-nas"
-        ctaLabel="Více o nás"
-      />
-    </div>
-    <div class="order-5 lg:order-4">
-      <SectionVyberSluzeb headingAs="h2" compactTop={false} />
-    </div>
-    <div class="order-4 lg:order-5">
-      <SectionZastoupeni />
-    </div>
-  </div>
+  <CoOdNasDostanete title="Co zahrnuje služba agentury" />
+  <SectionNasPribeh
+    ctaHref="/o-nas"
+    ctaLabel="Více o nás"
+  />
+  <ManifestSection />
+  <SectionPorovnani ctaHref="#poptavka" intro={false} />
+  <SectionZastoupeni />
   <SectionReference />
-  <SectionFooter />
+  <PoptavkaPatickaSvetla
+    context="/"
+    photoCol="820px"
+    photo="/images/agency/poptavka-jan-u-stolu.jpg"
+  />
+  <SectionFooter showIntro={false} />
 </Layout>
 
 <style>

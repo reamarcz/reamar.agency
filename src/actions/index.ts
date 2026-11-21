@@ -22,6 +22,9 @@ function buildEmailBody(payload: Record<string, unknown>): string {
     termin: 'Termín prodeje',
     odkaz: 'Odkaz na podklady',
     souhlas: 'Souhlas',
+    hledam: 'Hledám',
+    poznamka: 'Poznámka',
+    zdroj: 'Zdroj (stránka)',
   };
   const formLabels: Record<string, string> = {
     contact: 'Poptávkový formulář',
@@ -30,6 +33,7 @@ function buildEmailBody(payload: Record<string, unknown>): string {
     'pribehy-alert': 'Příběhy z trhu — upozornit na další díl',
     callback: 'Zanechat kontakt – ozveme se vám',
     'pozemek-husinec-rez': 'Prohlídka pozemku Husinec–Řež',
+    'poptavka-paticka': 'Poptávková patička',
   };
   const formSourceLabel = formLabels[String(payload.formSource ?? '')] ?? 'Formulář z webu';
   lines.push(`Formulář: ${formSourceLabel}`);
@@ -59,6 +63,14 @@ export const server = {
         const p = phone.replace(/\s/g, '');
         if (p.length < 9 || !/^[0-9+]/.test(p)) {
           throw new ActionError({ code: 'BAD_REQUEST', message: 'Zadejte platné telefonní číslo.' });
+        }
+      } else if (formSource === 'poptavka-paticka') {
+        const p = telefon.replace(/\s/g, '');
+        if (!jmeno || p.replace(/\D/g, '').length < 9) {
+          throw new ActionError({
+            code: 'BAD_REQUEST',
+            message: 'Vyplňte jméno a platné telefonní číslo.',
+          });
         }
       } else if (formSource === 'pozemek-husinec-rez') {
         const p = telefon.replace(/\s/g, '');

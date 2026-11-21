@@ -5,6 +5,7 @@ import InvesticePruchod from '../components/InvesticePruchod.astro';
 import SectionSpecializace from '../components/SectionSpecializace.astro';
 import SectionVyberSluzeb from '../components/SectionVyberSluzeb.astro';
 import SectionFooter from '../components/SectionFooter.astro';
+import PoptavkaPatickaSvetla from '../components/PoptavkaPatickaSvetla.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { seoPages } from '../data/seo-pages';
 import { organizationGraph, serviceLd } from '../lib/jsonld';
@@ -41,7 +42,14 @@ const s = seoPages.investice;
   </div>
   <SectionSpecializace />
   <SectionVyberSluzeb headingAs="h2" compactTop={false} showSubline={false} />
-  <SectionFooter />
+  <PoptavkaPatickaSvetla
+    tone="dark"
+    preset="investice"
+    context="/investice"
+    photoCol="820px"
+    photo="/images/agency/poptavka-jan-u-stolu.jpg"
+  />
+  <SectionFooter showIntro={false} />
 </Layout>
 
 <style>

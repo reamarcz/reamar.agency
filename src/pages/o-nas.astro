@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import OnasStory from '../components/OnasStory.astro';
+import PoptavkaPatickaSvetla from '../components/PoptavkaPatickaSvetla.astro';
 import SectionFooter from '../components/SectionFooter.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { seoPages } from '../data/seo-pages';
@@ -20,5 +21,6 @@ const s = seoPages.oNas;
 >
   <JsonLd data={organizationGraph()} />
   <OnasStory />
+  <PoptavkaPatickaSvetla context="/o-nas" />
   <SectionFooter showIntro={false} />
 </Layout>
