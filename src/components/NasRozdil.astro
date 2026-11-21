@@ -1,0 +1,387 @@
+---
+/**
+ * Sekce „Naše role“
+ * Desktop ≥1024: video vlevo 380px, text vpravo na středu.
+ * Mobil: kicker + citát + lead → video → motivace.
+ */
+interface Props {
+  videoSrc?: string;
+  poster?: string;
+  /** Mobilní sazba homepage. Desktop beze změny. */
+  layout?: 'default' | 'editorial';
+}
+
+const {
+  videoSrc = '/videos/motivace.mp4',
+  poster = '/videos/motivace-poster.jpg',
+  layout = 'default',
+} = Astro.props;
+---
+
+<section class:list={['nr bg-white text-black font-yellix font-medium', layout === 'editorial' && 'nr--editorial']} aria-label="Naše role" data-nr>
+  <div class="nr-in mx-auto max-w-[1180px] px-5 py-16 md:px-10 md:py-24 xl:px-14 xl:py-28">
+    <div class="nr-layout">
+      <!-- Video: na mobilu uprostřed (order 2), na desktopu vlevo -->
+      <div class="nr-media">
+        <div class="nr-phone video-decorative-wrap" data-cover-managed data-nr-media>
+          <img
+            class="video-decorative-cover"
+            src={poster}
+            alt=""
+            width="1080"
+            height="1920"
+            loading="lazy"
+            decoding="async"
+          />
+          <video
+            data-nr-video
+            data-decorative-autoplay
+            src={videoSrc}
+            data-src={videoSrc}
+            poster={poster}
+            muted
+            loop
+            playsinline
+            webkit-playsinline="true"
+            preload="metadata"
+            disablepictureinpicture
+            aria-hidden="true"
+          >
+            <source src={videoSrc} type="video/mp4" />
+          </video>
+        </div>
+      </div>
+
+      <!-- Text: contents na mobilu kvůli pořadí citát → video → motivace -->
+      <div class="nr-copy">
+        <div class="nr-intro">
+          <p class="nr-kicker">Naše role</p>
+          <p class="nr-quote">
+            „Na trhu, kde každý chce prodat, my pomáháme dobře koupit.“
+          </p>
+          <p class="nr-lead">
+            Nemáme důvod přesvědčovat vás o konkrétním bytě.<br />
+            <span class="nr-lead-keep">Máme důvod najít</span> pro vás ten správný.
+          </p>
+        </div>
+
+        <div class="nr-sides" aria-label="Srovnání motivací">
+          <div class="nr-side">
+            <div class="nr-side-label nr-side-label--ok">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z" />
+                <path d="M9 12l2 2 4-4" />
+              </svg>
+              <span>Naše motivace</span>
+            </div>
+            <p class="nr-side-title nr-side-title--ok">Hájit zájmy kupujícího</p>
+          </div>
+
+          <div class="nr-side">
+            <div class="nr-side-label nr-side-label--muted">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z" />
+              </svg>
+              <span>Motivace developera / makléře</span>
+            </div>
+            <p class="nr-side-title nr-side-title--muted">Prodat svoji nemovitost</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .nr-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .nr-media {
+    order: 2;
+    width: 100%;
+    max-width: 26.25rem; /* 420px */
+    margin-inline: auto;
+  }
+  .nr-phone {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    background: #111;
+  }
+  .nr-phone video,
+  .nr-phone .video-decorative-cover {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+  .nr-phone .video-decorative-cover {
+    z-index: 1;
+    transition: opacity 0.35s ease;
+  }
+  .nr-phone.is-playing .video-decorative-cover {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* contents: intro + sides se řadí kolem videa na mobilu */
+  .nr-copy {
+    display: contents;
+  }
+  .nr-intro {
+    order: 1;
+  }
+  .nr-sides {
+    order: 3;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .nr-kicker {
+    margin: 0 0 1.25rem;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.55);
+    line-height: 1;
+  }
+  .nr-quote {
+    margin: 0 0 1.5rem;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .nr-lead {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.62);
+  }
+
+  .nr-side {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .nr-side-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    margin: 0 0 0.75rem;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.35;
+  }
+  .nr-side-label svg {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-top: 0.05em;
+  }
+  .nr-side-label--ok {
+    color: #2c5a42;
+  }
+  .nr-side-label--muted {
+    color: rgba(0, 0, 0, 0.55);
+  }
+  .nr-side-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .nr-side-title--ok {
+    color: #2c5a42;
+    font-weight: 600;
+  }
+  .nr-side-title--muted {
+    color: rgba(0, 0, 0, 0.45);
+  }
+
+  @media (min-width: 640px) {
+    .nr-sides {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      column-gap: 2rem;
+      row-gap: 0.75rem;
+      align-items: start;
+    }
+    /* subgrid: labely na jedné řádce, titulky na druhé */
+    .nr-side {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 2;
+    }
+    .nr-side-label {
+      margin: 0;
+      min-height: 0;
+    }
+    .nr-quote {
+      font-size: 32px;
+    }
+    .nr-side-title {
+      font-size: 22px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .nr-layout {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 120px;
+      align-items: stretch;
+    }
+    .nr-media {
+      order: unset;
+      max-width: none;
+      margin-inline: 0;
+      width: 380px;
+    }
+    .nr-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 3.5rem;
+      max-width: 720px;
+      order: unset;
+    }
+    .nr-intro,
+    .nr-sides {
+      order: unset;
+    }
+    .nr-kicker {
+      margin-bottom: 1.5rem;
+    }
+    .nr-quote {
+      margin-bottom: 1.75rem;
+      font-size: 40px;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      max-width: 712px;
+    }
+    .nr-lead {
+      font-size: 16px;
+    }
+    .nr-sides {
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+      padding-top: 2rem;
+      column-gap: 2.25rem;
+      row-gap: 0.85rem;
+    }
+    .nr-side-title {
+      font-size: 24px;
+      line-height: 1.18;
+    }
+  }
+
+  /* Mobilní homepage */
+  @media (max-width: 1023px) {
+    .nr--editorial .nr-in {
+      padding-top: 3rem;
+      padding-bottom: 1.5rem;
+    }
+    .nr--editorial .nr-layout {
+      gap: 2.5rem;
+    }
+    .nr--editorial .nr-kicker {
+      margin-bottom: 1.25rem;
+    }
+    .nr--editorial .nr-quote {
+      margin-bottom: 1.5rem;
+    }
+    .nr--editorial .nr-lead br {
+      display: none;
+    }
+    .nr--editorial .nr-lead-keep {
+      white-space: nowrap;
+    }
+    .nr--editorial .nr-sides {
+      margin-top: 1.5rem;
+      padding-top: 0;
+      border-top: 0;
+      text-align: center;
+      justify-items: center;
+    }
+    .nr--editorial .nr-side {
+      align-items: center;
+      justify-items: center;
+      text-align: center;
+    }
+    .nr--editorial .nr-side-label {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .nr--editorial .nr-sides {
+      gap: 2rem;
+    }
+    .nr--editorial .nr-side-label {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nr-phone .video-decorative-cover {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { bindHeroLoop, type HeroLoopHandle } from '../scripts/hero-loop';
+
+  type NrEl = HTMLElement & {
+    _nrCleanup?: (() => void) | null;
+    _nrLoop?: HeroLoopHandle | null;
+  };
+
+  function initNrOne(wrap: NrEl) {
+    if (wrap._nrCleanup) wrap._nrCleanup();
+
+    const media = wrap.querySelector('[data-nr-media]') as HTMLElement | null;
+    const video = wrap.querySelector('[data-nr-video]') as HTMLVideoElement | null;
+
+    let loop: HeroLoopHandle | null = null;
+    if (media && video) {
+      loop = bindHeroLoop(video, {
+        host: media,
+        markHost: media,
+        eager: false,
+        clickToPause: false,
+      });
+      wrap._nrLoop = loop;
+    }
+
+    wrap._nrCleanup = () => {
+      loop?.destroy();
+      wrap._nrLoop = null;
+      wrap._nrCleanup = null;
+    };
+  }
+
+  function initNr() {
+    document.querySelectorAll('[data-nr]').forEach((el) => initNrOne(el as NrEl));
+  }
+
+  initNr();
+  document.addEventListener('astro:page-load', initNr);
+</script>

@@ -56,16 +56,16 @@ export const seoPages = {
       'Zkušenosti z více než 200 developerských projektů. Dnes je využíváme pro kupující.',
     ogImageAlt: 'REAMAR Agency — O nás, náhled pro sdílení',
   },
-  sluzby: {
-    title: 'Priority a Standard | Služby pro kupující | REAMAR',
+  konzultace: {
+    title: 'Konzultace | Agentura pro kupující | REAMAR',
     description:
-      'Dva způsoby spolupráce při nákupu novostavby. Priority nabízí aktivní vyhledávání a zastupování, Standard pomáhá sledovat příležitosti na trhu.',
-    canonical: '/sluzby',
+      'Probereme vaše představy, podíváme se na možnosti na trhu a představíme vám formy naší spolupráce.',
+    canonical: '/konzultace',
     image: OG.sluzby,
-    ogTitle: 'Dva způsoby, jak koupit lépe.',
+    ogTitle: 'Dobrý nákup začíná správným rozhovorem.',
     ogDescription:
-      'Priority a Standard. Vyberte si způsob spolupráce s Agenturou pro kupující.',
-    ogImageAlt: 'REAMAR Agency — Služby Priority a Standard, náhled pro sdílení',
+      'Nezávazná konzultace k nákupu novostavby. Ozveme se do 24 hodin.',
+    ogImageAlt: 'REAMAR Agency — Konzultace k nákupu novostavby, náhled pro sdílení',
   },
   portal: {
     title: 'Klientský portál pro kupující novostaveb | REAMAR',

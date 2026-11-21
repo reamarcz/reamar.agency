@@ -7,6 +7,23 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
   { id: 'prohlidky', label: 'Prohlídky', count: 2 },
   { id: 'dokumenty', label: 'Dokumenty' },
 ];
+/** Teaser „Zlevněné projekty“ — ukázka z demo dat (Sep→Oct 2026 drop). */
+const discounted = [
+  {
+    name: 'Harmonia',
+    place: 'Hrdlořezy',
+    drop: '−6,7 %',
+    cover:
+      'https://res.cloudinary.com/honzavrkota/image/upload/v1698312732/2023_08_12_Jirankova_vila_0040_ft6wrd.jpg',
+  },
+  {
+    name: 'THE TRIANGLE A',
+    place: 'Vysočany',
+    drop: '−6,4 %',
+    cover:
+      'https://e789041c34.clvaw-cdnwnd.com/ae6558007ecfdb440303dcabbd56bf2c/200000008-49fbe49fc0/StudioBARAK-43.jpeg',
+  },
+];
 ---
 
 <div class="kp" data-kp>
@@ -17,7 +34,7 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
           <span class="kp-ava font-yellix" aria-hidden="true">TK</span>
           <div>
             <p class="kp-client-name font-yellix">Tereza K.</p>
-            <p class="kp-client-meta font-yellix">Aktualizováno 6. 11.</p>
+            <p class="kp-client-meta font-yellix"><span class="kp-plan is-priority">Priority</span></p>
           </div>
         </div>
         <div class="kp-brief">
@@ -62,24 +79,44 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
           </ul>
         </nav>
       </div>
-      <button type="button" class="kp-prio" data-kp-locked="predprodeje">
-        <span class="kp-prio-copy">
-          <span class="kp-prio-kicker font-yellix">Priority list</span>
-          <span class="kp-prio-name font-yellix">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
-              <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
-            </svg>
-            Předprodej projektu
+      <div class="kp-nav-teasers">
+        <button type="button" class="kp-prio" data-kp-locked="predprodeje" data-kp-guide-target="prio">
+          <span class="kp-prio-copy">
+            <span class="kp-prio-kicker font-yellix">Priority list</span>
+            <span class="kp-prio-name font-yellix">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+              </svg>
+              Předprodej projektu
+            </span>
+            <span class="kp-prio-meta font-yellix">Jste zařazení · 3 projekty</span>
           </span>
-          <span class="kp-prio-meta font-yellix">Jste zařazení · 3 projekty</span>
-        </span>
-        <span class="kp-prio-go" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 6l6 6-6 6"/>
-          </svg>
-        </span>
-      </button>
+          <span class="kp-prio-go" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 6l6 6-6 6"/>
+            </svg>
+          </span>
+        </button>
+        <button type="button" class="kp-prio" data-kp-locked="zlevnene" aria-label="Zlevněné projekty">
+          <span class="kp-prio-copy">
+            <span class="kp-prio-kicker font-yellix">Zlevněné</span>
+            <span class="kp-prio-name font-yellix">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 7l6 6 4-4 8 8"/>
+                <path d="M14 17h7v-7"/>
+              </svg>
+              Pokles cen
+            </span>
+            <span class="kp-prio-meta font-yellix">2 projekty · 30 dní</span>
+          </span>
+          <span class="kp-prio-go" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 6l6 6-6 6"/>
+            </svg>
+          </span>
+        </button>
+      </div>
       <div class="kp-agent">
         <p class="kp-nav-kicker font-yellix">Konzultant</p>
         <div class="kp-agent-row">
@@ -106,7 +143,7 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
         <span class="kp-mava font-yellix" aria-hidden="true">TK</span>
         <div class="kp-mhi">
           <b class="font-yellix">Tereza K.</b>
-          <small class="font-yellix">Aktualizováno 6. 11.</small>
+          <small class="font-yellix"><span class="kp-plan is-priority">Priority</span></small>
         </div>
         <button type="button" class="kp-mkp font-yellix" data-kp-agent-open>
           <img src="/images/agency/jan-prochazka.jpg" alt="" width="28" height="28" />
@@ -156,7 +193,27 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
         </span>
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
       </button>
-      <div class="kp-side-top">
+      <section class="kp-disc" aria-label="Zlevněné projekty" data-kp-guide-target="disc">
+        <button type="button" class="kp-disc-label font-yellix" data-kp-locked="zlevnene">
+          <span>Zlevněné · pokles ceny za 30 dní</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+        <div class="kp-disc-strip">
+          {discounted.map((item) => (
+            <button type="button" class="kp-disc-card" data-kp-locked="zlevnene" aria-label={`${item.name}, zlevněno ${item.drop}`}>
+              <span class="kp-disc-photo">
+                <img src={item.cover} alt="" loading="lazy" />
+                <span class="kp-disc-badge font-yellix">{item.drop}</span>
+              </span>
+              <span class="kp-disc-info">
+                <b class="font-yellix">{item.name}</b>
+                <small class="font-yellix">{item.place}</small>
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+      <div class="kp-side-top" data-kp-guide-target="vyber">
         <div class="kp-side-head">
           <span class="font-yellix">Váš výběr</span>
           <b class="font-yellix">4 projekty</b>
@@ -449,6 +506,25 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
     font-size: 11px;
     color: rgba(0, 0, 0, 0.48);
   }
+  .kp-plan {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.3;
+  }
+  .kp-plan.is-priority {
+    background: rgba(18, 49, 40, 0.1);
+    color: #123128;
+  }
+  .kp-plan.is-standard {
+    background: rgba(0, 0, 0, 0.06);
+    color: rgba(0, 0, 0, 0.55);
+  }
   .kp-brief {
     margin-top: 1.15rem;
     padding-top: 1rem;
@@ -705,6 +781,112 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
   }
   .kp-prio-go svg { width: 100%; height: 100%; display: block; }
 
+  .kp-nav-teasers {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin-top: 0.85rem;
+  }
+  .kp-nav-teasers .kp-prio { margin-top: 0; }
+
+  .kp-disc {
+    flex-shrink: 0;
+    margin: 0.35rem 0 0.1rem;
+    padding: 0.55rem 0.85rem 0.65rem;
+    border: 0;
+    border-bottom: 1px solid var(--kp-line);
+    background: transparent;
+  }
+  .kp-disc-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    margin: 0 0 0.5rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: rgba(0, 0, 0, 0.55);
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .kp-disc-label svg {
+    flex-shrink: 0;
+    color: rgba(0, 0, 0, 0.28);
+  }
+  .kp-disc-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem;
+  }
+  .kp-disc-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Yellix', system-ui, sans-serif;
+  }
+  .kp-disc-photo {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #e8e4dc;
+  }
+  .kp-disc-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .kp-disc-badge {
+    position: absolute;
+    left: 0.35rem;
+    top: 0.35rem;
+    padding: 0.22rem 0.4rem;
+    border-radius: 999px;
+    background: #123128;
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .kp-disc-info {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.05rem;
+    padding: 0 0.05rem;
+  }
+  .kp-disc-info b {
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .kp-disc-info small {
+    font-size: 10.5px;
+    color: rgba(0, 0, 0, 0.48);
+  }
+  .kp-disc-card:hover .kp-disc-photo { opacity: 0.92; }
+
   .kp-side {
     display: flex;
     flex-direction: column;
@@ -733,8 +915,12 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
       background: #fff;
       border-bottom: 0;
     }
-    .kp-prio {
+    .kp-nav-teasers {
       grid-area: prio;
+      margin-top: 0;
+      gap: 0;
+    }
+    .kp-prio {
       width: auto;
       margin: 0;
       border-radius: 0;
@@ -1149,8 +1335,8 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
     line-height: 1.2;
   }
   .kp-badge-trend { top: 0.45rem; left: 0.45rem; }
-  .kp-badge-trend.is-up { color: #1f7a4d; }
-  .kp-badge-trend.is-down { color: #c13b3a; }
+  .kp-badge-trend.is-up { color: #c13b3a; }
+  .kp-badge-trend.is-down { color: #123128; }
   .kp-badge-av {
     top: 0.45rem;
     right: 0.45rem;
@@ -2048,6 +2234,7 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
     .kp-brief,
     .kp-menu,
     .kp-prio,
+    .kp-nav-teasers,
     .kp-agent { display: none !important; }
     .kp-side {
       display: none;
@@ -3067,6 +3254,9 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
     if (kind === 'predprodeje') {
       title.textContent = 'Předprodej projektu otevřeme na schůzce';
       text.textContent = 'Jste na našem priority listu. Předprodej projektu makléř ukáže osobně – neposíláme ho e-mailem.';
+    } else if (kind === 'zlevnene') {
+      title.textContent = 'Zlevněné projekty otevřeme na schůzce';
+      text.textContent = 'Sledujeme, kde developer právě upravil ceník. Konkrétní zlevněné jednotky a podmínky makléř ukáže osobně.';
     } else if (kind === 'zadani') {
       title.textContent = 'Zadání upravíme na schůzce';
       text.textContent = 'Dispozici, rozpočet a lokalitu mění makléř s vámi. Tahle ukázka ukazuje jen aktuální výběr.';
@@ -3300,3 +3490,4 @@ const menu: { id: string; label: string; count?: number; current?: boolean; lock
   document.addEventListener('astro:page-load', () => { init(); });
   document.addEventListener('astro:before-swap', cleanup);
 </script>
+

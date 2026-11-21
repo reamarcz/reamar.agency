@@ -27,12 +27,12 @@ const findScreens: { tab: string; label: string; kind: 'vyber' | 'mapa' | 'detai
 ];
 ---
 
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet" />
+
 <div class="kpp" data-kpp>
-  <KlientskyPortalHeroMobile
-    loginHref={loginHref}
-    demoHref={demoHref}
-    coverUrl="https://yardhrdlorezy.cz/wp-content/uploads/2026/07/ext_05_3-scaled.webp"
-  />
+  <KlientskyPortalHeroMobile loginHref={loginHref} demoHref={demoHref} />
   <section class="kpp-track" data-kpp-track>
     <div class="kpp-sticky">
       <div class="kpp-stage">
@@ -111,6 +111,17 @@ const findScreens: { tab: string; label: string; kind: 'vyber' | 'mapa' | 'detai
           </div>
         </div>
         <button type="button" class="kpp-pill font-yellix" data-kpp-open>Ukázka výběru · info</button>
+      </div>
+      <div class="kpp-guide" data-kpp-guide hidden aria-hidden="true">
+        <svg class="kpp-guide-svg" aria-hidden="true">
+          <g data-kpp-guide-doodle="prio"></g>
+          <g data-kpp-guide-doodle="disc"></g>
+          <path data-kpp-guide-arrow="vyber" fill="none" />
+          <path data-kpp-guide-head="vyber" fill="none" />
+        </svg>
+        <p class="kpp-guide-note is-prio" data-kpp-guide-note="prio">Přednostní přístup<br />k <span class="kpp-guide-u">předprodeji</span></p>
+        <p class="kpp-guide-note is-disc" data-kpp-guide-note="disc"><span class="kpp-guide-u">ZLEVNĚNÉ BYTY</span><br />z první ruky</p>
+        <p class="kpp-guide-note is-vyber" data-kpp-guide-note="vyber">Projekty vybrané<br />na míru</p>
       </div>
     </div>
   </section>
@@ -603,11 +614,102 @@ const findScreens: { tab: string; label: string; kind: 'vyber' | 'mapa' | 'detai
       z-index: 5;
       pointer-events: auto;
     }
+    .kpp.is-live .kpp-shade,
+    .kpp.is-live .kpp-hero {
+      z-index: 0;
+      pointer-events: none;
+    }
     .kpp-demo .kp {
       height: 100%;
       min-height: 0;
       border: 0;
     }
+    .kpp-guide {
+      position: absolute;
+      top: var(--nav-h);
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 8;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .kpp-guide.is-on { opacity: 1; }
+    .kpp-guide.is-out { opacity: 0; transition-duration: 0.28s; }
+    .kpp-guide-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .kpp-guide-svg path,
+    .kpp-guide-svg line {
+      stroke: #ff1a1a;
+      stroke-width: 3.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      vector-effect: non-scaling-stroke;
+      filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.95)) drop-shadow(0 1px 0 rgba(255, 255, 255, 0.7));
+    }
+    .kpp-guide-svg [data-kpp-guide-arrow="vyber"],
+    .kpp-guide-svg [data-kpp-guide-head="vyber"] {
+      stroke-width: 2.4;
+    }
+    .kpp-guide-svg [data-kpp-guide-doodle="prio"] path,
+    .kpp-guide-svg [data-kpp-guide-doodle="prio"] line,
+    .kpp-guide-svg [data-kpp-guide-doodle="disc"] path,
+    .kpp-guide-svg [data-kpp-guide-doodle="disc"] line {
+      stroke-width: 3.2;
+    }
+    .kpp-guide-note {
+      position: absolute;
+      margin: 0;
+      max-width: 13rem;
+      color: #ff1a1a;
+      font-family: 'Caveat', 'Yellix', cursive;
+      font-size: 1.85rem;
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: 0.01em;
+      text-shadow:
+        0 0 12px #fff,
+        0 0 4px #fff,
+        1px 0 0 #fff,
+        -1px 0 0 #fff,
+        0 1px 0 #fff,
+        0 -1px 0 #fff;
+      opacity: 0;
+      transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .kpp-guide-u {
+      text-decoration: underline;
+      text-decoration-thickness: 0.12em;
+      text-underline-offset: 0.12em;
+    }
+    .kpp-guide.is-on .kpp-guide-note { opacity: 1; }
+    .kpp-guide-note.is-prio {
+      transform: rotate(-6deg) scale(0.96);
+      transition-delay: 0.05s;
+    }
+    .kpp-guide-note.is-disc {
+      transform: rotate(3deg) scale(0.96);
+      transition-delay: 0.14s;
+    }
+    .kpp-guide-note.is-vyber {
+      transform: rotate(-3deg) scale(0.96);
+      transition-delay: 0.22s;
+    }
+    .kpp-guide.is-on .kpp-guide-note.is-prio,
+    .kpp-guide.is-on .kpp-guide-note.is-disc,
+    .kpp-guide.is-on .kpp-guide-note.is-vyber {
+      transform: rotate(var(--kpp-rot, -4deg)) scale(1);
+    }
+    .kpp-guide-note.is-prio { --kpp-rot: -6deg; }
+    .kpp-guide-note.is-disc { --kpp-rot: 3deg; }
+    .kpp-guide-note.is-vyber { --kpp-rot: -3deg; }
     .kpp-shade { z-index: 3; }
     .kpp-shade,
     .kpp-hero { will-change: opacity, transform; }
@@ -803,4 +905,240 @@ const findScreens: { tab: string; label: string; kind: 'vyber' | 'mapa' | 'detai
   init();
   document.addEventListener('astro:page-load', init);
   document.addEventListener('astro:before-swap', cleanup);
+</script>
+
+<script>
+  let guideEl: HTMLElement | null = null;
+  let guideKp: HTMLElement | null = null;
+  let guideTrack: HTMLElement | null = null;
+  let guideShown = false;
+  let guideRaf = 0;
+  let guideTickRaf = 0;
+  let onGuideWinScroll: (() => void) | null = null;
+  let onGuideKey: ((e: KeyboardEvent) => void) | null = null;
+
+  function guideDesk() {
+    return window.matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)').matches;
+  }
+  /** Top of the portal story — annotations on. Past that — off. */
+  function guideAtStart() {
+    if (!guideTrack) return window.scrollY < 48;
+    const sc = -guideTrack.getBoundingClientRect().top / Math.max(1, window.innerHeight);
+    return sc < 0.12;
+  }
+
+  function arrowPath(x1: number, y1: number, x2: number, y2: number) {
+    const mx = (x1 + x2) / 2;
+    const my = (y1 + y2) / 2 + Math.abs(x2 - x1) * 0.04;
+    return `M ${x1.toFixed(1)} ${y1.toFixed(1)} Q ${mx.toFixed(1)} ${my.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+  }
+
+  function arrowHead(x1: number, y1: number, x2: number, y2: number) {
+    const ang = Math.atan2(y2 - y1, x2 - x1);
+    const len = 9;
+    const a1 = ang + Math.PI * 0.78;
+    const a2 = ang - Math.PI * 0.78;
+    return `M ${(x2 + Math.cos(a1) * len).toFixed(1)} ${(y2 + Math.sin(a1) * len).toFixed(1)} L ${x2.toFixed(1)} ${y2.toFixed(1)} L ${(x2 + Math.cos(a2) * len).toFixed(1)} ${(y2 + Math.sin(a2) * len).toFixed(1)}`;
+  }
+
+  function svgAdd(g: SVGGElement, tag: string, attrs: Record<string, string>) {
+    const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+    g.appendChild(el);
+    return el;
+  }
+
+  /** Hand-drawn bell (priority list). */
+  function buildBellDoodle(g: SVGGElement, cx: number, cy: number) {
+    g.replaceChildren();
+    // dome
+    svgAdd(g, 'path', {
+      d: `M ${(cx - 14).toFixed(1)} ${(cy + 2).toFixed(1)} Q ${(cx - 15).toFixed(1)} ${(cy - 18).toFixed(1)} ${cx.toFixed(1)} ${(cy - 20).toFixed(1)} Q ${(cx + 15).toFixed(1)} ${(cy - 18).toFixed(1)} ${(cx + 14).toFixed(1)} ${(cy + 2).toFixed(1)}`,
+    });
+    // bottom rim (slightly wavy)
+    svgAdd(g, 'path', {
+      d: `M ${(cx - 18).toFixed(1)} ${(cy + 2).toFixed(1)} Q ${(cx - 6).toFixed(1)} ${(cy + 6).toFixed(1)} ${cx.toFixed(1)} ${(cy + 3).toFixed(1)} Q ${(cx + 6).toFixed(1)} ${(cy + 6).toFixed(1)} ${(cx + 18).toFixed(1)} ${(cy + 2).toFixed(1)}`,
+    });
+    // clapper
+    svgAdd(g, 'path', {
+      d: `M ${cx.toFixed(1)} ${(cy + 3).toFixed(1)} L ${cx.toFixed(1)} ${(cy + 11).toFixed(1)}`,
+    });
+    svgAdd(g, 'path', {
+      d: `M ${(cx - 4).toFixed(1)} ${(cy + 14).toFixed(1)} Q ${cx.toFixed(1)} ${(cy + 17).toFixed(1)} ${(cx + 4).toFixed(1)} ${(cy + 14).toFixed(1)}`,
+    });
+    // little ding lines
+    svgAdd(g, 'line', { x1: String(cx + 16), y1: String(cy - 10), x2: String(cx + 24), y2: String(cy - 16) });
+    svgAdd(g, 'line', { x1: String(cx + 18), y1: String(cy - 4), x2: String(cx + 26), y2: String(cy - 6) });
+  }
+
+  /** Hand-drawn % with sparks + down tick. */
+  function buildDiscDoodle(g: SVGGElement, cx: number, cy: number) {
+    g.replaceChildren();
+    svgAdd(g, 'path', {
+      d: `M ${(cx - 10).toFixed(1)} ${(cy - 16).toFixed(1)} Q ${(cx - 2).toFixed(1)} ${(cy + 2).toFixed(1)} ${(cx + 12).toFixed(1)} ${(cy + 18).toFixed(1)}`,
+    });
+    svgAdd(g, 'path', {
+      d: `M ${(cx - 14).toFixed(1)} ${(cy - 18).toFixed(1)} a 5.5 5.5 0 1 0 0.1 0`,
+    });
+    svgAdd(g, 'path', {
+      d: `M ${(cx + 6).toFixed(1)} ${(cy + 8).toFixed(1)} a 5.5 5.5 0 1 0 0.1 0`,
+    });
+    svgAdd(g, 'path', {
+      d: `M ${(cx + 22).toFixed(1)} ${(cy - 10).toFixed(1)} L ${(cx + 22).toFixed(1)} ${(cy + 16).toFixed(1)} M ${(cx + 14).toFixed(1)} ${(cy + 6).toFixed(1)} L ${(cx + 22).toFixed(1)} ${(cy + 18).toFixed(1)} L ${(cx + 30).toFixed(1)} ${(cy + 6).toFixed(1)}`,
+    });
+    svgAdd(g, 'line', { x1: String(cx - 26), y1: String(cy - 8), x2: String(cx - 18), y2: String(cy - 14) });
+    svgAdd(g, 'line', { x1: String(cx - 24), y1: String(cy - 18), x2: String(cx - 22), y2: String(cy - 8) });
+    svgAdd(g, 'line', { x1: String(cx + 32), y1: String(cy - 16), x2: String(cx + 40), y2: String(cy - 10) });
+    svgAdd(g, 'line', { x1: String(cx + 36), y1: String(cy - 20), x2: String(cx + 34), y2: String(cy - 8) });
+  }
+
+  function layoutGuide() {
+    if (!guideEl || !guideKp || !guideShown) return;
+    const host = guideEl.getBoundingClientRect();
+    const svg = guideEl.querySelector('.kpp-guide-svg') as SVGSVGElement | null;
+    if (!svg || host.width < 40) return;
+    svg.setAttribute('viewBox', `0 0 ${host.width} ${host.height}`);
+
+    const prio = guideKp.querySelector('[data-kp-guide-target="prio"]') as HTMLElement | null;
+    const bell = guideEl.querySelector('[data-kpp-guide-doodle="prio"]') as SVGGElement | null;
+    const noteP = guideEl.querySelector('[data-kpp-guide-note="prio"]') as HTMLElement | null;
+    if (prio && bell && noteP) {
+      const r = prio.getBoundingClientRect();
+      const noteLeft = Math.min(host.width - 200, Math.max(64, r.left - host.left + r.width * 0.42));
+      const noteTop = Math.min(host.height - 70, Math.max(8, r.top - host.top - 6));
+      noteP.style.left = `${noteLeft}px`;
+      noteP.style.top = `${noteTop}px`;
+      const nh = Math.max(noteP.offsetHeight, 40);
+      // 10px gap: doodle reaches ~26px right of center
+      buildBellDoodle(bell, noteLeft - 36, noteTop + nh * 0.45);
+    }
+
+    const disc = guideKp.querySelector('[data-kp-guide-target="disc"]') as HTMLElement | null;
+    const doodle = guideEl.querySelector('[data-kpp-guide-doodle="disc"]') as SVGGElement | null;
+    const noteD = guideEl.querySelector('[data-kpp-guide-note="disc"]') as HTMLElement | null;
+    if (disc && doodle && noteD) {
+      const r = disc.getBoundingClientRect();
+      const noteLeft = Math.min(host.width - 220, Math.max(8, r.right - host.left - 12));
+      const noteTop = Math.min(host.height - 70, Math.max(8, r.top - host.top + r.height * 0.08));
+      noteD.style.left = `${noteLeft}px`;
+      noteD.style.top = `${noteTop}px`;
+      const nh = Math.max(noteD.offsetHeight, 40);
+      buildDiscDoodle(doodle, noteLeft - 52, noteTop + nh * 0.45 + 10);
+    }
+
+    const vyber = guideKp.querySelector('[data-kp-guide-target="vyber"]') as HTMLElement | null;
+    const cards = guideKp.querySelector('[data-kp-cards]') as HTMLElement | null;
+    const arrow = guideEl.querySelector('[data-kpp-guide-arrow="vyber"]') as SVGPathElement | null;
+    const head = guideEl.querySelector('[data-kpp-guide-head="vyber"]') as SVGPathElement | null;
+    const noteV = guideEl.querySelector('[data-kpp-guide-note="vyber"]') as HTMLElement | null;
+    if (vyber && cards && arrow && head && noteV) {
+      const headR = vyber.getBoundingClientRect();
+      const labelX = Math.min(host.width - 170, headR.left - host.left + headR.width + 36);
+      const labelY = headR.top - host.top + headR.height + 56;
+      noteV.style.left = `${labelX}px`;
+      noteV.style.top = `${labelY}px`;
+      // Short, mostly horizontal arrow pointing left toward the header
+      const ay = labelY + 18;
+      const ax = labelX - 4;
+      const tipX = headR.left - host.left + headR.width * 0.85;
+      const tipY = ay - 4;
+      arrow.setAttribute('d', arrowPath(ax, ay, tipX, tipY));
+      head.setAttribute('d', arrowHead(ax, ay, tipX, tipY));
+    }
+  }
+
+  function reqGuideLayout() {
+    if (!guideRaf) {
+      guideRaf = requestAnimationFrame(() => {
+        guideRaf = 0;
+        layoutGuide();
+      });
+    }
+  }
+
+  function hideGuide() {
+    if (!guideEl || !guideShown) return;
+    guideShown = false;
+    guideEl.classList.add('is-out');
+    guideEl.classList.remove('is-on');
+    window.setTimeout(() => {
+      if (!guideEl || guideShown) return;
+      guideEl.hidden = true;
+      guideEl.setAttribute('aria-hidden', 'true');
+    }, 280);
+  }
+
+  function showGuide() {
+    if (!guideEl || !guideDesk() || guideShown) return;
+    guideShown = true;
+    guideEl.hidden = false;
+    guideEl.classList.remove('is-out');
+    guideEl.setAttribute('aria-hidden', 'false');
+    reqGuideLayout();
+    requestAnimationFrame(() => {
+      if (!guideShown) return;
+      guideEl?.classList.add('is-on');
+      reqGuideLayout();
+    });
+    window.setTimeout(reqGuideLayout, 400);
+  }
+
+  function syncGuide() {
+    if (!guideDesk()) {
+      hideGuide();
+      return;
+    }
+    if (guideAtStart()) showGuide();
+    else hideGuide();
+  }
+
+  function reqGuideSync() {
+    if (!guideTickRaf) {
+      guideTickRaf = requestAnimationFrame(() => {
+        guideTickRaf = 0;
+        syncGuide();
+        if (guideShown) layoutGuide();
+      });
+    }
+  }
+
+  function cleanupGuide() {
+    if (guideRaf) cancelAnimationFrame(guideRaf);
+    if (guideTickRaf) cancelAnimationFrame(guideTickRaf);
+    guideRaf = guideTickRaf = 0;
+    if (onGuideWinScroll) window.removeEventListener('scroll', onGuideWinScroll);
+    if (onGuideKey) window.removeEventListener('keydown', onGuideKey);
+    onGuideWinScroll = onGuideKey = null;
+    guideEl = null;
+    guideKp = null;
+    guideTrack = null;
+    guideShown = false;
+  }
+
+  function initGuide() {
+    cleanupGuide();
+    if (!guideDesk()) return;
+    const root = document.querySelector('[data-kpp]') as HTMLElement | null;
+    const demo = root?.querySelector('[data-kpp-demo]') as HTMLElement | null;
+    const guide = root?.querySelector('[data-kpp-guide]') as HTMLElement | null;
+    const track = root?.querySelector('[data-kpp-track]') as HTMLElement | null;
+    const kp = demo?.querySelector('[data-kp]') as HTMLElement | null;
+    if (!root || !demo || !guide || !kp || !track) return;
+    guideEl = guide;
+    guideKp = kp;
+    guideTrack = track;
+
+    onGuideWinScroll = reqGuideSync;
+    onGuideKey = (e) => {
+      if (e.key === 'Escape') hideGuide();
+    };
+    window.addEventListener('scroll', onGuideWinScroll, { passive: true });
+    window.addEventListener('keydown', onGuideKey);
+    window.addEventListener('resize', reqGuideSync);
+    syncGuide();
+  }
+
+  initGuide();
+  document.addEventListener('astro:page-load', initGuide);
+  document.addEventListener('astro:before-swap', cleanupGuide);
 </script>

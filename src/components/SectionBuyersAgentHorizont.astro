@@ -1,9 +1,13 @@
 ---
+import { sluzbaItems } from '../data/co-zahrnuje-sluzba';
+
 interface Props {
   videoSrc?: string;
   posterSrc?: string;
   episodeLabel?: string;
   episodeHref?: string;
+  /** Mobilní karty ve vizuálu specializace (obrázek nahoře). Desktop beze změny. */
+  mobileCards?: 'default' | 'editorial';
 }
 
 const {
@@ -11,6 +15,7 @@ const {
   posterSrc = '/video/penthouse-nahled.jpg',
   episodeLabel = 'Příběhy z trhu · 100 milionů na penthouse. Co vybereme?',
   episodeHref = '/pribehy-z-trhu/',
+  mobileCards = 'default',
 } = Astro.props;
 
 const [episodeKicker, episodeTitle] = episodeLabel.split(/\s·\s/);
@@ -22,8 +27,10 @@ const tiles = [
     image: '/images/agency/statistiky.webp',
     position: '50% 0%',
     alt: 'Přehled developerského trhu a jednotek',
-    title: 'Vyhledávání na celém trhu<br />novostaveb',
+    title: 'Vyhledávání na celém trhu',
+    titleRest: 'novostaveb',
     text: 'V Praze sledujeme téměř <strong>10&nbsp;000 bytů</strong>. Bez hluboké znalosti trhu a správných technologií je prakticky nemožné tak rozsáhlou nabídku porovnat.',
+    perk: 'Širší výběr',
     icon: 'search',
     market: {
       href: 'https://www.reamar.cz/prazsky-rezidencni-trh',
@@ -35,8 +42,10 @@ const tiles = [
     image: '/images/agency/projekty-seznam.webp',
     position: '50% 12%',
     alt: 'Výběr projektů a neveřejných nabídek',
-    title: 'Předprodej projektů<br />a neveřejné nabídky',
+    title: 'Předprodej projektů',
+    titleRest: 'a neveřejné nabídky',
     text: 'Díky kontaktům na developerském trhu řešíme předprodeje, <strong>neveřejné nabídky</strong> a podmínky, ke kterým se kupující sám často nedostane.',
+    perk: 'Byty pod cenou',
     icon: 'reserve',
     cta: {
       href: 'https://nabidka.reamar.cz/praha-7',
@@ -50,20 +59,25 @@ const tiles = [
     image: '/images/agency/vyjednavani.webp',
     position: '50% 40%',
     alt: 'Jednání u stolu nad dokumentací projektu',
-    title: 'Vyjednávání s developerem<br />a právní servis',
+    title: 'Vyjednávání s developerem',
+    titleRest: 'a právní servis',
     text: 'Od rezervace po podpis smluv stojíme <strong>na vaší straně</strong>. Hlídáme podmínky, termíny, dokumentaci i body, které se v nákupu snadno přehlédnou.',
+    perk: 'Silnější pozice',
     icon: 'deal',
   },
 ];
 ---
 
-<section id="koncept" class="bah" aria-labelledby="koncept-heading" data-bah data-nav-hide-zone>
+<section id="koncept" class:list={['bah', mobileCards === 'editorial' && 'bah--editorial']} aria-labelledby="koncept-heading" data-bah data-nav-hide-zone>
   <div class="bah__track" data-bah-track>
     <div class="bah__sticky" data-bah-sticky>
       <header class="bah__head" data-bah-head data-sm-rise>
         <div class="bah__dict">
           <div class="bah__lemma">
-            <h2 id="koncept-heading" class="bah__h font-yellix">Buyer’s Agent</h2>
+            <h2 id="koncept-heading" class="bah__h font-yellix">
+              <span class="bah__h-a">Buyer’s</span>
+              <span class="bah__h-b">Agent</span>
+            </h2>
             <p class="bah__phon font-yellix">
               <span class="bah__ipa" lang="en">/ˈbaɪərz ˈeɪdʒənt/</span>
               <span class="bah__say">bajerz ejdžent</span>
@@ -71,6 +85,13 @@ const tiles = [
           </div>
           <p class="bah__sub font-yellix">
             Na západních trzích běžný princip odborného zastoupení kupujícího.
+          </p>
+          <p class="bah__quote bah__quote--head font-yellix">
+            Klient má při nákupu nemovitosti partnera, který nestojí na straně konkrétní nabídky, ale na straně jeho rozhodnutí.
+          </p>
+          <p class="bah__vs font-yellix">
+            <span class="bah__vs-k">srov.</span>
+            realitní makléř – zastupuje prodávajícího
           </p>
         </div>
         <button type="button" class="bah__play font-yellix" data-strip-open>
@@ -89,7 +110,6 @@ const tiles = [
               <div class="bah__bar"><span data-bah-fill></span></div>
               <div class="bah__body">
                 <div class="bah__meta">
-                  <span class="bah__num font-yellix">{tile.num}</span>
                   <span class:list={['bah__icon', `bah__icon--${tile.icon}`]} aria-hidden="true">
                     {tile.icon === 'search' && (
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -111,8 +131,11 @@ const tiles = [
                     )}
                   </span>
                 </div>
-                <h3 class="font-yellix" set:html={tile.title} />
-                <p class="font-yellix" set:html={tile.text} />
+                <h3 class="font-yellix">
+                  {tile.title}
+                  {tile.titleRest && <span class="bah__title-rest"><br />{tile.titleRest}</span>}
+                </h3>
+                <p class="bah__copy font-yellix" set:html={tile.text} />
                 {tile.market && (
                   <a
                     class="bah__mkt font-yellix"
@@ -142,6 +165,15 @@ const tiles = [
                       <img src="/images/arrow-1.svg" alt="" width="11" height="11" />
                     </span>
                   </a>
+                )}
+                {mobileCards === 'editorial' && tile.perk && (
+                  <p class="bah__perk font-yellix">
+                    <svg viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="8" cy="8" r="8" fill="currentColor"/>
+                      <path d="M4.6 8.15 6.85 10.35 11.45 5.7" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {tile.perk}
+                  </p>
                 )}
               </div>
             </article>
@@ -193,8 +225,50 @@ const tiles = [
             <span class="bah__yt-short">Příběhy z trhu</span>
           </span>
         </a>
-        <p class="bah__quote font-yellix" data-sm-rise style="--sm-d: 80ms">Klient má při nákupu nemovitosti partnera, který nestojí na straně konkrétní nabídky, ale na straně jeho rozhodnutí.</p>
+        <p class="bah__quote bah__quote--cap font-yellix" data-sm-rise style="--sm-d: 80ms">Klient má při nákupu nemovitosti partnera, který nestojí na straně konkrétní nabídky, ale na straně jeho rozhodnutí.</p>
       </div>
+
+      <aside class="bah__pack" aria-labelledby="bah-pack-title" data-sm-rise data-sm-pack>
+        <h2 id="bah-pack-title" class="bah__pack-title font-yellix">
+          Co od nás<br /> dostanete
+        </h2>
+        <p class="bah__pack-kicker font-yellix">Součástí spolupráce</p>
+        <ul class="bah__pack-list">
+          {
+            sluzbaItems.map((item) => (
+              <li>
+                <span class="bah__pack-ic" set:html={item.icon} />
+                <div>
+                  <b class="font-yellix">{item.title}</b>
+                  <p class="font-yellix">{item.text}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+        {mobileCards === 'editorial' && (
+          <div class="bah__pack-dots" data-bah-pack-dots aria-hidden="true">
+            {sluzbaItems.map((_, i) => (
+              <span class:list={[i === 0 && 'is-on']}></span>
+            ))}
+          </div>
+        )}
+        <div class="bah__pack-actions">
+          <a class="bah__pack-cta font-yellix" href="#poptavka">
+            <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+            Probrat možnosti
+          </a>
+          <button type="button" class="bah__pack-how font-yellix" data-cod-how>
+            <span class="bah__pack-how-i" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 11v5.5M12 7.6v.1" />
+              </svg>
+            </span>
+            Jak to funguje
+          </button>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
@@ -246,6 +320,10 @@ const tiles = [
     letter-spacing: -0.04em;
     color: #000;
   }
+  .bah__h-a,
+  .bah__h-b {
+    display: inline;
+  }
   .bah__phon {
     display: flex;
     flex-wrap: wrap;
@@ -274,10 +352,175 @@ const tiles = [
     line-height: 1.35;
     letter-spacing: -0.015em;
     color: #000;
-    white-space: nowrap;
+  }
+  .bah__quote--head {
+    margin: 1rem 0 0;
+    padding-left: 0.85rem;
+    border-left: 1.5px solid rgba(0, 0, 0, 0.22);
+    max-width: 34ch;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: -0.015em;
+    color: rgba(0, 0, 0, 0.72);
+  }
+  .bah__vs {
+    display: none;
+  }
+  .bah__quote--cap {
+    display: none;
+  }
+
+  /* Mobilní homepage (bah--editorial). Desktop si nechává výchozí slovník. */
+  @media (max-width: 1023px) {
+    .bah--editorial .bah__dict {
+      max-width: 22.5rem;
+    }
+    .bah--editorial {
+      background: #f1f1f1;
+    }
+    .bah--editorial .bah__lemma {
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      gap: 0.85rem;
+      width: 100%;
+      padding-bottom: 1.1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+    }
+    .bah--editorial .bah__h {
+      display: block;
+      font-size: clamp(36px, 8vw, 44px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+    .bah--editorial .bah__h-a,
+    .bah--editorial .bah__h-b {
+      display: inline;
+    }
+    .bah--editorial .bah__phon {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.35;
+      gap: 0.3rem 0.55rem;
+      color: rgba(0, 0, 0, 0.5);
+    }
+    .bah--editorial .bah__ipa {
+      font-style: italic;
+      font-weight: 400;
+    }
+    .bah--editorial .bah__say {
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.5);
+    }
+    .bah--editorial .bah__sub {
+      margin: 1.1rem 0 0;
+      padding-top: 0;
+      border-top: 0;
+      max-width: none;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+      color: #000;
+    }
+    .bah--editorial .bah__quote--head {
+      position: relative;
+      margin: 1.05rem 0 0;
+      padding-left: 1.15rem;
+      border-left: 0;
+      max-width: none;
+      font-size: 16px;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+      color: rgba(0, 0, 0, 0.58);
+    }
+    .bah--editorial .bah__quote--head::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      top: 0.12em;
+      font-style: normal;
+      font-weight: 500;
+      letter-spacing: 0;
+      color: rgba(0, 0, 0, 0.4);
+    }
+    .bah--editorial .bah__vs {
+      display: block;
+      margin: 1.1rem 0 0;
+      padding-top: 1.1rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.14);
+      max-width: none;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: -0.005em;
+      color: rgba(0, 0, 0, 0.48);
+    }
+    .bah--editorial .bah__vs-k {
+      margin-right: 0.15em;
+      color: rgba(0, 0, 0, 0.48);
+    }
   }
   .bah__play {
     display: none;
+  }
+
+  .bah__perk {
+    display: none;
+  }
+
+  /* Layout sandbox: šedé pole a bílé dlaždice s fajfkou */
+  @media (max-width: 1023px) {
+    .bah--editorial .bah__viewport {
+      background: #f1f1f1;
+      padding: 1.6rem 0 1.85rem;
+    }
+    .bah--editorial .bah__row {
+      gap: 1.35rem;
+    }
+    .bah--editorial .bah__tile {
+      background: #fff;
+    }
+    .bah--editorial .bah__body {
+      padding: 2rem 1.55rem 2.05rem;
+    }
+    .bah--editorial .bah__meta {
+      margin-bottom: 1.2rem;
+    }
+    .bah--editorial .bah__tile h3 {
+      margin-bottom: 0;
+    }
+    .bah--editorial .bah__perk {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin: 1.45rem 0 0;
+      color: #2c5a42;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      line-height: 1.2;
+    }
+    .bah--editorial .bah__copy {
+      margin-top: 0.9rem;
+      line-height: 1.6;
+    }
+    .bah--editorial .bah__mkt {
+      margin-top: 1.25rem;
+    }
+    .bah--editorial .bah__offer {
+      margin-top: 1.4rem;
+    }
+    .bah--editorial .bah__perk svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
   }
 
   .bah__viewport {
@@ -326,9 +569,6 @@ const tiles = [
     align-items: center;
     justify-content: flex-start;
     margin-bottom: 0.85rem;
-  }
-  .bah__num {
-    display: none;
   }
   .bah__icon {
     display: flex;
@@ -546,7 +786,7 @@ const tiles = [
     margin-top: -0.5rem;
     padding: 0 var(--pad);
   }
-  .bah__quote {
+  .bah__quote--cap {
     margin: 0;
     max-width: 32ch;
     font-size: 22px;
@@ -555,6 +795,218 @@ const tiles = [
     letter-spacing: -0.02em;
     color: #000;
   }
+
+  /* Mobilní inventář služby — hned pod epizodou / penthousem */
+  .bah__pack {
+    margin: 0.75rem var(--pad) 0;
+    padding: 1.85rem 1.2rem 1.45rem;
+    background: #fff;
+    color: #000;
+  }
+  .bah__pack-title {
+    margin: 0 0 1.75rem;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    text-align: left;
+  }
+  .bah__pack-kicker {
+    margin: 0 0 0.7rem;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    line-height: 1;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .bah__pack-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  .bah__pack-list li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .bah__pack-ic {
+    display: block;
+    width: 28px;
+    height: 28px;
+    color: #000;
+  }
+  .bah__pack-ic :global(svg) {
+    display: block;
+    width: 28px;
+    height: 28px;
+  }
+  .bah__pack-list b {
+    display: block;
+    margin: 0 0 3px;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+  .bah__pack-list p {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.58);
+  }
+  .bah__pack-actions {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 14px;
+    margin-top: 1.25rem;
+  }
+  .bah__pack-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 16px;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .bah__pack-cta img {
+    display: block;
+    width: 12px;
+    height: 12px;
+    filter: brightness(0) invert(1);
+  }
+  .bah__pack-how {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.85);
+    background: transparent;
+    font: inherit;
+    font-size: 14px;
+    line-height: 1.2;
+    color: #000;
+    cursor: pointer;
+  }
+  .bah__pack-how-i {
+    display: block;
+    width: 14px;
+    height: 14px;
+  }
+  .bah__pack-how-i svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Mobilní homepage: inventář jako swipovací karty */
+  @media (max-width: 1023px) {
+    .bah--editorial .bah__pack {
+      display: flex;
+      flex-direction: column;
+      margin: 1.5rem 0 0;
+      padding: 1.75rem 0 1.5rem;
+      background: #f1f1f1;
+    }
+    .bah--editorial .bah__pack-title,
+    .bah--editorial .bah__pack-kicker,
+    .bah--editorial .bah__pack-actions {
+      padding-inline: var(--pad);
+    }
+    .bah--editorial .bah__pack-kicker {
+      order: -1;
+      margin: 0 0 0.55rem;
+      text-align: center;
+    }
+    .bah--editorial .bah__pack-title {
+      margin-bottom: 1rem;
+      font-size: 26px;
+      line-height: 1.1;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .bah--editorial .bah__pack-title br {
+      display: none;
+    }
+    .bah--editorial .bah__pack-list {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--pad);
+      padding: 0.35rem var(--pad) 0.5rem;
+      border: 0;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .bah--editorial .bah__pack-list::-webkit-scrollbar {
+      display: none;
+    }
+    .bah--editorial .bah__pack-list li {
+      display: flex;
+      flex: 0 0 82%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.35rem;
+      text-align: center;
+      min-height: 14.5rem;
+      margin: 0;
+      padding: 1.35rem 1.2rem 1.45rem;
+      background: #fff;
+      border: 0;
+      scroll-snap-align: start;
+      box-sizing: border-box;
+    }
+    .bah--editorial .bah__pack-list li > div {
+      width: 100%;
+    }
+    .bah--editorial .bah__pack-ic,
+    .bah--editorial .bah__pack-ic :global(svg) {
+      width: 32px;
+      height: 32px;
+    }
+    .bah--editorial .bah__pack-list b {
+      margin: 0 0 0.4rem;
+      font-size: 17px;
+    }
+    .bah--editorial .bah__pack-list p {
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .bah--editorial .bah__pack-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.35rem;
+      margin-top: 0.85rem;
+    }
+    .bah--editorial .bah__pack-dots span {
+      width: 1.15rem;
+      height: 2px;
+      background: rgba(0, 0, 0, 0.18);
+    }
+    .bah--editorial .bah__pack-dots span.is-on {
+      background: #000;
+    }
+    .bah--editorial .bah__pack-actions {
+      align-items: center;
+      margin-top: 1.15rem;
+    }
+  }
+
   .bah__yt {
     display: flex;
     align-items: center;
@@ -641,6 +1093,9 @@ const tiles = [
     .bah__offer {
       display: none;
     }
+    .bah__pack {
+      display: none;
+    }
   }
 
   @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
@@ -680,6 +1135,13 @@ const tiles = [
     }
     .bah__sub {
       font-size: 19px;
+      white-space: nowrap;
+    }
+    .bah__quote--head {
+      display: none;
+    }
+    .bah__quote--cap {
+      display: block;
     }
     .bah__play {
       display: inline-flex;
@@ -750,28 +1212,10 @@ const tiles = [
       transform-origin: left;
     }
     .bah__body {
-      padding: 1.5rem 2rem 1.75rem;
+      padding: 1.75rem 2rem 1.75rem;
     }
     .bah__meta {
-      justify-content: space-between;
-      margin-bottom: 1.1rem;
-    }
-    .bah__num {
-      display: block;
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 1;
-      letter-spacing: 0.12em;
-      font-variant-numeric: proportional-nums;
-      color: rgba(0, 0, 0, 0.5);
-    }
-    .bah__icon {
-      width: 22px;
-      height: 22px;
-    }
-    .bah__icon svg {
-      width: 22px;
-      height: 22px;
+      display: none;
     }
     .bah__tile h3 {
       margin-bottom: 0.6rem;
@@ -841,7 +1285,7 @@ const tiles = [
       opacity: 0;
       pointer-events: none;
     }
-    .bah__quote {
+    .bah__quote--cap {
       position: absolute;
       top: clamp(2.5rem, 6vh, 4rem);
       left: var(--pad);
@@ -1120,6 +1564,18 @@ const tiles = [
       if (location.hash === '#koncept' && mq.matches) pinTo(0);
     };
 
+    const packList = sec.querySelector<HTMLElement>('.bah__pack-list');
+    const packDots = [...sec.querySelectorAll<HTMLElement>('[data-bah-pack-dots] span')];
+    const updatePackDots = () => {
+      if (!packList || !packDots.length) return;
+      const card = packList.querySelector('li');
+      const step = (card?.offsetWidth || 0) + 12 || 1;
+      const active = Math.min(packDots.length - 1, Math.max(0, Math.round(packList.scrollLeft / step)));
+      packDots.forEach((dot, i) => dot.classList.toggle('is-on', i === active));
+    };
+    packList?.addEventListener('scroll', updatePackDots, { passive: true });
+    updatePackDots();
+
     document.addEventListener('click', onKonceptClick, true);
     window.addEventListener('hashchange', onHash);
     window.addEventListener('scroll', req, { passive: true });
@@ -1135,6 +1591,7 @@ const tiles = [
       icons.disconnect();
       box.removeEventListener('click', onBox);
       box.removeEventListener('keydown', onBoxKey);
+      packList?.removeEventListener('scroll', updatePackDots);
       document.removeEventListener('click', onKonceptClick, true);
       window.removeEventListener('hashchange', onHash);
       window.removeEventListener('scroll', req);

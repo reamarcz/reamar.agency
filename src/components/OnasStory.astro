@@ -11,7 +11,6 @@ import {
 
 const ext = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 16 16 8M10 8h6v6"/></svg>`;
 const corner = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6 L18 18"/><path d="M18 9 L18 18 L9 18"/></svg>`;
-const play = `<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15L19.5 12z" fill="currentColor"/></svg>`;
 
 const socials = [
   { name: 'YouTube', href: youtubeKanal },
@@ -137,7 +136,8 @@ const featurePosterMobile = '/videos/epizoda-0-poster.jpg';
         data-poster-mobile={featurePosterMobile}
         controls
         playsinline
-        preload="none"
+        webkit-playsinline
+        preload="metadata"
       ></video>
     </div>
   </div>
@@ -219,38 +219,6 @@ const featurePosterMobile = '/videos/epizoda-0-poster.jpg';
     </div>
   </section>
 
-  <section class="onas-c5" aria-labelledby="onas-c5-heading">
-    <img
-      class="onas-c5-bg"
-      src="/images/agency/jv-holder3.jpg"
-      alt=""
-      width="1920"
-      height="1080"
-      loading="lazy"
-    />
-    <div class="onas-c5-ov" aria-hidden="true"></div>
-    <div class="onas-wrap onas-c5-g" data-onas-in>
-      <div data-onas-in-item>
-        <span class="onas-kick">Agentura pro kupující</span>
-        <h2 id="onas-c5-heading">Kupujete nemovitost za miliony.<br />Nenechávejte podmínky a vyjednávání na lidech, kteří pracují pro druhou stranu.</h2>
-      </div>
-      <div class="onas-c5-b" data-onas-in-item>
-        <button
-          type="button"
-          class="onas-btn onas-btn-w"
-          data-smart-meeting-open
-          data-smart-meeting-type="client"
-        >
-          <Fragment set:html={corner} />
-          Domluvit schůzku
-        </button>
-        <a class="onas-btn onas-btn-o" href="/pribehy-z-trhu/">
-          <Fragment set:html={play} />
-          Příběhy z trhu
-        </a>
-      </div>
-    </div>
-  </section>
 </div>
 
 <script>
@@ -337,11 +305,13 @@ const featurePosterMobile = '/videos/epizoda-0-poster.jpg';
         ? (video.getAttribute('data-poster-mobile') || video.getAttribute('data-poster-desktop'))
         : video.getAttribute('data-poster-desktop');
       let changed = false;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      video.playsInline = true;
       if (nextPoster && video.getAttribute('poster') !== nextPoster) {
         video.setAttribute('poster', nextPoster);
       }
       if (video.getAttribute('src') !== next) {
-        video.removeAttribute('src');
         const legacy = video.querySelector('source');
         if (legacy) legacy.remove();
         video.setAttribute('src', next);
@@ -351,9 +321,11 @@ const featurePosterMobile = '/videos/epizoda-0-poster.jpg';
       return changed;
     }
 
-    function playFeature() {
+    function playFeature(reset) {
       if (!feature) return;
-      try { feature.currentTime = 0; } catch (e) {}
+      if (reset) {
+        try { feature.currentTime = 0; } catch (e) {}
+      }
       const play = feature.play();
       if (play && typeof play.catch === 'function') play.catch(() => {});
     }
@@ -362,26 +334,25 @@ const featurePosterMobile = '/videos/epizoda-0-poster.jpg';
       if (!feature) return;
       syncPanelShape();
       applyFeatureSource(feature);
-      feature.preload = 'metadata';
+      feature.preload = 'auto';
     }
 
     function openModal() {
       if (!modal) return;
       pauseLoop();
       syncPanelShape();
-      const changed = applyFeatureSource(feature);
+      applyFeatureSource(feature);
       modal.hidden = false;
       document.body.style.overflow = 'hidden';
       if (!feature) return;
-      if (!changed && feature.readyState >= 2) {
-        playFeature();
-        return;
+      // iOS: play() musí zůstat ve stejném user-gesture turnu.
+      playFeature(true);
+      if (feature.paused) {
+        feature.addEventListener('canplay', function onReady() {
+          feature.removeEventListener('canplay', onReady);
+          if (!modal.hidden && feature.paused) playFeature(false);
+        });
       }
-      feature.addEventListener('loadeddata', function onReady() {
-        feature.removeEventListener('loadeddata', onReady);
-        if (!modal.hidden) playFeature();
-      });
-      if (feature.readyState >= 2) playFeature();
     }
 
     function closeModal() {

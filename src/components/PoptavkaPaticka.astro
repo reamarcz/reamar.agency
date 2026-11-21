@@ -69,12 +69,9 @@ const initialPreset =
         </svg>
         Ozvu se do 24 hodin
       </span>
-      <h2 id="kb-title">
-        <span class="kb__h-a">Řekněte nám, co hledáte.</span>
-        <span class="kb__h-b">Zbytek pohlídáme my.</span>
-      </h2>
+      <h2 id="kb-title">Dobrý nákup začíná správným rozhovorem.</h2>
       <p class="kb__lead">
-        Probereme, co hledáte, podíváme se na možnosti na trhu a představím vám formy spolupráce.
+        Probereme vaše představy, podíváme se na možnosti na trhu a představíme vám formy naší spolupráce.
       </p>
     </div>
   </div>
@@ -171,19 +168,19 @@ const initialPreset =
 
         <div class="kb__r2">
           <label class="kb__f">
-            <small>Jméno</small>
+            <small>Jméno <span class="kb__req" aria-hidden="true">*</span></small>
             <input name="jmeno" autocomplete="given-name" placeholder="Jak vás oslovit" required />
             <span class="kb__err">Napište, jak vás oslovit.</span>
           </label>
           <label class="kb__f">
-            <small>Telefon</small>
+            <small>Telefon <span class="kb__req" aria-hidden="true">*</span></small>
             <input name="telefon" type="tel" autocomplete="tel" inputmode="tel" placeholder="+420" required />
             <span class="kb__err">Zkontrolujte telefonní číslo.</span>
           </label>
         </div>
 
         <label class="kb__f">
-          <small data-note-label>Co hledáte <em>nepovinné</em></small>
+          <small data-note-label>Co hledáte</small>
           <input
             name="poznamka"
             data-note
@@ -200,7 +197,6 @@ const initialPreset =
             <path d="M6 6 18 18M18 9v9H9"></path>
           </svg>
         </button>
-        <p class="kb__note">Nezávazně a zdarma.</p>
         <p class="kb__gdpr">
           Odesláním souhlasíte se <a href="/ochrana-osobnich-udaju">zpracováním osobních údajů</a>.
         </p>
@@ -330,10 +326,6 @@ const initialPreset =
     line-height: 1.1;
     letter-spacing: -0.03em;
     font-weight: 500;
-  }
-  .kb__h-a,
-  .kb__h-b {
-    display: block;
   }
   .kb__lead {
     margin: 0 auto;
@@ -498,6 +490,9 @@ const initialPreset =
     color: rgba(255, 255, 255, 0.5);
     margin-bottom: 10px;
   }
+  .kb__req {
+    letter-spacing: 0;
+  }
   .kb__f em {
     font-style: normal;
     text-transform: none;
@@ -612,13 +607,8 @@ const initialPreset =
     opacity: 0.6;
     cursor: default;
   }
-  .kb__note {
-    margin: -8px 0 0;
-    font-size: 13px;
-    color: var(--mut);
-  }
   .kb__gdpr {
-    margin: -14px 0 0;
+    margin: 8px 0 0;
     font-size: 11px;
     color: rgba(255, 255, 255, 0.35);
   }

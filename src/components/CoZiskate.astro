@@ -1,0 +1,369 @@
+---
+/**
+ * Sekce „Co získáte“ – klientský portál (REAMAR Agency)
+ *
+ * Desktop (od 1024 px): text + seznam vlevo, laptop s plovoucími štítky vpravo, tlačítko pod laptopem.
+ * Mobil: text → seznam → laptop → štítky pod sebou → tlačítko.
+ * Štítky jsou poloprůhledné (glass) a jemně se vznášejí. Respektuje prefers-reduced-motion.
+ */
+interface Props {
+  laptopSrc?: string;
+  ctaHref?: string;
+}
+
+const {
+  laptopSrc = '/images/portal-laptop-tmavy-2000.webp',
+  ctaHref = '/klientsky-portal',
+} = Astro.props;
+
+const items = [
+  { b: 'Osobního konzultanta', rest: ', který zastupuje vaše zájmy' },
+  { b: 'Monitoring', rest: ' téměř celého trhu novostaveb a výběr bytů na míru' },
+  { b: 'Přednostní přístup', rest: ' k novým projektům před zahájením prodeje' },
+  { b: 'Upozornění', rest: ' na zlevněné byty a cenové příležitosti' },
+  { b: 'Vyjednávání s developery', rest: ' a pomoc se smlouvami' },
+];
+---
+
+<section class="cz" aria-labelledby="cz-heading">
+  <div class="cz-in">
+    <div class="cz-copy">
+      <p class="cz-kicker">CO ZÍSKÁTE</p>
+      <h2 id="cz-heading">
+        Přístup k našim datům,<br />
+        kontaktům a zkušenostem<br />
+        z developerského trhu.
+      </h2>
+      <p class="cz-lead">Vy rozhodujete, my stojíme na vaší straně.</p>
+
+      <ul class="cz-list">
+        {items.map(({ b, rest }) => (
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2c5a42" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12.5l4.5 4.5L19 7.5" />
+            </svg>
+            <span><strong>{b}</strong><span class="cz-rest">{rest}</span></span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="cz-cta-wrap">
+        <a class="cz-cta" href={ctaHref}>
+          <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+          Prohlédnout klientský portál
+        </a>
+      </div>
+    </div>
+
+    <div class="cz-visual">
+      <div class="cz-stage">
+        <img
+          class="cz-laptop"
+          src={laptopSrc}
+          alt="Klientský portál REAMAR v notebooku: výběr projektů, mapa cen a doporučení konzultanta"
+          width="2000"
+          height="1261"
+          loading="lazy"
+          decoding="async"
+        />
+
+        <div class="cz-pill cz-float cz-pill--top" style="--d:0s">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8z" /></svg>
+          <span>Předprodeje a nové projekty</span>
+        </div>
+        <div class="cz-pill cz-float cz-pill--right" style="--d:-2.2s">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z" /><path d="M10 20.5h4" /></svg>
+          <span>Upozornění<br />na zlevněné nabídky</span>
+        </div>
+        <div class="cz-pill cz-float cz-pill--left" style="--d:-4.1s">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l9 5-9 5-9-5z" /><path d="M3 14l9 5 9-5" /></svg>
+          <span>Výběr napříč<br />celým trhem</span>
+        </div>
+      </div>
+
+      <div class="cz-pills-m">
+        <div class="cz-pill">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l9 5-9 5-9-5z" /><path d="M3 14l9 5 9-5" /></svg>
+          <span>Výběr napříč celým trhem</span>
+        </div>
+        <div class="cz-pill">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8z" /></svg>
+          <span>Předprodeje a nové projekty</span>
+        </div>
+        <div class="cz-pill">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z" /><path d="M10 20.5h4" /></svg>
+          <span>Upozornění na zlevněné nabídky</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cz {
+    background: #f1f1f1;
+    color: #000;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+    padding: 64px 20px;
+  }
+  .cz-in {
+    max-width: 1680px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .cz-kicker {
+    margin: 0 0 12px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: rgba(0, 0, 0, 0.55);
+    line-height: 1;
+  }
+  .cz h2 {
+    margin: 0 0 14px;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  .cz-lead {
+    margin: 0 0 22px;
+    max-width: 46ch;
+    font-size: 16px;
+    line-height: 1.55;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .cz-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+  }
+  .cz-list li {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 14px;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-size: 15.5px;
+    line-height: 1.35;
+  }
+  .cz-list svg {
+    display: block;
+  }
+  .cz-list strong {
+    font-weight: 600;
+    color: #000;
+  }
+  .cz-rest {
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  .cz-stage {
+    position: relative;
+  }
+  .cz-laptop {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.16));
+  }
+
+  .cz-pill {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 1.3;
+    background: rgba(255, 255, 255, 0.62);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+  }
+  .cz-pill svg {
+    flex: none;
+  }
+  .cz-pills-m {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .cz-float {
+    display: none;
+  }
+
+  .cz-cta-wrap {
+    margin-top: 28px;
+  }
+  .cz-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .cz-cta img {
+    display: block;
+    width: 12px;
+    height: 12px;
+    filter: brightness(0) invert(1);
+  }
+  .cz-cta:hover {
+    opacity: 0.85;
+  }
+
+  @media (max-width: 1023px) {
+    .cz { padding: 96px 24px 104px; }
+    .cz-in { gap: 72px; }
+    .cz-kicker,
+    .cz h2,
+    .cz-lead,
+    .cz-cta-wrap { text-align: center; }
+    .cz-lead { margin-inline: auto; }
+    .cz-list {
+      max-width: 340px;
+      margin-inline: auto;
+    }
+    .cz-kicker { margin-bottom: 20px; }
+    .cz h2 {
+      margin-bottom: 20px;
+      font-size: 30px;
+      line-height: 1.12;
+    }
+    .cz h2 br { display: none; }
+    .cz-lead { margin-bottom: 44px; }
+    .cz-list { gap: 20px; }
+    .cz-list li {
+      align-items: start;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+    .cz-list svg { margin-top: 1px; }
+    .cz-cta-wrap { margin-top: 48px; }
+    .cz-pills-m {
+      gap: 10px;
+      max-width: 340px;
+      margin: 36px auto 0;
+    }
+    .cz-pills-m .cz-pill { justify-content: center; }
+  }
+
+  @media (min-width: 768px) {
+    .cz { padding: 120px 40px; }
+    .cz h2 { font-size: 40px; }
+  }
+
+  @media (min-width: 1024px) {
+    .cz { padding: 112px 32px; }
+    .cz-in {
+      grid-template-columns: max-content minmax(0, 1fr);
+      padding-left: 24px;
+      gap: 28px;
+      align-items: end;
+    }
+    .cz-copy { justify-self: start; }
+    .cz h2,
+    .cz-lead,
+    .cz-list li { white-space: nowrap; }
+    .cz-visual {
+      justify-self: end;
+      width: min(100%, 590px);
+      margin-bottom: -40px;
+    }
+    .cz-kicker { margin-bottom: 22px; }
+    .cz h2 { margin-bottom: 22px; font-size: 34px; line-height: 1.1; }
+    .cz-lead { margin-bottom: 44px; font-size: 16px; }
+    .cz-list { gap: 12px; }
+    .cz-list li {
+      gap: 12px;
+      padding: 0;
+      font-size: 14.5px;
+      line-height: 1.35;
+    }
+    .cz-stage {
+      padding: 0 20px 0 28px;
+    }
+    .cz-float {
+      display: flex;
+      position: absolute;
+      z-index: 2;
+      padding: 12px 14px;
+      font-size: 13.5px;
+      gap: 10px;
+      animation: cz-float 6.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+      animation-delay: var(--d, 0s);
+      will-change: transform;
+    }
+    .cz-float svg {
+      width: 16px;
+      height: 16px;
+    }
+    .cz-pill--top {
+      top: -34px;
+      left: calc(50% + 4px);
+      translate: -50% 0;
+    }
+    .cz-pill--right {
+      top: 27%;
+      right: 0;
+    }
+    .cz-pill--left {
+      top: 58%;
+      left: 0;
+    }
+    .cz-pills-m { display: none; }
+    .cz-cta-wrap {
+      margin-top: 48px;
+      text-align: left;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .cz { padding: 152px 40px; }
+    .cz h2 { font-size: 40px; }
+    .cz-in {
+      padding-left: 56px;
+      gap: 32px;
+    }
+    .cz-visual { width: min(100%, 750px); }
+    .cz-stage { padding: 0 12px 0 36px; }
+    .cz-float {
+      padding: 14px 16px;
+      font-size: 14px;
+      gap: 12px;
+    }
+    .cz-pill--top { top: -38px; left: calc(50% + 12px); }
+    .cz-pill--right { top: 27%; right: -6px; }
+    .cz-pill--left { top: 58%; left: -8px; }
+  }
+
+  @media (min-width: 1536px) {
+    .cz { padding-left: 64px; padding-right: 56px; }
+    .cz-in { padding-left: 88px; }
+    .cz-visual { width: min(100%, 820px); }
+  }
+
+  @keyframes cz-float {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -10px, 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cz-float { animation: none; }
+  }
+</style>

@@ -2,13 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 import HeroStrip from '../components/HeroStrip.astro';
 import SectionBuyersAgentHorizont from '../components/SectionBuyersAgentHorizont.astro';
-import SectionPrilecitosti from '../components/SectionPrilecitosti.astro';
-import SectionSpecializace from '../components/SectionSpecializace.astro';
 import SectionNasPribeh from '../components/SectionNasPribeh.astro';
 import ManifestSection from '../components/ManifestSection.astro';
 import SectionPorovnani from '../components/SectionPorovnani.astro';
 import SectionZastoupeni from '../components/onepager/SectionZastoupeni.astro';
+import CoZiskate from '../components/CoZiskate.astro';
 import CoOdNasDostanete from '../components/CoOdNasDostanete.astro';
+import NasRozdil from '../components/NasRozdil.astro';
 import SectionReference from '../components/SectionReference.astro';
 import SectionFooter from '../components/SectionFooter.astro';
 import PoptavkaPatickaSvetla from '../components/PoptavkaPatickaSvetla.astro';
@@ -36,20 +36,24 @@ const s = seoPages.home;
     <SectionBuyersAgentHorizont
       videoSrc="/video/penthouse-nahled.mp4"
       posterSrc="/video/penthouse-nahled.jpg"
+      mobileCards="editorial"
     />
   </div>
   <div class="lg:hidden">
-    <SectionPrilecitosti ctaHref="#poptavka" />
-    <SectionSpecializace />
+    <NasRozdil videoSrc="/videos/motivace.mp4" poster="/videos/motivace-poster.jpg" layout="editorial" />
   </div>
   <CoOdNasDostanete title="Co zahrnuje služba agentury" />
+  <div class="hidden lg:block">
+    <NasRozdil videoSrc="/videos/motivace.mp4" poster="/videos/motivace-poster.jpg" />
+  </div>
   <SectionNasPribeh
     ctaHref="/o-nas"
     ctaLabel="Více o nás"
   />
   <ManifestSection />
   <SectionPorovnani ctaHref="#poptavka" intro={false} />
-  <SectionZastoupeni />
+  <SectionZastoupeni mobileStatsOnly />
+  <CoZiskate ctaHref="/klientsky-portal" />
   <SectionReference />
   <PoptavkaPatickaSvetla
     context="/"

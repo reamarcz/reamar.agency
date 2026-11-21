@@ -19,6 +19,8 @@ interface Props {
   photoZoom?: string;
   /** light = bílá plocha (O nás), dark = černá plocha (Investice) */
   tone?: 'light' | 'dark';
+  /** První obrazovka pod pevnou hlavičkou: výška sedí do okna, jmenovka zůstane vidět */
+  hero?: boolean;
 }
 
 const {
@@ -36,6 +38,7 @@ const {
   photoLeft = '0',
   photoZoom = '100%',
   tone = 'light',
+  hero = false,
 } = Astro.props;
 const isDark = tone === 'dark';
 
@@ -53,7 +56,7 @@ const initialPreset =
 ---
 
 <section
-  class:list={['kb', isDark ? 'kb--dark' : 'kb--light']}
+  class:list={['kb', isDark ? 'kb--dark' : 'kb--light', hero && 'kb--hero']}
   id="poptavka"
   aria-labelledby="kbl-title"
   data-poptavka-paticka
@@ -95,12 +98,9 @@ const initialPreset =
           </svg>
           Ozvu se do 24 hodin
         </span>
-        <h2 id="kbl-title">
-          <span class="kb__h-a">Řekněte nám, co hledáte.</span>
-          <span class="kb__h-b">Zbytek pohlídáme my.</span>
-        </h2>
+        <h2 id="kbl-title">Dobrý nákup začíná správným rozhovorem.</h2>
         <p class="kb__lead">
-          Probereme, co hledáte, podíváme se na možnosti na trhu a představím vám formy spolupráce.
+          Probereme vaše představy, podíváme se na možnosti na trhu a představíme vám formy naší spolupráce.
         </p>
       </div>
 
@@ -145,19 +145,19 @@ const initialPreset =
 
           <div class="kb__r2">
             <label class="kb__f">
-              <small>Jméno</small>
+              <small>Jméno <span class="kb__req" aria-hidden="true">*</span></small>
               <input name="jmeno" autocomplete="given-name" placeholder="Jak vás oslovit" required />
               <span class="kb__err">Napište, jak vás oslovit.</span>
             </label>
             <label class="kb__f">
-              <small>Telefon</small>
+              <small>Telefon <span class="kb__req" aria-hidden="true">*</span></small>
               <input name="telefon" type="tel" autocomplete="tel" inputmode="tel" placeholder="+420" required />
               <span class="kb__err">Zkontrolujte telefonní číslo.</span>
             </label>
           </div>
 
           <label class="kb__f">
-            <small data-note-label>Co hledáte <em>nepovinné</em></small>
+            <small data-note-label>Co hledáte</small>
             <input
               name="poznamka"
               data-note
@@ -174,7 +174,6 @@ const initialPreset =
               <path d="M6 6 18 18M18 9v9H9"></path>
             </svg>
           </button>
-          <p class="kb__note">Nezávazně a zdarma.</p>
           <p class="kb__gdpr">
             Odesláním souhlasíte se <a href="/ochrana-osobnich-udaju">zpracováním osobních údajů</a>.
           </p>
@@ -246,7 +245,9 @@ const initialPreset =
     --mut: rgba(0, 0, 0, 0.6);
     --ln: rgba(0, 0, 0, 0.16);
     --green: #17804a;
-    --field-bg: #f4f4f2;
+    --field-bg: #f1f1f1;
+    --field-hover: #ebebeb;
+    --field-focus: #e5e5e5;
     --field-fg: #000;
     --opt-hover: rgba(0, 0, 0, 0.04);
     --opt-active-bg: #f4f4f2;
@@ -267,7 +268,9 @@ const initialPreset =
     --mut: rgba(255, 255, 255, 0.6);
     --ln: rgba(255, 255, 255, 0.22);
     --green: #46c37b;
-    --field-bg: rgba(255, 255, 255, 0.04);
+    --field-bg: rgba(255, 255, 255, 0.07);
+    --field-hover: rgba(255, 255, 255, 0.09);
+    --field-focus: rgba(255, 255, 255, 0.13);
     --field-fg: #fff;
     --opt-hover: rgba(255, 255, 255, 0.06);
     --opt-active-bg: rgba(255, 255, 255, 0.08);
@@ -427,10 +430,6 @@ const initialPreset =
     letter-spacing: -0.03em;
     font-weight: 500;
   }
-  .kb__h-a,
-  .kb__h-b {
-    display: block;
-  }
   .kb__lead {
     margin: 0 auto;
     font-size: 15px;
@@ -467,6 +466,9 @@ const initialPreset =
     color: var(--mut);
     margin-bottom: 10px;
   }
+  .kb__req {
+    letter-spacing: 0;
+  }
   .kb__f em {
     font-style: normal;
     text-transform: none;
@@ -478,24 +480,27 @@ const initialPreset =
     width: 100%;
     height: 48px;
     padding: 0 16px;
-    border: 1px solid var(--ln);
+    border: 0;
     background: var(--field-bg);
     color: var(--field-fg);
     font: inherit;
     font-size: 15px;
     outline: 0;
     border-radius: 0;
-    transition: border-color 0.2s;
+    transition: background-color 0.2s;
   }
   .kb__f input::placeholder {
     color: var(--mut);
     opacity: 0.7;
   }
+  .kb__f input:hover {
+    background: var(--field-hover);
+  }
   .kb__f input:focus {
-    border-color: var(--fg);
+    background: var(--field-focus);
   }
   .kb__f.is-err input {
-    border-color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.14);
   }
   .kb__err {
     display: none;
@@ -582,13 +587,8 @@ const initialPreset =
     opacity: 0.6;
     cursor: default;
   }
-  .kb__note {
-    margin: -6px 0 0;
-    font-size: 13px;
-    color: var(--mut);
-  }
   .kb__gdpr {
-    margin: -12px 0 0;
+    margin: 8px 0 0;
     font-size: 11px;
     color: var(--mut);
     opacity: 0.75;
@@ -722,12 +722,70 @@ const initialPreset =
     color: var(--mut);
   }
 
+  @media (min-width: 900px) {
+    .kb--hero .kbl {
+      height: calc(100svh - 108px);
+    }
+    .kb--hero .kb__photo,
+    .kb--hero .kbl__pn {
+      min-height: 0;
+      height: 100%;
+    }
+    .kb--hero .kbl__pn {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 36px 64px 32px;
+      overflow: hidden;
+      background: #f1f1f1;
+    }
+    .kb--hero {
+      --field-bg: #fff;
+      --field-hover: #f7f7f7;
+      --field-focus: #fff;
+    }
+    .kb--hero .kb__opt:has(input:checked) {
+      background: #fff;
+      box-shadow: none;
+    }
+    .kb--hero .kb__head {
+      margin-bottom: 20px;
+    }
+    .kb--hero .kb__form {
+      gap: 14px;
+    }
+    .kb--hero .kbl__contacts {
+      margin-top: 20px;
+      padding-top: 16px;
+    }
+  }
+
+  @media (min-width: 900px) and (max-height: 860px) {
+    .kb--hero .kbl__pn {
+      padding: 24px 64px 20px;
+    }
+    .kb--hero .kb__head {
+      margin-bottom: 14px;
+    }
+    .kb--hero h2 {
+      margin: 8px 0 8px;
+    }
+    .kb--hero .kb__form {
+      gap: 10px;
+    }
+    .kb--hero .kbl__contacts {
+      margin-top: 14px;
+      padding-top: 12px;
+    }
+  }
+
   @media (max-width: 899px) {
     .kbl {
       display: block;
     }
     .kb__photo {
-      height: 340px;
+      height: 400px;
       min-height: 0;
     }
     .kb__photo img {
@@ -740,10 +798,20 @@ const initialPreset =
     .kb__quote {
       left: 1.25rem;
       right: 1.25rem;
-      bottom: 22px;
+      bottom: 18px;
     }
     .kb__quote p {
-      display: none;
+      margin: 0 0 14px;
+      font-size: 15px;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      text-indent: 0;
+    }
+    .kb__quote-punch {
+      margin-top: 0.35em;
+      font-size: 22px;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
     }
     .kbl__pn {
       padding: 28px 20px 40px;

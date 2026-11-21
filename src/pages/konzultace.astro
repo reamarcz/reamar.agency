@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import SectionVyberSluzeb from '../components/SectionVyberSluzeb.astro';
+import PoptavkaPatickaSvetla from '../components/PoptavkaPatickaSvetla.astro';
 import SectionDotaznik from '../components/SectionDotaznik.astro';
 import SectionFaq from '../components/SectionFaq.astro';
 import SectionFooter from '../components/SectionFooter.astro';
@@ -8,7 +8,7 @@ import JsonLd from '../components/JsonLd.astro';
 import { seoPages } from '../data/seo-pages';
 import { organizationGraph, serviceLd } from '../lib/jsonld';
 
-const s = seoPages.sluzby;
+const s = seoPages.konzultace;
 ---
 
 <Layout
@@ -23,13 +23,18 @@ const s = seoPages.sluzby;
   <JsonLd data={organizationGraph()} />
   <JsonLd
     data={serviceLd({
-      name: 'Priority a Standard — služby Agentury pro kupující',
+      name: 'Konzultace k nákupu novostavby',
       description: s.description,
       url: s.canonical,
     })}
   />
-  <SectionVyberSluzeb />
+  <PoptavkaPatickaSvetla
+    hero
+    context="/konzultace"
+    photoCol="820px"
+    photo="/images/agency/poptavka-jan-u-stolu.jpg"
+  />
   <SectionDotaznik />
   <SectionFaq />
-  <SectionFooter />
+  <SectionFooter showIntro={false} />
 </Layout>

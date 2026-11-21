@@ -101,7 +101,26 @@
 }
 .pdm .kp-mhi { flex: 1; min-width: 0; line-height: 1.2; }
 .pdm .kp-mhi b { display: block; font-size: 16px; font-weight: 500; }
-.pdm .kp-mhi small { display: block; margin-top: 2px; font-size: 12px; color: rgba(0, 0, 0, 0.5); }
+.pdm .kp-mhi small { display: block; margin-top: 3px; font-size: 12px; color: rgba(0, 0, 0, 0.5); }
+.pdm .kp-plan {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+.pdm .kp-plan.is-priority {
+  background: rgba(18, 49, 40, 0.1);
+  color: #123128;
+}
+.pdm .kp-plan.is-standard {
+  background: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.55);
+}
 .pdm .kp-mkp {
   display: flex;
   align-items: center;
@@ -217,6 +236,98 @@
 .pdm .kp-prl b { display: block; font-size: 14.5px; font-weight: 500; }
 .pdm .kp-prl em { display: block; font-style: normal; font-size: 12px; color: rgba(0, 0, 0, 0.5); }
 
+.pdm .kp-disc {
+  width: 100%;
+  margin: 4px 0 2px;
+  padding: 10px 16px 14px;
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0;
+  background: transparent;
+}
+.pdm .kp-disc-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  margin: 0 0 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.pdm .kp-disc-label svg {
+  flex-shrink: 0;
+  color: rgba(0, 0, 0, 0.28);
+}
+.pdm .kp-disc-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.pdm .kp-disc-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+.pdm .kp-disc-photo {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #e8e4dc;
+}
+.pdm .kp-disc-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pdm .kp-disc-badge {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  padding: 4px 7px;
+  border-radius: 999px;
+  background: #123128;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+}
+.pdm .kp-disc-info b {
+  display: block;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pdm .kp-disc-info small {
+  display: block;
+  margin-top: 1px;
+  font-size: 11.5px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .pdm .kp-cards {
   flex: none;
   flex-direction: column;
@@ -258,8 +369,8 @@
   background: #fff;
   font-size: 11.5px;
 }
-.pdm .kp-bdg.is-dn { color: #c0392b; }
-.pdm .kp-bdg.is-up { color: #2f8a52; }
+.pdm .kp-bdg.is-dn { color: #123128; }
+.pdm .kp-bdg.is-up { color: #c13b3a; }
 .pdm .kp-bdg.is-flat { color: #0c0c0c; }
 .pdm .kp-bdg.is-units {
   left: auto;

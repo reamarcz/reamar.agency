@@ -116,8 +116,9 @@ const counts = [
   }
   .wrap {
     width: auto;
-    max-width: 1080px;
-    margin: 0 20px;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
     display: grid;
     grid-template-columns: 1fr;
     gap: 36px;
@@ -131,9 +132,9 @@ const counts = [
   }
   h2 {
     margin: 16px 0 18px;
-    font-size: 34px;
-    line-height: 1.02;
-    letter-spacing: -0.04em;
+    font-size: 28px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
     font-weight: 500;
   }
   .l p {
@@ -408,12 +409,13 @@ const counts = [
       padding: 110px 0;
     }
     .wrap {
-      margin: 0 40px;
+      margin: 0 auto;
+      padding: 0 40px;
       grid-template-columns: 1fr 1fr;
       gap: 48px;
     }
     h2 {
-      font-size: 46px;
+      font-size: 36px;
     }
     .l p {
       font-size: 17px;
@@ -435,12 +437,14 @@ const counts = [
       font-size: 84px;
     }
   }
-  @media (min-width: 1180px) {
+  @media (min-width: 1280px) {
     .wrap {
-      width: 1080px;
-      margin: 0 auto;
+      padding: 0 56px;
       grid-template-columns: 1fr 500px;
       gap: 72px;
+    }
+    h2 {
+      font-size: 40px;
     }
   }
 </style>

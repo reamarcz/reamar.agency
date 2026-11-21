@@ -58,7 +58,7 @@ export function initPoptavkaPatickaForms() {
       const radios = form.elements.namedItem('hledam') as RadioNodeList | null;
       const isByt = radios?.value === 'konkretni-byt';
       const v = isByt ? NOTE.byt : NOTE.def;
-      noteLbl.innerHTML = v[0] + ' <em>nepovinné</em>';
+      noteLbl.textContent = v[0];
       note.placeholder = v[1];
     }
 

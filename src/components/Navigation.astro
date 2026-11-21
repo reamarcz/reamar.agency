@@ -24,7 +24,8 @@ const storiesOverview = path === '/pribehy-z-trhu';
 const overlayNav = path === '/agent-pro-kupujici' || path === '/o-nas' || storiesOverview || fullbleedNav;
 const isOnepager = path === '/agentura-pro-kupujici-onepager';
 const navLinks = isOnepager ? onepagerNavLinks : defaultNavLinks;
-const sluzbyHref = isOnepager ? '#vyber-sluzeb' : '/sluzby';
+const ctaHref = isOnepager ? '#vyber-sluzeb' : '/konzultace';
+const ctaLabel = isOnepager ? 'Vybrat službu' : 'Probrat možnosti';
 const isCurrent = (href: string) => {
   const linkPath = href.split('#')[0];
   if (!linkPath || linkPath === '/') return false;
@@ -139,15 +140,15 @@ const isCurrent = (href: string) => {
       )}
 
       <a
-        href={sluzbyHref}
+        href={ctaHref}
         class:list={[
           'nav-cta inline-flex items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] text-white no-underline whitespace-nowrap transition-opacity hover:opacity-85',
-          isCurrent('/sluzby') ? 'font-semibold' : 'font-medium',
+          isCurrent('/konzultace') ? 'font-semibold' : 'font-medium',
         ]}
-        aria-current={isCurrent('/sluzby') ? 'page' : undefined}
+        aria-current={isCurrent('/konzultace') ? 'page' : undefined}
       >
         <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
-        Vybrat službu
+        {ctaLabel}
       </a>
     </nav>
 
@@ -262,16 +263,16 @@ const isCurrent = (href: string) => {
       )}
 
       <a
-        href={sluzbyHref}
+        href={ctaHref}
         class:list={[
           'inline-flex w-fit items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] text-white no-underline',
-          isCurrent('/sluzby') ? 'font-semibold' : 'font-medium',
+          isCurrent('/konzultace') ? 'font-semibold' : 'font-medium',
         ]}
-        aria-current={isCurrent('/sluzby') ? 'page' : undefined}
+        aria-current={isCurrent('/konzultace') ? 'page' : undefined}
         data-drawer-close
       >
         <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
-        Vybrat službu
+        {ctaLabel}
       </a>
     </nav>
 
