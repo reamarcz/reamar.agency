@@ -1,22 +1,5 @@
 ---
 const developerServices = ['Marketing', 'Sales', 'Kombinace služeb'];
-const clientInterests = [
-  {
-    icon: 'search',
-    title: 'Priority',
-    text: 'Aktivní vyhledávání a předprodeje.',
-  },
-  {
-    icon: 'send',
-    title: 'Standard',
-    text: 'Sledování nových příležitostí.',
-  },
-  {
-    icon: 'chat',
-    title: 'Nezávazná konzultace',
-    text: 'Společně vybereme, jak dál.',
-  },
-];
 const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
 ---
 <div
@@ -55,42 +38,6 @@ const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
           <span class="block md:whitespace-nowrap">Většinou začínáme <strong>nezávaznou konzultací</strong>, kde si projdeme vaše zadání, preference a vhodnou formu spolupráce.</span>
           <span class="block md:whitespace-nowrap">Pokud už víte, co hledáte, můžete nám své preference <a href={questionnaireUrl} target="_blank" rel="noopener noreferrer">vyplnit online</a>.</span>
         </p>
-        <p class="mt-8 font-yellix text-[14px] font-medium text-[#000000] mb-3">Vyberte službu</p>
-        <div class="contact-interests" role="radiogroup" aria-label="Vyberte službu">
-          {clientInterests.map((item) => (
-            <button
-              type="button"
-              class="contact-interest smart-contact-service"
-              data-service={item.title}
-              role="radio"
-              aria-checked="false"
-            >
-              <span class="contact-interest-icon" aria-hidden="true">
-                  {item.icon === 'send' && (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M4 6.5h16v11H4z"/>
-                      <path d="m4 6.5 8 6.2 8-6.2"/>
-                    </svg>
-                  )}
-                  {item.icon === 'search' && (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="11" cy="11" r="6.2"/>
-                      <path d="M16.2 16.2 21 21"/>
-                    </svg>
-                  )}
-                  {item.icon === 'chat' && (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M4 6.2h9.2A1.8 1.8 0 0 1 15 8v5.2a1.8 1.8 0 0 1-1.8 1.8H9.4L6.2 18v-3H4A1.8 1.8 0 0 1 2.2 13.2V8A1.8 1.8 0 0 1 4 6.2Z"/>
-                    </svg>
-                  )}
-                </span>
-              <span class="contact-interest-copy">
-                <span class="contact-interest-title">{item.title}</span>
-                <span class="contact-interest-text">{item.text}</span>
-              </span>
-            </button>
-          ))}
-        </div>
       </div>
 
       <div data-contact-developer-view class="hidden">
@@ -322,9 +269,8 @@ const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
     function mapClientInterest(value) {
       if (!value) return 'Nezávazná konzultace';
       const v = String(value).toLowerCase();
-      if (v.indexOf('priority') !== -1 || v.indexOf('vyhled') !== -1 || v.indexOf('osobní') !== -1) return 'Priority';
-      if (v.indexOf('standard') !== -1 || v.indexOf('monitor') !== -1) return 'Standard';
-      return 'Nezávazná konzultace';
+      if (v.indexOf('priority') !== -1 || v.indexOf('standard') !== -1) return 'Nezávazná konzultace';
+      return String(value);
     }
 
     function setMode(type) {
