@@ -1,11 +1,4 @@
 ---
-interface Props {
-  /** Na mobilu jen čísla. Desktop beze změny. */
-  mobileStatsOnly?: boolean;
-}
-
-const { mobileStatsOnly = false } = Astro.props;
-
 const bandItems = [
   {
     kind: 'why' as const,
@@ -41,7 +34,7 @@ const bandItems = [
 ];
 ---
 
-<section class:list={['bg-black', mobileStatsOnly && 'zast--stats']} aria-label="Zastoupení kupujícího" data-zastoupeni>
+<section class="bg-black" aria-label="Zastoupení kupujícího" data-zastoupeni>
   <div class="mx-auto max-w-[1440px] px-5 py-20 md:px-10 md:py-28 xl:px-14 xl:py-32">
     <h2 class="zast-piece m-0 font-yellix text-[28px] font-medium leading-[1.15] tracking-[-0.02em] text-white md:text-[36px] xl:text-[40px]" style="--i: 0">
       Rozhodnutí za miliony<br class="md:hidden" /> si zaslouží<br />
@@ -65,8 +58,8 @@ const bandItems = [
       </div>
     </div>
 
-    <div class="zast-band" aria-label="Co získáte">
-      <p class="zast-who zast-band-kicker zast-piece" style="--i: 3">Co získáte</p>
+    <div class="zast-band" aria-label="Výhody">
+      <p class="zast-who zast-band-kicker zast-piece" style="--i: 3">Výhody</p>
       {bandItems.map((item, index) => (
         <div class:list={['zast-piece', 'zast-band-item', item.kind === 'why' && 'zast-band-why', index > 0 && 'zast-band-side']} style={`--i: ${index + 4}`}>
           {item.kind === 'why' ? (
@@ -169,9 +162,21 @@ const bandItems = [
     color: rgba(255, 255, 255, 0.62);
   }
 
+  @media (max-width: 767px) {
+    .zast-num {
+      font-size: 20px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+  }
+
   @media (min-width: 768px) {
     .zast-claim { font-size: 26px; }
-    .zast-num { font-size: 32px; }
+    .zast-num {
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
     .zast-band-title { font-size: 22px; }
     .zast-split {
       grid-template-columns: 1fr 1fr;
@@ -192,8 +197,8 @@ const bandItems = [
     .zast-band-kicker {
       margin-bottom: 0;
     }
-    .zast-band-title { font-size: 18px; }
-    .zast-num { font-size: 26px; }
+    .zast-band-title,
+    .zast-num { font-size: 18px; }
     .zast-band-item {
       padding-right: 1.5rem;
     }
@@ -203,12 +208,6 @@ const bandItems = [
     }
     .zast-band-item:last-child {
       padding-right: 0;
-    }
-  }
-
-  @media (max-width: 767px) {
-    .zast--stats .zast-band-why {
-      display: none;
     }
   }
 

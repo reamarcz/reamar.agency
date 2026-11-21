@@ -3,7 +3,7 @@
  * Sekce „Co získáte“ – klientský portál (REAMAR Agency)
  *
  * Desktop (od 1024 px): text + seznam vlevo, laptop s plovoucími štítky vpravo, tlačítko pod laptopem.
- * Mobil: text → seznam → laptop → štítky pod sebou → tlačítko.
+ * Mobil: nadpis → lead → „CO ZÍSKÁTE“ přilepené k seznamu → laptop → štítky → tlačítko.
  * Štítky jsou poloprůhledné (glass) a jemně se vznášejí. Respektuje prefers-reduced-motion.
  */
 interface Props {
@@ -228,7 +228,7 @@ const items = [
   }
 
   @media (max-width: 1023px) {
-    .cz { padding: 96px 24px 104px; }
+    .cz { padding: 96px 24px 28px; }
     .cz-in { gap: 72px; }
     .cz-kicker,
     .cz h2,
@@ -239,14 +239,32 @@ const items = [
       max-width: 340px;
       margin-inline: auto;
     }
-    .cz-kicker { margin-bottom: 20px; }
+    .cz-copy {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .cz h2 { order: 1; }
+    .cz-lead { order: 2; }
+    .cz-kicker { order: 3; }
+    .cz-list { order: 4; }
+    .cz-cta-wrap { order: 5; }
     .cz h2 {
       margin-bottom: 20px;
       font-size: 30px;
       line-height: 1.12;
     }
     .cz h2 br { display: none; }
-    .cz-lead { margin-bottom: 44px; }
+    .cz-lead { margin-bottom: 64px; }
+    .cz-kicker,
+    .cz-list {
+      width: 100%;
+      max-width: 340px;
+    }
+    .cz-kicker {
+      margin: 0 0 12px;
+      text-align: left;
+    }
     .cz-list { gap: 20px; }
     .cz-list li {
       align-items: start;

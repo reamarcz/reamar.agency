@@ -265,13 +265,13 @@ const isCurrent = (href: string) => {
       <a
         href={ctaHref}
         class:list={[
-          'inline-flex w-fit items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] text-white no-underline',
+          'inline-flex w-fit items-center gap-2 bg-black px-4 py-2.5 font-yellix text-[18px] leading-none text-white no-underline',
           isCurrent('/konzultace') ? 'font-semibold' : 'font-medium',
         ]}
         aria-current={isCurrent('/konzultace') ? 'page' : undefined}
         data-drawer-close
       >
-        <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
+        <img src="/images/arrow-1.svg" alt="" class="h-3.5 w-3.5 shrink-0" width="14" height="14" />
         {ctaLabel}
       </a>
     </nav>

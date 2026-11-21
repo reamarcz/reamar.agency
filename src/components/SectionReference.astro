@@ -413,6 +413,14 @@ const wideQuote = {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
+  @media (max-width: 1023px) {
+    #pribehy-z-trhu > div {
+      padding-top: 28px;
+    }
+    .ref-in.is-in {
+      animation-delay: 0ms;
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
     .ref-in,
     .ref-in.is-in {
@@ -436,6 +444,7 @@ const wideQuote = {
     const grid = wrap.querySelector('.ref-grid');
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const phone = window.matchMedia('(max-width: 1023px)').matches;
     if (reduced) {
       items.forEach((el) => el.classList.add('is-in'));
     }
@@ -448,10 +457,12 @@ const wideQuote = {
             items.forEach((el) => el.classList.add('is-in'));
             io?.disconnect();
           },
-          { threshold: 0.18, rootMargin: '0px 0px -10% 0px' }
+          phone
+            ? { threshold: 0, rootMargin: '0px 0px 25% 0px' }
+            : { threshold: 0.18, rootMargin: '0px 0px -10% 0px' }
         );
 
-    if (io) io.observe(grid || wrap);
+    if (io) io.observe(phone ? wrap : grid || wrap);
 
     const loops: HeroLoopHandle[] = [];
     if (!reduced) {
