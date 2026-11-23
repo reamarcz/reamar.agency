@@ -82,7 +82,7 @@ const [noteLabel, notePlaceholder] = noteCopy[initialPreset as keyof typeof note
         decoding="async"
         width="2400"
         height="1600"
-        sizes={`(max-width: 899px) 100vw, ${photoCol}`}
+        sizes="(max-width: 899px) 100vw, 70vw"
       />
       <figure class="kb__quote">
         <p>
@@ -304,7 +304,7 @@ const [noteLabel, notePlaceholder] = noteCopy[initialPreset as keyof typeof note
 
   .kbl {
     display: grid;
-    grid-template-columns: minmax(0, var(--kbl-photo-col, 680px)) 1fr;
+    grid-template-columns: minmax(22rem, 1fr) minmax(0, 42.5rem);
     min-height: 0;
   }
 
@@ -382,8 +382,13 @@ const [noteLabel, notePlaceholder] = noteCopy[initialPreset as keyof typeof note
   }
 
   .kbl__pn {
-    padding: 56px 64px 48px;
-    max-width: 820px;
+    padding: 56px 80px 48px;
+    max-width: none;
+  }
+  .kb__head,
+  .kb__formwrap {
+    width: min(100%, 520px);
+    margin-inline: auto;
   }
 
   .kb__eyebrow {
@@ -751,13 +756,13 @@ const [noteLabel, notePlaceholder] = noteCopy[initialPreset as keyof typeof note
       box-sizing: border-box;
       max-width: none;
       width: 100%;
-      padding: 36px 64px 32px;
+      padding: 36px 80px 32px;
       overflow: hidden;
       background: #f1f1f1;
     }
     .kb--hero .kb__head,
     .kb--hero .kb__formwrap {
-      width: min(100%, 692px);
+      width: min(100%, 520px);
       margin-inline: auto;
     }
     .kb--hero .kb__opt:has(input:checked) {
@@ -778,7 +783,7 @@ const [noteLabel, notePlaceholder] = noteCopy[initialPreset as keyof typeof note
 
   @media (min-width: 900px) and (max-height: 860px) {
     .kb--hero .kbl__pn {
-      padding: 24px 64px 20px;
+      padding: 24px 80px 20px;
     }
     .kb--hero .kb__head {
       margin-bottom: 14px;
