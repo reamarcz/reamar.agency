@@ -17,8 +17,8 @@ Allow: /
 # GPTBot (trénování modelů) — zatím bez explicitního zákazu; politiku lze doplnit později.
 
 Disallow: /portal-demo/
-Disallow: /investice-2
-Disallow: /agentura-pro-kupujici
-Disallow: /agentura-pro-kupujici-onepager
+Disallow: /prodej
+Disallow: /alterna
+Disallow: /pozemekhusinec
 
-Sitemap: https://reamar.agency/sitemap-index.xml
+Sitemap: https://reamar.agency/sitemap.xml

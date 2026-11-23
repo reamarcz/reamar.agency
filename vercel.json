@@ -1,29 +1,42 @@
 {
-  "headers": [
+  "redirects": [
     {
-      "source": "/agentura-pro-kupujici",
-      "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }
-      ]
+      "source": "/prodej",
+      "destination": "https://www.reamar.cz/prodej",
+      "permanent": true
     },
     {
-      "source": "/agentura-pro-kupujici/",
-      "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }
-      ]
+      "source": "/prodej/",
+      "destination": "https://www.reamar.cz/prodej",
+      "permanent": true
+    },
+    {
+      "source": "/alterna",
+      "destination": "https://www.reamar.cz/alterna",
+      "permanent": true
+    },
+    {
+      "source": "/alterna/",
+      "destination": "https://www.reamar.cz/alterna",
+      "permanent": true
     },
     {
       "source": "/pozemekhusinec",
-      "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
-      ]
+      "destination": "https://www.reamar.cz/pozemekhusinec",
+      "permanent": true
+    },
+    {
+      "source": "/pozemekhusinec/",
+      "destination": "https://www.reamar.cz/pozemekhusinec",
+      "permanent": true
     },
     {
       "source": "/pozemekhusinec/(.*)",
-      "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
-      ]
-    },
+      "destination": "https://www.reamar.cz/pozemekhusinec",
+      "permanent": true
+    }
+  ],
+  "headers": [
     {
       "source": "/images/nabidka/(.*)",
       "headers": [

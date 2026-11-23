@@ -38,6 +38,13 @@ const initialPreset =
   (preset && validPresets.has(preset) && preset) ||
   (urlPreset && validPresets.has(urlPreset) && urlPreset) ||
   'bydleni';
+const noteCopy = {
+  bydleni: ['Co hledáte', 'např. 3+kk v Praze 9 do 10 mil., nastěhování 2027'],
+  investice: ['Co hledáte', 'např. 1+kk v širším centru Prahy, na dlouhodobý pronájem'],
+  'konkretni-byt': ['Odkaz na byt', 'Vložte odkaz nebo název projektu'],
+  'rozhlizim-se': ['Co hledáte', 'např. 3+kk v Praze 9 do 10 mil., nastěhování 2027'],
+} as const;
+const [noteLabel, notePlaceholder] = noteCopy[initialPreset as keyof typeof noteCopy];
 ---
 
 <section
@@ -180,11 +187,11 @@ const initialPreset =
         </div>
 
         <label class="kb__f">
-          <small data-note-label>Co hledáte</small>
+          <small data-note-label>{noteLabel}</small>
           <input
             name="poznamka"
             data-note
-            placeholder="např. 3+kk v Praze 9 do 10 mil., nastěhování 2027"
+            placeholder={notePlaceholder}
           />
         </label>
 

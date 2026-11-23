@@ -5,10 +5,6 @@ import sitemap from '@astrojs/sitemap';
 
 const SITEMAP_EXCLUDE = [
   /\/portal-demo(\/|$)/,
-  /\/investice-2\/?$/,
-  /\/agentura-pro-kupujici(\/|$)/,
-  /\/agentura-pro-kupujici-onepager\/?$/,
-  /\/pozemekhusinec(\/|$)/,
   /\/404\/?$/,
 ];
 
@@ -27,10 +23,17 @@ export default defineConfig({
     '/varianta-koncept-2': '/',
     '/horizont': '/',
     '/bydleni-2': '/bydleni',
+    '/investice-2': '/investice',
     '/investice-3': '/investice',
     '/klientsky-portal-2': '/klientsky-portal',
+    '/home-layout': '/',
+    '/agentura-pro-kupujici': '/',
+    '/agentura-pro-kupujici-onepager': '/',
     '/sluzby': '/konzultace',
     '/prazsky-rezidencni-trh': 'https://www.reamar.cz/prazsky-rezidencni-trh',
+    '/prodej': 'https://www.reamar.cz/prodej',
+    '/alterna': 'https://www.reamar.cz/alterna',
+    '/pozemekhusinec': 'https://www.reamar.cz/pozemekhusinec',
   },
   build: {
     inlineStylesheets: 'auto',

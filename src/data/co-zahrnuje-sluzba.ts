@@ -2,6 +2,7 @@ export type SluzbaItem = {
   title: string;
   text: string;
   icon: string;
+  tag?: string;
 };
 
 export type SluzbaStep = {
@@ -16,9 +17,10 @@ export const sluzbaItems: SluzbaItem[] = [
     icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="24" cy="15" r="7" fill="currentColor" stroke="none"/><path d="M10 41V31h28v10"/></svg>`,
   },
   {
-    title: 'Klientský portál',
-    text: 'Projekty, které právě zlevnily, neveřejné předprodeje a výběr na míru od konzultanta na jednom místě.',
+    title: 'Monitoring trhu',
+    text: 'Upozornění na zlevněné byty a nové nabídky dle vašich preferencí.',
     icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="9" y="8" width="30" height="9" fill="currentColor" stroke="none"/><rect x="9.75" y="21.75" width="28.5" height="7.5"/><rect x="9.75" y="33.75" width="28.5" height="7.5"/></svg>`,
+    tag: 'Vlastní software',
   },
   {
     title: 'Přístup k příležitostem',
@@ -60,7 +62,7 @@ export const sluzbaSteps: SluzbaStep[] = [
     text: 'Jednáme s developerem o rezervaci, ceně, splátkách i dalších podmínkách.',
   },
   {
-    title: 'Právní servis při podpisu',
-    text: 'Zkontrolujeme smlouvy dřív, než cokoli podepíšete.',
+    title: 'Dokončení nákupu',
+    text: 'Podle zvolených služeb můžeme také poskytnout právní kontrolu smluv nebo zastoupení až do předání bytu.',
   },
 ];

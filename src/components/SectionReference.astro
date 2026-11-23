@@ -19,6 +19,7 @@ const columns = [
       src: '/images/agency/jan-shorts.jpg',
       mp4: '/videos/agent-office.mp4',
       pos: 'center 18%',
+      desktopOnly: true,
     },
     quote: {
       text: 'Nejvíc jsme s manželem ocenili, že nám pan Vitvera neříkal jen výhody. U každého projektu jsme si prošli i to, co nám na něm nemusí vyhovovat.',
@@ -38,8 +39,7 @@ const wideQuote = {
   <div class="mx-auto max-w-[1440px] px-5 py-16 md:px-10 md:py-24 xl:px-14 xl:py-28">
     <h2
       id="reference-heading"
-      class="ref-in flex items-center gap-3 font-yellix text-[28px] font-medium leading-[1.12] tracking-[-0.02em] text-black md:gap-3.5 md:text-[36px] xl:text-[40px]"
-      style="--i: 0"
+      class="flex items-center gap-3 font-yellix text-[28px] font-medium leading-[1.12] tracking-[-0.02em] text-black md:gap-3.5 md:text-[36px] xl:text-[40px]"
     >
       <img
         src="/images/arrow-1.svg"
@@ -53,7 +53,7 @@ const wideQuote = {
 
     <div class="ref-grid mt-10 md:mt-14">
       {columns.map((col, index) => (
-        <div class="ref-col ref-in" style={`--i: ${index + 1}`}>
+        <div class="ref-col">
           {col.flip && col.quote && (
             <article class="ref-card">
               <p>„{col.quote.text}“</p>
@@ -62,7 +62,7 @@ const wideQuote = {
           )}
           <a
             href="/pribehy-z-trhu/"
-            class:list={['ref-video', col.video.mp4 && 'video-decorative-wrap']}
+            class:list={['ref-video', col.video.mp4 && 'video-decorative-wrap', col.video.desktopOnly && 'ref-video--desk']}
             {...(col.video.mp4 ? { 'data-cover-managed': true } : {})}
           >
             {col.video.mp4 ? (
@@ -79,19 +79,19 @@ const wideQuote = {
                 <video
                   data-decorative-autoplay
                   data-ref-loop
-                  src={col.video.mp4}
+                  src={col.video.desktopOnly ? undefined : col.video.mp4}
                   data-src={col.video.mp4}
                   poster={col.video.src}
                   muted
                   loop
                   playsinline
                   webkit-playsinline="true"
-                  preload="metadata"
+                  preload={col.video.desktopOnly ? 'none' : 'metadata'}
                   disablepictureinpicture
                   aria-hidden="true"
                   style={`object-position: ${col.video.pos}`}
                 >
-                  <source src={col.video.mp4} type="video/mp4" />
+                  {!col.video.desktopOnly && <source src={col.video.mp4} type="video/mp4" />}
                 </video>
               </>
             ) : (
@@ -119,14 +119,24 @@ const wideQuote = {
           )}
         </div>
       ))}
-      <div class="ref-col ref-col--wide ref-in" style="--i: 3">
-        <a href="/pribehy-z-trhu/" class="ref-video ref-video--wide" aria-label="Přehrát celý díl: 100 milionů na penthouse. Co vybereme?">
+      <div class="ref-col ref-col--wide">
+        <a href="/pribehy-z-trhu/" class="ref-video ref-video--wide video-decorative-wrap" data-cover-managed aria-label="Přehrát celý díl: 100 milionů na penthouse. Co vybereme?">
+          <img
+            class="video-decorative-cover"
+            src="/video/penthouse-nahled.jpg"
+            alt=""
+            width="960"
+            height="640"
+            loading="lazy"
+          />
           <video
+            data-decorative-autoplay
             data-ref-loop
             muted
             loop
             playsinline
             preload="metadata"
+            data-src="/videos/penthouse-intro.mp4"
             poster="/video/penthouse-nahled.jpg"
             disablepictureinpicture
             aria-hidden="true"
@@ -166,17 +176,6 @@ const wideQuote = {
 </section>
 
 <style>
-  .ref-in {
-    opacity: 0;
-    transform: translateY(32px);
-  }
-  .ref-in.is-in {
-    animation: ref-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    animation-delay: calc(var(--i) * 180ms);
-  }
-  @keyframes ref-in {
-    to { opacity: 1; transform: translateY(0); }
-  }
   .ref-grid {
     display: grid;
     gap: 1.25rem;
@@ -213,6 +212,7 @@ const wideQuote = {
     background: linear-gradient(transparent, rgba(0, 0, 0, .62));
     pointer-events: none;
   }
+  .ref-video--wide img,
   .ref-video--wide video {
     position: absolute;
     inset: 0;
@@ -417,16 +417,8 @@ const wideQuote = {
     #pribehy-z-trhu > div {
       padding-top: 28px;
     }
-    .ref-in.is-in {
-      animation-delay: 0ms;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .ref-in,
-    .ref-in.is-in {
-      opacity: 1;
-      transform: none;
-      animation: none;
+    .ref-video--desk {
+      display: none;
     }
   }
 </style>
@@ -439,34 +431,12 @@ const wideQuote = {
     if (!wrap) return;
     if (wrap._refCleanup) wrap._refCleanup();
 
-    const items = [...wrap.querySelectorAll('.ref-in')];
-    if (!items.length) return;
-    const grid = wrap.querySelector('.ref-grid');
-
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const phone = window.matchMedia('(max-width: 1023px)').matches;
-    if (reduced) {
-      items.forEach((el) => el.classList.add('is-in'));
-    }
-
-    const io = reduced
-      ? null
-      : new IntersectionObserver(
-          (entries) => {
-            if (!entries.some((entry) => entry.isIntersecting)) return;
-            items.forEach((el) => el.classList.add('is-in'));
-            io?.disconnect();
-          },
-          phone
-            ? { threshold: 0, rootMargin: '0px 0px 25% 0px' }
-            : { threshold: 0.18, rootMargin: '0px 0px -10% 0px' }
-        );
-
-    if (io) io.observe(phone ? wrap : grid || wrap);
-
     const loops: HeroLoopHandle[] = [];
     if (!reduced) {
       wrap.querySelectorAll<HTMLVideoElement>('video[data-ref-loop]').forEach((video) => {
+        if (phone && video.closest('.ref-video--desk')) return;
         const host = video.closest('.ref-video') || video;
         loops.push(
           bindHeroLoop(video, {
@@ -480,7 +450,6 @@ const wideQuote = {
     }
 
     wrap._refCleanup = () => {
-      io?.disconnect();
       loops.forEach((loop) => loop.destroy());
       wrap._refCleanup = null;
     };

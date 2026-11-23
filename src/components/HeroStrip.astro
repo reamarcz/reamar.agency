@@ -225,9 +225,9 @@ const offerLines = ['Byty 2+kk', 'Holešovice', '6 475 200 Kč'];
       <video
         class="strip-modal-video"
         data-strip-feature
-        data-src-desktop="/videos/medailonek-apk.mp4"
+        data-src-desktop="/videos/epizoda-0-720.mp4"
         data-src-mobile="/videos/epizoda-0-720.mp4"
-        data-poster-desktop="/images/agency/hero-obhlidka.jpg"
+        data-poster-desktop="/videos/epizoda-0-poster.jpg"
         data-poster-mobile="/videos/epizoda-0-poster.jpg"
         controls
         playsinline
@@ -554,24 +554,18 @@ html.intro-on.intro-film .intro-film-b .intro-film-w{animation:intro-film-b 7s c
       return { strip: strip, modal: modal, feature: feature, panel: panel };
     }
 
-    function isMobileViewport() {
-      return window.matchMedia('(max-width: 1023px)').matches;
-    }
-
     function syncPanelShape(panel) {
       if (!panel) return;
-      panel.classList.toggle('is-mobile', isMobileViewport());
+      panel.classList.add('is-mobile');
     }
 
     function applyFeatureSource(video) {
       if (!video) return false;
-      var mobile = isMobileViewport();
-      var next = mobile
-        ? (video.getAttribute('data-src-mobile') || '/videos/epizoda-0-720.mp4')
-        : (video.getAttribute('data-src-desktop') || '/videos/medailonek-apk.mp4');
-      var nextPoster = mobile
-        ? (video.getAttribute('data-poster-mobile') || video.getAttribute('data-poster-desktop'))
-        : video.getAttribute('data-poster-desktop');
+      var next = video.getAttribute('data-src-mobile')
+        || video.getAttribute('data-src-desktop')
+        || '/videos/epizoda-0-720.mp4';
+      var nextPoster = video.getAttribute('data-poster-mobile')
+        || video.getAttribute('data-poster-desktop');
       var changed = false;
       video.setAttribute('playsinline', '');
       video.setAttribute('webkit-playsinline', '');

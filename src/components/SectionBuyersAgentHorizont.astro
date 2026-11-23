@@ -229,7 +229,7 @@ const tiles = [
       </div>
 
       <aside class="bah__pack" aria-labelledby="bah-pack-title" data-sm-rise data-sm-pack>
-        <p class="bah__pack-kicker font-yellix">Co zahrnuje spolupráce</p>
+        <p class="bah__pack-kicker font-yellix">Zázemí agentury</p>
         <h2 id="bah-pack-title" class="bah__pack-title font-yellix">
           Víc než jen hledání bytu.
         </h2>
@@ -249,6 +249,7 @@ const tiles = [
                 <span class="bah__pack-ic" set:html={item.icon} />
                 <div>
                   <b class="font-yellix">{item.title}</b>
+                  {item.tag && <span class="bah__pack-tag font-yellix">{item.tag}</span>}
                   <p class="font-yellix">{item.text}</p>
                 </div>
               </li>
@@ -982,6 +983,16 @@ const tiles = [
     .bah--editorial .bah__pack-list b {
       margin: 0 0 0.4rem;
       font-size: 17px;
+    }
+    .bah--editorial .bah__pack-tag {
+      display: block;
+      margin: 0 0 0.5rem;
+      color: #17804a;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      line-height: 1;
+      text-transform: uppercase;
     }
     .bah--editorial .bah__pack-list p {
       font-size: 14px;

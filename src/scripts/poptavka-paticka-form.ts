@@ -48,16 +48,17 @@ export function initPoptavkaPatickaForms() {
     const note = form.querySelector<HTMLInputElement>('[data-note]');
     const noteLbl = form.querySelector<HTMLElement>('[data-note-label]');
     const submitBtn = form.querySelector<HTMLButtonElement>('[data-kb-submit]');
-    const NOTE = {
-      def: ['Co hledáte', 'např. 3+kk v Praze 9 do 10 mil., nastěhování 2027'],
-      byt: ['Odkaz na byt', 'Vložte odkaz nebo název projektu'],
+    const NOTE: Record<string, [string, string]> = {
+      bydleni: ['Co hledáte', 'např. 3+kk v Praze 9 do 10 mil., nastěhování 2027'],
+      investice: ['Co hledáte', 'např. 1+kk v širším centru Prahy, na dlouhodobý pronájem'],
+      'konkretni-byt': ['Odkaz na byt', 'Vložte odkaz nebo název projektu'],
+      'rozhlizim-se': ['Co hledáte', 'např. 3+kk v Praze 9 do 10 mil., nastěhování 2027'],
     };
 
     function syncNote() {
       if (!note || !noteLbl) return;
       const radios = form.elements.namedItem('hledam') as RadioNodeList | null;
-      const isByt = radios?.value === 'konkretni-byt';
-      const v = isByt ? NOTE.byt : NOTE.def;
+      const v = NOTE[radios?.value || ''] || NOTE.bydleni;
       noteLbl.textContent = v[0];
       note.placeholder = v[1];
     }

@@ -18,9 +18,9 @@ export const seoPages = {
       'Nákupní agentura REAMAR zastupuje kupující novostaveb v Praze a okolí. Sledujeme trh, vybíráme vhodné byty a s developery jednáme ve vašem zájmu.',
     canonical: '/',
     image: OG.uvod,
-    ogTitle: 'Kdo při nákupu novostavby zastupuje vás?',
+    ogTitle: 'Agentura pro kupující novostaveb',
     ogDescription:
-      'Známe developerský trh z druhé strany stolu. Dnes stojíme na straně kupujících.',
+      'Zastupujeme kupující na developerském trhu. Sledujeme trh, vybíráme vhodné byty a s developery jednáme ve vašem zájmu.',
     ogImageAlt: 'REAMAR Agency — Agentura pro kupující, náhled pro sdílení',
   },
   bydleni: {

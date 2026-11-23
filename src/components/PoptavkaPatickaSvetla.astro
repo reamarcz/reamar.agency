@@ -53,6 +53,13 @@ const initialPreset =
   (preset && validPresets.has(preset) && preset) ||
   (urlPreset && validPresets.has(urlPreset) && urlPreset) ||
   'bydleni';
+const noteCopy = {
+  bydleni: ['Co hledáte', 'např. 3+kk v Praze 9 do 10 mil., nastěhování 2027'],
+  investice: ['Co hledáte', 'např. 1+kk v širším centru Prahy, na dlouhodobý pronájem'],
+  'konkretni-byt': ['Odkaz na byt', 'Vložte odkaz nebo název projektu'],
+  'rozhlizim-se': ['Co hledáte', 'např. 3+kk v Praze 9 do 10 mil., nastěhování 2027'],
+} as const;
+const [noteLabel, notePlaceholder] = noteCopy[initialPreset as keyof typeof noteCopy];
 ---
 
 <section
@@ -157,11 +164,11 @@ const initialPreset =
           </div>
 
           <label class="kb__f">
-            <small data-note-label>Co hledáte</small>
+            <small data-note-label>{noteLabel}</small>
             <input
               name="poznamka"
               data-note
-              placeholder="např. 3+kk v Praze 9 do 10 mil., nastěhování 2027"
+              placeholder={notePlaceholder}
             />
           </label>
 
@@ -731,19 +738,27 @@ const initialPreset =
       min-height: 0;
       height: 100%;
     }
+    .kb--hero {
+      background: #f1f1f1;
+      --field-bg: #fff;
+      --field-hover: #f7f7f7;
+      --field-focus: #fff;
+    }
     .kb--hero .kbl__pn {
       display: flex;
       flex-direction: column;
       justify-content: center;
       box-sizing: border-box;
+      max-width: none;
+      width: 100%;
       padding: 36px 64px 32px;
       overflow: hidden;
       background: #f1f1f1;
     }
-    .kb--hero {
-      --field-bg: #fff;
-      --field-hover: #f7f7f7;
-      --field-focus: #fff;
+    .kb--hero .kb__head,
+    .kb--hero .kb__formwrap {
+      width: min(100%, 692px);
+      margin-inline: auto;
     }
     .kb--hero .kb__opt:has(input:checked) {
       background: #fff;

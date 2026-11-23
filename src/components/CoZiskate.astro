@@ -21,7 +21,7 @@ const items = [
   { b: 'Monitoring', rest: ' téměř celého trhu novostaveb a výběr bytů na míru' },
   { b: 'Přednostní přístup', rest: ' k novým projektům před zahájením prodeje' },
   { b: 'Upozornění', rest: ' na zlevněné byty a cenové příležitosti' },
-  { b: 'Vyjednávání s developery', rest: ' a pomoc se smlouvami' },
+  { b: 'Vyjednávání s developery', rest: ' a bezpečný nákup' },
 ];
 ---
 
@@ -323,7 +323,7 @@ const items = [
       padding: 12px 14px;
       font-size: 13.5px;
       gap: 10px;
-      animation: cz-float 6.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+      animation: cz-float 5.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
       animation-delay: var(--d, 0s);
       will-change: transform;
     }
@@ -337,7 +337,7 @@ const items = [
       translate: -50% 0;
     }
     .cz-pill--right {
-      top: 27%;
+      top: 32%;
       right: 0;
     }
     .cz-pill--left {
@@ -366,7 +366,7 @@ const items = [
       gap: 12px;
     }
     .cz-pill--top { top: -38px; left: calc(50% + 12px); }
-    .cz-pill--right { top: 27%; right: -6px; }
+    .cz-pill--right { top: 32%; right: -6px; }
     .cz-pill--left { top: 58%; left: -8px; }
   }
 
@@ -378,7 +378,7 @@ const items = [
 
   @keyframes cz-float {
     0%, 100% { transform: translate3d(0, 0, 0); }
-    50% { transform: translate3d(0, -10px, 0); }
+    50% { transform: translate3d(0, -16px, 0); }
   }
 
   @media (prefers-reduced-motion: reduce) {
