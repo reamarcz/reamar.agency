@@ -17,6 +17,7 @@ Allow: /
 # GPTBot (trénování modelů) — zatím bez explicitního zákazu; politiku lze doplnit později.
 
 Disallow: /portal-demo/
+Disallow: /partneri
 Disallow: /prodej
 Disallow: /alterna
 Disallow: /pozemekhusinec

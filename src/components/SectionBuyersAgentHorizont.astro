@@ -8,6 +8,8 @@ interface Props {
   episodeHref?: string;
   /** Mobilní karty ve vizuálu specializace (obrázek nahoře). Desktop beze změny. */
   mobileCards?: 'default' | 'editorial';
+  /** Mobilní inventář. Na homepage žije samostatně v CoOdNasDostanete. */
+  showPack?: boolean;
 }
 
 const {
@@ -16,6 +18,7 @@ const {
   episodeLabel = 'Příběhy z trhu · 100 milionů na penthouse. Co vybereme?',
   episodeHref = '/pribehy-z-trhu/',
   mobileCards = 'default',
+  showPack = true,
 } = Astro.props;
 
 const [episodeKicker, episodeTitle] = episodeLabel.split(/\s·\s/);
@@ -228,7 +231,7 @@ const tiles = [
         <p class="bah__quote bah__quote--cap font-yellix" data-sm-rise style="--sm-d: 80ms">Klient má při nákupu nemovitosti partnera, který nestojí na straně konkrétní nabídky, ale na straně jeho rozhodnutí.</p>
       </div>
 
-      <aside class="bah__pack" aria-labelledby="bah-pack-title" data-sm-rise data-sm-pack>
+      {showPack && <aside class="bah__pack" aria-labelledby="bah-pack-title" data-sm-rise data-sm-pack>
         <p class="bah__pack-kicker font-yellix">Zázemí agentury</p>
         <h2 id="bah-pack-title" class="bah__pack-title font-yellix">
           Víc než jen hledání bytu.
@@ -269,7 +272,7 @@ const tiles = [
             Probrat možnosti
           </a>
         </div>
-      </aside>
+      </aside>}
     </div>
   </div>
 </section>

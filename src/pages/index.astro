@@ -7,6 +7,7 @@ import ManifestSection from '../components/ManifestSection.astro';
 import SectionPorovnani from '../components/SectionPorovnani.astro';
 import SectionZastoupeni from '../components/onepager/SectionZastoupeni.astro';
 import CoZiskate from '../components/CoZiskate.astro';
+import SectionCoDelaAgent from '../components/SectionCoDelaAgent.astro';
 import CoOdNasDostanete from '../components/CoOdNasDostanete.astro';
 import NasRozdil from '../components/NasRozdil.astro';
 import SectionReference from '../components/SectionReference.astro';
@@ -37,15 +38,12 @@ const s = seoPages.home;
       videoSrc="/video/penthouse-nahled.mp4"
       posterSrc="/video/penthouse-nahled.jpg"
       mobileCards="editorial"
+      showPack={false}
     />
   </div>
-  <div class="lg:hidden">
-    <NasRozdil videoSrc="/videos/motivace.mp4" poster="/videos/motivace-poster.jpg" layout="editorial" />
-  </div>
+  <SectionCoDelaAgent />
   <CoOdNasDostanete />
-  <div class="hidden lg:block">
-    <NasRozdil videoSrc="/videos/motivace.mp4" poster="/videos/motivace-poster.jpg" />
-  </div>
+  <NasRozdil videoSrc="/videos/motivace.mp4" poster="/videos/motivace-poster.jpg" layout="editorial" />
   <SectionNasPribeh
     ctaHref="/o-nas"
     ctaLabel="Více o nás"

@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 const SITEMAP_EXCLUDE = [
   /\/portal-demo(\/|$)/,
+  /\/partneri(\/|$)/,
   /\/404\/?$/,
 ];
 

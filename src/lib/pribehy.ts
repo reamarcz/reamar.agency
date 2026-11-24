@@ -12,7 +12,7 @@ export type Short = {
 };
 
 export const shorts = shortsData as Short[];
-export const janFoto = '/images/agency/Jan%20Vitvera.webp';
+export const janFoto = '/images/agency/profilovka_cista_svetle_seda_1080.jpg';
 export const janJmeno = 'Jan Vitvera';
 
 export function padDil(n: number) {
