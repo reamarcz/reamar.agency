@@ -64,13 +64,16 @@ const rows = [
     </h2>
     <div class="pn-table">
       <div class="pn-head" aria-hidden="true">
-        <span></span>
+        <span class="pn-kicker pn-kicker--q">Při nákupu</span>
         <span class="pn-kicker">Kupujete sami</span>
         <span class="pn-kicker pn-kicker--us">Máte své zastoupení</span>
       </div>
       {rows.map((row) => (
         <div class="pn-row">
-          <p class="pn-q">{row.q}</p>
+          <p class="pn-q">
+            <img class="pn-q-arrow" src="/images/arrow-1.svg" alt="" width="13" height="13" />
+            {row.q}
+          </p>
           <p class="pn-usual">
             <b class="pn-lab">Kupujete sami</b>
             {row.usual}
@@ -120,6 +123,9 @@ const rows = [
     font-size: 17px;
     line-height: 1.35;
     color: #111;
+  }
+  .pn-q-arrow {
+    display: none;
   }
   .pn-usual {
     font-size: 17px;
@@ -200,8 +206,16 @@ const rows = [
       align-self: stretch;
       display: flex;
       align-items: center;
+      gap: 0.55rem;
       position: relative;
       padding-right: 3.25rem;
+    }
+    .pn-q-arrow {
+      display: block;
+      flex: 0 0 auto;
+      width: 13px;
+      height: 13px;
+      filter: brightness(0);
     }
     .pn-q::after {
       content: "";
@@ -225,6 +239,12 @@ const rows = [
       line-height: 1.15;
       color: rgba(0, 0, 0, 0.45);
       transform: translateY(-2px);
+    }
+    .pn-kicker--q {
+      width: 0;
+      min-width: 100%;
+      color: #111;
+      white-space: nowrap;
     }
     .pn-kicker--us {
       width: calc(100% - 2rem);

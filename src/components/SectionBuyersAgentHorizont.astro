@@ -433,25 +433,56 @@ const tiles: {
     .bah--editorial {
       background: #f1f1f1;
     }
+    .bah--editorial .bah__sticky {
+      padding-top: 4.5rem;
+      padding-bottom: 4rem;
+      gap: 3.7rem;
+    }
     .bah--editorial .bah__lemma {
       flex-direction: column;
       flex-wrap: nowrap;
       align-items: flex-start;
-      gap: 0.85rem;
+      gap: 4.35rem;
       width: 100%;
-      padding-bottom: 1.1rem;
+      padding-bottom: 0.85rem;
       border-bottom: 1px solid rgba(0, 0, 0, 0.14);
     }
     .bah--editorial .bah__h {
       display: block;
-      font-size: clamp(36px, 8vw, 44px);
+      font-size: clamp(32px, 8.4vw, 40px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      white-space: normal;
+    }
+    .bah--editorial .bah__h-mob {
+      display: none;
+    }
+    .bah--editorial .bah__claim,
+    .bah--editorial .bah__claim-a,
+    .bah--editorial .bah__claim-b {
+      display: block;
+    }
+    .bah--editorial .bah__claim-a {
+      color: rgba(0, 0, 0, 0.42);
+    }
+    .bah--editorial .bah__claim-b {
+      margin-top: 0.4rem;
+      color: #000;
+    }
+    .bah--editorial .bah__entry {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.15rem 0.5rem;
+    }
+    .bah--editorial .bah__name {
+      display: block;
+      margin: 0;
+      font-size: 22px;
       line-height: 1;
       letter-spacing: -0.04em;
-      white-space: nowrap;
-    }
-    .bah--editorial .bah__h-a,
-    .bah--editorial .bah__h-b {
-      display: inline;
+      color: #000;
     }
     .bah--editorial .bah__phon {
       margin: 0;
@@ -470,7 +501,7 @@ const tiles: {
       color: rgba(0, 0, 0, 0.5);
     }
     .bah--editorial .bah__sub {
-      margin: 1.1rem 0 0;
+      margin: 0.8rem 0 0;
       padding-top: 0;
       border-top: 0;
       max-width: none;
@@ -480,44 +511,9 @@ const tiles: {
       letter-spacing: -0.02em;
       color: #000;
     }
-    .bah--editorial .bah__quote--head {
-      position: relative;
-      margin: 1.05rem 0 0;
-      padding-left: 1.15rem;
-      border-left: 0;
-      max-width: none;
-      font-size: 16px;
-      font-weight: 400;
-      font-style: italic;
-      line-height: 1.45;
-      letter-spacing: -0.01em;
-      color: rgba(0, 0, 0, 0.58);
-    }
-    .bah--editorial .bah__quote--head::before {
-      content: "→";
-      position: absolute;
-      left: 0;
-      top: 0.12em;
-      font-style: normal;
-      font-weight: 500;
-      letter-spacing: 0;
-      color: rgba(0, 0, 0, 0.4);
-    }
+    .bah--editorial .bah__quote--head,
     .bah--editorial .bah__vs {
-      display: block;
-      margin: 1.1rem 0 0;
-      padding-top: 1.1rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.14);
-      max-width: none;
-      font-size: 13px;
-      font-weight: 400;
-      line-height: 1.4;
-      letter-spacing: -0.005em;
-      color: rgba(0, 0, 0, 0.48);
-    }
-    .bah--editorial .bah__vs-k {
-      margin-right: 0.15em;
-      color: rgba(0, 0, 0, 0.48);
+      display: none;
     }
   }
   .bah__play {
@@ -532,7 +528,7 @@ const tiles: {
   @media (max-width: 1023px) {
     .bah--editorial .bah__viewport {
       background: #f1f1f1;
-      padding: 1.6rem 0 1.85rem;
+      padding: 0.7rem 0 1.85rem;
     }
     .bah--editorial .bah__row {
       gap: 1.35rem;
