@@ -1,0 +1,348 @@
+---
+interface Props {
+  ctaHref?: string;
+}
+
+const icon = (body: string) =>
+  `<svg width="22" height="22" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">${body}</svg>`;
+
+const rows = [
+  {
+    q: 'Z čeho vybíráte',
+    usual: 'Procházíte portály a weby developerů.',
+    benefit: 'K novým projektům se dostanete dřív',
+    note: 'Vybíráme pro vás z tisíců bytů včetně předprodejů.',
+    icon: icon(
+      '<rect x="9" y="8" width="30" height="9" fill="currentColor" stroke="none"/><rect x="9.75" y="21.75" width="28.5" height="7.5"/><rect x="9.75" y="33.75" width="28.5" height="7.5"/>',
+    ),
+  },
+  {
+    q: 'Jednání o ceně',
+    usual: 'Nevíte, kde může developer ustoupit.',
+    benefit: 'Známe obchodní politiku developerů',
+    note: 'Víme, o čem má smysl vyjednávat.',
+    icon: icon(
+      '<rect x="19" y="19" width="10" height="10" fill="currentColor" stroke="none"/><path d="M4 24h11"/><path d="M10 18l6 6-6 6"/><path d="M44 24H33"/><path d="M38 18l-6 6 6 6"/>',
+    ),
+  },
+  {
+    q: 'Komu záleží na výsledku',
+    usual: 'Developer/makléř chce prodat svůj byt.',
+    benefit: 'My chceme, abyste koupili ten správný',
+    note: 'Bez ohledu na to, od koho.',
+    icon: icon(
+      '<circle cx="24" cy="15" r="7" fill="currentColor" stroke="none"/><path d="M10 41V31h28v10"/>',
+    ),
+  },
+  {
+    q: 'Jak poznáte dobrou cenu',
+    usual: 'Srovnáváte jen pár vybraných projektů.',
+    benefit: 'Analyzujeme ceny tisíců bytů',
+    note: 'Víme, co za stejné peníze můžete koupit jinde.',
+    icon: icon(
+      '<rect x="8" y="10" width="32" height="10" fill="currentColor" stroke="none"/><rect x="8.75" y="28.75" width="22.5" height="9"/>',
+    ),
+  },
+  {
+    q: 'Před podpisem',
+    usual: 'V podmínkách se musíte zorientovat sami.',
+    benefit: 'Známe úskalí nákupu novostaveb',
+    note: 'Řešíme je dřív, než podepíšete.',
+    icon: icon(
+      '<path d="M11 6h26v36H11z"/><path d="M17 15h14M17 21h14M17 27h8"/><rect x="25" y="32" width="12" height="10" fill="currentColor" stroke="none"/>',
+    ),
+  },
+];
+---
+
+<section id="porovnani" class="pn bg-white" aria-label="Porovnání">
+  <div class="mx-auto max-w-[1440px] px-5 pt-8 pb-16 md:px-10 md:pt-8 md:pb-24 xl:px-14 xl:pt-8 xl:pb-28">
+    <p class="pn-eyebrow">Porovnání</p>
+    <h2 class="pn-title">
+      <span>Stejný trh.</span>
+      <span>Jiná pozice.</span>
+    </h2>
+    <div class="pn-table">
+      <div class="pn-head" aria-hidden="true">
+        <span></span>
+        <span class="pn-kicker">Kupujete sami</span>
+        <span class="pn-kicker pn-kicker--us">Máte své zastoupení</span>
+      </div>
+      {rows.map((row) => (
+        <div class="pn-row">
+          <p class="pn-q">{row.q}</p>
+          <p class="pn-usual">
+            <b class="pn-lab">Kupujete sami</b>
+            {row.usual}
+          </p>
+          <p class="pn-us">
+            <b class="pn-lab">Máte své zastoupení</b>
+            <span class="pn-us-body">
+              <span class="pn-ic" set:html={row.icon} />
+              <span>
+                <span class="pn-benefit">{row.benefit}</span>
+                <span class="pn-note">{row.note}</span>
+              </span>
+            </span>
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pn-eyebrow,
+  .pn-title {
+    display: none;
+  }
+  .pn-table {
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .pn-head {
+    display: none;
+  }
+  .pn-q,
+  .pn-usual,
+  .pn-us,
+  .pn-kicker,
+  .pn-benefit,
+  .pn-note {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .pn-q {
+    font-size: 17px;
+    line-height: 1.35;
+    color: #111;
+  }
+  .pn-usual {
+    font-size: 17px;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .pn-us {
+    display: flex;
+    flex-direction: column;
+    padding: 0.95rem 1.05rem 1rem;
+    color: #032d20;
+    background: #e7f3ec;
+  }
+  .pn-us-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .pn-ic {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+    color: inherit;
+  }
+  .pn-ic :global(svg) {
+    display: block;
+    width: 22px;
+    height: 22px;
+  }
+  .pn-benefit {
+    display: block;
+    font-size: 17px;
+    line-height: 1.3;
+    color: inherit;
+  }
+  .pn-note {
+    display: block;
+    margin-top: 0.28rem;
+    font-size: 14px;
+    line-height: 1.4;
+    color: rgba(3, 45, 32, 0.72);
+  }
+  .pn-lab {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .pn-usual .pn-lab {
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .pn-us .pn-lab {
+    color: #032d20;
+  }
+
+  @media (min-width: 900px) {
+    .pn-table {
+      display: grid;
+      grid-template-columns: max-content max-content minmax(12rem, 30rem);
+      justify-content: center;
+      column-gap: 3.5rem;
+      row-gap: 0.65rem;
+    }
+    .pn-head,
+    .pn-row {
+      display: grid;
+      grid-template-columns: subgrid;
+      grid-column: 1 / -1;
+      align-items: center;
+    }
+    .pn-head {
+      align-items: end;
+      margin-bottom: 0.15rem;
+    }
+    .pn-q {
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding-right: 3.25rem;
+    }
+    .pn-q::after {
+      content: "";
+      position: absolute;
+      top: calc(-0.65rem / 2);
+      bottom: calc(-0.65rem / 2);
+      right: 0;
+      width: 1px;
+      background: rgba(0, 0, 0, 0.12);
+    }
+    .pn-row:nth-child(2) .pn-q::after {
+      top: 0;
+    }
+    .pn-row:last-child .pn-q::after {
+      bottom: 0;
+    }
+    .pn-kicker {
+      display: block;
+      padding: 0 0 0.35rem;
+      font-size: 26px;
+      line-height: 1.15;
+      color: rgba(0, 0, 0, 0.45);
+      transform: translateY(-2px);
+    }
+    .pn-kicker--us {
+      width: calc(100% - 2rem);
+      color: #032d20;
+    }
+    .pn-usual {
+      font-size: 17px;
+      line-height: 1.4;
+    }
+    .pn-us {
+      justify-self: start;
+      width: calc(100% - 2rem);
+      padding: 0.65rem 0.95rem 0.7rem 0.85rem;
+    }
+    .pn-lab {
+      display: none;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .pn-lab {
+      display: none;
+    }
+    .pn-table {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      gap: 12px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 1.25rem;
+      scrollbar-width: none;
+      margin-inline: -1.25rem;
+      padding-inline: 1.25rem;
+      -webkit-overflow-scrolling: touch;
+    }
+    .pn-table::-webkit-scrollbar {
+      display: none;
+    }
+    .pn-eyebrow {
+      display: block;
+      margin: 0 0 14px;
+      font-family: 'Yellix', system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      line-height: 1;
+      text-align: center;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.55);
+    }
+    .pn-title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+      margin: 0 0 1.75rem;
+      font-family: 'Yellix', system-ui, sans-serif;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: #111;
+      text-align: center;
+    }
+    .pn-us-body,
+    .pn-note {
+      text-align: left;
+    }
+    .pn-us-body {
+      display: block;
+    }
+    .pn-q {
+      display: none;
+    }
+    .pn-row {
+      display: flex;
+      flex: 0 0 min(82vw, 420px);
+      flex-direction: column;
+      box-sizing: border-box;
+      scroll-snap-align: start;
+      overflow: hidden;
+      text-align: left;
+    }
+    .pn-row + .pn-row {
+      border-top: 0;
+    }
+    .pn-usual,
+    .pn-us {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0;
+      padding: 1.2rem 1.15rem;
+      text-align: left;
+    }
+    .pn-usual {
+      padding-left: 1.15rem;
+      border-left: 0;
+      background: #f1f1f1;
+      font-size: 15px;
+      line-height: 1.4;
+      color: rgba(0, 0, 0, 0.55);
+    }
+    .pn-usual::after {
+      content: none;
+    }
+    .pn-ic {
+      display: none;
+    }
+    .pn-benefit {
+      font-size: 17px;
+      line-height: 1.35;
+    }
+    .pn-us {
+      background: #e7f3ec;
+    }
+  }
+</style>

@@ -69,10 +69,13 @@ const usParts = withWordIndex(usLines);
     font-weight: 500;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding: clamp(140px, 22vh, 260px) var(--page-pad);
+    padding: clamp(112px, 17vh, 220px) var(--page-pad);
   }
   @media (min-width: 768px) {
-    .mf { --page-pad: 2.5rem; }
+    .mf {
+      --page-pad: 2.5rem;
+      padding: clamp(140px, 22vh, 260px) var(--page-pad);
+    }
   }
   @media (min-width: 1280px) {
     .mf { --page-pad: 3.5rem; }

@@ -6,6 +6,9 @@ interface Props {
   email?: string;
   whatsapp?: string;
   photo?: string;
+  /** Když je vyplněné, vlevo běží video místo fotky. */
+  video?: string;
+  videoPoster?: string;
   photoAlt?: string;
   photoPosition?: string;
   photoPositionMobile?: string;
@@ -30,6 +33,8 @@ const {
   email = 'jan.vitvera@reamar.cz',
   whatsapp,
   photo = '/images/agency/poptavka-jan-u-stolu.jpg',
+  video,
+  videoPoster,
   photoAlt = 'Jan Vitvera u jednacího stolu na Záběhlickém zámku',
   photoPosition = '14% 22%',
   photoPositionMobile = '12% 18%',
@@ -74,16 +79,30 @@ const [noteLabel, notePlaceholder] = noteCopy[initialPreset as keyof typeof note
   style={`--kb-photo-pos: ${photoPosition}; --kb-photo-pos-m: ${photoPositionMobile}; --kbl-photo-col: ${photoCol}; --kb-photo-top: ${photoTop}; --kb-photo-left: ${photoLeft}; --kb-photo-zoom: ${photoZoom};`}
 >
   <div class="kbl">
-    <div class="kb__photo">
-      <img
-        src={photo}
-        alt={photoAlt}
-        loading="lazy"
-        decoding="async"
-        width="2400"
-        height="1600"
-        sizes="(max-width: 899px) 100vw, 70vw"
-      />
+    <div class:list={['kb__photo', video && 'kb__photo--video video-decorative-wrap']}>
+      {video ? (
+        <video
+          data-decorative-autoplay
+          src={video}
+          poster={videoPoster || photo}
+          muted
+          loop
+          playsinline
+          webkit-playsinline="true"
+          preload="metadata"
+          aria-hidden="true"
+        />
+      ) : (
+        <img
+          src={photo}
+          alt={photoAlt}
+          loading="lazy"
+          decoding="async"
+          width="2400"
+          height="1600"
+          sizes="(max-width: 899px) 100vw, 70vw"
+        />
+      )}
       <figure class="kb__quote">
         <p>
           „Každý přirozeně hájí zájmy toho, koho zastupuje.
@@ -307,6 +326,18 @@ const [noteLabel, notePlaceholder] = noteCopy[initialPreset as keyof typeof note
     grid-template-columns: minmax(22rem, 1fr) minmax(0, 42.5rem);
     min-height: 0;
   }
+  /* Video zůstává vlevo, strop je photoCol. Šířku navíc bere bílý sloupec. */
+  .kb:has(.kb__photo--video) .kbl {
+    width: 100%;
+    margin-inline: 0;
+    grid-template-columns: clamp(22rem, 48%, var(--kbl-photo-col, 820px)) minmax(26rem, 1fr);
+  }
+  @media (min-width: 900px) {
+    .kb__photo--video .kb__quote {
+      left: 2.5rem;
+      right: 2.5rem;
+    }
+  }
 
   .kb__photo {
     position: relative;
@@ -315,7 +346,8 @@ const [noteLabel, notePlaceholder] = noteCopy[initialPreset as keyof typeof note
     overflow: hidden;
     background: #000;
   }
-  .kb__photo img {
+  .kb__photo img,
+  .kb__photo video {
     position: absolute;
     top: var(--kb-photo-top, 0);
     left: var(--kb-photo-left, 0);
@@ -814,6 +846,13 @@ const [noteLabel, notePlaceholder] = noteCopy[initialPreset as keyof typeof note
       width: 128%;
       height: 128%;
       object-position: var(--kb-photo-pos-m, 28% 28%);
+    }
+    .kb__photo--video video {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-position: center 18%;
     }
     .kb__quote {
       left: 1.25rem;

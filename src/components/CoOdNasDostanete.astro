@@ -98,7 +98,10 @@ const titleHtml = title.startsWith('Víc než jen')
           <li>
             <span aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             <div>
-              <b>{step.title}</b>
+              <b>
+                {step.title}
+                {step.tag && <em class="cod-md__tag">{step.tag}</em>}
+              </b>
               <p>{step.text}</p>
             </div>
           </li>
@@ -381,6 +384,18 @@ const titleHtml = title.startsWith('Víc než jen')
     font-size: 16px;
     font-weight: 500;
     letter-spacing: -0.02em;
+  }
+  .cod-md__tag {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: 2px;
+    font-style: normal;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #17804a;
   }
   .cod-md__list p {
     margin: 0;

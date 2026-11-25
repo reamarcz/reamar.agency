@@ -1,11 +1,12 @@
 ---
 /**
  * Co pro vás dělá agent — „Honza píše“.
- * Desktop ≥1024: chat vlevo, vertikální video Honzy vpravo (zrcadlo „Naší role“),
- *   video se přepíná s každou zprávou 01–03.
+ * Desktop ≥1024: chat vlevo, vertikální video Honzy vpravo.
+ *   Jeden klip na scénář, přepne se při jeho startu.
  * Mobil: jen chat (bez videa).
- * Zprávy mají rezervované místo od začátku (visibility), takže sekce při
- * přehrávání neposkakuje. Bez JS / s reduced motion je vidět celý rozhovor.
+ * Zprávy mají rezervované místo od začátku (visibility), výška chatu
+ * podle nejdelšího scénáře, takže sekce při přehrávání neposkakuje.
+ * Bez JS / s reduced motion je vidět celý první scénář.
  */
 interface Props {
   title?: string;
@@ -21,21 +22,62 @@ const {
   ctaLabel = 'Napsat',
 } = Astro.props;
 
-type Msg = { text: string; num?: string; clip?: number; me?: boolean };
+type Msg = { text: string; me?: boolean };
+type Pace = { read: number; dots: number; scene: number };
+type Scenario = { id: string; label: string; clip: number; msgs: Msg[]; pace: Pace };
 
-const messages: Msg[] = [
-  { num: '01', text: 'Vyberu vám vhodné byty z tisíců nabídek.', clip: 0 },
-  { num: '02', text: 'Půjdu s vámi k developerovi vyjednat lepší nabídku.', clip: 1 },
-  { num: '03', text: 'Při dokončení koupě vám budu krýt záda.', clip: 2 },
-  { text: 'Takže na to nebudu sám?', me: true },
-  { text: 'Přesně tak.' },
+const scenarios: Scenario[] = [
+  {
+    id: 'vyjednavani',
+    label: 'Vyjednávání',
+    clip: 0,
+    pace: { read: 1400, dots: 1300, scene: 4200 },
+    msgs: [
+      { text: 'Pane Dvořáku, u toho 4+kk v Karlíně jsem s developerem domluvil slevu 4 %.' },
+      { text: 'Podmínkou je podpis smlouvy do 14 dnů. Je to poslední byt v projektu, developer ho chce prodat.' },
+      { text: 'To je přes půl milionu?', me: true },
+      { text: 'Přesně tak. Mám připravit rezervaci?' },
+    ],
+  },
+  {
+    id: 'predprodej',
+    label: 'Předprodej',
+    clip: 1,
+    pace: { read: 1600, dots: 1000, scene: 3800 },
+    msgs: [
+      { text: 'Na Praze 5 teď řeším s developery tři projekty, které jdou do prodeje až na jaře.' },
+      { text: 'Protože k nim přivádíme víc kupujících, dostanou naši klienti zvýhodněné podmínky. Zařadil jsem vás na priority list.' },
+      { text: 'Takže to uvidím dřív než ostatní?', me: true },
+      { text: 'Jako jeden z prvních.' },
+    ],
+  },
+  {
+    id: 'provereni',
+    label: 'Prověření',
+    clip: 2,
+    pace: { read: 1300, dots: 1300, scene: 4000 },
+    msgs: [
+      { text: 'K projektu, který jste posílal: developer měl u posledních dvou projektů víc než roční skluz.' },
+      { text: 'Byt je hezký, ale tady bych byl opatrný. Ve stejné lokalitě mám dvě lepší alternativy.' },
+      { text: 'Dobře, že to vím teď. Pošlete mi je?', me: true },
+    ],
+  },
+  {
+    id: 'prohlidka',
+    label: 'Prohlídka',
+    clip: 3,
+    pace: { read: 1200, dots: 1000, scene: 3600 },
+    msgs: [
+      { text: 'Pane Vitvero, teď opravdu nemám čas na prohlídky.', me: true },
+      { text: 'Nevadí. Zítra tam jedu s kameramanem, všechno vám natočíme a pošlu.' },
+      { text: 'Ukážu vám i to, co na vizualizacích vidět není.' },
+      { text: 'Přesně tohle potřebuju.', me: true },
+    ],
+  },
 ];
 
-/* Provizorní záběry — nahradit finálním natáčením (3× vertikálně, 5–6 s). */
 const clips = [
-  { src: '/videos/agent-krok-01.mp4', poster: '/videos/agent-krok-01.jpg' },
-  { src: '/videos/agent-krok-02.mp4', poster: '/videos/agent-krok-02.jpg' },
-  { src: '/videos/agent-krok-03.mp4', poster: '/videos/agent-krok-03.jpg' },
+  { src: '/videos/agent-office.mp4', poster: '/videos/agent-office-poster.jpg' },
 ];
 ---
 
@@ -43,34 +85,60 @@ const clips = [
   <div class="cda-in">
     <div class="cda-layout">
       <div class="cda-copy">
-        <p class="cda-kicker">Co pro vás dělá agent</p>
+        <p class="cda-kicker">Co pro vás řešíme</p>
         <h2 id="cda-title">{title}</h2>
 
         <div class="cda-chat" data-cda-chat>
           <div class="cda-who">
             <img src={avatarSrc} alt="" width="44" height="44" loading="lazy" decoding="async" />
-            <div>
+            <div class="cda-who-id">
               <b>{agentName}</b>
               <span class="cda-status" data-cda-status>váš agent · online</span>
             </div>
+            <div class="cda-tabs" role="tablist" aria-label="Scénáře z praxe">
+              {
+                scenarios.map((s, i) => (
+                  <button
+                    type="button"
+                    class="cda-tab"
+                    role="tab"
+                    id={`cda-tab-${s.id}`}
+                    aria-selected={i === 0 ? 'true' : 'false'}
+                    aria-controls="cda-panel"
+                    data-cda-tab={String(i)}
+                  >
+                    {s.label}
+                  </button>
+                ))
+              }
+            </div>
           </div>
+          <div class="cda-tab-progress" aria-hidden="true"><span data-cda-fill></span></div>
 
-          <ol class="cda-msgs" aria-live="polite">
+          <div class="cda-panel" id="cda-panel" role="tabpanel" aria-labelledby="cda-tab-vyjednavani" data-cda-slot>
             {
-              messages.map((m, i) => (
-                <li
-                  class:list={['cda-m', m.me && 'cda-m--me', i < 2 && 'is-in']}
-                  data-cda-msg
-                  data-clip={m.clip !== undefined ? String(m.clip) : undefined}
+              scenarios.map((s, si) => (
+                <ol
+                  class="cda-msgs"
+                  data-cda-msgs={String(si)}
+                  data-clip={String(s.clip)}
+                  data-read={String(s.pace.read)}
+                  data-dots={String(s.pace.dots)}
+                  data-scene={String(s.pace.scene)}
+                  hidden={si !== 0}
+                  aria-live={si === 0 ? 'polite' : undefined}
                 >
-                  <p class="cda-bubble">
-                    {m.num && <small>{m.num}</small>}
-                    {m.text}
-                  </p>
-                </li>
+                  {
+                    s.msgs.map((m, i) => (
+                      <li class:list={['cda-m', m.me && 'cda-m--me', si === 0 && i === 0 && 'is-in']} data-cda-msg>
+                        <p class="cda-bubble">{m.text}</p>
+                      </li>
+                    ))
+                  }
+                </ol>
               ))
             }
-          </ol>
+          </div>
           <span class="cda-dots" data-cda-dots aria-hidden="true"><i></i><i></i><i></i></span>
         </div>
       </div>
@@ -79,15 +147,16 @@ const clips = [
       <figure class="cda-media" aria-hidden="true" data-cda-media>
         {
           clips.map((c, i) => (
-            <div class:list={['cda-slide', i === 1 && 'is-on']} data-cda-slide>
+            <div class:list={['cda-slide', i === 0 && 'is-on']} data-cda-slide>
               <img src={c.poster} alt="" width="720" height="1280" loading="lazy" decoding="async" />
               <video
-                data-src={c.src}
+                src={c.src}
+                poster={c.poster}
                 muted
                 loop
                 playsinline
                 webkit-playsinline="true"
-                preload="none"
+                preload="auto"
                 disablepictureinpicture
                 disableremoteplayback
               />
@@ -161,12 +230,60 @@ const clips = [
     position: relative;
     margin-top: 24px;
   }
+  .cda-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: flex-end;
+    margin-left: auto;
+  }
+  .cda-tab {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: rgba(0, 0, 0, 0.38);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .cda-tab + .cda-tab {
+    margin-left: 0.4em;
+  }
+  .cda-tab + .cda-tab::before {
+    content: '·';
+    margin-right: 0.4em;
+    color: rgba(0, 0, 0, 0.28);
+  }
+  .cda-tab[aria-selected='true'],
+  .cda-tab:hover {
+    color: #000;
+  }
+  .cda-tab-progress {
+    height: 1px;
+    margin: 0 0 16px;
+    background: rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  .cda-tab-progress span {
+    display: block;
+    height: 100%;
+    background: #000;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
   .cda-who {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 12px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 12px;
+  }
+  .cda-who-id {
+    flex: 0 0 auto;
   }
   .cda-who img {
     display: block;
@@ -197,9 +314,6 @@ const clips = [
     border-radius: 50%;
     background: #16a34a;
   }
-  .cda-status.is-typing::before {
-    animation: cda-pulse 1s infinite;
-  }
 
   .cda-msgs {
     list-style: none;
@@ -208,6 +322,16 @@ const clips = [
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+  .cda-panel {
+    position: relative;
+  }
+  .cda-msgs[hidden] {
+    display: none;
+  }
+  .cda-msgs.is-out {
+    opacity: 0;
+    transition: opacity 0.25s ease;
   }
   .cda-m {
     position: relative;
@@ -294,6 +418,14 @@ const clips = [
     .cda-stage {
       margin-top: 52px;
       text-align: center;
+    }
+  }
+  @media (max-width: 640px) {
+    .cda-tabs {
+      flex: 1 0 100%;
+      margin-left: 0;
+      margin-top: 10px;
+      justify-content: flex-start;
     }
   }
   .cda-cta {
@@ -457,6 +589,7 @@ const clips = [
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center top;
     }
     .cda-slide video {
       opacity: 0;
@@ -517,20 +650,13 @@ const clips = [
       opacity: 1;
     }
   }
-  @keyframes cda-pulse {
-    50% {
-      opacity: 0.3;
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .cda-slide,
     .cda.is-js .cda-m.is-in .cda-bubble,
     .cda.is-js .cda-cta.is-in {
       transition: none;
     }
-    .cda-dots i,
-    .cda-status.is-typing::before {
+    .cda-dots i {
       animation: none;
     }
   }
@@ -549,17 +675,25 @@ const clips = [
     const chat = sec.querySelector<HTMLElement>('[data-cda-chat]');
     const msgs = [...sec.querySelectorAll<HTMLElement>('[data-cda-msg]')];
     const dots = sec.querySelector<HTMLElement>('[data-cda-dots]');
-    const status = sec.querySelector<HTMLElement>('[data-cda-status]');
     const ctas = [...sec.querySelectorAll<HTMLElement>('[data-cda-cta]')];
     const cta = ctas[0];
     const slides = [...sec.querySelectorAll<HTMLElement>('[data-cda-slide]')];
     const videos = slides.map((s) => s.querySelector('video') as HTMLVideoElement);
-    if (!chat || !dots || !status || !cta || !msgs.length) return;
+    if (!chat || !dots || !cta || !slides.length) return;
 
-    const prewritten = 2;
+    const tabs = [...sec.querySelectorAll<HTMLButtonElement>('[data-cda-tab]')];
+    const lists = [...sec.querySelectorAll<HTMLElement>('[data-cda-msgs]')];
+    const fills = [...sec.querySelectorAll<HTMLElement>('[data-cda-fill]')];
+    const slot = sec.querySelector<HTMLElement>('[data-cda-slot]');
+    if (!tabs.length || !lists.length || !slot) return;
+
     let alive = true;
-    let current = 1;
+    let token = 0;
+    let auto = true;
+    let paused = false;
+    let ctaShown = false;
     let inView = false;
+    const resume: (() => void)[] = [];
 
     /* ---- video ---- */
     const armVideo = (v: HTMLVideoElement) => {
@@ -580,34 +714,14 @@ const clips = [
 
     const playCurrent = () => {
       if (reduced || !desktop.matches || !inView) return;
-      const v = videos[current];
+      const v = videos[0];
       if (!v) return;
       armVideo(v);
-      const next = videos[(current + 1) % videos.length];
-      if (next) armVideo(next);
       const p = v.play();
       if (p && typeof p.catch === 'function') p.catch(() => {}); // zablokováno → zůstane fotka
     };
 
-    const setClip = (i: number) => {
-      current = i;
-      slides.forEach((s, k) => s.classList.toggle('is-on', k === i));
-      videos.forEach((v, k) => {
-        if (k === i) {
-          try {
-            v.currentTime = 0;
-          } catch {}
-        } else v.pause();
-      });
-      playCurrent();
-    };
-
     /* ---- chat ---- */
-    const setTyping = (on: boolean) => {
-      status.textContent = on ? 'píše…' : 'váš agent · online';
-      status.classList.toggle('is-typing', on);
-    };
-
     const placeDots = (li: HTMLElement, me: boolean) => {
       const box = chat.getBoundingClientRect();
       const r = li.getBoundingClientRect();
@@ -623,65 +737,189 @@ const clips = [
       }
     };
 
-    const reveal = (li: HTMLElement) => {
-      li.classList.add('is-in');
-      if (li.dataset.clip !== undefined && slides.length) setClip(Number(li.dataset.clip));
-    };
-
     const showCtas = () => ctas.forEach((el) => el.classList.add('is-in'));
 
-    const showAll = () => {
-      msgs.forEach((m) => m.classList.add('is-in'));
-      showCtas();
+    const setProgress = (_index: number, value: number) => {
+      const scale = `scaleX(${Math.max(0, Math.min(1, value))})`;
+      fills.forEach((fill) => {
+        fill.style.transform = scale;
+      });
     };
 
-    const play = async () => {
-      if (reduced) {
-        showAll();
+    const showList = (index: number) => {
+      lists.forEach((ol, i) => {
+        ol.hidden = i !== index;
+        if (i === index) ol.setAttribute('aria-live', 'polite');
+        else ol.removeAttribute('aria-live');
+      });
+      tabs.forEach((tab, i) => tab.setAttribute('aria-selected', i === index ? 'true' : 'false'));
+      const tab = tabs[index];
+      if (tab) slot.setAttribute('aria-labelledby', tab.id);
+    };
+
+    const measure = () => {
+      let max = 0;
+      lists.forEach((ol) => {
+        const wasHidden = ol.hidden;
+        ol.hidden = false;
+        ol.style.position = 'absolute';
+        ol.style.left = '0';
+        ol.style.right = '0';
+        ol.style.visibility = 'hidden';
+        max = Math.max(max, ol.offsetHeight);
+        ol.style.position = '';
+        ol.style.left = '';
+        ol.style.right = '';
+        ol.style.visibility = '';
+        ol.hidden = wasHidden;
+      });
+      slot.style.minHeight = `${max}px`;
+    };
+
+    const SETTLE = 400;
+
+    const paceOf = (ol: HTMLElement) => ({
+      read: Number(ol.dataset.read) || 1400,
+      dots: Number(ol.dataset.dots) || 1300,
+      scene: Number(ol.dataset.scene) || 4200,
+    });
+
+    const duration = (ol: HTMLElement) => {
+      const pace = paceOf(ol);
+      return pace.read + pace.dots + SETTLE + pace.scene;
+    };
+
+    const hold = async (ms: number, my: number, clock: { pausedFor: number }) => {
+      let left = ms;
+      while (left > 0) {
+        if (!alive || my !== token) return false;
+        if (paused) {
+          const mark = performance.now();
+          await new Promise<void>((resolve) => resume.push(resolve));
+          clock.pausedFor += performance.now() - mark;
+          continue;
+        }
+        const slice = Math.min(80, left);
+        await wait(slice);
+        if (!paused) left -= slice;
+      }
+      return alive && my === token;
+    };
+
+    const run = async (index: number, my: number) => {
+      const ol = lists[index];
+      const items = [...ol.querySelectorAll<HTMLElement>('[data-cda-msg]')];
+      if (!ol || !items.length) return;
+      items.forEach((li) => li.classList.remove('is-in'));
+      ol.classList.remove('is-out');
+      dots.classList.remove('is-on');
+      showList(index);
+      const pre = Math.max(0, items.length - 1);
+      for (let i = 0; i < pre; i += 1) items[i].classList.add('is-in');
+      playCurrent();
+      setProgress(index, 0);
+
+      const pace = paceOf(ol);
+      const total = duration(ol);
+      const clock = { pausedFor: 0 };
+      const startedAt = performance.now();
+      let raf = 0;
+      const tickProgress = () => {
+        if (!alive || my !== token) return;
+        if (!paused) {
+          const elapsed = performance.now() - startedAt - clock.pausedFor;
+          setProgress(index, elapsed / total);
+        }
+        raf = window.requestAnimationFrame(tickProgress);
+      };
+      raf = window.requestAnimationFrame(tickProgress);
+      const stopProgress = () => window.cancelAnimationFrame(raf);
+
+      if (!(await hold(pace.read, my, clock))) {
+        stopProgress();
         return;
       }
-      const shown = msgs[prewritten - 1];
-      if (shown?.dataset.clip !== undefined && slides.length) setClip(Number(shown.dataset.clip));
-      await wait(400);
-      for (const [i, li] of msgs.entries()) {
-        if (i < prewritten) continue;
-        if (!alive) return;
-        const me = li.classList.contains('cda-m--me');
-        placeDots(li, me);
-        if (!me) setTyping(true);
-        await wait(me ? 500 : 600);
-        if (!alive) return;
+      const last = items[items.length - 1];
+      if (last) {
+        placeDots(last, last.classList.contains('cda-m--me'));
+        if (!(await hold(pace.dots, my, clock))) {
+          stopProgress();
+          return;
+        }
         dots.classList.remove('is-on');
-        setTyping(false);
-        reveal(li);
-        const last = i === msgs.length - 1;
-        const hasClip = li.dataset.clip !== undefined && desktop.matches;
-        await wait(last ? 300 : me ? 600 : hasClip ? 1400 : 700);
+        last.classList.add('is-in');
+        if (!(await hold(SETTLE, my, clock))) {
+          stopProgress();
+          return;
+        }
       }
-      if (alive) showCtas();
+      if (!ctaShown) {
+        ctaShown = true;
+        showCtas();
+      }
+      if (!auto) {
+        setProgress(index, 1);
+        stopProgress();
+        return;
+      }
+      if (!(await hold(pace.scene, my, clock))) {
+        stopProgress();
+        return;
+      }
+      setProgress(index, 1);
+      stopProgress();
+      ol.classList.add('is-out');
+      if (!(await hold(250, my, clock))) return;
+      ol.classList.remove('is-out');
+      if (alive && my === token && auto) run((index + 1) % lists.length, my);
     };
 
-    sec.classList.add('is-js');
+    const wake = () => {
+      const queued = resume.splice(0);
+      queued.forEach((resolve) => resolve());
+    };
+
+    if (!reduced) sec.classList.add('is-js');
+    measure();
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => {
+        if (reduced) {
+          showList(index);
+          return;
+        }
+        auto = false;
+        token += 1;
+        dots.classList.remove('is-on');
+        lists.forEach((ol) => ol.classList.remove('is-out'));
+        wake();
+        run(index, token);
+      });
+    });
 
     let started = false;
     const startIo = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting && !started) {
-          started = true;
-          startIo.disconnect();
-          play();
-        }
+      ([entry]) => {
+        if (!entry.isIntersecting || started) return;
+        started = true;
+        startIo.disconnect();
+        if (reduced) return;
+        token = 1;
+        run(0, token);
       },
       { threshold: 0.3 },
     );
     startIo.observe(chat);
 
-    /* video hraje jen v obraze */
+    /* video hraje jen v obraze, rozepsaný scénář se pozastaví */
     const viewIo = new IntersectionObserver(
-      ([e]) => {
-        inView = e.isIntersecting;
-        if (inView) playCurrent();
-        else videos.forEach((v) => v.pause());
+      ([entry]) => {
+        inView = entry.isIntersecting;
+        paused = started && !inView;
+        if (inView) {
+          wake();
+          playCurrent();
+        } else videos.forEach((v) => v.pause());
       },
       { threshold: 0.15 },
     );
@@ -691,13 +929,18 @@ const clips = [
       if (document.hidden) videos.forEach((v) => v.pause());
       else playCurrent();
     };
+    const onResize = () => measure();
     document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener('resize', onResize);
 
     sec._cdaCleanup = () => {
       alive = false;
+      token += 1;
+      wake();
       startIo.disconnect();
       viewIo.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('resize', onResize);
       videos.forEach((v) => {
         v.pause();
         v.removeEventListener('playing', onPlaying);

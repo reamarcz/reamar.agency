@@ -4,7 +4,7 @@ import HeroStrip from '../components/HeroStrip.astro';
 import SectionBuyersAgentHorizont from '../components/SectionBuyersAgentHorizont.astro';
 import SectionNasPribeh from '../components/SectionNasPribeh.astro';
 import ManifestSection from '../components/ManifestSection.astro';
-import SectionPorovnani from '../components/SectionPorovnani.astro';
+import SectionPorovnaniNakup from '../components/SectionPorovnaniNakup.astro';
 import SectionZastoupeni from '../components/onepager/SectionZastoupeni.astro';
 import CoZiskate from '../components/CoZiskate.astro';
 import SectionCoDelaAgent from '../components/SectionCoDelaAgent.astro';
@@ -49,14 +49,16 @@ const s = seoPages.home;
     ctaLabel="Více o nás"
   />
   <ManifestSection />
-  <SectionPorovnani ctaHref="#poptavka" intro={false} />
+  <SectionPorovnaniNakup ctaHref="#poptavka" />
   <SectionZastoupeni />
   <CoZiskate ctaHref="/klientsky-portal" />
   <SectionReference />
   <PoptavkaPatickaSvetla
     context="/"
     photoCol="820px"
-    photo="/images/agency/poptavka-jan-u-stolu.jpg"
+    video="/images/agency/agent-pise.mp4"
+    videoPoster="/images/agency/agent-pise.webp"
+    photoPosition="center 22%"
   />
   <SectionFooter showIntro={false} />
 </Layout>

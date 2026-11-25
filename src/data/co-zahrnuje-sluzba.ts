@@ -8,6 +8,7 @@ export type SluzbaItem = {
 export type SluzbaStep = {
   title: string;
   text: string;
+  tag?: string;
 };
 
 export const sluzbaItems: SluzbaItem[] = [
@@ -56,6 +57,7 @@ export const sluzbaSteps: SluzbaStep[] = [
   {
     title: 'Osobní vyhledávání',
     text: 'Otevřeme vám portál a aktivně doporučujeme nemovitosti podle zadání.',
+    tag: 'Vlastní software',
   },
   {
     title: 'Vyjednávání podmínek',

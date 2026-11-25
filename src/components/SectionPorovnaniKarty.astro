@@ -1,0 +1,115 @@
+---
+// Záloha mobilních karet porovnání. Nikde se neimportuje.
+// Pořadí: Kupujete sami, pak šedá Máte své zastoupení.
+// Živá verze je SectionPorovnaniNakup.
+---
+
+<section class="pk" aria-label="Porovnání, záloha karet">
+  <div class="pk-grid">
+    <article class="pk-col">
+      <h3>Kupujete sami</h3>
+      <div class="pk-rule" aria-hidden="true"></div>
+      <p>Srovnáváte to, co je veřejně k vidění. U každé nabídky stojí někdo, kdo ji chce prodat.</p>
+      <div class="pk-rule" aria-hidden="true"></div>
+      <ul>
+        <li><span class="pk-mark" aria-hidden="true"></span><span>Procházíte portály a weby developerů</span></li>
+        <li><span class="pk-mark" aria-hidden="true"></span><span>Nevíte, kde může developer ustoupit</span></li>
+        <li><span class="pk-mark" aria-hidden="true"></span><span>Developer nebo makléř chce prodat svůj byt</span></li>
+        <li><span class="pk-mark" aria-hidden="true"></span><span>Srovnáváte jen pár vybraných projektů</span></li>
+        <li><span class="pk-mark" aria-hidden="true"></span><span>V podmínkách se musíte zorientovat sami</span></li>
+      </ul>
+    </article>
+    <article class="pk-col is-featured">
+      <h3>Máte své zastoupení</h3>
+      <div class="pk-rule" aria-hidden="true"></div>
+      <p>Neprodáváme konkrétní byt. Chceme, abyste koupili ten správný, a úskalí řešíme dřív, než podepíšete.</p>
+      <div class="pk-rule" aria-hidden="true"></div>
+      <ul>
+        <li><span class="pk-mark" aria-hidden="true"></span><span>K novým projektům se dostanete dřív</span></li>
+        <li><span class="pk-mark" aria-hidden="true"></span><span>Známe obchodní politiku developerů</span></li>
+        <li><span class="pk-mark" aria-hidden="true"></span><span>Víme, o čem má smysl vyjednávat</span></li>
+        <li><span class="pk-mark" aria-hidden="true"></span><span>Analyzujeme ceny tisíců bytů</span></li>
+        <li><span class="pk-mark" aria-hidden="true"></span><span>Známe úskalí nákupu novostaveb</span></li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<style>
+  .pk-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1.25rem;
+    scrollbar-width: none;
+    margin-inline: -1.25rem;
+    padding-inline: 1.25rem;
+    -webkit-overflow-scrolling: touch;
+  }
+  .pk-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .pk-col {
+    display: flex;
+    flex: 0 0 min(82vw, 420px);
+    flex-direction: column;
+    box-sizing: border-box;
+    scroll-snap-align: start;
+    margin: 0;
+    padding: 2rem 1.5rem 2.15rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .pk-col.is-featured {
+    border: 0;
+    background: var(--color-muted);
+  }
+  .pk-col h3,
+  .pk-col p,
+  .pk-col li {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: #000;
+  }
+  .pk-col h3 {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+  .pk-col p {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.65;
+  }
+  .pk-rule {
+    height: 1px;
+    margin: 1.35rem 0;
+    background: rgba(0, 0, 0, 0.16);
+  }
+  .pk-col ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .pk-col li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .pk-col li + li {
+    margin-top: 1.05rem;
+  }
+  .pk-mark {
+    display: block;
+    width: 5px;
+    height: 5px;
+    margin-top: 0.48em;
+    flex-shrink: 0;
+    background: #000;
+  }
+</style>
