@@ -64,7 +64,7 @@ const rows = [
     </h2>
     <div class="pn-table">
       <div class="pn-head" aria-hidden="true">
-        <span class="pn-kicker pn-kicker--q">Při nákupu</span>
+        <span class="pn-kicker pn-kicker--q">Porovnání</span>
         <span class="pn-kicker">Kupujete sami</span>
         <span class="pn-kicker pn-kicker--us">Máte své zastoupení</span>
       </div>
@@ -188,6 +188,7 @@ const rows = [
       display: grid;
       grid-template-columns: max-content max-content minmax(12rem, 30rem);
       justify-content: center;
+      padding-left: 2rem;
       column-gap: 3.5rem;
       row-gap: 0.65rem;
     }
@@ -199,8 +200,18 @@ const rows = [
       align-items: center;
     }
     .pn-head {
+      position: relative;
       align-items: end;
-      margin-bottom: 0.15rem;
+      margin-bottom: 0.85rem;
+    }
+    .pn-head::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 2rem;
+      bottom: 0;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.12);
     }
     .pn-q {
       align-self: stretch;
@@ -227,18 +238,18 @@ const rows = [
       background: rgba(0, 0, 0, 0.12);
     }
     .pn-row:nth-child(2) .pn-q::after {
-      top: 0;
+      top: calc(-0.65rem - 0.85rem);
     }
     .pn-row:last-child .pn-q::after {
       bottom: 0;
     }
     .pn-kicker {
       display: block;
-      padding: 0 0 0.35rem;
+      padding: 0 0 0.85rem;
       font-size: 26px;
       line-height: 1.15;
       color: rgba(0, 0, 0, 0.45);
-      transform: translateY(-2px);
+      transform: translateY(-14px);
     }
     .pn-kicker--q {
       width: 0;
@@ -326,6 +337,7 @@ const rows = [
       flex: 0 0 min(82vw, 420px);
       flex-direction: column;
       box-sizing: border-box;
+      min-height: 13.5rem;
       scroll-snap-align: start;
       overflow: hidden;
       text-align: left;
@@ -349,7 +361,7 @@ const rows = [
       background: #f1f1f1;
       font-size: 15px;
       line-height: 1.4;
-      color: rgba(0, 0, 0, 0.55);
+      color: #111;
     }
     .pn-usual::after {
       content: none;

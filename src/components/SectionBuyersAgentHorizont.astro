@@ -48,7 +48,7 @@ const tiles: {
     text: 'Chodíme s vámi k developerům a jednáme o <strong>ceně, splátkách i parkování</strong>. Víme, o čem má smysl vyjednávat.',
     perk: 'Silnější pozice',
     icon: 'deal',
-    note: 'U jednacího stolu budu sedět vedle vás.',
+    note: 'Při rozhodnutí za miliony by měl někdo hájit i vaše zájmy.',
   },
   {
     num: '02',
@@ -59,7 +59,7 @@ const tiles: {
     text: 'Díky našim kontaktům <strong>víme o projektech dřív</strong>, než jdou do prodeje. Řešíme tak nabídky, ke kterým se kupující sám nedostane.',
     perk: 'Byty pod cenou',
     icon: 'reserve',
-    note: 'O novém projektu se dozvíte ode mě jako první.',
+    note: 'O novém projektu se ode mě dozvíte jako první.',
   },
   {
     num: '03',
@@ -497,8 +497,29 @@ const tiles: {
       font-weight: 400;
     }
     .bah--editorial .bah__say {
-      font-weight: 400;
-      color: rgba(0, 0, 0, 0.5);
+      display: none;
+    }
+    .bah--editorial .bah__play {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 1.5rem 0 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      line-height: 1;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.55);
+    }
+    .bah--editorial .bah__play-line {
+      display: block;
+      width: 2.25rem;
+      height: 1px;
+      background: currentColor;
     }
     .bah--editorial .bah__sub {
       margin: 0.8rem 0 0;
@@ -518,6 +539,28 @@ const tiles: {
   }
   .bah__play {
     display: none;
+  }
+
+  @media (max-width: 1023px) {
+    .bah__tile .bah__note-who {
+      display: none;
+    }
+    .bah__tile .bah__note-box {
+      position: relative;
+      justify-content: center;
+      max-height: none;
+    }
+    .bah__tile .bah__note-ava {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      translate: 0 -50%;
+    }
+    .bah__tile .bah__note-copy {
+      flex: 1;
+      text-align: center;
+      padding-inline: 42px;
+    }
   }
 
   .bah__perk {

@@ -1,10 +1,7 @@
 ---
 /**
- * Sekce „Co získáte“ – klientský portál (REAMAR Agency)
- *
- * Desktop (od 1024 px): text + seznam vlevo, laptop s plovoucími štítky vpravo, tlačítko pod laptopem.
- * Mobil: nadpis → lead → „CO ZÍSKÁTE“ přilepené k seznamu → laptop → štítky → tlačítko.
- * Štítky jsou poloprůhledné (glass) a jemně se vznášejí. Respektuje prefers-reduced-motion.
+ * Sekce klientského portálu.
+ * Vlevo text a odkazy, vpravo notebook, který se přepíná mezi portálem a měsíčním reportem.
  */
 interface Props {
   laptopSrc?: string;
@@ -16,33 +13,47 @@ const {
   ctaHref = '/klientsky-portal',
 } = Astro.props;
 
-const items = [
-  { b: 'Osobního konzultanta', rest: ', který zastupuje vaše zájmy' },
-  { b: 'Monitoring', rest: ' téměř celého trhu novostaveb a výběr bytů na míru' },
-  { b: 'Přednostní přístup', rest: ' k novým projektům před zahájením prodeje' },
-  { b: 'Upozornění', rest: ' na zlevněné byty a cenové příležitosti' },
-  { b: 'Vyjednávání s developery', rest: ' a bezpečný nákup' },
+const items: { b: string; rest: string; link?: string; href?: string }[] = [
+  { b: 'Upozornění', rest: ' na zlevněné projekty v reálném čase' },
+  { b: 'Předprodeje a nové projekty', rest: ' dřív, než se dostanou na portály' },
+  { b: 'Porovnání ceny s trhem', rest: ' u každého bytu a projektu' },
+  {
+    b: 'Čtvrtletní report',
+    rest: ' ',
+    link: 'Pražský rezidenční trh Q3/2026',
+    href: 'https://www.reamar.cz/prazsky-rezidencni-trh',
+  },
 ];
+const reportLaptop = '/images/agency/portal-laptop-report-2000.webp';
+const reportPdf = '/docs/ukazka-reportu-zlevnene-projekty.pdf';
 ---
 
 <section class="cz" aria-labelledby="cz-heading">
   <div class="cz-in">
     <div class="cz-copy">
-      <p class="cz-kicker">CO ZÍSKÁTE</p>
+      <p class="cz-kicker">Vlastní software</p>
       <h2 id="cz-heading">
         Přístup k našim datům,<br />
         kontaktům a zkušenostem<br />
         z developerského trhu.
       </h2>
-      <p class="cz-lead">Vy rozhodujete, my stojíme na vaší straně.</p>
+      <p class="cz-lead">Díky vlastním technologiím máme neustálý přehled o developerském trhu. Stejné informace zpřístupňujeme i vám.</p>
 
       <ul class="cz-list">
-        {items.map(({ b, rest }) => (
+        {items.map(({ b, rest, link, href }) => (
           <li>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2c5a42" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M5 12.5l4.5 4.5L19 7.5" />
             </svg>
-            <span><strong>{b}</strong><span class="cz-rest">{rest}</span></span>
+            <span>
+              <strong>{b}</strong>
+              <span class="cz-rest">
+                {rest}
+                {href && (
+                  <a class="cz-list-link" href={href} target="_blank" rel="noopener noreferrer">{link}</a>
+                )}
+              </span>
+            </span>
           </li>
         ))}
       </ul>
@@ -52,39 +63,88 @@ const items = [
           <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
           Prohlédnout klientský portál
         </a>
+        <a class="cz-cta-pdf" href={reportPdf} target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+            <path d="M14 3v5h5" />
+          </svg>
+          <span>Zlevněné projekty (PDF)</span>
+        </a>
       </div>
     </div>
 
     <div class="cz-visual">
       <div class="cz-stage">
-        <img
-          class="cz-laptop"
-          src={laptopSrc}
-          alt="Klientský portál REAMAR v notebooku: výběr projektů, mapa cen a doporučení konzultanta"
-          width="2000"
-          height="1261"
-          loading="lazy"
-          decoding="async"
-        />
-
-        <div class="cz-pill cz-float cz-pill--top" style="--d:0s">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8z" /></svg>
-          <span>Předprodeje a nové projekty</span>
+        <div class="cz-device">
+          <div class="cz-laptop-wrap" id="cz-laptop">
+            <img
+              class="cz-laptop"
+              src={laptopSrc}
+              alt="Klientský portál REAMAR v notebooku"
+              width="2000"
+              height="1261"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              class="cz-laptop cz-laptop-report"
+              src={reportLaptop}
+              alt=""
+              width="2000"
+              height="1261"
+            />
+          </div>
+          <div class="cz-pill cz-float cz-pill--top" style="--d:0s">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8z" /></svg>
+            <span>Předprodeje a nové projekty</span>
+          </div>
+          <div class="cz-pill cz-float cz-pill--right" style="--d:-2.2s">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z" /><path d="M10 20.5h4" /></svg>
+            <span>Upozornění<br />na zlevněné nabídky</span>
+          </div>
+          <div class="cz-pill cz-float cz-pill--left" style="--d:-4.1s">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l9 5-9 5-9-5z" /><path d="M3 14l9 5 9-5" /></svg>
+            <span>Výběr napříč<br />celým trhem</span>
+          </div>
+          <div class="cz-pill cz-float cz-float-report cz-pill--top" style="--d:0s">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 19h16M7 19V11M12 19V6M17 19v-5" /></svg>
+            <span>86 projektů · 469 jednotek</span>
+          </div>
         </div>
-        <div class="cz-pill cz-float cz-pill--right" style="--d:-2.2s">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z" /><path d="M10 20.5h4" /></svg>
-          <span>Upozornění<br />na zlevněné nabídky</span>
-        </div>
-        <div class="cz-pill cz-float cz-pill--left" style="--d:-4.1s">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l9 5-9 5-9-5z" /><path d="M3 14l9 5 9-5" /></svg>
-          <span>Výběr napříč<br />celým trhem</span>
+        <div class="cz-tabs" role="tablist" aria-label="Ukázka v notebooku">
+          <button
+            type="button"
+            class="cz-tab"
+            role="tab"
+            id="cz-tab-portal"
+            aria-selected="true"
+            aria-controls="cz-laptop"
+            data-cz-tab="portal"
+          >
+            Klientský portál
+          </button>
+          <button
+            type="button"
+            class="cz-tab"
+            role="tab"
+            id="cz-tab-report"
+            aria-selected="false"
+            aria-controls="cz-laptop"
+            tabindex="-1"
+            data-cz-tab="report"
+          >
+            Měsíční report
+          </button>
         </div>
       </div>
-
       <div class="cz-pills-m">
-        <div class="cz-pill">
+        <div class="cz-pill cz-pill-portal">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z" /><path d="M10 20.5h4" /></svg>
           <span>Upozornění na zlevněné nabídky</span>
+        </div>
+        <div class="cz-pill cz-pill-report">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 19h16M7 19V11M12 19V6M17 19v-5" /></svg>
+          <span>86 projektů · 469 jednotek</span>
         </div>
       </div>
     </div>
@@ -108,9 +168,11 @@ const items = [
     align-items: center;
   }
   .cz-kicker {
-    margin: 0 0 12px;
+    margin: 0 0 14px;
     font-size: 12px;
+    font-weight: 500;
     letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: rgba(0, 0, 0, 0.55);
     line-height: 1;
   }
@@ -124,7 +186,6 @@ const items = [
   }
   .cz-lead {
     margin: 0 0 22px;
-    max-width: 46ch;
     font-size: 16px;
     line-height: 1.55;
     color: rgba(0, 0, 0, 0.7);
@@ -157,17 +218,40 @@ const items = [
   .cz-rest {
     color: rgba(0, 0, 0, 0.7);
   }
+  .cz-list-link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .cz-list-link:hover {
+    opacity: 0.7;
+  }
 
   .cz-stage {
     position: relative;
+  }
+  .cz-laptop-wrap {
+    position: relative;
+    filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.16));
   }
   .cz-laptop {
     display: block;
     width: 100%;
     height: auto;
-    filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.16));
+  }
+  .cz-laptop-report {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .cz.is-report .cz-laptop-report {
+    opacity: 1;
   }
 
+  .cz-device {
+    position: relative;
+  }
   .cz-pill {
     display: flex;
     align-items: center;
@@ -180,21 +264,82 @@ const items = [
     backdrop-filter: blur(14px) saturate(140%);
     border: 1px solid rgba(255, 255, 255, 0.7);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+    transition: opacity 0.6s ease;
   }
   .cz-pill svg {
     flex: none;
   }
   .cz-pills-m {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    display: grid;
     margin-top: 20px;
+  }
+  .cz-pills-m .cz-pill {
+    grid-area: 1 / 1;
+    justify-self: center;
   }
   .cz-float {
     display: none;
   }
+  .cz-float-report,
+  .cz-pill-report {
+    opacity: 0;
+  }
+  .cz.is-report .cz-float:not(.cz-float-report),
+  .cz.is-report .cz-pill-portal {
+    opacity: 0;
+  }
+  .cz.is-report .cz-float-report,
+  .cz.is-report .cz-pill-report {
+    opacity: 1;
+  }
+
+  .cz-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1.75rem;
+    margin: 28px 0 0;
+  }
+  .cz-tab {
+    position: relative;
+    padding: 0 0 7px;
+    border: 0;
+    background: none;
+    color: rgba(0, 0, 0, 0.38);
+    font: inherit;
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .cz-tab[aria-selected='true'] {
+    color: #000;
+  }
+  .cz-tab[aria-selected='true']::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: #000;
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  .cz.is-running .cz-tab[aria-selected='true']::after {
+    animation: cz-tab-progress 3.5s linear forwards;
+  }
+  .cz.is-paused .cz-tab[aria-selected='true']::after {
+    animation-play-state: paused;
+  }
+  .cz-tab:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 3px;
+  }
 
   .cz-cta-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 22px;
     margin-top: 28px;
   }
   .cz-cta {
@@ -218,59 +363,104 @@ const items = [
   .cz-cta:hover {
     opacity: 0.85;
   }
+  .cz-cta-pdf {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #000;
+    font-size: 14px;
+    line-height: 1.3;
+    text-decoration: none;
+  }
+  .cz-cta-pdf svg {
+    display: block;
+    flex: 0 0 auto;
+  }
+  .cz-cta-pdf span {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .cz-cta-pdf:hover {
+    opacity: 0.7;
+  }
 
   @media (max-width: 1023px) {
-    .cz { padding: 96px 24px 28px; }
-    .cz-in { gap: 72px; }
+    .cz { padding: 120px 24px 96px; }
+    .cz-in { gap: 0; }
+    .cz-copy { display: contents; }
     .cz-kicker,
     .cz h2,
-    .cz-lead,
-    .cz-cta-wrap { text-align: center; }
-    .cz-lead { margin-inline: auto; }
-    .cz-list {
-      max-width: 340px;
-      margin-inline: auto;
-    }
-    .cz-copy {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .cz h2 { order: 1; }
-    .cz-lead { order: 2; }
-    .cz-kicker { order: 3; }
-    .cz-list { order: 4; }
-    .cz-cta-wrap { order: 5; }
+    .cz-lead { text-align: center; }
+    .cz-cta-wrap { justify-content: center; }
+    .cz-kicker { order: 1; }
+    .cz h2 { order: 2; }
+    .cz-lead { order: 3; }
+    .cz-visual { order: 4; width: 100%; }
+    .cz-list { order: 5; }
+    .cz-cta-wrap { order: 6; }
     .cz h2 {
-      margin-bottom: 20px;
+      margin-bottom: 36px;
       font-size: 30px;
       line-height: 1.12;
     }
     .cz h2 br { display: none; }
-    .cz-lead { margin-bottom: 64px; }
-    .cz-kicker,
+    .cz-lead { margin-bottom: 88px; }
     .cz-list {
       width: 100%;
-      max-width: 340px;
-    }
-    .cz-kicker {
-      margin: 0 0 12px;
+      max-width: none;
+      margin: 72px 0 0;
       text-align: left;
     }
-    .cz-list { gap: 20px; }
+    .cz-kicker {
+      margin: 0 0 18px;
+    }
+    .cz-list { gap: 24px; }
     .cz-list li {
       align-items: start;
+      gap: 12px;
       font-size: 15px;
-      line-height: 1.45;
+      line-height: 1.35;
+    }
+    .cz-list li > span {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .cz-list strong {
+      font-size: 15px;
+      line-height: 1.3;
+    }
+    .cz-rest {
+      font-size: 14px;
+      line-height: 1.4;
     }
     .cz-list svg { margin-top: 1px; }
-    .cz-cta-wrap { margin-top: 48px; }
+    .cz-cta-wrap { margin-top: 80px; }
+    .cz-tabs { margin-top: 40px; }
+    .cz-visual { position: relative; }
     .cz-pills-m {
-      gap: 10px;
-      max-width: 340px;
-      margin: 36px auto 0;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      z-index: 3;
+      width: max-content;
+      max-width: calc(100% - 8px);
+      margin: 0;
+      translate: -50% -50%;
+      justify-items: center;
     }
-    .cz-pills-m .cz-pill { justify-content: center; }
+    .cz-pills-m .cz-pill {
+      justify-self: center;
+      gap: 6px;
+      padding: 6px 10px;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+    .cz-pills-m .cz-pill svg {
+      width: 14px;
+      height: 14px;
+    }
   }
 
   @media (min-width: 768px) {
@@ -284,15 +474,21 @@ const items = [
       grid-template-columns: max-content minmax(0, 1fr);
       padding-left: 24px;
       gap: 28px;
-      align-items: end;
+      align-items: start;
     }
-    .cz-copy { justify-self: start; }
+    .cz-copy { justify-self: start; width: max-content; }
     .cz h2,
-    .cz-lead,
-    .cz-list li { white-space: nowrap; }
+    .cz-list li { white-space: normal; }
+    .cz-lead {
+      white-space: normal;
+      width: 0;
+      min-width: 100%;
+    }
+    .cz-list { width: 0; min-width: 100%; }
     .cz-visual {
       justify-self: end;
       width: min(100%, 590px);
+      margin-top: 82px;
       margin-bottom: -40px;
     }
     .cz-kicker { margin-bottom: 22px; }
@@ -306,6 +502,10 @@ const items = [
       line-height: 1.35;
     }
     .cz-stage {
+      padding: 0 20px 0 28px;
+    }
+    .cz-device {
+      margin: 0 -20px 0 -28px;
       padding: 0 20px 0 28px;
     }
     .cz-float {
@@ -338,7 +538,7 @@ const items = [
     }
     .cz-pills-m { display: none; }
     .cz-cta-wrap {
-      margin-top: 48px;
+      margin-top: 64px;
       text-align: left;
     }
   }
@@ -352,6 +552,10 @@ const items = [
     }
     .cz-visual { width: min(100%, 750px); }
     .cz-stage { padding: 0 12px 0 36px; }
+    .cz-device {
+      margin: 0 -12px 0 -36px;
+      padding: 0 12px 0 36px;
+    }
     .cz-float {
       padding: 14px 16px;
       font-size: 14px;
@@ -373,7 +577,101 @@ const items = [
     50% { transform: translate3d(0, -16px, 0); }
   }
 
+  @keyframes cz-tab-progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
+    .cz-laptop-report,
+    .cz-pill { transition: none; }
     .cz-float { animation: none; }
+    .cz-tab[aria-selected='true']::after {
+      animation: none;
+      transform: scaleX(1);
+    }
   }
 </style>
+
+<script>
+  const root = document.querySelector('.cz');
+  if (root) {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const tabs = [...root.querySelectorAll('[data-cz-tab]')];
+    const duration = 3500;
+    let index = 0;
+    let timer = 0;
+    let started = 0;
+    let left = duration;
+    let visible = false;
+
+    const show = (next, restart) => {
+      index = next;
+      root.classList.toggle('is-report', next === 1);
+      tabs.forEach((tab, n) => {
+        const on = n === next;
+        tab.setAttribute('aria-selected', on ? 'true' : 'false');
+        tab.tabIndex = on ? 0 : -1;
+      });
+      if (!restart || reduced || !visible) return;
+      root.classList.remove('is-running');
+      void root.offsetWidth;
+      root.classList.add('is-running');
+    };
+
+    const pause = () => {
+      if (timer) {
+        left = Math.max(0, left - (performance.now() - started));
+        window.clearTimeout(timer);
+        timer = 0;
+      }
+      root.classList.add('is-paused');
+    };
+
+    const play = () => {
+      if (reduced || !visible || timer) return;
+      root.classList.remove('is-paused');
+      if (!root.classList.contains('is-running')) {
+        root.classList.add('is-running');
+        left = duration;
+      }
+      started = performance.now();
+      timer = window.setTimeout(() => {
+        timer = 0;
+        left = duration;
+        show((index + 1) % tabs.length, true);
+        play();
+      }, left);
+    };
+
+    const select = (next) => {
+      window.clearTimeout(timer);
+      timer = 0;
+      left = duration;
+      show(next, true);
+      play();
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(i));
+      tab.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+        event.preventDefault();
+        const next = event.key === 'ArrowRight' ? (i + 1) % tabs.length : (i + tabs.length - 1) % tabs.length;
+        select(next);
+        tabs[next].focus();
+      });
+    });
+
+    new IntersectionObserver(
+      (entries) => {
+        visible = entries.some((entry) => entry.isIntersecting);
+        if (visible) play();
+        else pause();
+      },
+      { threshold: 0.35 },
+    ).observe(root);
+
+    show(0, false);
+  }
+</script>
