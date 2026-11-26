@@ -1,4 +1,33 @@
 ---
+interface Props {
+  showCompare?: boolean;
+}
+
+const { showCompare = false } = Astro.props;
+
+const compareRows = [
+  {
+    q: 'Z čeho vybíráte',
+    usual: 'Procházíte portály a weby developerů.',
+    benefit: 'K novým projektům se dostanete dřív',
+  },
+  {
+    q: 'Jednání o ceně',
+    usual: 'Nevíte, kde může developer ustoupit.',
+    benefit: 'Známe obchodní politiku developerů',
+  },
+  {
+    q: 'Jak poznáte dobrou cenu',
+    usual: 'Srovnáváte jen pár vybraných projektů.',
+    benefit: 'Analyzujeme ceny tisíců bytů',
+  },
+  {
+    q: 'Před podpisem',
+    usual: 'V podmínkách se musíte zorientovat sami.',
+    benefit: 'Známe úskalí nákupu novostaveb',
+  },
+];
+
 const bandItems = [
   {
     kind: 'why' as const,
@@ -57,6 +86,19 @@ const bandItems = [
         </p>
       </div>
     </div>
+
+    {showCompare && (
+      <div class="zast-cmp" aria-label="Porovnání">
+        <p class="zast-who zast-piece" style="--i: 3">Porovnání</p>
+        {compareRows.map((row, index) => (
+          <article class="zast-cmp-row zast-piece" style={`--i: ${index + 4}`}>
+            <h3 class="zast-cmp-q">{row.q}</h3>
+            <p class="zast-cmp-usual">{row.usual}</p>
+            <p class="zast-cmp-us">{row.benefit}</p>
+          </article>
+        ))}
+      </div>
+    )}
 
     <div class="zast-band" aria-label="Výhody">
       <p class="zast-who zast-band-kicker zast-piece" style="--i: 3">Výhody</p>
@@ -160,6 +202,54 @@ const bandItems = [
     font-size: 13px;
     line-height: 1.45;
     color: rgba(255, 255, 255, 0.62);
+  }
+
+  .zast-cmp {
+    display: none;
+  }
+  .zast-cmp-q,
+  .zast-cmp-usual,
+  .zast-cmp-us {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-weight: 500;
+  }
+  .zast-cmp-q {
+    margin-bottom: 0.55rem;
+    font-size: 17px;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .zast-cmp-usual {
+    font-size: 15px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.42);
+  }
+  .zast-cmp-us {
+    margin: 0.45rem 0 0;
+    font-size: 17px;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    color: #46c37b;
+  }
+
+  @media (max-width: 899px) {
+    .zast-cmp {
+      display: grid;
+      gap: 0;
+      margin-top: 2.75rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    .zast-cmp-row + .zast-cmp-row {
+      margin-top: 2.25rem;
+      padding-top: 2.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .zast-band-why {
+      display: none;
+    }
   }
 
   @media (max-width: 767px) {

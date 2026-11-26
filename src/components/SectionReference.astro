@@ -16,9 +16,9 @@ const columns = [
   },
   {
     video: {
-      src: '/images/agency/jan-shorts.jpg',
+      src: '/videos/agent-office-poster.jpg',
       mp4: '/videos/agent-office.mp4',
-      pos: 'center 18%',
+      pos: 'center 32%',
       desktopOnly: true,
     },
     quote: {
@@ -135,13 +135,12 @@ const wideQuote = {
             muted
             loop
             playsinline
-            preload="metadata"
+            preload="none"
             data-src="/videos/penthouse-intro.mp4"
             poster="/video/penthouse-nahled.jpg"
             disablepictureinpicture
             aria-hidden="true"
           >
-            <source src="/videos/penthouse-intro.mp4" type="video/mp4" />
           </video>
           <span class="ref-video-bar">
             <span class="ref-video-title">100 milionů na penthouse.<br />Co vybereme?</span>
@@ -413,11 +412,27 @@ const wideQuote = {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
+  @media (max-width: 639px) {
+    .ref-grid {
+      display: flex;
+      flex-direction: column;
+    }
+    .ref-col,
+    .ref-wide-foot {
+      display: contents;
+    }
+    .ref-col:nth-child(1) .ref-card { order: 1; }
+    .ref-col:nth-child(1) .ref-video { order: 2; }
+    .ref-col:nth-child(2) .ref-card { order: 3; }
+    .ref-col--wide .ref-card { order: 4; }
+    .ref-cta { order: 5; }
+  }
   @media (max-width: 1023px) {
     #pribehy-z-trhu > div {
-      padding-top: 28px;
+      padding-top: 88px;
     }
-    .ref-video--desk {
+    .ref-video--desk,
+    .ref-video--wide {
       display: none;
     }
   }
@@ -436,7 +451,7 @@ const wideQuote = {
     const loops: HeroLoopHandle[] = [];
     if (!reduced) {
       wrap.querySelectorAll<HTMLVideoElement>('video[data-ref-loop]').forEach((video) => {
-        if (phone && video.closest('.ref-video--desk')) return;
+        if (phone && video.closest('.ref-video--desk, .ref-video--wide')) return;
         const host = video.closest('.ref-video') || video;
         loops.push(
           bindHeroLoop(video, {

@@ -41,26 +41,36 @@ const s = seoPages.home;
       showPack={false}
     />
   </div>
-  <SectionCoDelaAgent />
-  <CoOdNasDostanete />
-  <NasRozdil videoSrc="/videos/motivace.mp4" poster="/videos/motivace-poster.jpg" layout="editorial" />
-  <SectionNasPribeh
-    ctaHref="/o-nas"
-    ctaLabel="Více o nás"
-  />
-  <ManifestSection />
-  <SectionPorovnaniNakup ctaHref="#poptavka" />
-  <SectionZastoupeni />
-  <CoZiskate ctaHref="/klientsky-portal" />
-  <SectionReference />
-  <PoptavkaPatickaSvetla
-    context="/"
-    photoCol="820px"
-    video="/images/agency/agent-pise.mp4"
-    videoPoster="/images/agency/agent-pise.webp"
-    photoPosition="center 22%"
-  />
-  <SectionFooter showIntro={false} />
+  <div class="home-flow">
+    <div class="home-slot home-chat"><SectionCoDelaAgent /></div>
+    <div class="home-slot home-zazemi"><CoOdNasDostanete /></div>
+    <div class="home-slot home-role">
+      <NasRozdil videoSrc="/videos/motivace.mp4" poster="/videos/motivace-poster.jpg" layout="editorial" />
+    </div>
+    <div class="home-slot home-pribeh">
+      <SectionNasPribeh
+        ctaHref="/o-nas"
+        ctaLabel="Více o nás"
+      />
+    </div>
+    <div class="home-slot home-manifest"><ManifestSection /></div>
+    <div class="home-slot home-compare">
+      <SectionPorovnaniNakup ctaHref="#poptavka" />
+    </div>
+    <div class="home-slot home-rozhodnuti"><SectionZastoupeni showCompare /></div>
+    <div class="home-slot home-software"><CoZiskate ctaHref="/klientsky-portal" /></div>
+    <div class="home-slot home-reference"><SectionReference /></div>
+    <div class="home-slot home-kontakt">
+      <PoptavkaPatickaSvetla
+        context="/"
+        photoCol="820px"
+        video="/images/agency/agent-pise.mp4"
+        videoPoster="/images/agency/agent-pise.webp"
+        photoPosition="center 22%"
+      />
+    </div>
+    <div class="home-slot home-footer"><SectionFooter showIntro={false} /></div>
+  </div>
 </Layout>
 
 <style>
@@ -70,6 +80,36 @@ const s = seoPages.home;
   .hero-cover--plain-em :global(.hero-em::after) {
     content: none;
     display: none;
+  }
+
+  .home-flow,
+  .home-slot {
+    display: contents;
+  }
+
+  @media (max-width: 899px) {
+    .home-flow {
+      display: flex;
+      flex-direction: column;
+    }
+    .home-slot {
+      display: block;
+      width: 100%;
+      min-width: 0;
+    }
+    .home-chat { order: 1; }
+    .home-zazemi { order: 2; }
+    .home-software { order: 3; }
+    .home-rozhodnuti { order: 4; }
+    .home-role { order: 5; }
+    .home-pribeh { order: 6; }
+    .home-reference { order: 7; }
+    .home-kontakt { order: 8; }
+    .home-footer { order: 9; }
+    .home-manifest,
+    .home-compare {
+      display: none;
+    }
   }
 
   @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
