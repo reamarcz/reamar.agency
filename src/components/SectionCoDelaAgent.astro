@@ -688,6 +688,7 @@ const clips = [
     let alive = true;
     let token = 0;
     let auto = true;
+    let current = 0;
     let paused = false;
     let ctaShown = false;
     let inView = false;
@@ -745,6 +746,7 @@ const clips = [
     };
 
     const showList = (index: number) => {
+      current = index;
       lists.forEach((ol, i) => {
         ol.hidden = i !== index;
         if (i === index) ol.setAttribute('aria-live', 'polite');
@@ -880,20 +882,62 @@ const clips = [
     if (!reduced) sec.classList.add('is-js');
     measure();
 
+    const open = (index: number) => {
+      if (index < 0 || index >= lists.length) return;
+      if (reduced) {
+        showList(index);
+        return;
+      }
+      auto = false;
+      token += 1;
+      dots.classList.remove('is-on');
+      lists.forEach((ol) => ol.classList.remove('is-out'));
+      wake();
+      run(index, token);
+    };
+
     tabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => {
-        if (reduced) {
-          showList(index);
-          return;
-        }
-        auto = false;
-        token += 1;
-        dots.classList.remove('is-on');
-        lists.forEach((ol) => ol.classList.remove('is-out'));
-        wake();
-        run(index, token);
-      });
+      tab.addEventListener('click', () => open(index));
     });
+
+    /* Mobil: vodorovný tah po bublinách přepne scénář. Svislý pohyb se nesahá, scroll zůstane stránce. */
+    let swipe: { x: number; y: number; horizontal: boolean; decided: boolean } | null = null;
+    const swipePhone = () => !desktop.matches;
+    const onSwipeStart = (event: TouchEvent) => {
+      if (!swipePhone() || event.touches.length !== 1) {
+        swipe = null;
+        return;
+      }
+      const t = event.touches[0];
+      swipe = { x: t.clientX, y: t.clientY, horizontal: false, decided: false };
+    };
+    const onSwipeMove = (event: TouchEvent) => {
+      if (!swipe || event.touches.length !== 1) return;
+      const t = event.touches[0];
+      const dx = t.clientX - swipe.x;
+      const dy = t.clientY - swipe.y;
+      if (!swipe.decided && (Math.abs(dx) > 12 || Math.abs(dy) > 12)) {
+        swipe.decided = true;
+        swipe.horizontal = Math.abs(dx) > Math.abs(dy) * 1.4;
+      }
+    };
+    const onSwipeEnd = (event: TouchEvent) => {
+      const gesture = swipe;
+      swipe = null;
+      if (!gesture?.horizontal) return;
+      const t = event.changedTouches[0];
+      if (!t) return;
+      const dx = t.clientX - gesture.x;
+      if (Math.abs(dx) < 48) return;
+      open(current + (dx < 0 ? 1 : -1));
+    };
+    const onSwipeCancel = () => {
+      swipe = null;
+    };
+    slot.addEventListener('touchstart', onSwipeStart, { passive: true });
+    slot.addEventListener('touchmove', onSwipeMove, { passive: true });
+    slot.addEventListener('touchend', onSwipeEnd);
+    slot.addEventListener('touchcancel', onSwipeCancel);
 
     let started = false;
     const startIo = new IntersectionObserver(
@@ -937,6 +981,10 @@ const clips = [
       wake();
       startIo.disconnect();
       viewIo.disconnect();
+      slot.removeEventListener('touchstart', onSwipeStart);
+      slot.removeEventListener('touchmove', onSwipeMove);
+      slot.removeEventListener('touchend', onSwipeEnd);
+      slot.removeEventListener('touchcancel', onSwipeCancel);
       document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', onResize);
       videos.forEach((v) => {
