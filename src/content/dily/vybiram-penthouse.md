@@ -6,7 +6,7 @@ tema: "Agent pro kupující"
 datum: 2026-11-12
 delka: "10 min"
 delkaIso: "PT10M"
-youtubeId: "MIYbJdRJYGY"
+youtubeId: "FiwdICm-IrA"
 poster: "/images/agency/hero-obhlidka.jpg"
 nahled: "/video/penthouse-nahled.mp4"
 perex: "Dva pražské penthousy, dvě úplně jiné nabídky a jedno klientské zadání. Ukazuju, podle čeho je porovnáváme a co nakonec rozhoduje, když rozpočet není hlavní limit."
